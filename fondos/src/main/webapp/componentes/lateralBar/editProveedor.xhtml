@@ -1,0 +1,122 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+	<h:form id="#{proveedoresMB.idFormEdit}">
+		<p:sidebar position="right" id="editObject" widgetVar="#{proveedoresMB.dialogEdit}">
+			
+			<b:panel look="primary" title="#{proveedoresMB.headerDialog}" collapsible="false"> 
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="5">
+							<b:row>
+							
+									<h:outputText value="Nombre" />
+							
+							</b:row>
+							<b:row>
+									<p:inputText value="#{proveedoresMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
+							</b:row>
+						</b:column>
+						<b:column col-xs="5">
+							<b:row>
+								<h:outputText value="Cuenta" />
+							</b:row>
+							<b:row><p:inputText  value="#{proveedoresMB.itemSelected.ncuenta}" id="codigo" />
+							
+							</b:row>
+							
+						</b:column>
+					</b:row>
+				
+					<b:row>
+						<b:column>
+							<b:row>
+							
+									<h:outputText value="Nombre Legal" />
+							
+							</b:row>
+							<b:row>
+									<p:inputText value="#{proveedoresMB.itemSelected.nombreLegal}" size="50" maxlength="150"></p:inputText>
+							</b:row>
+						</b:column>
+					</b:row>
+					<b:row>	
+						<b:column>
+							<b:row>
+								<h:outputText value="DUI" />
+							</b:row>
+							<b:row>
+								<b:inputText  value="#{proveedoresMB.itemSelected.dui}" maxlength="15" />
+							</b:row>
+						</b:column>
+						<b:column>
+							<b:row>
+								<h:outputText value="NIT" />
+							</b:row>
+							<b:row>
+								<b:inputText  value="#{proveedoresMB.itemSelected.nit}" maxlength="15" />
+							</b:row>
+						</b:column>
+						<b:column>
+							<b:row>
+								<h:outputText value="NCR" />
+							</b:row>
+							<b:row>
+								<b:inputText  value="#{proveedoresMB.itemSelected.nrc}" maxlength="15" />
+							</b:row>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-xs="6">
+							<b:row>
+								<h:outputText value="Tipo Persona" />
+							</b:row>
+							<b:row>
+								<p:selectOneListbox value="#{proveedoresMB.itemSelected.tipo}" converter="tipoPersonaConverter">
+									<f:selectItem itemLabel="Persona Natural" itemValue="N" selected="selected" />
+									<f:selectItem itemLabel="Persona Juridica" itemValue="J"/>
+								</p:selectOneListbox>
+							</b:row>
+														
+						</b:column>
+						<b:column col-xs="6">
+							<b:row>
+								<h:outputText value="Activo" />
+							</b:row>
+							<b:row>
+								<p:selectOneMenu value="#{proveedoresMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+								</p:selectOneMenu>
+							</b:row>
+														
+						</b:column>
+					</b:row>
+					<hr />
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+									<ui:param name="mb" 		value="#{proveedoresMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{proveedoresMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{proveedoresMB.dialogEdit}"></ui:param>
+						</ui:include>
+					</b:row>
+					
+				</b:container>
+				
+			
+			</b:panel>
+			
+		</p:sidebar>
+	</h:form>
+</ui:composition>

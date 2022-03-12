@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+		<div id="wrapper">
+			<div id="main">
+				<div class="inner">
+					<f:event listener="#{tablaGastoMB.preRender()}" type="preRenderView"></f:event>
+					
+					<div class="titlePage">
+						<b:container fluid="true">
+								<b:row>
+									<b:column col-xs="10">
+										<h2 class="headerPage"><h:outputText value="#{tablaGastoMB.headerPage}" /></h2>	
+									</b:column>
+									<b:column col-xs="1" styleClass="">
+										<b:row styleClass="btn btn-info">
+											<p:commandLink action="#{tablaGastoMB.openNew()}"  > <b:iconAwesome value="plus" style="color:#fff;" size="1x"/> </p:commandLink>
+										</b:row>
+									</b:column>
+								</b:row>
+						
+						</b:container>
+						
+					</div>
+					
+					
+					<h:form id="#{tablaGastoMB.idFormList}">
+						<p:dataTable value="#{tablaGastoMB.list}" var="i" 
+						 editable="true" editMode="row"
+						rowIndexVar="rowIndex" scrollHeight="250" 
+						id="#{tablaGastoMB.idTable}"	
+						>
+							<f:facet name="header"><h:outputText value="#{tablaGastoMB.headerTable}" />
+							<p:commandLink action="#{tablaGastoMB.updateDialogNew()}" > 
+							<img src="../resources/images/add.jpg" alt="+" height="30" width="30"/> </p:commandLink> 
+							</f:facet>
+							<p:ajax event="rowEdit" listener="#{tablaGastoMB.onEditRow}" ></p:ajax>
+							<p:column >
+								<h:outputText value="#{i.idtablagasto}" />
+							</p:column>
+							<p:column headerText="Nombre" width="600">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{i.nombre}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{i.nombre}" size="20" maxlength="50" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+						
+							
+							<p:column headerText="Activo">
+								<p:cellEditor>
+									<f:facet name="output">
+											<h:outputText value="#{i.act}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{i.act}" style="width:52px;">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							
+							</p:column>
+							<p:column>
+								<p:rowEditor id="IDRowEdit"></p:rowEditor>
+							</p:column>
+							<p:column>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</div>
+			</div>
+
+		</div>
+		<h:form id="#{tablaGastoMB.idFormNew}">
+			<p:dialog widgetVar="#{tablaGastoMB.wtgDialog}" width="700" height="300" header="Nuevo">
+				<p:panel>
+					<f:facet name="header"><h:outputText value="#{tablaGastoMB.headerDialog}" /> </f:facet>
+					<p:panelGrid columns="2">
+						<h:outputText value="Nombre" /><p:inputText value="#{tablaGastoMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
+						
+						
+						<h:outputText value="Activo" /><p:selectOneMenu value="#{tablaGastoMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+															</p:selectOneMenu>
+					<p:commandButton action="#{tablaGastoMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
+					<p:commandButton action="#{tablaGastoMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
+					</p:panelGrid>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

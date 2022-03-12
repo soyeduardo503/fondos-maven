@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui">
+
+
+
+
+		
+<h:form id="loadCategoriasFromFile">
+			<p:dialog widgetVar="loadWgtCat" width="1100" height="600" header="Carga de archivo" id="idLoadCat" modal="true">
+				<b:panel>
+					<f:facet name="header"><h:outputText value="Carga de categorias" /> </f:facet>
+					
+					<b:container fluid="true">
+						
+						<br/>
+					
+							
+					
+						 	<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+						 	 
+								<b:row>
+								 		
+										<b:column col-xs="2"><h:outputText value="Nombre :"  /></b:column>
+															
+									
+								
+								
+										<b:column col-xs="4">									
+											<h:outputText id="nombrePre" value="#{cargaCategoriaMB.presupuesto.nombrePresupuesto}"  />
+											
+										</b:column>
+								
+									<b:column col-xs="2"/><b:column col-xs="2"><h:outputText value="Codigo : " /></b:column>
+									<b:column col-xs="2"><h:outputText  value="#{cargaCategoriaMB.presupuesto.codigo}" id="codigo"  styleClass="codigo" /></b:column>
+								</b:row>
+								
+								
+								
+							</b:panel>
+						
+							<b:panel title="Archivo de carga" collapsible="false" look="#{varMB.DANGER}">
+									<b:row>
+													
+									
+										<b:column col-xs="12">
+											  <p:fileUpload mode="advanced"
+								                      multiple="false"
+								                      sizeLimit="202400000" allowTypes="/(\.|\/)(csv)$/"
+								                      invalidSizeMessage="Maximo archivo permitido 2MB"
+								                      invalidFileMessage="only csv | CSV  is allowed"
+								                      update="detailUploadFile,totalItem,montoTotal,saveBtnCat"  
+								                      listener="#{cargaCategoriaMB.handleFileUpload}"/>
+										</b:column>						
+									</b:row>
+									<b:row>
+										<b:column> 
+											<p:dataTable id="detailUploadFile" value="#{cargaCategoriaMB.list}" var="c" >
+												<p:column headerText="Codigo">
+													<h:outputText value="#{c.codigo}"/>
+												</p:column>
+												<p:column headerText="Nombre">
+													<h:outputText value="#{c.nombre}"/>
+												</p:column>
+												<p:column headerText="Codigo">
+													<h:outputText value="#{c.descripcion}"/>
+												</p:column>
+												<p:column headerText="Monto">
+													<h:outputText value="#{c.monto}"/>
+												</p:column>
+												
+												<p:column headerText="Rubro">
+													<h:outputText value="#{c.idRubro}"/>
+												</p:column>
+											</p:dataTable>
+										</b:column>
+									</b:row>
+									
+								</b:panel>	
+					
+								<b:panel title="" collapsible="false" look="#{varMB.DANGER}" id="panelResumen">
+								<b:row>
+									<b:column col-xs="2">
+										Resumen
+									</b:column>
+									<b:column col-xs="6">
+										<b:container>
+											<b:row>
+												<b:column col-xs="2">
+													Total :
+												</b:column>
+												<b:column col-xs="6">
+													<h:outputText value="#{cargaCategoriaMB.list.size()}" id="totalItem"/>
+												</b:column>
+											</b:row>
+											<br/>
+											<b:row>
+												<b:column col-xs="2">
+													Monto total:
+												</b:column>
+												<b:column col-xs="6">
+													<h:outputText value="#{cargaCategoriaMB.montoTotal}" id="montoTotal" styleClass="resume"/>
+												</b:column>
+											</b:row>
+											  <p:growl id="messages" showDetail="true"/>	
+											 <p:messages escape="false"  autoUpdate="true"  for="cats"/>
+											<br/>
+											<br/>
+										</b:container>
+									</b:column>
+									<b:column col-xs="2">
+										<b:row>
+											Opciones
+										</b:row>
+										<b:row>
+											<p:commandLink id="saveBtnCat" action="#{cargaCategoriaMB.save}" disabled="#{!cargaCategoriaMB.ok}">
+												<b:iconAwesome value="save" solid="true" size="2x"/>
+											</p:commandLink>
+										</b:row>
+									</b:column>
+								</b:row>
+								<b:row>	
+									
+									
+								</b:row>
+								</b:panel>	
+							
+							
+						
+									
+						
+					
+					</b:container>
+				</b:panel>
+			</p:dialog>
+		</h:form>
+		
+		
+</ui:composition>

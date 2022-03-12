@@ -1,0 +1,57 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+	<h:form id="#{organigramViewMB.formOrganigrama}">
+	<p:dialog widgetVar="#{organigramViewMB.wgtOrganigrama}" id="idOrgPresupuesto" width="900" height="500">
+	
+       
+		<b:container fluid="true">
+		<b:row>
+			<b:column col-xs="12">
+				<p:organigram  id="organigram"
+                      widgetVar="organigram"
+                      value="#{organigramViewMB.rootNode}"
+                      var="node"
+                       leafNodeConnectorHeight="#{organigramView.leafNodeConnectorHeight}"
+                      autoScrollToSelection="#{organigramView.autoScrollToSelection}"
+                      zoom="#{organigramView.zoom}"
+                    style="width:1000px"
+                  
+                      
+                    >
+				
+				  <p:organigramNode>
+               		 <h:outputText value="#{node.data}"/>
+           			
+           		 </p:organigramNode>
+
+            <p:organigramNode type="root"
+                              style="border-radius: 10px;">
+                <h:outputText value="#{node.data}"/>
+            </p:organigramNode>
+
+            <p:organigramNode type="division"
+                              styleClass="division"
+                               skipLeafHandling="true"
+                             >
+                             <h:outputText value="#{node.data}"/>
+                             
+                             
+                          
+                
+            </p:organigramNode>
+				
+				</p:organigram>
+				</b:column>
+			</b:row>	
+		</b:container>
+		
+	</p:dialog>
+	</h:form>
+</ui:composition>

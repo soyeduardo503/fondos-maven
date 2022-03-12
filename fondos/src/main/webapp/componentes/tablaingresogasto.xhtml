@@ -1,0 +1,40 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    >
+           <h:form id="IDFrmTableDetail">
+           		<p:inputText id="filtro" value="#{presupuestoViewMB.filtro}" >
+           			
+           		</p:inputText>
+           		<p:commandButton value="filtrar" action="#{presupuestoViewMB.actualizarNodo()}" update="IDTTDetalles"></p:commandButton>
+           		
+				<p:treeTable id="IDTTDetalles"  style="width:100%;" value="#{presupuestoViewMB.nodo}" resizableColumns="true" emptyMessage="Presupuesto sin detalle"  var="c">
+					<f:facet name="header"><p:outputLabel value="#{presupuestoViewMB.presupuesto.nombrePresupuesto}"/> </f:facet>
+					<p:column headerText="Categoria" style="width:30%;">
+						<p:outputLabel value="#{c.getNombre()}"/>
+					</p:column>
+					<p:column headerText="Monto">
+						<p:outputLabel value="#{c.getTotal()}"/>
+					</p:column>
+					<p:column headerText="Disponible">
+						<p:outputLabel value="#{c.getDisponible()}"/>
+					</p:column>
+					<p:column headerText="Subcategoria">
+						<p:outputLabel value="#{c.getHijos()}"/>
+					</p:column>
+					<p:column headerText="Detalle gastado">
+						<h:outputText  value="Detalle" >
+							
+						</h:outputText>
+					</p:column>
+					<p:column headerText="" width="10" >
+						
+					</p:column>
+					
+				</p:treeTable>
+			</h:form>
+
+</ui:composition>

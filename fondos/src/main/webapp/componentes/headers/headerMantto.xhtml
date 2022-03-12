@@ -1,0 +1,28 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    xmlns:b="http://bootsfaces.net/ui"
+    >
+
+	<div class="titlePage">
+						<b:container fluid="true">
+								<b:row>
+									<b:column col-xs="10">
+										<h2 class="headerPage"><h:outputText value="#{bean.headerPage}"  /></h2>	
+									</b:column>
+									<b:column col-xs="1" styleClass="">
+										<p:commandLink action="#{bean.openNew()}" >
+											<b:row styleClass="btn btn-info">
+												 <b:iconAwesome value="plus" style="color:#fff;" size="1x"/> 
+											</b:row>
+										</p:commandLink>
+									</b:column>
+								</b:row>
+						
+						</b:container>
+						
+					</div>
+</ui:composition>

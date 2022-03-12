@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+		
+
+		
+		<p:dialog widgetVar="DlgGasto" header="Ingreso de gasto" width="400"
+			height="50" closable="true" closeOnEscape="true" id="IDGasto">
+				<h:outputText value="Categoria no cuenta con fondos" />			
+		</p:dialog>
+		<p:dialog widgetVar="DlgRequired" header="Ingreso de gasto" width="400"
+			height="50" closable="true" closeOnEscape="true" id="IDRequired">
+				<h:outputText value="#{ingresoGastoMB.mensaje}" />			
+		</p:dialog>
+		
+</ui:composition>

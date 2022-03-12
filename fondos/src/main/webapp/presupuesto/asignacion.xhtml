@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+		<f:event listener="#{asignacionFondosMB.preRender()}" type="preRenderView"></f:event>
+	  <h:form id="IDFrmTableDetail">
+            <b:panel look="primary" title="Presupuestos" icon="wallet" collapsible="false">
+            	<p:selectOneMenu value="#{asignacionFondosMB.presupuesto}" converter="presupuestoConverter">
+            		<p:ajax event="change" listener="#{asignacionFondosMB.reloadView()}" update="panelPresupuesto"/>
+            		<f:selectItems value="#{asignacionFondosMB.list}" var="p" itemLabel="#{p.nombrePresupuesto}" itemValue="#{p}"/>
+            		
+            	
+            	</p:selectOneMenu>
+            </b:panel>
+           
+           <b:panel look="info" title="Asignacion de fondos para presupuesto" icon="search-dollar" collapsible="false" id="panelPresupuesto">
+           	<b:container>
+           		<b:row>
+           			<b:column col-xs="6">
+           				<b:row styleClass="card-header">
+		           			<b:column col-xs="6">Nombre</b:column>
+		           			<b:column col-xs="6">#{asignacionFondosMB.presupuesto.nombrePresupuesto}</b:column>
+		           			
+		           			
+						</b:row>
+						<b:row styleClass="card-header">
+		           			<b:column col-xs="6">Monto Total</b:column>
+		           			<b:column col-xs="6">#{asignacionFondosMB.presupuesto.total}</b:column>
+		           			
+		           			
+						</b:row>
+						<b:row styleClass="card-header">
+		           			<b:column col-xs="6">Año</b:column>
+		           			<b:column col-xs="6">#{asignacionFondosMB.presupuesto.year}</b:column>
+		           			
+		           			
+						</b:row>
+           			</b:column>
+           		
+           			<b:column col-xs="6">
+           				
+           				<b:row>Asignable</b:row>
+           				<b:row id="disponible">  <h:outputText value="#{asignacionFondosMB.asignable}" converter="moneyConverter" /> </b:row>
+           				<hr />
+           				<b:row>Asignacion de fondos</b:row>
+           				<b:row id="percent">  <b:progressBar styleClass="progress-bar" value="#{asignacionFondosMB.percentAsignable}"  /></b:row>
+           			</b:column>	
+	           		
+				</b:row>
+           	</b:container>
+           	
+			<p:dataTable  value="#{asignacionFondosMB.allCategoria}" var="a" rowStyleClass="#{asignacionFondosMB.styleCell(a.codigo)}" id="detalleAsignacionFondo">
+				<p:column width="120">
+					<f:facet name="header">#</f:facet>
+					<h:outputLabel value="#{a.codigo}" />
+				</p:column>
+				<p:column width="600">
+					<f:facet name="header" >Nombre</f:facet>
+					<h:outputLabel value="#{a.nombre}" />
+				</p:column>
+				<p:column width="40">
+					<f:facet name="header" >%</f:facet>
+					<h:outputLabel value="" />
+				</p:column>
+				<p:column width="120">
+					<f:facet name="header">Monto Asignado</f:facet>
+					<p:inputText value="#{a.monto}">
+						<p:ajax event="click" listener="#{asignacionFondosMB.asignarCodigo(a)}">
+							
+						</p:ajax>
+					</p:inputText>
+					
+				</p:column>
+				<f:facet name="footer">
+					<b:container>
+						
+						<b:row >
+							<b:column col-xs="4">Total:</b:column>
+							<b:column col-xs="4"><h:outputLabel value="#{asignacionFondosMB.allCategoria.size()}" /> </b:column>
+						</b:row>
+					</b:container>
+				</f:facet>
+			</p:dataTable>
+				
+				
+				
+			</b:panel>
+			</h:form>
+
+	
+							
+			
+		<script type="text/javascript">
+function clearFocus() {
+	var t=$( ".ui-widget-content.default" );
+	
+	[].forEach.call(t, function(el) {
+		console.log(el);
+	    el.classList.remove("focusRow");
+	    el.classList.remove("focusRowSon");
+	});
+ 
+}
+</script>
+	</ui:define>
+
+</ui:composition>
+</html>

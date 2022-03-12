@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title><ui:insert name="title">Default Title</ui:insert></title>
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/js/script.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/main.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/site.css" />
+	<style type="text/css">
+.ui-growl {
+	right: 20px;
+	top: 20%;
+}
+</style>
+	
+	
+	<ui:define name="script">
+		<script type="text/javascript">
+let spans = document.querySelectorAll('.word span');
+spans.forEach((span, idx) => {
+    span.addEventListener('click', (e) => {
+        e.target.classList.add('active');
+    });
+    span.addEventListener('animationend', (e) => {
+        e.target.classList.remove('active');
+    });
+    
+    // Initial animation
+    setTimeout(() => {
+        span.classList.add('active');
+    }, 750 * (idx+1))
+});
+</script>
+	</ui:define>
+</h:head>
+
+<h:body>
+	<b:panel look="primary" collapsible="false"  id="ppanel" style="min-height:90%; max-height:100%;">
+		<f:facet name="heading">
+			<b:container fluid="true">	
+				<b:row>
+					<b:column col-xs="2" style="font-size:1.6em;">
+					 	<b:iconAwesome value="money" /> Fondos
+					</b:column>
+					
+					<b:column col-xs="9">
+					</b:column>
+					<b:column col-xs="1">
+						<div style="position: relative; float: right; right: 10px;">
+							
+							<ui:include src="/dialog/dialogPresupuestos.xhtml"></ui:include>
+						</div>
+					</b:column>
+				</b:row>
+			</b:container>
+		
+		</f:facet>
+		<b:row>
+			<b:column col-xs="2">
+				<!-- Menu -->
+				
+					 
+			               <ui:include src="/componentes/menu/menu.xhtml"/>
+			         
+				
+			</b:column>
+			<b:column col-xs="10">
+			<!-- center -->
+			
+				
+					<p:messages escape="false" globalOnly="true" autoUpdate="true" />
+					<b:container fluid="true">
+						<ui:insert name="body" />
+					</b:container>
+			</b:column>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+	
+		
+		</b:row>		
+				
+				
+			
+	</b:panel>
+	<b:container fluid="true">
+		<b:column id="footer" >
+			<b:column>
+				<img src="#{request.contextPath}/resources/images/pablotesak.png" />
+			</b:column>
+		</b:column>
+	</b:container>
+	<ui:insert name="dialog" />
+	<p:growl autoUpdate="true" globalOnly="false" />
+	<p:dialog id="idDlgCambiarPassword" header="Cambio de password" widgetVar="DlgPassword" width="250" modal="true">
+			<h:form id="IDFrmPassword">
+				<p:panelGrid columns="2">
+				</p:panelGrid>
+			</h:form>
+	</p:dialog>
+</h:body>
+
+</html>

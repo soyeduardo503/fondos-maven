@@ -1,0 +1,79 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+           <h:form id="IDFrmTableDetail">
+           <b:panel look="info" title="#{presupuestoViewMB.presupuesto.nombrePresupuesto}" icon="search-dollar">
+				<p:treeTable id="IDTreenode" value="#{presupuestoViewMB.nodo}" var="c">
+					<f:facet name="header"> </f:facet>
+					<p:column headerText="Categoria" > 
+						<p:outputLabel value="#{c.getNombre()}"/>
+					</p:column>
+					<p:column headerText="Monto" width="120">
+						<p:outputLabel value="#{c.getTotal()}"/>
+					</p:column>
+					<p:column headerText="Disponible" width="120" >
+						<p:outputLabel rendered="#{ingresoMontoMB.obtenerDisponibleAsignado(c.getCategoria())>0}" value="#{ingresoMontoMB.obtenerDisponibleAsignado(c.getCategoria())}"/>
+					</p:column>
+					<p:column headerText="Subcategoria" width="120">
+						<p:outputLabel value="#{c.getHijos()}"/>
+					</p:column>
+					<p:column headerText="Gastado(%)" width="120">
+						<h:outputText  value="#{c.getPorcentajeDisponible()}" >
+							<f:convertNumber pattern="##" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Asignar" style="width:40px;">
+						<div style="float: left;">
+							<p:commandLink disabled="#{!(ingresoMontoMB.obtenerDisponibleAsignado(c.getCategoria())>0 or (c.getHijos()==0))}" id="link" value="+" update="IDFrmTableDetail:IDDlgIngresoNuevaCategoria" oncomplete="PF('DlgIngresoNuevaCategoria').show();">
+								<f:setPropertyActionListener target="#{ingresoMontoMB.categoria}" value="#{c.getCategoria()}"></f:setPropertyActionListener>
+							</p:commandLink>
+						</div>
+						<div style="float: left;">
+							<p:commandLink disabled="#{!((ingresoMontoMB.obtenerDisponibleAsignado(c.getCategoria())>0) or (c.getHijos()==0))}" id="linkDolar" value="$" update="IDFrmTableDetail:IDDlgIngreso" oncomplete="PF('DlgIngresoMonto').show();">
+								<f:setPropertyActionListener target="#{ingresoMontoMB.categoria}" value="#{c.getCategoria()}"></f:setPropertyActionListener>
+							</p:commandLink>
+						</div>
+					</p:column>
+					<p:column headerText=""  width="10" style="background-color: ##{c.getColorDisponible()};width:10px;">
+						<p:outputLabel value=""/>
+					</p:column>
+					
+				</p:treeTable>
+				
+				<p:dialog id="IDDlgIngreso" widgetVar="DlgIngresoMonto" header="Ingreso Monto">
+					<p:panel>
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Categoria padre"/><p:outputLabel value="#{ingresoMontoMB.nombreCategoria()}"/>
+							<p:outputLabel value="Categoria"/><p:outputLabel value="#{categoriaMB.itemSelected.nombre}"/>
+							<p:outputLabel value="Descripcion"/><p:inputText value="#{categoriaMB.itemSelected.descripcion}"/>
+							<p:outputLabel value="Monto"/> <p:inputText value="#{categoriaMB.itemSelected.monto}"/>
+							<p:commandButton value="Aceptar" icon="ui-icon-check" action="#{categoriaMB.edit()}"/>
+						</p:panelGrid>
+					</p:panel>
+				</p:dialog>
+				
+				<p:dialog id="IDDlgIngresoNuevaCategoria" widgetVar="DlgIngresoNuevaCategoria" header="Ingreso Categoria">
+					<p:panel>
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Categoria"/><p:inputText value="#{categoriaMB.itemSelected.nombre}"/>
+							<p:outputLabel value="Descripcion"/><p:inputText value="#{categoriaMB.itemSelected.descripcion}"/>
+							<p:outputLabel value="Categoria padre"/><p:outputLabel value="#{ingresoMontoMB.nombreCategoria()}"/>
+							<p:outputLabel value="Monto"/> <p:inputText value="#{categoriaMB.itemSelected.monto}"/>
+							
+							<p:commandButton value="Aceptar" icon="ui-icon-check" action="#{categoriaMB.crearCategoria(c.getCategoria())}"/>
+						</p:panelGrid>
+					</p:panel>
+				</p:dialog>
+				<p:confirmDialog header="Alerta" id="IDMessageIngreso" message="#{ingresoMontoMB.mensaje}" 
+				widgetVar="WgtMessageIngreso" >
+					<p:commandButton value="Ok" onclick="PF('IDMessageIngreso').hide();"></p:commandButton>
+				</p:confirmDialog>
+				</b:panel>
+			</h:form>
+
+</ui:composition>

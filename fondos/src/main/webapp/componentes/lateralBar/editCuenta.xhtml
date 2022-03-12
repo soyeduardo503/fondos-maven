@@ -1,0 +1,77 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+	<h:form id="#{cuentaMB.idFormEdit}" >
+		<p:sidebar position="right" id="editObject" widgetVar="#{cuentaMB.dialogEdit}">
+			
+			<b:panel look="primary" title="#{cuentaMB.headerDialog}" collapsible="false"> 
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="5">
+							<b:row>
+							
+									<h:outputText value="Numero" />
+							
+							</b:row>
+							<b:row>
+									<p:inputText value="#{cuentaMB.itemSelected.numero}" size="20" maxlength="50"></p:inputText>
+							</b:row>
+						</b:column>
+						<b:column col-xs="5">
+							<b:row>
+								<h:outputText value="Banco" />
+							</b:row>
+							<b:row>
+								<p:selectOneMenu  value="#{cuentaMB.itemSelected.idBanco}">
+									<f:selectItems value="#{bancoMB.list}" var="b" itemLabel="#{b.nombre}" itemValue="#{b.idBanco}"/>
+								</p:selectOneMenu>
+							
+							
+							</b:row>
+							
+						</b:column>
+					</b:row>
+				
+				
+					<b:row>
+						<b:column col-xs="12">
+							<b:row>
+								<h:outputText value="Activo" />
+							</b:row>
+							<b:row>
+								<p:selectOneMenu value="#{cuentaMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+								</p:selectOneMenu>
+							</b:row>
+														
+						</b:column>
+					</b:row>
+					<hr />
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarEdit.xhtml">
+									<ui:param name="mb" 		value="#{cuentaMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{cuentaMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{cuentaMB.dialogEdit}"></ui:param>
+						</ui:include>
+					</b:row>
+					
+				</b:container>
+				
+			
+			</b:panel>
+			
+		</p:sidebar>
+	</h:form>
+</ui:composition>

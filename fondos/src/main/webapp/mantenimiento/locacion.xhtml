@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+		<div id="wrapper">
+			<div id="main">
+				<div class="inner">
+					<f:event listener="#{locacionMB.preRender()}" type="preRenderView"></f:event>
+					<f:event listener="#{tipoLocacionMB.preRender()}" type="preRenderView"></f:event>
+					<h2><h:outputText value="#{locacionMB.headerPage}" /></h2>
+					<h:form id="#{locacionMB.idFormList}">
+						<p:dataTable value="#{locacionMB.list}" var="i" 
+						 editable="true" editMode="row"
+						rowIndexVar="rowIndex" scrollHeight="250" 
+						id="#{locacionMB.idTable}"	
+						>
+							<f:facet name="header"><h:outputText value="#{locacionMB.headerTable}" /><p:commandLink action="#{locacionMB.updateDialogNew()}" > <img src="/resources/images/plus.jpg" alt="+" height="30" width="30"/> </p:commandLink> </f:facet>
+							<p:ajax event="rowEdit" listener="#{locacionMB.onEditRow}" ></p:ajax>
+							<p:column >
+								<h:outputText value="#{i.idLocacion}" />
+							</p:column>
+							<p:column headerText="Nombre">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{i.nombre}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{i.nombre}" size="20" maxlength="50" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Capacidad(mt2)">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{i.capacidad}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{i.capacidad}" maxlength="5"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column headerText="Descripcion">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{i.descripcion}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{i.descripcion}" size="30" maxlength="200" />
+									</f:facet>
+								</p:cellEditor>
+								
+							</p:column>
+							
+							<p:column headerText="Tipo locacion">
+								<p:cellEditor>
+									<f:facet name="output">
+											<h:outputText value="#{i.idTipoLocacion.nombre}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{i.idTipoLocacion}" style="width:52px;" converter="tipoLocacionConverter">
+															<f:selectItems value="#{tipoLocacionMB.list}"  var="t" itemLabel="#{t.nombre}" itemValue="#{t}"/>
+															
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							
+							</p:column>
+							
+							<p:column headerText="Locacion Padre">
+								<p:cellEditor>
+									<f:facet name="output">
+											<h:outputText value="#{i.idLocacionPadre.nombre}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{i.idLocacionPadre}" style="width:52px;" converter="locacionConverter">
+															<f:selectItems value="#{locacionMB.list}" var="l"  itemLabel="#{l.nombre}" itemValue="#{l}"/>
+															
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							
+							</p:column>
+							
+							
+							<p:column headerText="Activo">
+								<p:cellEditor>
+									<f:facet name="output">
+											<h:outputText value="#{i.act}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{i.act}" style="width:52px;">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							
+							</p:column>
+							<p:column>
+								<p:rowEditor id="IDRowEdit"></p:rowEditor>
+							</p:column>
+							
+						</p:dataTable>
+					</h:form>
+				</div>
+			</div>
+
+		</div>
+		<h:form id="#{locacionMB.idFormNew}">
+			<p:dialog widgetVar="#{locacionMB.wtgDialog}" width="700" height="300" header="Nuevo" id="#{locacionMB.idWtgNew}">
+				<p:panel>
+					<f:facet name="header"><h:outputText value="#{locacionMB.headerDialog}" /> </f:facet>
+					<p:panelGrid columns="2">
+						<h:outputText value="Nombre" /><p:inputText value="#{locacionMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
+						<h:outputText value="Descripcion" /><p:inputText value="#{locacionMB.itemSelected.descripcion}" size="50" maxlength="200"></p:inputText>
+						<h:outputText value="Capacidad" /><p:inputText value="#{locacionMB.itemSelected.capacidad}" size="5" maxlength="5"></p:inputText>
+						<h:outputText value="Tipo Locacion" /><p:selectOneMenu value="#{locacionMB.itemSelected.idTipoLocacion}"  converter="tipoLocacionConverter">
+																<f:selectItems value="#{tipoLocacionMB.list}"  var="t" itemLabel="#{t.nombre}" itemValue="#{t}"/>
+																
+															</p:selectOneMenu>
+						<h:outputText value="Principal" /><p:selectBooleanButton value="#{locacionMB.locacionPrincipal}" onLabel="Principal" offLabel="Secundario">
+															
+														</p:selectBooleanButton>
+						<h:outputText value="Locacion Padre" />	<p:selectOneMenu value="#{locacionMB.itemSelected.idLocacionPadre}" converter="locacionConverter" disabled="#{locacionMB.locacionPrincipal}">
+															<f:selectItem itemLabel="" itemValue=""/>
+															<f:selectItems value="#{locacionMB.list}" var="l"  itemLabel="#{l.nombre}" itemValue="#{l}"/>
+															</p:selectOneMenu>								
+						<h:outputText value="Activo" /><p:selectOneMenu value="#{locacionMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+															</p:selectOneMenu>
+					<p:commandButton action="#{locacionMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
+					<p:commandButton action="#{locacionMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
+					</p:panelGrid>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

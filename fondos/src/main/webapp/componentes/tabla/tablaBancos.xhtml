@@ -1,0 +1,53 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+                      
+                      <p:dataTable value="#{bancoMB.list}" var="i" 
+						 editable="true" editMode="row"
+						rowIndexVar="rowIndex" scrollHeight="250" 
+						id="#{bancoMB.idTable}"	
+						>
+							
+							
+							
+							<p:column headerText="Banco"  width="200">
+								<h:outputText value="#{i.idBanco}" />
+							</p:column>
+							<p:column headerText="Nombre ">
+								<h:outputText value="#{i.nombre}" />
+							</p:column>
+							<p:column headerText="Status" width="75">
+								<h:outputText value="#{i.act}" converter="statusConverter"/>
+							</p:column>
+							
+							
+							
+							
+						
+						
+							<p:column style="padding-left:5px;" headerText="Opciones" width="150">
+							<div  style="float: left;">
+								<b:container fluid="true">
+								<ui:include src="/componentes/botones/eliminar.xhtml">
+									<ui:param name="mb" 		value="#{bancoMB}" />
+									<ui:param name="bean" value="#{i}"></ui:param>
+									<ui:param name="cols" value="1"></ui:param>
+								</ui:include>
+								<ui:include src="/componentes/botones/editar.xhtml">
+									<ui:param name="mb" 		value="#{bancoMB}" />
+									<ui:param name="bean" value="#{i}"></ui:param>
+									<ui:param name="cols" value="1"></ui:param>
+								</ui:include>	
+									
+								</b:container>
+							</div>	
+							</p:column>
+							
+						</p:dataTable>
+         
+</ui:composition>

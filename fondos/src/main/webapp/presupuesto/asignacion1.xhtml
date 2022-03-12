@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+		<f:event listener="#{asignacionFondosMB.preRender()}" type="preRenderView"></f:event>
+	  <h:form id="IDFrmTableDetail">
+           
+           <b:panel look="info" title="Asignacion de fondos para presupuesto" icon="search-dollar" collapsible="false">
+           	<b:container>
+           		<b:row>
+           			<b:column col-xs="6">
+           				<b:row styleClass="card-header">
+		           			<b:column col-xs="6">Nombre</b:column>
+		           			<b:column col-xs="6">#{asignacionFondosMB.presupuesto.nombrePresupuesto}</b:column>
+		           			
+		           			
+						</b:row>
+						<b:row styleClass="card-header">
+		           			<b:column col-xs="6">Monto Total</b:column>
+		           			<b:column col-xs="6">#{asignacionFondosMB.presupuesto.total}</b:column>
+		           			
+		           			
+						</b:row>
+						<b:row styleClass="card-header">
+		           			<b:column col-xs="6">Año</b:column>
+		           			<b:column col-xs="6">#{asignacionFondosMB.presupuesto.year}</b:column>
+		           			
+		           			
+						</b:row>
+           			</b:column>
+           		
+           			<b:column col-xs="6">
+           				
+           				<b:row>Asignable</b:row>
+           				<b:row id="disponible">  <h:outputText value="#{asignacionFondosMB.asignable}" converter="moneyConverter" /> </b:row>
+           				<hr />
+           				<b:row>Asignacion de fondos</b:row>
+           				<b:row id="percent">  <b:progressBar styleClass="progress-bar" value="#{asignacionFondosMB.percentAsignable}"  /></b:row>
+           			</b:column>	
+	           		
+				</b:row>
+           	</b:container>
+           	
+				<p:treeTable id="IDAsignacion" value="#{asignacionFondosMB.nodo}" var="c" expandMode="children"  rowStyleClass="#{asignacionFondosMB.styleCell(c.categoria.codigo)}"  >
+					<f:facet name="header"> </f:facet>
+					 <p:ajax event="expand" listener="#{asignacionFondosMB.selectNode}" update=":IDFrmTableDetail:IDAsignacion" onstart="clearFocus();" />
+					
+					<p:column headerText="Cod" width="150"  > 
+						<p:outputLabel value="#{c.categoria.codigo}" styleClass="idColumnTableFont"/>
+					</p:column>
+					<p:column headerText="Categoria" > 
+						<p:outputLabel value="#{c.nombre}"/>
+					</p:column>
+					<p:column headerText="%" width="100" >
+						<p:outputLabel  value="#{c.getPorcentajeDisponible()}"/>
+					</p:column>
+					<p:column headerText="No Asignado" width="120" >
+						<p:outputLabel  value="0.0"/>
+					</p:column>
+					
+					<p:column headerText="Monto($)" width="120">
+						
+						<p:inputNumber value="#{c.total}" decimalPlaces="2" emptyValue="0">
+							<p:ajax event="change" listener="#{asignacionFondosMB.validar()}"/>
+							<p:ajax event="focus" listener="#{asignacionFondosMB.validar()}"/>
+							
+						</p:inputNumber>
+						
+					</p:column>
+
+					
+					
+					
+					
+					
+				</p:treeTable>
+				
+				
+				
+			</b:panel>
+			</h:form>
+
+	
+							
+			
+		<script type="text/javascript">
+function clearFocus() {
+	var t=$( ".ui-widget-content.default" );
+	
+	[].forEach.call(t, function(el) {
+		console.log(el);
+	    el.classList.remove("focusRow");
+	    el.classList.remove("focusRowSon");
+	});
+ 
+}
+</script>
+	</ui:define>
+
+</ui:composition>
+</html>

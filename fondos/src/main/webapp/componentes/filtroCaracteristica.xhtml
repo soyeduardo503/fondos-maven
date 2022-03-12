@@ -1,0 +1,45 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    >
+
+	
+
+<h:form id="IDfiltros">
+			<p:commandButton value="Filtros" icon="ui-icon-wrench" onclick="PF('DlgFiltro').show();"></p:commandButton>
+				<p:dialog widgetVar="DlgFiltro" header="Filtro de busqueda" closable="true" closeOnEscape="true" width="700" >
+				
+					<p:fieldset legend="Filtrado">
+					<p:selectCheckboxMenu  multiple="true" label="Caracteristicas" id="idfilterC1"  value="#{usuarioSesionMB.filtro.listIdCaracteristicaSelected}" layout="grid" columns="5" panelStyle="width:250px;">
+						<p:ajax  event="change" process="@this" listener="#{filtrosMB.aplicarBusquedaFiltroCaracteristica()}" update=":IDfiltros:idFilterC2"></p:ajax>
+						<f:selectItems value="#{filtrosMB.listCaracteristicas}" var="c" itemLabel="#{c.nombre}" itemValue="#{c.idCaracteristica}"></f:selectItems>
+					</p:selectCheckboxMenu>
+					</p:fieldset>
+					<p:fieldset legend="Caracteristicas">
+					
+					<p:selectManyCheckbox id="idFilterC2"  value="#{usuarioSesionMB.filtro.listIdItemCaracteristicaSelected}" layout="pageDirection"   columns="5" >
+						<f:selectItems value="#{filtrosMB.listItemCaracteristicaFiltrada}" var="ic" itemValue="#{ic.value}" itemLabel="#{ic.label}"/>
+						<p:ajax event="change" update=":IDfiltros:IDSalida"></p:ajax>
+					</p:selectManyCheckbox>
+					</p:fieldset>						
+					
+					<p:panel >
+
+						<p:dataGrid id="IDSalida" value="#{usuarioSesionMB.filtro.listItemcaracteristicasSelected}" var="ic" columns="5" layout="grid" >
+												<f:facet name="header">Filtros seleccionados</f:facet>
+							<p:panel header="#{ic.valor}" >
+								<p:outputLabel value="#{ic.codigo}"/>
+							</p:panel>			
+								
+								
+						</p:dataGrid>
+						
+					</p:panel>
+					<p:commandButton value="Aplicar" ></p:commandButton>
+				</p:dialog>
+</h:form>	       
+
+</ui:composition>

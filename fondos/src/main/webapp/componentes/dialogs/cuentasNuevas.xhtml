@@ -1,0 +1,67 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+		<p:dialog widgetVar="#{cuentaMB.wtgDialog}" width="700" height="350" header="#{cuentaMB.headerDialog}" id="#{cuentaMB.idWtgNew}">
+				<b:panel >
+					<f:facet name="header"><h:outputText value="#{cuentaMB.headerDialog}" /> </f:facet>
+					<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="8"><h:outputText value="Banco" /></b:column>
+						<b:column col-xs="4">Cuenta </b:column>
+					</b:row>
+					<b:row>
+						<b:column col-xs="8">
+							<p:selectOneMenu  value="#{cuentaMB.itemSelected.idBanco}" id="idBancoList">
+								<f:selectItems value="#{bancoMB.list}" var="b"  itemValue="#{b.idBanco}" itemLabel="#{b.nombre}"/>
+							</p:selectOneMenu>
+														
+							
+						</b:column>
+						<b:column col-xs="4">
+									<p:inputText value="#{cuentaMB.itemSelected.numero}" size="20" maxlength="20"/>
+						 </b:column>
+					</b:row>	
+					<b:row>
+						<b:column col-xs="12"><h2>Chequera </h2></b:column>
+					</b:row>
+					<b:row>
+						
+							<b:column col-xs="4">Nombre</b:column>
+							<b:column col-xs="4">Desde</b:column>
+							<b:column col-xs="4">Hasta</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-xs="4"><p:inputText id="Nombre" value="#{cuentaMB.chequera.nombre}" size="20" maxlength="15"></p:inputText></b:column>
+							<b:column col-xs="4"><p:inputText id="desde" value="#{cuentaMB.chequera.desde}" size="20" maxlength="15"></p:inputText></b:column>
+							<b:column col-xs="4"><p:inputText id="hasta" value="#{cuentaMB.chequera.hasta}" size="20" maxlength="15"></p:inputText></b:column>
+						
+					</b:row>
+					
+					
+					
+					
+					<hr/>
+					
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+									<ui:param name="mb" 		value="#{cuentaMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{cuentaMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{cuentaMB.wtgDialog}"></ui:param>
+						</ui:include>
+						
+					</b:row>	
+					</b:container>
+				</b:panel>
+			</p:dialog>
+</ui:composition>

@@ -1,0 +1,37 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+
+	
+
+<h:form id="IDfiltros">
+			
+				<p:dialog widgetVar="DlgPresupuestoDetalle" header="#{presupuestoDetailMB.itemSelected.nombrePresupuesto}" closable="true" closeOnEscape="true" width="900" >
+					<b:panel look="info" collapsible="false" title="Detalle de presupuesto">
+						<b:row>
+							<b:column col-xs="5" styleClass="btn-primary">Ultimos 5 gastos</b:column>
+							<b:column col-xs="1"/>
+							<b:column col-xs="5" styleClass="btn-danger">Principales categorias</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-xs="5" styleClass="btn-primary">
+								<p:dataList value="#{presupuestoMB.}">
+								
+								</p:dataList>
+							</b:column>
+							<b:column col-xs="1"/>
+							<b:column col-xs="5" styleClass="btn-danger">Principales categorias</b:column>
+						</b:row>
+						
+						
+					</b:panel>
+				
+				</p:dialog>
+</h:form>	       
+
+</ui:composition>

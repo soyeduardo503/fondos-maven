@@ -1,0 +1,27 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+	<p:confirmDialog message="Desea eliminar a #{nombreObjeto}?" widgetVar="#{wgtName}" id="#{idName}">
+		<b:container fluid="true">
+				<b:row>
+					<b:column colXs="3" ></b:column>
+					<b:column colXs="3" >
+						<p:commandLink action="#{mb.remove()}"  >
+							<b:iconAwesome value="check-square" solid="true"  styleClass="btn btn-info" />
+						</p:commandLink>
+					</b:column>
+					<b:column colXs="3" >
+						<p:commandLink  onclick="PF('#{wgtName}').hide();">
+							<b:iconAwesome value="window-close"   styleClass="btn btn-danger"  />
+						</p:commandLink>
+					</b:column>
+				</b:row>
+		</b:container>
+	</p:confirmDialog>
+</ui:composition>

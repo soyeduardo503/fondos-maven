@@ -1,0 +1,79 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+<p:sidebar position="right" id="editObject" widgetVar="#{presupuestoMB.dialogEdit}">
+			<h:form id="#{presupuestoMB.idFormNew}">
+			<b:panel look="primary" title="#{presupuestoMB.itemSelected.nombrePresupuesto}" collapsible="false"> 
+				<b:container fluid="true">
+						<b:row>
+							<b:column col-xs="8"><h:outputText value="Nombre" /></b:column>
+							<b:column col-xs="4"><h:outputText value="Codigo" /></b:column>						
+						</b:row>
+						<b:row>
+							<b:column col-xs="8"><p:inputText value="#{presupuestoMB.itemSelected.nombrePresupuesto}"  size="50" maxlength="50" >
+													<p:ajax event="change" listener="#{presupuestoMB.asignarCodigo()}"/>
+												</p:inputText></b:column>
+							<b:column col-xs="4"><h:outputText value="#{presupuestoMB.codTemp}" id="codigo"/></b:column>						
+						</b:row>
+						<b:row>
+							<b:column col-xs="6"><h:outputText value="Monto" /></b:column>
+							<b:column col-xs="6"><h:outputText value="Año" /></b:column>						
+						</b:row>
+						<b:row>
+							<b:column col-xs="6"><p:inputText value="#{presupuestoMB.itemSelected.total}" size="9" maxlength="9"/></b:column>
+							<b:column col-xs="6"><p:spinner value="#{presupuestoMB.itemSelected.year}" required="true" min="2022" max="2040"/></b:column>						
+						</b:row>
+						<b:row>
+							<b:column col-xs="6"><h:outputText value="Fecha inicio" /></b:column>
+							<b:column col-xs="6"><h:outputText value="Fecha fin" /></b:column>						
+						</b:row>
+						<b:row>
+							<b:column col-xs="6"><p:calendar value="#{presupuestoMB.itemSelected.fechaInicio}" pattern="dd/MM/yyyy"/></b:column>
+							<b:column col-xs="6"><p:calendar value="#{presupuestoMB.itemSelected.fechaFin}" pattern="dd/MM/yyyy"/></b:column>						
+						</b:row>
+						
+						<b:row>
+							<b:column col-xs="4"><h:outputText value="Cuentas" /></b:column>
+							<b:column col-xs="4">
+								<p:selectOneMenu value="#{presupuestoMB.itemSelected.idCuenta}">
+									<f:selectItems value="#{listaCuentasMB.list}" var="c" itemLabel="#{c.banco}- #{c.numero}" itemValue="#{c.idCuenta}"/>
+								</p:selectOneMenu>
+							</b:column>						
+						</b:row>	
+						
+					
+					
+					<b:row>
+						<b:column>
+							<b:row>
+							
+							</b:row>
+						</b:column>
+					</b:row>
+				</b:container>
+				<p:panelGrid columns="2">
+														
+						
+						
+						
+						
+						
+						<h:outputText value="Activo" /><p:selectOneMenu value="#{presupuestoMB.itemSelected.act}">
+															<f:selectItem itemLabel="Activo" itemValue="A"/>
+															<f:selectItem itemLabel="Inactivo" itemValue="I"/>
+															<f:selectItem itemLabel="Finalizado" itemValue="F"/>
+															</p:selectOneMenu>
+					<p:commandButton action="#{presupuestoMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
+					<p:commandButton action="#{presupuestoMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
+				</p:panelGrid>
+			
+			</b:panel>
+			</h:form>
+		</p:sidebar>
+</ui:composition>

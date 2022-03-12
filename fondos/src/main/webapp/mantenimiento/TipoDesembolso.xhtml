@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+		
+					<f:event listener="#{tipoDesembolsoMB.preRender()}" type="preRenderView"></f:event>
+					
+					
+					<div class="titlePage">
+						<b:container fluid="true">
+								<b:row>
+									<b:column col-xs="10">
+										<h2 class="headerPage"><h:outputText value="#{tipoDesembolsoMB.headerPage}" /></h2>	
+									</b:column>
+									<b:column col-xs="1" styleClass="">
+										
+									</b:column>
+								</b:row>
+						
+						</b:container>
+						
+					</div>
+					<h:form id="#{tipoDesembolsoMB.idFormList}">
+						<p:dataTable value="#{tipoDesembolsoMB.list}" var="i" 
+						 editable="true" editMode="row"
+						rowIndexVar="rowIndex" scrollHeight="250" 
+						id="#{tipoDesembolsoMB.idTable}"	
+						>
+							
+							
+							<p:column >
+								<h:outputText value="#{i.idTipoDesembolso}" />
+							</p:column>
+							<p:column headerText="Nombre">
+								
+										<h:outputText value="#{i.nombre}" />
+								
+							</p:column>
+							
+							<p:column headerText="Tipo Origen">
+								
+										<h:outputText value="#{i.tipoDesembolso}" converter="origenTipoPago"  />
+								
+							</p:column>
+						
+						
+							
+							
+							
+							
+							<p:column headerText="Activo">
+								
+											<h:outputText value="#{i.act}" />
+								
+							
+							</p:column>
+							<p:column>
+								<p:commandLink styleClass="btn btn-info" actionListener="#{tipoDesembolsoMB.openEdit(i)}"
+								 oncomplete="PF('#{tipoDesembolsoMB.idWtgNew}').show();" update=":#{tipoDesembolsoMB.idFormNew}">
+									<b:iconAwesome value="pencil" />
+									<f:setPropertyActionListener value="#{i}" target="#{tipoDesembolsoMB.itemSelected}" />
+								</p:commandLink>
+								
+							</p:column>
+							
+						</p:dataTable>
+					</h:form>
+				
+		
+			<p:sidebar position="right" id="editObject" widgetVar="#{tipoDesembolsoMB.idWtgNew}">
+				<h:form id="#{tipoDesembolsoMB.idFormNew}">
+					<b:panel look="primary" title="#{tipoDesembolsoMB.itemSelected.nombre}" collapsible="false"> 
+						<b:container fluid="true" >
+							<b:row styleClass="btn-outline-data" >
+								<b:column col-xs="5" >
+									Nombre
+								</b:column>
+								<b:column col-xs="5" >
+									
+											<h:outputText value="#{tipoDesembolsoMB.itemSelected.nombre}" />
+									
+								</b:column>
+							</b:row>
+							<b:row>
+								<hr/>
+							</b:row>
+							<b:row>
+								
+								<b:column col-xs="5" >
+									Tipo origen
+								</b:column>
+								
+								
+								<b:column col-xs="5" >
+									
+											<h:outputText value="#{tipoDesembolsoMB.itemSelected.tipoDesembolso}" converter="origenTipoPago" />
+									
+								</b:column>
+							
+							
+								
+							</b:row>
+							<b:row>
+								<hr/>
+							</b:row>
+							
+							<b:row>	
+								<b:column col-xs="5" >
+									Activo
+								</b:column>
+								
+								<b:column col-xs="5"   >
+										<p:toggleSwitch value="#{tipoDesembolsoMB.stateActive}"  rendered="true" />
+										
+								</b:column>
+							</b:row>
+							<b:row>
+								<hr/>
+							</b:row>
+							<b:row>
+								
+								
+								<b:column col-xs="5" styleClass="btn btn-info" >
+									<p:commandLink action="#{tipoDesembolsoMB.save()}">
+										<b:iconAwesome value="save" solid="true"/> Guardar
+										</p:commandLink>
+										</b:column>
+										
+								<b:column col-xs="5" styleClass="btn btn-danger" ><b:iconAwesome value="window-close"/> cancelar</b:column>
+							</b:row>
+						</b:container>
+					</b:panel>	
+				</h:form>
+			</p:sidebar>
+			
+		
+		
+		<h:form id="#{tipoDesembolsoMB.idFormNew}2">
+			<p:dialog widgetVar="nuevo" width="700" height="300" header="Nuevo" id="#{tipoDesembolsoMB.idWtgNew}">
+				<p:panel>
+					<f:facet name="header"><h:outputText value="#{tipoDesembolsoMB.headerDialog}" /> </f:facet>
+					<p:panelGrid columns="2">
+						<h:outputText value="Nombre" /><p:inputText value="#{tipoDesembolsoMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
+						<h:outputText value="Codigo" /><p:inputText value="#{tipoDesembolsoMB.itemSelected.tipoDesembolso}" size="2" maxlength="2"></p:inputText>
+						<h:outputText value="Activo" /><p:selectOneMenu value="#{tipoDesembolsoMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+															</p:selectOneMenu>
+					<p:commandButton action="#{tipoDesembolsoMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
+					<p:commandButton action="#{tipoDesembolsoMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
+					</p:panelGrid>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

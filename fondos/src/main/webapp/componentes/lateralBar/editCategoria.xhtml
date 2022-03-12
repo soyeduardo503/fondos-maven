@@ -1,0 +1,89 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+<p:sidebar position="right" id="editObject" widgetVar="#{categoriaMB.idWtgNew}">
+			<h:form id="#{categoriaMB.idFormNew}">
+			<b:panel look="primary" title="#{categoriaMB.itemSelected.nombre}" collapsible="false"> 
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="5">
+							<b:row>
+							
+									<h:outputText value="Nombre" />
+							
+							</b:row>
+							<b:row>
+									<p:inputText value="#{categoriaMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
+							</b:row>
+						</b:column>
+						<b:column col-xs="5">
+							<b:row>
+								<h:outputText value="Codigo" />
+							</b:row>
+							<b:row><h:outputText  value="#{categoriaMB.itemSelected.codigo}" id="codigo" />
+							
+							</b:row>
+							
+						</b:column>
+					</b:row>
+				
+					<b:row>
+						<b:column>
+							<b:row>
+							
+									<h:outputText value="Categoria Padre" />
+							
+							</b:row>
+							<b:row>
+									<p:selectOneMenu value="#{categoriaMB.itemSelected.idCategoriaPadre}" converter="categoriaConverter" disabled="#{categoriaMB.itemSelected.idCategoriaPadre==null}" >
+																<f:selectItem itemLabel="" itemValue=""/>
+																	<p:ajax process="@this" event="change" listener="#{categoriaMB.asignarCodigo()}" />
+																<f:selectItems value="#{categoriaMB.list}" var="l"  itemLabel="#{l.nombre}" itemValue="#{l}"/>
+									</p:selectOneMenu>
+							</b:row>
+						</b:column>
+						<b:column>
+							<b:row>
+								<h:outputText value="Descripcion" />
+							</b:row>
+							<b:row>
+								<b:inputTextarea  value="#{categoriaMB.itemSelected.descripcion}" maxlength="200" rows="3" size="100"/>
+								
+								
+								
+							</b:row>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column>
+							<b:row>
+							
+							</b:row>
+						</b:column>
+					</b:row>
+				</b:container>
+				<p:panelGrid columns="2">
+														
+						
+						
+						
+						<h:outputText value="Nombre a mostrar" /><p:inputText value="#{categoriaMB.itemSelected.nombrePantalla}" size="15" maxlength="30"></p:inputText>
+						
+						<h:outputText value="Activo" /><p:selectOneMenu value="#{categoriaMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+															</p:selectOneMenu>
+					<p:commandButton action="#{categoriaMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
+					<p:commandButton action="#{categoriaMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
+				</p:panelGrid>
+			
+			</b:panel>
+			</h:form>
+		</p:sidebar>
+</ui:composition>
