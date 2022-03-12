@@ -21,7 +21,7 @@ public class HibernateUtil {
     		Log.info(fileContext.getAbsolutePath());
     		Log.info("Exist ->"+fileContext.exists());
     		if(!fileContext.exists())
-    			fileContext=new File("/opt/epsilon/db/hibernate.cfg.epsilon.xml");
+    			fileContext=new File("/opt/epsilon/db/hibernate.cfg.epsilon.fondos.xml");
 			return    new Configuration().configure(fileContext).buildSessionFactory();
     		//return new Configuration().configure().buildSessionFactory();
     			

@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
+
 import javax.persistence.TypedQuery;
 
 import sv.com.epsilon.entities.Categoria;
@@ -207,9 +209,9 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
 		getSession();
 		try {
 			String sql="Select ROUND( i.monto-i.actual,2) From Categoria i " +
-	    			" Where i.idCategoria=:cat " ;
+	    			" Where i.codigo=:cat " ;
 	    			
-	    	 Query q = session.createQuery(sql).setParameter("cat", Integer.parseInt(cod));
+	    	 Query q = session.createQuery(sql).setParameter("cat", cod);
 	    	 
 			 return new BigDecimal((Double)q.uniqueResult());
 		}finally {
@@ -234,5 +236,48 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
 		
 	}
 
+	public List<Categoria> findAllChildrenSelectableActive() {
+	  	getSession();
+    	try {
+	    	
+	    	   Transaction tx = session.beginTransaction();
+	    	  Query tr =session.createQuery("Select p from Categoria p where p.act='A' and p.monto=0 ").setCacheMode(null);
+	         //Query t = session.getNamedQuery(qName).setParameter("act", "A");
+	    	    
+	    	  
+	        
+	        List<Categoria> list= (List<Categoria>)tr.list();
+	        tx.commit();
+	        session.evict(list);
+	        list.forEach( t->{Log.info(t.getNombre()+" ->"+t.getMonto()+" "+t.getCodigo());});
+	        
+	        return list;
+    	}finally {
+    		close();
+    	}
+	}
+
+	public void updateMontoDisponible(Double monto, String codigoPadre) {
+		
+		getSession();
+    	try {
+	    	
+    		System.out.println("Actualizando monto de "+codigoPadre+" en "+monto);
+	    	   Transaction tx = session.beginTransaction();
+	    	   Query q=session.createQuery("update Categoria set actual=(actual+ :monto ) where codigo=:codigoPadre");
+	         //Query t = session.getNamedQuery(qName).setParameter("act", "A");
+	    	    q.setParameter("monto", monto);
+	    	    q.setParameter("codigoPadre", codigoPadre);
+	    	  Integer r=q.executeUpdate();
+	        System.out.println(r);
+	        
+	        tx.commit();
+	        
+	        
+	        
+    	}finally {
+    		close();
+    	}
+	}
     
 }

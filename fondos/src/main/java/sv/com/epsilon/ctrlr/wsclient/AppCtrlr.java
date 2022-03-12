@@ -3,13 +3,8 @@
  */
 package sv.com.epsilon.ctrlr.wsclient;
 
-import com.google.gson.Gson;
-
 import sv.com.epsilon.ctrlr.session.UserSessionToken;
-import sv.com.epsilon.entities.Menu;
-import sv.com.epsilon.entities.SessionActive;
 import sv.com.epsilon.session.pojo.ContextRolRWS;
-import sv.com.epsilon.session.pojo.MenuRWS;
 import sv.com.epsilon.session.pojo.NavAuthorityResponse;
 import sv.com.epsilon.session.pojo.PageAuthorityRWS;
 import sv.com.epsilon.session.pojo.SessionActiveRequest;
@@ -78,14 +73,7 @@ public class AppCtrlr {
 		return resp;
 	}
 	
-	public Menu searchMenuUser(Integer idRol,String context,String token) throws Exception {
-		String endpoint =  "/menu/find";
-		
-		MenuRWS param=new MenuRWS(context,idRol);
-		Menu resp= (Menu) new WSClientCtrlr().sendRequest(param, endpoint,Menu.class,token);//, ParametroResWS.class);
-		System.out.println(new Gson().toJson(resp));
-		return resp;
-	}
+	
 
 	public SessionActiveResponse findSessionActive(String token,String mac) throws Exception {
 		String endpoint="/context/token/mac";

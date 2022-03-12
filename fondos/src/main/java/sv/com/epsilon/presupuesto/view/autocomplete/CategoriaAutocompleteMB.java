@@ -1,7 +1,7 @@
 package sv.com.epsilon.presupuesto.view.autocomplete;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -12,8 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import sv.com.epsilon.entities.Categoria;
-import sv.com.epsilon.entities.Presupuesto;
-import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 
@@ -34,27 +33,31 @@ public class CategoriaAutocompleteMB {
 	
 	public void preRender(){
 		if(!FacesContext.getCurrentInstance().isPostback()){
-			List<Presupuesto> presupuestos=new PresupuestoFacade().findAllSongActive();
-			for(Presupuesto presupuesto: presupuestos){
-				String cod=new StringBuilder(presupuesto.getNombrePresupuesto()).toString();
-				for(Categoria c:presupuesto.getCategoriaList()){
-						categoriaAplicable(c,cod,presupuesto,presupuesto.getYear());
+			List<Categoria> categorias=new CategoriaFacade().findAllChildrenSelectableActive();
+			//for(Presupuesto presupuesto: presupuestos){
+//				String cod=new StringBuilder(presupuesto.getNombrePresupuesto()).toString();
+				for(Categoria c:categorias){
+					if(c.getMonto()==0)
+						categoriaAplicable(c);
 						
 				}
-			}
+			
 		}
 	}
 	
-	private void categoriaAplicable(Categoria c,String cod,Presupuesto p,String year) {
-		if(c.getCategoriaList().isEmpty()){
-			cod=c.getIdCategoria()+"-"+cod+"-"+c.getNombre();
-			categoriasCod.put(cod, new CategoriaGasto(c, 0.0,p,year));
-		}else{
-			for(Categoria cat:c.getCategoriaList()){
-				
-				categoriaAplicable(cat,cod+"-"+c.getNombre(),p,year);
-			}
-		}
+	private void categoriaAplicable(Categoria c) {
+		//if(c.getCategoriaList().isEmpty()){
+			String cods=c.getCodigo()+"-"+c.getNombre();
+			CategoriaGasto gasto=new CategoriaGasto();
+			gasto.setYear(String.valueOf( Calendar.getInstance().get(Calendar.YEAR)));
+			gasto.setCategoria(c);
+			categoriasCod.put(cods, gasto);
+//		}else{
+//			for(Categoria cat:c.getCategoriaList()){
+//				
+//				categoriaAplicable(cat,cod+"-"+c.getNombre(),p,year);
+//			}
+//		}
 	}
 
 	public List<String> obtenerListaCuentas(String txt){
@@ -62,7 +65,7 @@ public class CategoriaAutocompleteMB {
 			list=new ArrayList<String>();
 			 Set<String> listTemp = categoriasCod.keySet();
 			for(String c: listTemp){
-				if(c.contains(txt)){
+				if(c.toUpperCase().contains(txt.toUpperCase())){
 					list.add(c);
 				}
 			}

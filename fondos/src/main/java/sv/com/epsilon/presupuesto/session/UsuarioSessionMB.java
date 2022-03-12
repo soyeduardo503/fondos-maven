@@ -97,7 +97,7 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	
 	{
 		presupuestoSelected=new PresupuestoFacade().findById(1);
-		this.addValue("context","eMoney");
+		this.addValue("context","fondos");
 	}
 	
 	

@@ -3,8 +3,6 @@
  */
 package sv.com.epsilon.test;
 
-import org.junit.Test;
-
 import sv.com.epsilon.facade.CategoriaFacade;
 
 /**
@@ -13,7 +11,7 @@ import sv.com.epsilon.facade.CategoriaFacade;
  */
 public class MyTest {
 
-	@Test
+	//@Test
 	public void test() {
 			System.out.println(new CategoriaFacade().findAll());
 	}

@@ -19,9 +19,9 @@
 					
 					<f:event listener="#{tipoDesembolsoMB.preRender()}" type="preRenderView"></f:event>
 					<f:event listener="#{categoriaAutocompleteMB.preRender()}" type="preRenderView"></f:event>
+					<f:event listener="#{proveedoresMB.preRender()}" type="preRenderView"></f:event>
 					
-					
-						<h:form id="IDFormGasto">
+						<h:form id="#{ingresoGastoMB.form}">
 					<p:growl id="msg"></p:growl>
 					<b:panel look="danger" title="Pantalla de ingreso de gastos" icon-awesome="arrow-up" collapsible="false">
 					
@@ -43,27 +43,51 @@
 					<b:column col-xs="1">
 						<p:outputLabel value="Detalle"/>
 					</b:column>
-					<b:column col-xs="8" colspan="3">
+					<b:column col-xs="6" colspan="3">
 						<p:inputTextarea  value="#{ingresoGastoMB.gasto.descripcion}" cols="112" rows="5"/>
 					</b:column>
+					<b:column col-xs="2">
+						<b:row>
+							<b:column col-xs="10" colspan="1">
+								<p:outputLabel value="fecha registro"/>
+							</b:column>
+								<b:column col-xs="3" colspan="1">
+								<p:outputLabel value="#{ingresoGastoMB.gasto.fecha}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</p:outputLabel>
+							</b:column>
+						</b:row>
+					</b:column>
+					<b:column col-xs="3">
+					
+						<b:row>
+									
+									<b:column col-xs="10" colspan="1">
+										<p:outputLabel value="Fecha de movimiento"/>
+									</b:column>
+										<b:column col-xs="3" colspan="1">
+										<p:calendar value="#{ingresoGastoMB.movimiento.fecha}" mask="true" pattern="dd/MM/yyyy"/>
+									</b:column>		
+						</b:row>
+						
+						
+					</b:column>
 				</b:row>
-				
+				<b:row>
+					<b:column col-xs="1">
+						<p:outputLabel value="Proveedor"/>
+					</b:column>
+					<b:column col-xs="6" colspan="3">
+						<p:selectOneMenu  value="#{ingresoGastoMB.gasto.idProveedor}" converter="proveedorConverter">
+							<f:selectItem itemLabel="" itemValue="" />
+							<f:selectItems value="#{proveedoresMB.list}" var="p" itemValue="#{p}" itemLabel="#{p.nombre}" />	
+						</p:selectOneMenu>
+					</b:column>
+				</b:row>
 				<b:row>
 					
-						<b:column col-xs="1" colspan="1">
-						<p:outputLabel value="Fecha de movimiento"/>
-					</b:column>
-						<b:column col-xs="3" colspan="1">
-						<p:calendar value="#{ingresoGastoMB.movimiento.fecha}" mask="true" pattern="dd/MM/yyyy"/>
-					</b:column>
-					<b:column col-xs="1" colspan="1">
-						<p:outputLabel value="fecha registro"/>
-					</b:column>
-						<b:column col-xs="3" colspan="1">
-						<p:outputLabel value="#{ingresoGastoMB.movimiento.fechaRegistro}">
-							<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-						</p:outputLabel>
-					</b:column>
+					
+					
 				</b:row>
 				<b:row>
 					<p:spacer/>
@@ -83,24 +107,31 @@
 										<b:column col-xs="4" colspan="1">
 											<p:selectOneMenu
 												value="#{ingresoGastoMB.gasto.idTipoDesembolso}"
-												converter="tipoDesembolsoConverter">
-												
+												converter="tipoDesembolsoConverter" >
+												<f:selectItem itemValue="" itemLabel="" noSelectionOption="true"/>
 												<f:selectItems value="#{tipoDesembolsoMB.list}" var="td"
 													itemLabel="#{td.nombre}" itemValue="#{td}"></f:selectItems>
+													<p:ajax event="change" update=":#{ingresoGastoMB.form}:noCheque" listener="#{ingresoGastoMB.actualizarCheque(ingresoGastoMB.gasto.idTipoDesembolso)}" />
 											</p:selectOneMenu>
 										</b:column>
+										
 									</b:row>
 
 									<b:row>
-								<b:column col-xs="2" colspan="1">
-								<p:outputLabel value="Cuenta"/>
-							</b:column>
-							<b:column col-xs="2" colspan="1">
-								<p:autoComplete value="#{ingresoGastoMB.movimiento.cuenta}" completeMethod="#{cuentasMB.obtenerListaCuentas}"/>
-							</b:column>
+							
+							
 						</b:row>
 					</b:column>
-					<b:column col-xs="7">
+						<b:column col-xs="3" colspan="1">
+											<p:outputLabel value="No. Cheque/Recibo/Transferencia" />
+										</b:column>
+										<b:column col-xs="2" colspan="1">
+											
+												<p:inputText value="#{ingresoGastoMB.gasto.cheque}" id="noCheque" />
+										</b:column>
+				</b:row>
+				<b:row>
+						<b:column col-xs="7">
 							<b:row>
 								<b:column col-xs="2" >
 									<p:outputLabel value="Archivos relacionados"/>
@@ -113,16 +144,9 @@
 			
 							</b:row>		
 					</b:column>
-					
+			
 				</b:row>
-				<b:row>	
-					<b:column col-xs="3" colspan="1">
-						<p:outputLabel value="Recibo"/>
-					</b:column>
-						<b:column col-xs="3" colspan="1">
-								<h:outputText  value="#{ingresoGastoMB.gasto.reciboList}"/>
-						</b:column>
-				</b:row>
+				
 				
 				<b:row >
 					<b:column col-xs="3" colspan="8" styleClass="ui-widget-header">
@@ -143,12 +167,10 @@
 					
 					
 				</b:column>
-				<b:column col-xs="3">
-					<p:inputNumber decimalPlaces="2" value=""/>
-				</b:column>
-								<b:column col-xs="1">
+				
+								<b:column col-xs="3">
 									<p:commandLink id="addCategoriaGasto" 	action="#{ingresoGastoMB.addCategoria()}">
-										<b:iconAwesome solid="true" value="plus-circle" />
+										<b:iconAwesome solid="true" value="plus-circle" style="font-size:2em;" />
 
 									</p:commandLink>
 
@@ -161,9 +183,7 @@
 				<b:panel look="danger" title="Distribucion #{ingresoGastoMB.movimiento.monto}" id="idOrgienCategorias" icon-awesome="money" collapsible="false">
 					<p:dataTable value="#{ingresoGastoMB.list}" var="g" >
 						
-						<p:column headerText="Presupuesto">
-							<h:outputText value="#{g.presupuesto.nombrePresupuesto}" />
-						</p:column>
+						
 						<p:column headerText="Categoria">
 							<h:outputText value="#{g.categoria.nombre}" />
 						</p:column>
@@ -171,7 +191,9 @@
 							<h:outputText value="#{g.disponible}" />
 						</p:column>
 						<p:column headerText="$">
-							<h:outputText value="#{g.monto}" />
+							<p:inputText value="#{g.monto}" >
+								<p:ajax event="keyup" listener="#{ingresoGastoMB.recalcularTotal()}" update=":IDFormGasto:totalMovimiento"/>
+							</p:inputText>
 						</p:column>
 						<p:column headerText="">
 							<b:commandLink  action="#{ingresoGastoMB.removeCategoriaGasto(g)}"  styleClass="btn btn-outline-danger" >
@@ -185,28 +207,35 @@
 				
 				</b:panel>
 				
-				<b:column col-xs="2" >
-						<p:outputLabel value="Monto"/>
+				<b:column col-xs="6" >
+						<b:panel styleClass="panel-danger">
+								<b:row>
+									<b:column col-xs="6" styleClass="panel-danger" >Monto Total</b:column>
+									<b:column col-xs="6"><h:outputText id="totalMovimiento"  value="#{ingresoGastoMB.gasto.total}"/> </b:column>
+								</b:row>
+							</b:panel>
 			</b:column>
 						<b:column col-xs="1" >
-						<p:inputText value="#{ingresoGastoMB.movimiento.monto}" required="true">
-							<p:ajax event="keyup" process="@this" update="idOrgienCategorias"/>
-						</p:inputText>
+							
+						
+							
+							
+						
 			</b:column>
 			<br/>
 			<br/>
 			<br/>
 			<f:facet name="footer">
-					<p:commandLink  onclick="PF('sidebar1').show()">
+					
 						<b:container fluid="true">
 							<b:row >
 								<b:column col-xs="3"/>
-								<b:column col-xs="2" styleClass="btn btn-info" ><b:iconAwesome value="save" solid="true"/> Guardar</b:column>
+								<b:column col-xs="2" styleClass="btn btn-info" ><p:commandLink  actionListener="#{ingresoGastoMB.save()}"> <b:iconAwesome value="save" solid="true" /> Guardar</p:commandLink></b:column>
 								<b:column col-xs="2" styleClass="btn btn-success" ><h:commandLink action="#{ingresoGastoMB.print()}" style="color: #fff;" target="_blank" ><b:iconAwesome value="file-pdf" solid="true"/> Print</h:commandLink></b:column>
 								<b:column col-xs="2" styleClass="btn btn-danger" ><b:iconAwesome value="window-close"/> cancelar</b:column>
 							</b:row>
 						</b:container>
-					</p:commandLink>
+					
 				</f:facet>
 			</p:panel>
 					

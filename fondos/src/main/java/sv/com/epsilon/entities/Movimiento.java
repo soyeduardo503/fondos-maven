@@ -63,9 +63,7 @@ public class Movimiento implements Serializable {
     private Integer idUsuario;
     @Column(name = "Cuenta")
     private String cuenta;
-    @JoinColumn(name = "idPresupuesto", referencedColumnName = "idPresupuesto")
-    @ManyToOne
-    private Presupuesto idPresupuesto;
+    
     @JoinColumn(name = "idGasto", referencedColumnName = "idGasto")
     @ManyToOne
     private Gasto idGasto;
@@ -148,13 +146,7 @@ public class Movimiento implements Serializable {
         this.cuenta = cuenta;
     }
 
-    public Presupuesto getIdPresupuesto() {
-        return idPresupuesto;
-    }
-
-    public void setIdPresupuesto(Presupuesto idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
-    }
+    
 
 
     public Gasto getIdGasto() {
@@ -172,8 +164,18 @@ public class Movimiento implements Serializable {
     public void setIdFinanciamiento(Financiamiento idFinanciamiento) {
         this.idFinanciamiento = idFinanciamiento;
     }
+    
+    
 
-    @Override
+    public Categoria getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(Categoria idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idMovimiento != null ? idMovimiento.hashCode() : 0);

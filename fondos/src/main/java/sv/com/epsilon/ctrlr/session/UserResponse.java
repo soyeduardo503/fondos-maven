@@ -12,7 +12,7 @@ import java.util.concurrent.TimeoutException;
 
 
 
-import sv.com.epsilon.entities.UserRols;
+
 import sv.com.epsilon.response.Response;
 
 /**
@@ -32,7 +32,7 @@ public class UserResponse implements Response,Serializable{
 	private String token;
 	private String look;
 	private String lang;
-	private List<UserRols> listRol;
+	
 	
 	
 	public String getStatus() {
@@ -59,9 +59,7 @@ public class UserResponse implements Response,Serializable{
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public List<UserRols> getListRol() {
-		return listRol;
-	}
+	
 	
 	
 	public String getLook() {
@@ -75,9 +73,6 @@ public class UserResponse implements Response,Serializable{
 	}
 	public void setLang(String lang) {
 		this.lang = lang;
-	}
-	public void setListRol(List<UserRols> listRol) {
-		this.listRol = listRol;
 	}
 	
 	

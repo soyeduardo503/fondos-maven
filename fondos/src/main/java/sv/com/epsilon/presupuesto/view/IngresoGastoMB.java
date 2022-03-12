@@ -26,16 +26,23 @@ import org.primefaces.event.FileUploadEvent;
 
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Movimiento;
+import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
+import sv.com.epsilon.facade.ChequeraFacade;
+import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
+import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.presupuesto.view.autocomplete.CategoriaAutocompleteMB;
 import sv.com.epsilon.report.documentos.RptShow;
 import sv.com.epsilon.report.pojo.Cheque;
 import sv.com.epsilon.report.pojo.Documento;
+import sv.com.epsilon.util.Constantes.TipoPago;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
+import sv.com.epsilon.util.MessageGrowlContext;
 import sv.com.epsilon.util.NumberToLetter;
+import sv.com.epsilon.util.Util;
 
 /**
  * @author usuario07
@@ -50,7 +57,7 @@ public class IngresoGastoMB implements Serializable {
 	 */
 	private static final long serialVersionUID = -4005321057957924342L;
 
-	@ManagedProperty(value="#{sesionMB}")
+	@ManagedProperty(value="#{usuarioSessionMB}")
 	private UsuarioSessionMB sesionMB;
 	
 	@ManagedProperty(value="#{categoriaAutocompleteMB}")
@@ -62,7 +69,12 @@ public class IngresoGastoMB implements Serializable {
 	private CategoriaGasto detalle=new CategoriaGasto();
 	private String categoriaTxt="";
 	private String mensaje;
+	private boolean showCheque;
+	private boolean showTransferencia;
+	private boolean showRecibo;
+	private String form="IDFormGasto";
 	
+	BigDecimal monto=new BigDecimal(0);
 	{
 		movimiento.setMonto(0.0);
 	}
@@ -98,6 +110,12 @@ public class IngresoGastoMB implements Serializable {
 	}
 	
 	
+	public String getForm() {
+		return form;
+	}
+	public void setForm(String form) {
+		this.form = form;
+	}
 	
 	public CategoriaGasto getDetalle() {
 		return detalle;
@@ -107,12 +125,13 @@ public class IngresoGastoMB implements Serializable {
 	}
 	
 	
+	
 	public void addCategoria(){
-		categoriaTxt=detalle.getTxtCategoria();
+		//categoriaTxt=detalle.getTxtCategoria();
 		if(!"".equals(categoriaTxt)){
-			String[] cods=categoriaTxt.split("-");
+			//String[] cods=categoriaTxt.split("-");
 			CategoriaGasto cg=this.categoriaAutocompleteMB.obtenerCategoria(this.categoriaTxt);
-			BigDecimal disponible=new CategoriaFacade().getMontoDisponible(cods[0]);
+			BigDecimal disponible=new CategoriaFacade().getMontoDisponible(CodigoCtrlr.getCodigoPadre( cg.getCategoria().getCodigo()));
 		//CategoriaGasto cg=new CategoriaGasto(c, new Double(this.movimiento.getMonto()));
 		try {
 			if(disponible.doubleValue()<=0) {
@@ -131,9 +150,7 @@ public class IngresoGastoMB implements Serializable {
 			}
 			Double montoAplicable=this.movimiento.getMonto();
 			if(cg!=null ){
-				if(list.size()>0) {
-					montoAplicable= montoProrroteado().doubleValue();
-				}
+				
 				Log.info("Disponible :"+disponible.doubleValue());
 				
 				Log.info("Mov:"+this.movimiento.getMonto());
@@ -157,6 +174,39 @@ public class IngresoGastoMB implements Serializable {
 		}
 	}
 	
+	public void recalcularTotal() {
+		recalcularMonto();
+		
+	}
+	
+	public void actualizarCheque(Tipodesembolso idTipoDesembolso) {
+		this.gasto.setCheque("");
+		showCheque=false;
+		showRecibo=false;
+		showTransferencia=false;
+		ChequeraFacade facade = new ChequeraFacade();
+		facade.setIdEmpresa(sesionMB.getIdEmpresa());
+		facade.setToken(sesionMB.getToken());
+		switch (idTipoDesembolso.getIdTipoDesembolso()) {
+		case 1: 
+			showCheque=true;			
+			gasto.setCheque( facade.findCurrentValue().toString());
+			break;
+		case 2:			
+			showTransferencia=true;
+			
+			break;
+		case 3: 
+			
+			showRecibo=true;
+			
+			
+			break;	
+		default:
+			break;
+		}
+	}
+	
 	private boolean foundCategoria(CategoriaGasto cg) {
 		for(int i=0;i<list.size();i++) {
 			if(cg.getCategoria().getIdCategoria()==list.get(i).getCategoria().getIdCategoria())
@@ -169,27 +219,23 @@ public class IngresoGastoMB implements Serializable {
 		recalcularMonto();
 		new ExecuteForm().update(":IDFormGasto:idOrgienCategorias");
 	}
-	private BigDecimal montoProrroteado() {
-		return new BigDecimal(movimiento.getMonto()).divide(new BigDecimal(list.size()), 2, BigDecimal.ROUND_HALF_UP);
-		
-	}
 	
+	
+	
+
 	private void recalcularMonto() {
 		if(list.size()<1)
 			return ;
-		BigDecimal montoAplicable=new BigDecimal(movimiento.getMonto()).divide(new BigDecimal(list.size()), 2, BigDecimal.ROUND_HALF_UP);
-		BigDecimal monto=new BigDecimal(movimiento.getMonto()).setScale(2,BigDecimal.ROUND_HALF_UP) ;
-		int i=0;
-		while(i!=list.size()){
-			if(i<list.size()-1) {
-				list.get(i).setMonto(montoAplicable.doubleValue());
-				monto=monto.subtract(montoAplicable).setScale(2,BigDecimal.ROUND_HALF_UP) ;
-			}
-			else {
-				list.get(i).setMonto(monto.doubleValue());
-			}
-			i++;
-		}
+		monto=new BigDecimal(0).setScale(2,BigDecimal.ROUND_HALF_UP) ;
+		
+		
+			
+		list.forEach(gasto->{		
+				monto=Util.addAndRound2(monto, new BigDecimal(gasto.getMonto()));
+		});
+		
+		gasto.setTotal(monto.doubleValue());
+		
 		
 	}
 	public void upload(FileUploadEvent event) {
@@ -197,6 +243,7 @@ public class IngresoGastoMB implements Serializable {
 			copyFile(event.getFile().getFileName(), event.getFile().getInputStream());
 			FacesMessage message = new FacesMessage("El archivo se ha subido con éxito!");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			//copyFile(categoriaTxt, null);
 		} catch (IOException e) {
 			Log.error(e,"Error en carga de archivo");
 		}
@@ -232,14 +279,17 @@ public class IngresoGastoMB implements Serializable {
 			Documento doc=new Documento();
 			doc.setExt("PDF");
 			doc.setNombre("Cheque FPT");
-			doc.setPath("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper");
+			if(new File("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper").exists())
+				doc.setPath("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper");
+			else
+				doc.setPath("/opt/epsilon/reporte/cheque.jasper");
 			Cheque cheque=new Cheque();
-			String cantidadLetras=new NumberToLetter().Convertir(String.valueOf(movimiento.getMonto()),true, true, true);
-			cheque.setCantidad(movimiento.getMonto());
+			String cantidadLetras=new NumberToLetter().Convertir(String.valueOf(gasto.getTotal()),true, true, true);
+			cheque.setCantidad(gasto.getTotal());
 
 			cheque.setCantidadLetras(cantidadLetras);
 			cheque.setConcepto(this.gasto.getNombre());
-			cheque.setProveedor("Proveedor XYZ");
+			cheque.setProveedor(gasto.getIdProveedor().getNombreLegal());
 			new RptShow().callReport(doc, cheque);
 		}
 		
@@ -268,6 +318,38 @@ public class IngresoGastoMB implements Serializable {
 		public void setMensaje(String mensaje) {
 			this.mensaje = mensaje;
 		}
+		
+		
+		public void save() {
+			try {
+				gasto.setMovimientoList(createMovimientos());
+				GastoCtrlr.save(gasto);
+				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1)
+					print();
+			} catch (Exception e) {
+				new MessageGrowlContext().sendError("Error guardando informacion: "+e.getMessage(), e.getMessage(), e);
+			}
+		}
+		
+		public List<Movimiento> createMovimientos(){
+			List<Movimiento> mvts=new ArrayList<>();
+			this.list.forEach(temp->{
+				Movimiento mov=new Movimiento();
+				mov.setIdCategoria(		temp.getCategoria());
+				mov.setFecha(gasto.getFecha());
+				mov.setTipo("D");//debito
+				mov.setMonto(temp.getMonto());
+				mov.setFechaRegistro(new Date());
+				mov.setCuenta("99999");
+				mov.setIdUsuario(this.sesionMB.getIdUser());
+				mvts.add(mov);
+				//mov.setIdGasto(gasto)
+				
+			});
+			return mvts;
+		}
+		
+		
 
 		
 	

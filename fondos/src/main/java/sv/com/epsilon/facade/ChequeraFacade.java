@@ -41,5 +41,21 @@ public class ChequeraFacade extends AbstractFacade<Chequera> {
     	}
 		
 	}
+
+	public Integer findCurrentValue() {
+		getSession();
+    	try {
+	    	String sql="Select c From Chequera c" +
+	    			" Where  c.act ='A' " ;
+	    	Query q=session.createQuery(sql);
+	    	List<Chequera> list=(List<Chequera>)q.list();
+	    	if(list!=null)
+	    		list.forEach(cs->Log.info(cs.getCorrelativo()+"-"+cs.getNombre()+" - "+cs.getDesde()+" - "+cs.getHasta()+" - "+cs.getIdCuenta()));
+	    	return  list.get(0).getCorrelativo();
+    	}finally {
+    		close();
+    	}
+		
+	}
     
 }

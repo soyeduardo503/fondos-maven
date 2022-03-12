@@ -44,5 +44,33 @@ public class Constantes {
 		mensual.add("01" + mespref + Util.mesActual() + Util.anioActual());
 		return mensual;
 	}
+	
+	public enum TipoPago{
+		
+		CHEQUE(1,"CHEQUE"),
+		EFECTIVO(2,"EFECTIVO"),
+		TRANSFERENCIA(3,"TRANSFERENCIA");
+		private Integer codigo;
+		private String nombre;
+		private TipoPago(Integer codigo, String nombre) {
+			this.codigo = codigo;
+			this.nombre = nombre;
+		}
+		public Integer getCodigo() {
+			return codigo;
+		}
+		public void setCodigo(Integer codigo) {
+			this.codigo = codigo;
+		}
+		public String getNombre() {
+			return nombre;
+		}
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+		
+		
+		
+	}
 
 }

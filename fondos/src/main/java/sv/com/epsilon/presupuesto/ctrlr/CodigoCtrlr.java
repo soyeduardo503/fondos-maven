@@ -31,10 +31,10 @@ public class CodigoCtrlr {
 		return "ABC";
 	}
 	
-	public static String codParent(String cod) {
-		if(cod.length()>5) {
-			return cod.substring(0, cod.length()-2);
-		}
-		return cod.substring(0,3);
+	public static String getCodigoPadre(String codigo) {
+		return codigo.length()>5?codigo.substring(0, codigo.length()-2):codigo.substring(0, 5);
 	}
+public static void main(String[] args) {
+	System.out.println(new CodigoCtrlr().getCodigoPadre("22FPT0101"));
+}
 }

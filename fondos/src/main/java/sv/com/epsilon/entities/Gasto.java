@@ -63,6 +63,10 @@ public class Gasto implements Serializable {
     private String act;
     @Column(name = "Codigo")
     private String codigo;
+    @Column(name = "cheque")
+    private String cheque;
+    @Column(name = "total")
+    private Double total;
     
     @Column(name = "idEmpresa")
     private String idEmpresa;
@@ -75,12 +79,16 @@ public class Gasto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGasto")
     private List<Imagen> imagenList;
     
-    @OneToMany(mappedBy = "idGasto")
+    @OneToMany(mappedBy = "idGasto",cascade = CascadeType.ALL)
     private List<Movimiento> movimientoList;
     
     @JoinColumn(name = "idTipoDesembolso", referencedColumnName = "idTipoDesembolso")
     @ManyToOne(optional = false)
     private Tipodesembolso idTipoDesembolso;
+    
+    @JoinColumn(name = "idProveedor", referencedColumnName = "idProveedor")
+    @ManyToOne(optional = true)
+    private Proveedor idProveedor;
 
     public Gasto() {
     }
@@ -89,7 +97,23 @@ public class Gasto implements Serializable {
 
    
 
-    public String getIdEmpresa() {
+    public Double getTotal() {
+		return total;
+	}
+
+
+
+
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+
+
+
+
+	public String getIdEmpresa() {
 		return idEmpresa;
 	}
 
@@ -172,7 +196,23 @@ public class Gasto implements Serializable {
 
   
 
-    @XmlTransient
+    public String getCheque() {
+		return cheque;
+	}
+
+
+
+
+
+	public void setCheque(String cheque) {
+		this.cheque = cheque;
+	}
+
+
+
+
+
+	@XmlTransient
     public List<Recibo> getReciboList() {
         return reciboList;
     }
@@ -200,8 +240,25 @@ public class Gasto implements Serializable {
     }
 
 
+    
    
-    public Tipodesembolso getIdTipoDesembolso() {
+    public Proveedor getIdProveedor() {
+		return idProveedor;
+	}
+
+
+
+
+
+	public void setIdProveedor(Proveedor idProveedor) {
+		this.idProveedor = idProveedor;
+	}
+
+
+
+
+
+	public Tipodesembolso getIdTipoDesembolso() {
 		return idTipoDesembolso;
 	}
 
