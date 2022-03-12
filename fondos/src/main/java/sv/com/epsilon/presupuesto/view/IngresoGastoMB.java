@@ -31,6 +31,7 @@ import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
+import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.presupuesto.view.autocomplete.CategoriaAutocompleteMB;
@@ -322,8 +323,9 @@ public class IngresoGastoMB implements Serializable {
 		
 		public void save() {
 			try {
-				gasto.setMovimientoList(createMovimientos());
+			//	gasto.setMovimientoList(createMovimientos());
 				GastoCtrlr.save(gasto);
+				createMovimientos();
 				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1)
 					print();
 			} catch (Exception e) {
@@ -342,7 +344,8 @@ public class IngresoGastoMB implements Serializable {
 				mov.setFechaRegistro(new Date());
 				mov.setCuenta("99999");
 				mov.setIdUsuario(this.sesionMB.getIdUser());
-				mvts.add(mov);
+				MovimientoCtrlr.save(mov);
+				//mvts.add(mov);
 				//mov.setIdGasto(gasto)
 				
 			});

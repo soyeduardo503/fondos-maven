@@ -21,8 +21,8 @@ public class GastoCtrlr {
 		gasto.setIdEmpresa("1");
 		if(gasto.getCheque()==null)
 			throw new Exception("Requiere numero cheque/transferencia/recibo");
-		if(gasto.getMovimientoList()==null||gasto.getMovimientoList().size()==0)
-			throw new Exception("Agregar al menos un detalle del gasto");
+//		if(gasto.getMovimientoList()==null||gasto.getMovimientoList().size()==0)
+//			throw new Exception("Agregar al menos un detalle del gasto");
 		if(gasto.getIdProveedor()==null)
 			throw new Exception("Proveedor no asignado");
 		if(gasto.getIdTipoDesembolso()==null)
@@ -37,12 +37,11 @@ public class GastoCtrlr {
 		
 		GastoFacade facade=new GastoFacade();
 		facade.persis(gasto);
-		MovimientoFacade movimientoFacade=new MovimientoFacade();
-		gasto.getMovimientoList().forEach(mov->{
+//		MovimientoFacade movimientoFacade=new MovimientoFacade();
+	
 			
-			new CategoriaFacade().updateMontoDisponible(mov.getMonto(),CodigoCtrlr.getCodigoPadre(
-					mov.getIdCategoria().getCodigo()));
-		});
+			
+	
 		
 	}
 	

@@ -261,12 +261,13 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
 		
 		getSession();
     	try {
-	    	
+	    	Categoria cat = obtenerCategoriasFromCodigo(codigoPadre);
     		System.out.println("Actualizando monto de "+codigoPadre+" en "+monto);
 	    	   Transaction tx = session.beginTransaction();
-	    	   Query q=session.createQuery("update Categoria set actual=(actual+ :monto ) where codigo=:codigoPadre");
+	    	   Double montoActualizado=monto+cat.getActual();
+	    	   Query q=session.createQuery("update Categoria set actual= :montoActualizado  where codigo=:codigoPadre");
 	         //Query t = session.getNamedQuery(qName).setParameter("act", "A");
-	    	    q.setParameter("monto", monto);
+	    	    q.setParameter("montoActualizado", montoActualizado);
 	    	    q.setParameter("codigoPadre", codigoPadre);
 	    	  Integer r=q.executeUpdate();
 	        System.out.println(r);
@@ -279,5 +280,17 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
     		close();
     	}
 	}
-    
+	public Categoria obtenerCategoriasFromCodigo(String cod){
+    	getSession();
+    	try {
+	    	String sql="Select i From Categoria i" +
+	    			" Where  i.codigo = :cod" +
+	    			" ";
+	    	Query q=session.createQuery(sql).setParameter("cod",cod);
+	    	List<Categoria> list=(List<Categoria>)q.list();
+	    	return list.size()>0?list.get(0):new Categoria();
+    	}finally {
+    		close();
+    	}
+    }
 }
