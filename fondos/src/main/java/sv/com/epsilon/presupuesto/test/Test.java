@@ -18,7 +18,7 @@ public class Test {
     
 	public static void main(String[] args) throws Exception {
 	
-		System.out.println(new CodigoCtrlr().codParent("FPT01"));
+		System.out.println(new CodigoCtrlr().getCodigoPadre("FPT01"));
 	}
 //		{	String nombrePresupuesto="FUNDACION PABLO TESAK";
 //		String cod="";

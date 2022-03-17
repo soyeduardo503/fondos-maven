@@ -23,43 +23,27 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "chequera")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Chequera.findAll", query = "SELECT c FROM Chequera c Where c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Chequera.findByAct", query = "SELECT c FROM Cuenta c where c.act=:act and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Chequera.findByName", query = "SELECT c FROM Chequera c WHERE c.nombre like :nombre and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Chequera.findByIdCuenta", query = "SELECT c FROM Chequera c WHERE c.idCuenta = :idCuenta"),
-   })
+
 public class Chequera implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idChequera")
+
     private Integer idChequera;
-    @Basic(optional = false)
-    @Column(name = "correlativo")
+
     private Integer correlativo;
-    @Basic(optional = false)
-    @Column(name = "act")
+
     private String act;
-    @Basic(optional = false)
-    @Column(name = "nombre")
+
     private String nombre;
-    @Basic(optional = false)
-    @Column(name = "idCuenta")
+
     private Integer idCuenta;
     
-    @Basic(optional = false)
-    @Column(name = "desde")
+
     private Integer desde;
-    @Basic(optional = false)
-    @Column(name = "hasta")
+
     private Integer hasta;
-    @Column(name = "idEmpresa")
+
     private Integer idEmpresa;
 
     public Chequera() {

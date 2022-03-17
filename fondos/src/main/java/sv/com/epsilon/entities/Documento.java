@@ -30,44 +30,26 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "documento", schema = "epsilon")
-@XmlRootElement
-@Cacheable(false)
-@NamedQueries({
-	@NamedQuery(name = "Documento.findAll", query = "SELECT c FROM Documento c Where c.idEmpresa=:idEmpresa"),
-	@NamedQuery(name = "Documento.findByAct", query = "SELECT c FROM Documento c where c.act=:act and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Documento.findByName", query = "SELECT c FROM Documento c WHERE c.nombre=:nombre and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Documento.findByCod", query = "SELECT c FROM Documento c WHERE c.codDocumento = :cod and c.idEmpresa=:idEmpresa")})
+
 public class Documento implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idDocumento")
+
     private Integer idDocumento;
-    @Basic(optional = false)
-    @Column(name = "Nombre")
+
     private String nombre;
-    @Basic(optional = false)
-    @Column(name = "Descripcion")
+
     private String descripcion;
-    @Basic(optional = false)
-    @Column(name = "CodDocumento")
+
     private String codDocumento;
-    @Basic(optional = false)
-    @Column(name = "Extension")
+
     private String extension;
-    @Basic(optional = false)
-    @Column(name = "URL")
+
     private String url;
-    @Basic(optional = false)
-    @Column(name = "Act")
+
     private String act;
    
-    @Basic(optional = false)
-    @Column(name = "idEmpresa")
+
     private Integer idEmpresa;
 
     public Documento() {

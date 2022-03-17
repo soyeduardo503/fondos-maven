@@ -23,35 +23,22 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "cuenta")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Cuenta.findAll", query = "SELECT c FROM Cuenta c WHERE c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Cuenta.findByAct", query = "SELECT c FROM Cuenta c where c.act=:act and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Cuenta.findByIdCuenta", query = "SELECT c FROM Cuenta c WHERE c.idCuenta = :idCuenta "),
-    @NamedQuery(name = "Cuenta.findByNumero", query = "SELECT c FROM Cuenta c WHERE c.numero = :numero and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Cuenta.findByName", query = "SELECT c FROM Cuenta c WHERE c.numero = :nombre and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Cuenta.findByIdBanco", query = "SELECT c FROM Cuenta c WHERE c.idBanco = :idBanco and c.idEmpresa=:idEmpresa")})
+
 public class Cuenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idCuenta")
+
+
     private Integer idCuenta;
-    @Basic(optional = false)
-    @Column(name = "Numero")
+
+
     private String numero;
-    @Basic(optional = false)
-    @Column(name = "idBanco")
+
     private Integer idBanco;
-    @Basic(optional = false)
-    @Column(name = "act")
+
     private String act;
 
-    @Column(name = "idEmpresa")
+
     private Integer idEmpresa;
 
     public Cuenta() {

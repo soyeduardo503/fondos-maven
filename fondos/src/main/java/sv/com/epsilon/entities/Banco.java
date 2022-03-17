@@ -24,35 +24,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "Banco")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Banco.findAll", query = "SELECT c FROM Banco c WHERE c.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Banco.findByAct", query = "SELECT c FROM Banco c where c.act=:act and c.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Banco.findByIdBanco", query = "SELECT c FROM Banco c WHERE c.idBanco = :idBanco and c.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Banco.findByName", query = "SELECT c FROM Banco c WHERE c.nombre = :name and c.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Banco.findByIdEmpresa", query = "SELECT c FROM Banco c WHERE c.idEmpresa = :idEmpresa")}
-    )
+
 public class Banco implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idBanco")
+    
+    
     private Integer idBanco;
-    @Basic(optional = false)
-    @Column(name = "nombre")
+    
     private String nombre;
     
-    @Basic(optional = false)
-    @Column(name = "act")
+    
     private String act;
     
     
     
-    @Column(name = "idEmpresa")
+    
     private Integer idEmpresa;
 
     public Banco() {

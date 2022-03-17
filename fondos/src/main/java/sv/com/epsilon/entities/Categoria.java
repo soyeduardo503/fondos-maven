@@ -32,60 +32,35 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "categoria")
-@XmlRootElement
-@Cacheable(false)
-@NamedQueries({
-    @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
-    @NamedQuery(name = "Categoria.findByIdCategoria", query = "SELECT c FROM Categoria c WHERE c.idCategoria = :idCategoria"),
-    @NamedQuery(name = "Categoria.findByNombre", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Categoria.findByName", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre "),
-    @NamedQuery(name = "Categoria.findByDescripcion", query = "SELECT c FROM Categoria c WHERE c.descripcion = :descripcion"),
-    @NamedQuery(name = "Categoria.findByCodigo", query = "SELECT c FROM Categoria c WHERE c.codigo = :codigo"),
-    @NamedQuery(name = "Categoria.findByMonto", query = "SELECT c FROM Categoria c WHERE c.monto = :monto"),
-    @NamedQuery(name = "Categoria.findByAct", query = "SELECT c FROM Categoria c WHERE c.act = :act"),
-    @NamedQuery(name = "Categoria.findByActual", query = "SELECT c FROM Categoria c WHERE c.actual = :actual")})
+
 public class Categoria  implements Serializable, Comparable<Categoria> {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idCategoria")
+
     private Integer idCategoria;
-    @Basic(optional = false)
-    @Column(name = "Nombre")
+
     private String nombre;
-    @Basic(optional = false)
-    @Column(name = "Descripcion")
+
     private String descripcion;
     
-    @Basic(optional = false)
-    @Column(name = "Codigo")
+
     private String codigo;
-    @Basic(optional = false)
-    @Column(name = "Monto")
+
     private double monto;
-    @Basic(optional = false)
-    @Column(name = "Act")
+
     private String act;
-    @Basic(optional = false)
-    @Column(name = "idEmpresa")
+
     private Integer idEmpresa;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Actual")
+
     private Double actual;
-    @Column(name = "nombrePantalla")
+
     private String nombrePantalla;
-    @JoinColumn(name = "idPresupuesto", referencedColumnName = "idPresupuesto")
-    @ManyToOne(optional = true)
+
     private Presupuesto idPresupuesto;
-    @OneToMany(mappedBy = "idCategoriaPadre", cascade=CascadeType.PERSIST)
+
     private List<Categoria> categoriaList;
-    @JoinColumn(name = "idCategoriaPadre", referencedColumnName = "idCategoria" , nullable=true)
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+
     private Categoria idCategoriaPadre;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
 //    private List<Gasto> gastoList;
@@ -93,12 +68,11 @@ public class Categoria  implements Serializable, Comparable<Categoria> {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGasto")
 //    private List<Imagen> imagenList;
     
-    @OneToMany(mappedBy = "idCategoria")
+
     private List<Movimiento> movimientoList;
     
     
-    @Basic(optional = false)
-    @Column(name = "idRubro")
+
     private Integer idRubro ;
     
     public Categoria() {
