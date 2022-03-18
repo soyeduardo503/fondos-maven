@@ -200,34 +200,25 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 
 	public List<Categoria> findBiggest5Gastos(Presupuesto p) {
-		getSession();
-		try {
-			String sql=" from categoria c where c.idPresupuesto==:p order by monto  " ;
-	    			
-	    	 Query q = session.createQuery(sql).setParameter("p", p);
-	    	 
-	    	 
-	    	 List<Categoria> l= q.list();
-			 l.forEach(c->Log.info(c.getNombre()+" "+c.getMonto()));
-			 return l;
-		}finally {
-			close();
-		}
+		return getList("/categoria/top5/"+p.getIdPresupuesto());
+//		getSession();
+//		try {
+//			String sql=" from categoria c where c.idPresupuesto==:p order by monto  " ;
+//	    			
+//	    	 Query q = session.createQuery(sql).setParameter("p", p);
+//	    	 
+//	    	 
+//	    	 List<Categoria> l= q.list();
+//			 l.forEach(c->Log.info(c.getNombre()+" "+c.getMonto()));
+//			 return l;
+//		}finally {
+//			close();
+//		}
 		
 	}
 
 	public BigDecimal getMontoDisponible(String cod) {
-		getSession();
-		try {
-			String sql="Select ROUND( i.monto-i.actual,2) From Categoria i " +
-	    			" Where i.codigo=:cat " ;
-	    			
-	    	 Query q = session.createQuery(sql).setParameter("cat", cod);
-	    	 
-			 return new BigDecimal((Double)q.uniqueResult());
-		}finally {
-			close();
-		}
+		return count(cat.getIdCategoria(), "/categoria/count/children");
 	}
 
 	public void saveList(List<Categoria> principales, Categoria padre) {

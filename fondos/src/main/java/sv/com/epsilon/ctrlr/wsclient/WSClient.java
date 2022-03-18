@@ -1,5 +1,6 @@
 package sv.com.epsilon.ctrlr.wsclient;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +70,7 @@ public class WSClient<T> {
 	}
 	
 	public List<T> findAll(){
-		return this.getAll();
+		return getAll();
 	}
 	
 	public Integer count(int id,String endpoint) {
@@ -80,12 +81,20 @@ public class WSClient<T> {
 		return Integer.valueOf(String.valueOf( object.getValue()));
 	}
 	
-	public List<T> getAct()  throws Exception {
+	public BigDecimal mount(int id,String endpoint) {
+		RestTemplate restTemplate = new RestTemplate();
+		NumberResponse object =  restTemplate.getForObject(url(endpoint+"/"+id),NumberResponse.class);
+		if(object.getCod()!=0)
+			return new BigDecimal(0);
+		return new BigDecimal(String.valueOf( object.getValue()));
+	}
+	
+	public List<T> getAct()  {
 		return getList("/act/");
 		
 	}
 	
-	public List<T> getAll()  throws Exception {
+	public List<T> getAll()   {
 		return getList("/all/");
 	}
 	public T getById(int id) throws Exception{
