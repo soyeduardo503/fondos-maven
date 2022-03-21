@@ -7,6 +7,7 @@ package sv.com.epsilon.facade;
 
 import java.util.List;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Presupuesto;
 
@@ -15,7 +16,7 @@ import sv.com.epsilon.entities.Presupuesto;
  * @author Zeta
  */
 
-public class GastoFacade extends AbstractFacade<Gasto> {
+public class GastoFacade extends WSClient<Gasto> {
 
    
 

@@ -5,6 +5,7 @@
  */
 package sv.com.epsilon.facade;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Imagen;
 
 /**
@@ -12,7 +13,7 @@ import sv.com.epsilon.entities.Imagen;
  * @author Zeta
  */
 
-public class ImagenFacade extends AbstractFacade<Imagen> {
+public class ImagenFacade extends WSClient<Imagen> {
 
    
 

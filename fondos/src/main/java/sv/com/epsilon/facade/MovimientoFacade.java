@@ -5,6 +5,7 @@
  */
 package sv.com.epsilon.facade;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Movimiento;
 
 /**
@@ -12,7 +13,7 @@ import sv.com.epsilon.entities.Movimiento;
  * @author Zeta
  */
 
-public class MovimientoFacade extends AbstractFacade<Movimiento> {
+public class MovimientoFacade extends WSClient<Movimiento> {
 
 
     public MovimientoFacade() {

@@ -61,7 +61,7 @@ public abstract class AbstractFacade<T> {
 	protected  void getSession() {
 		 try {
 			//session.createQuery("SELECT SYSDATE()");
-			 session=HibernateUtil.getSessionFactory().openSession();
+		//	 session=HibernateUtil.getSessionFactory().openSession();
 			// Log.info(session);
 			 Log.info("---------------------------------------");
 //    		 if(session!=null&&session.isOpen()&&session.isConnected()) {
@@ -73,7 +73,7 @@ public abstract class AbstractFacade<T> {
 //    			 session = HibernateUtil.getSessionFactory().getCurrentSession();
     	    } catch (Exception ex) {
     	        ex.printStackTrace();
-    	    	session = HibernateUtil.getSessionFactory().openSession();
+    	  //  	session = HibernateUtil.getSessionFactory().openSession();
     	        
     	    }
         //return session;

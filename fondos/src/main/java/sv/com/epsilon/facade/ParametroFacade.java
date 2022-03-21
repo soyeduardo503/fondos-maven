@@ -17,7 +17,7 @@ import sv.com.epsilon.entities.Parametro;
  * @author Karina
  */
 
-public class ParametroFacade extends AbstractFacade<Parametro> {
+public class ParametroFacade extends WSClient<Parametro> {
 
 //    Session session = HibernateUtil.getSessionFactory().openSession();
 //    
