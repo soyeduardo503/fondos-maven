@@ -7,6 +7,7 @@ package sv.com.epsilon.facade;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -14,6 +15,7 @@ import org.hibernate.Transaction;
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
+import sv.com.epsilon.presupuesto.pojo.MontoUpdateRequest;
 import sv.com.epsilon.util.Log;
 
 /**
@@ -122,8 +124,12 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		//return 0;
 	}
 
-	public void findListSubCategoria(Categoria cat) throws Exception {
-		obtenerCategoriasFromCategoriasPadre(cat);
+	public void findListSubCategoria(Categoria cat)  {
+		try {
+			obtenerCategoriasFromCategoriasPadre(cat);
+		} catch (Exception e) {
+			Log.info("Could be find children");
+		}
 //		getSession();
 //		try {
 //			String sql="Select i From Categoria i " +
@@ -218,81 +224,49 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 
 	public BigDecimal getMontoDisponible(String cod) {
-		return count(cat.getIdCategoria(), "/categoria/count/children");
+		return mount( "/categoria/mount/"+cod);
 	}
 
 	public void saveList(List<Categoria> principales, Categoria padre) {
-		getSession();
-		try {
+	
+
 			
 			principales.forEach(
-					cat->{if(padre!=null)
-						cat.setIdCategoriaPadre(padre); 
-					this.persis(cat);
-					if(cat.getCategoriaList().size()>0) 
-						this.saveList(cat.getCategoriaList(), cat); });
-			
-		}finally {
-			close();
-		}
+						cat->{if(padre!=null)
+							cat.setIdCategoriaPadre(padre); 
+						try {
+							this.save(cat);
+							if(cat.getCategoriaList().size()>0) 
+								this.saveList(cat.getCategoriaList(), cat); 
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+				});					
+	
+		
 		
 	}
 
 	public List<Categoria> findAllChildrenSelectableActive() {
-	  	getSession();
-    	try {
-	    	
-	    	   Transaction tx = session.beginTransaction();
-	    	  Query tr =session.createQuery("Select p from Categoria p where p.act='A' and p.monto=0 ").setCacheMode(null);
-	         //Query t = session.getNamedQuery(qName).setParameter("act", "A");
-	    	    
-	    	  
-	        
-	        List<Categoria> list= (List<Categoria>)tr.list();
-	        tx.commit();
-	        session.evict(list);
-	        list.forEach( t->{Log.info(t.getNombre()+" ->"+t.getMonto()+" "+t.getCodigo());});
-	        
-	        return list;
-    	}finally {
-    		close();
-    	}
+	  return list("/categoria/count/children/act");
 	}
 
 	public void updateMontoDisponible(Double monto, String codigoPadre) {
 		
-		getSession();
-    	try {
-	    	Categoria cat = obtenerCategoriasFromCodigo(codigoPadre);
-    		System.out.println("Actualizando monto de "+codigoPadre+" en "+monto);
-	    	   Transaction tx = session.beginTransaction();
-	    	   Double montoActualizado=monto+cat.getActual();
-	    	   Query q=session.createQuery("update Categoria set actual= :montoActualizado  where codigo=:codigoPadre");
-	         //Query t = session.getNamedQuery(qName).setParameter("act", "A");
-	    	    q.setParameter("montoActualizado", montoActualizado);
-	    	    q.setParameter("codigoPadre", codigoPadre);
-	    	  Integer r=q.executeUpdate();
-	        System.out.println(r);
-	        
-	        tx.commit();
-	        
-	        
-	        
-    	}finally {
-    		close();
-    	}
+		try {
+			update(new MontoUpdateRequest(codigoPadre, monto),"/categoria/disponible");
+		} catch (Exception e) {
+			Log.error(e, "Error al update ");
+		}
 	}
 	public Categoria obtenerCategoriasFromCodigo(String cod){
-    	getSession();
-    	try {
-	    	String sql="Select i From Categoria i" +
-	    			" Where  i.codigo = :cod" +
-	    			" ";
-	    	Query q=session.createQuery(sql).setParameter("cod",cod);
-	    	List<Categoria> list=(List<Categoria>)q.list();
-	    	return list.size()>0?list.get(0):new Categoria();
-    	}finally {
-    		close();
-    	}
+    	Optional<Categoria> c= find("/categoria/codigo/"+cod);
+    	return c.isPresent()?c.get():new Categoria();
     }
+
+	
+	public void close() {
+		
+	}
+	
 }

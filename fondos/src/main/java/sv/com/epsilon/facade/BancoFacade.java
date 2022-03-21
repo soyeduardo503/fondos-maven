@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Banco;
 
 /**
@@ -17,7 +18,7 @@ import sv.com.epsilon.entities.Banco;
  * @author Zeta
  */
 
-public class BancoFacade extends AbstractFacade<Banco> {
+public class BancoFacade extends WSClient<Banco> {
 
 
     public BancoFacade() {
@@ -32,18 +33,19 @@ public class BancoFacade extends AbstractFacade<Banco> {
     }
 
 	public List<Banco> findAllByEmpresa(Integer value) {
-		getSession();
-		try {
-			String query="SELECT c FROM Banco c WHERE c.idEmpresa = :idEmpresa";
-			if(value==null) {
-				return this.findAll();
-			}
-			
-			Query t = session.createQuery(query).setParameter("idEmpresa", value);
-			return t.list();
-		}finally {
-			close();
-		}
+		return getAct();
+//		getSession();
+//		try {
+//			String query="SELECT c FROM Banco c WHERE c.idEmpresa = :idEmpresa";
+//			if(value==null) {
+//				return this.findAll();
+//			}
+//			
+//			Query t = session.createQuery(query).setParameter("idEmpresa", value);
+//			return t.list();
+//		}finally {
+//			close();
+//		}
 	}
     
 }

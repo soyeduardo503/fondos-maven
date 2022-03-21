@@ -40,6 +40,56 @@ public class WSClient<T> {
 			object=(T) resp.get();
 	}
 	
+	public boolean update(Object object,String endpoint) throws Exception {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<?> request = new HttpEntity<>(object);
+		//request.getHeaders().add(, CONTEXT);
+		
+		Optional<AccionResponse> resp = Optional.ofNullable( restTemplate.postForObject(url(endpoint),request,AccionResponse.class));
+		if(!resp.isPresent())
+			throw new Exception("Error when update the object");
+		else
+			return  resp.get().getStatus()==0;
+	}
+	
+	public List<T> findAllActive(){
+		return getAct();
+	}
+	
+	
+	public T findById(Integer id) {
+		Optional<T> ob = find("/byId/"+id);
+		return ob.isPresent()? ob.get(): newObject() ;
+	}
+	
+	private T newObject() {
+		try {
+			return typeClass.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public Optional<T> find(String endpoint) {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<T> responseEntity = 
+				  restTemplate.exchange(
+				    url(endpoint),
+				    HttpMethod.GET,
+				    null,
+				    typeClass
+				  );
+		if(200!=responseEntity.getStatusCodeValue())
+			return Optional.empty();
+		return  Optional.ofNullable( responseEntity.getBody());
+	}
+	
+	public boolean update(Object object) throws Exception {
+		return update(object,url("/update"));
+		
+	}
+	
 	public void save(List<T> object) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<?> request = new HttpEntity<>(object);
@@ -81,9 +131,9 @@ public class WSClient<T> {
 		return Integer.valueOf(String.valueOf( object.getValue()));
 	}
 	
-	public BigDecimal mount(int id,String endpoint) {
+	public BigDecimal mount(String endpoint) {
 		RestTemplate restTemplate = new RestTemplate();
-		NumberResponse object =  restTemplate.getForObject(url(endpoint+"/"+id),NumberResponse.class);
+		NumberResponse object =  restTemplate.getForObject(url(endpoint),NumberResponse.class);
 		if(object.getCod()!=0)
 			return new BigDecimal(0);
 		return new BigDecimal(String.valueOf( object.getValue()));
@@ -96,6 +146,10 @@ public class WSClient<T> {
 	
 	public List<T> getAll()   {
 		return getList("/all/");
+	}
+	
+	public List<T> list(String endpoint){
+		return getList(endpoint);
 	}
 	public T getById(int id) throws Exception{
 		RestTemplate restTemplate = new RestTemplate();

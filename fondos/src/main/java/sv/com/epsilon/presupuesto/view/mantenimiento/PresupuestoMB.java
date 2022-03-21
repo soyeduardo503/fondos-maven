@@ -142,7 +142,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 					List<Categoria> temp=categoria.getCategoriaList();
 					cat.setCategoriaList(null);
 					cat.setIdCategoriaPadre(null);
-					categoriaFacade.persis(cat);
+					categoriaFacade.save(cat);
 					categorias.add(cat);
 					if(temp!=null&&!temp.isEmpty()){
 						crearSubCategoria(cat,temp);
@@ -159,7 +159,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		}
 	}
 
-	private void crearSubCategoria(Categoria categoria, List<Categoria> list) {
+	private void crearSubCategoria(Categoria categoria, List<Categoria> list) throws Exception {
 		List<Categoria> categorias=new ArrayList<Categoria>();
 		for(Categoria c2:list){
 			Categoria cat=new Categoria();
@@ -173,7 +173,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 			cat.setIdCategoriaPadre(categoria);
 			List<Categoria> temp=c2.getCategoriaList();
 			cat.setCategoriaList(null);
-			categoriaFacade.persis(cat);
+			categoriaFacade.save(cat);
 			categorias.add(cat);
 			if(temp!=null&&!temp.isEmpty()){
 				crearSubCategoria(cat,temp);

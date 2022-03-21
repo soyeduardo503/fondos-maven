@@ -39,7 +39,13 @@ public class GeneradorCodigo implements Serializable {
 	
 	public synchronized void makeCode(Categoria cat){
 		
-		Categoria c2=categoriaFacade.obtenerCategoriasFromCategoriasPadre(cat.getIdCategoriaPadre());
+		Categoria c2;
+		try {
+			c2 = categoriaFacade.obtenerCategoriasFromCategoriasPadre(cat.getIdCategoriaPadre());
+		} catch (Exception e) {
+			Log.error(e, "error al obtener categoria desde padre");
+			c2=null;
+		}
 		
 		
 		String nextCode=((char)numberSeed)+"";

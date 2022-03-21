@@ -66,7 +66,7 @@ public class OrganigramViewMB {
 	public void createModelFromCategoria(Categoria c) {
 		CategoriaFacade facade = new CategoriaFacade();
 		try {
-			facade.findListSubCategoriaWithoutClose(c);
+			facade.findListRecursive(c);
 			rootNode=new CreteModelOrganigramCtrlr().fromCategoria(c);
 			facade.close();
 		} catch (Exception e) {

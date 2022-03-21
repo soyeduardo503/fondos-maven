@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Financiamiento;
 
 /**
@@ -16,7 +17,7 @@ import sv.com.epsilon.entities.Financiamiento;
  * @author Zeta
  */
 
-public class FinanciamientoFacade extends AbstractFacade<Financiamiento> {
+public class FinanciamientoFacade extends WSClient<Financiamiento> {
 
    
 
@@ -25,15 +26,16 @@ public class FinanciamientoFacade extends AbstractFacade<Financiamiento> {
     }
     
     public Financiamiento obtenerLastFromCaracteristica(){
-    	getSession();
-    	try {
-    	String sql="Select i From Caracteristica i" +    			
-    			" Order By LENGTH(i.codigo) desc, i.codigo Desc";
-    	Query q=session.createQuery(sql);
-    	List<Financiamiento> list=(List<Financiamiento>)q.list();
-    	return list.size()>0?list.get(0):new Financiamiento();
-    	}finally {
-    		close();
-    	}
+//    	getSession();
+//    	try {
+//    	String sql="Select i From Caracteristica i" +    			
+//    			" Order By LENGTH(i.codigo) desc, i.codigo Desc";
+//    	Query q=session.createQuery(sql);
+//    	List<Financiamiento> list=(List<Financiamiento>)q.list();
+//    	return list.size()>0?list.get(0):new Financiamiento();
+//    	}finally {
+//    		close();
+//    	}
+    	return new Financiamiento();
     }
 }
