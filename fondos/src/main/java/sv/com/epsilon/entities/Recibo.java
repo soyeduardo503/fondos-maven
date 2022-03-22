@@ -28,48 +28,28 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "recibo")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Recibo.findAll", query = "SELECT r FROM Recibo r where r.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Recibo.findByIdRecibo", query = "SELECT r FROM Recibo r WHERE r.idRecibo = :idRecibo and r.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Recibo.findByName", query = "SELECT r FROM Recibo r WHERE r.nombre = :nombre and r.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Recibo.findByNombre", query = "SELECT r FROM Recibo r WHERE r.nombre = :nombre and r.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Recibo.findByFechaPantalla", query = "SELECT r FROM Recibo r WHERE r.fechaPantalla = :fechaPantalla"),
-    @NamedQuery(name = "Recibo.findByTipoPersona", query = "SELECT r FROM Recibo r WHERE r.tipoPersona = :tipoPersona"),
-    @NamedQuery(name = "Recibo.findByDui", query = "SELECT r FROM Recibo r WHERE r.dui = :dui"),
-    @NamedQuery(name = "Recibo.findByNit", query = "SELECT r FROM Recibo r WHERE r.nit = :nit"),
-    @NamedQuery(name = "Recibo.findByAct", query = "SELECT r FROM Recibo r WHERE r.act = :act and r.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Recibo.findByIva", query = "SELECT r FROM Recibo r WHERE r.iva = :iva")})
+
 public class Recibo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idRecibo")
+    
     private Integer idRecibo;
-    @Basic(optional = false)
-    @Column(name = "Nombre")
+    
     private String nombre;
-    @Column(name = "FechaPantalla")
-    @Temporal(TemporalType.DATE)
+    
     private Date fechaPantalla;
-    @Column(name = "TipoPersona")
+    
     private String tipoPersona;
-    @Column(name = "DUI")
+    
     private String dui;
-    @Column(name = "NIT")
+    
     private String nit;
-    @Column(name = "IVA")
+    
     private String iva;
-    @Column(name = "act")
+    
     private String act;
-    @Column(name = "idEmpresa")
     private Integer idEmpresa;
-    @JoinColumn(name = "idGasto", referencedColumnName = "idGasto")
-    @ManyToOne(optional = false)
     private Gasto idGasto;
 
     public Recibo() {

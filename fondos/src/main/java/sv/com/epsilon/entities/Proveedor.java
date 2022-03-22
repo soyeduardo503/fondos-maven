@@ -25,64 +25,41 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "proveedor")
-@NamedQueries({
-    @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p Where p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Proveedor.findById", query = "SELECT p FROM Proveedor p Where p.idProveedor=:idProveedor and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Proveedor.findByName", query = "SELECT p FROM Proveedor p WHERE p.nombre like :nombre and p.idEmpresa=:idEmpresa"), 
-    @NamedQuery(name = "Proveedor.findDocs", query = "SELECT p FROM Proveedor p WHERE p.dui like :doc or p.nrc=:doc or p.nit=:doc and p.idEmpresa=:idEmpresa"),   
-    @NamedQuery(name = "Proveedor.findByAct", query = "SELECT p FROM Proveedor p WHERE p.act = 'A' and p.idEmpresa=:idEmpresa")
-    })
+
 public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idProveedor")
+
     private Integer idProveedor;
-    @Basic(optional = false)
-    @Column(name = "nombre")
+
     private String nombre;
-    @Column(name = "nombreLegal")
+
     private String nombreLegal;
-    @Basic(optional = false)
-    @Column(name = "tipo")
+
     private String tipo;
-    @Basic(optional = false)
-    @Column(name = "dui")
+
     private String dui;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "nrc")
+
     private String nrc;
-    @Column(name = "nit")
+    
     private String nit;
-    @Basic(optional = false)
-    @Column(name = "fechaIngreso")
-    @Temporal(TemporalType.DATE)
+    
     private Date fechaIngreso;
-    @Basic(optional = false)
-    @Column(name = "ncuenta")    
+        
     private String ncuenta;
     
-    @Basic(optional = false)
-    @Column(name = "IdUsuarioCreo")
+    
     private int idUsuarioCreo;
-    @Basic(optional = false)
-    @Column(name = "IdUSuarioModifico")
+    
     private int idUSuarioModifico;
-
-    @Basic(optional = false)
-    @Column(name = "IdEmpresa")
+    
     private int idEmpresa;
-    @Basic(optional = false)
-    @Column(name = "idBanco")
+
     private int idBanco;
 
-    @Basic(optional = false)
-    @Column(name = "Act")
     private String act;
+    
     public Proveedor() {
     }
 

@@ -10,72 +10,45 @@ import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 
 /**
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "movimiento")
 
-@NamedQueries({
-    @NamedQuery(name = "Movimiento.findAll", query = "SELECT m FROM Movimiento m"),
-    @NamedQuery(name = "Movimiento.findByIdMovimiento", query = "SELECT m FROM Movimiento m WHERE m.idMovimiento = :idMovimiento"),
-    @NamedQuery(name = "Movimiento.findByTipo", query = "SELECT m FROM Movimiento m WHERE m.tipo = :tipo"),
-    @NamedQuery(name = "Movimiento.findByFecha", query = "SELECT m FROM Movimiento m WHERE m.fecha = :fecha"),
-    @NamedQuery(name = "Movimiento.findByFechas", query = "SELECT m FROM Movimiento m WHERE m.fecha between :fecha1 and :fecha2 "),
-    @NamedQuery(name = "Movimiento.findByMonto", query = "SELECT m FROM Movimiento m WHERE m.monto = :monto"),
-    @NamedQuery(name = "Movimiento.findByFechaRegistro", query = "SELECT m FROM Movimiento m WHERE m.fechaRegistro = :fechaRegistro"),
-    @NamedQuery(name = "Movimiento.findByIdGasto", query = "SELECT m FROM Movimiento m WHERE m.idGasto = :idGasto"),
-    @NamedQuery(name = "Movimiento.findByIdUsuario", query = "SELECT m FROM Movimiento m WHERE m.idUsuario = :idUsuario"),
-    @NamedQuery(name = "Movimiento.findByCuenta", query = "SELECT m FROM Movimiento m WHERE m.cuenta = :cuenta")})
 public class Movimiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idMovimiento")   
+    
+       
     private Integer idMovimiento;
-    @Basic(optional = false)
-    @Column(name = "Tipo")
+    
     private String tipo;
-    @Column(name = "Fecha")
-    @Temporal(TemporalType.TIMESTAMP)
+    
     private Date fecha;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Monto")
+    
     private Double monto;
-    @Column(name = "FechaRegistro")
-    @Temporal(TemporalType.TIMESTAMP)
+    
     private Date fechaRegistro;
-    @Column(name = "IdUsuario")
+    
     private Integer idUsuario;
-    @Column(name = "Cuenta")
+    
     private String cuenta;
     
-    @JoinColumn(name = "idGasto", referencedColumnName = "idGasto")
-    @ManyToOne
     private Gasto idGasto;
     
-    @JoinColumn(name = "idCategoria", referencedColumnName = "idCategoria")
-    @ManyToOne(optional = true)
     private Categoria idCategoria;
     
-    @JoinColumn(name = "idFinanciamiento", referencedColumnName = "idFinanciamiento")
-    @ManyToOne
+    
     private Financiamiento idFinanciamiento;
 
     public Movimiento() {

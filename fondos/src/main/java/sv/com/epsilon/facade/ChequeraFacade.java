@@ -5,21 +5,19 @@
  */
 package sv.com.epsilon.facade;
 
+import java.math.BigInteger;
 import java.util.List;
 
-import org.hibernate.Query;
-
-import sv.com.epsilon.entities.Categoria;
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Chequera;
 import sv.com.epsilon.entities.Cuenta;
-import sv.com.epsilon.util.Log;
 
 /**
  *
  * @author Zeta
  */
 
-public class ChequeraFacade extends AbstractFacade<Chequera> {
+public class ChequeraFacade extends WSClient<Chequera> {
 
 
     public ChequeraFacade() {
@@ -27,35 +25,15 @@ public class ChequeraFacade extends AbstractFacade<Chequera> {
     }
 
 	public List<Chequera> findAllByCount(Cuenta c) {
-		getSession();
-    	try {
-	    	String sql="Select c From Chequera c" +
-	    			" Where  c.idCuenta = :c" ;
-	    	Query q=session.createQuery(sql).setParameter("c",c.getIdCuenta());
-	    	List<Chequera> list=(List<Chequera>)q.list();
-	    	if(list!=null)
-	    		list.forEach(cs->Log.info(cs.getCorrelativo()+"-"+cs.getNombre()+" - "+cs.getDesde()+" - "+cs.getHasta()+" - "+cs.getIdCuenta()));
-	    	return list;
-    	}finally {
-    		close();
-    	}
+		return getList("/cuenta/"+c.getIdCuenta());
 		
 	}
 
-	public Integer findCurrentValue() {
-		getSession();
-    	try {
-	    	String sql="Select c From Chequera c" +
-	    			" Where  c.act ='A' " ;
-	    	Query q=session.createQuery(sql);
-	    	List<Chequera> list=(List<Chequera>)q.list();
-	    	if(list!=null)
-	    		list.forEach(cs->Log.info(cs.getCorrelativo()+"-"+cs.getNombre()+" - "+cs.getDesde()+" - "+cs.getHasta()+" - "+cs.getIdCuenta()));
-	    	return  list.get(0).getCorrelativo();
-    	}finally {
-    		close();
-    	}
+	public Integer findCurrentValue(Chequera chequera) {
+		return new BigInteger( String.valueOf( getNumber("/current/"+chequera.getIdCuenta()).getValue())).intValue();
 		
 	}
+
+
     
 }

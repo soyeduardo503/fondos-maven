@@ -20,6 +20,9 @@ public class MovimientoFacade extends WSClient<Movimiento> {
         super(Movimiento.class);
     }
 
-	
+	public void save(Movimiento mov) {
+		save(mov);
+		this.update(object, endpoint)
+	}
     
 }

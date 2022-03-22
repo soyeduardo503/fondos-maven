@@ -26,34 +26,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "evento")
 
-@NamedQueries({
-    @NamedQuery(name = "Evento.findAll", query = "SELECT r FROM Evento r where r.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Evento.findByidEvento", query = "SELECT r FROM Evento r WHERE r.idEvento = :idEvento"),
-    @NamedQuery(name = "Evento.findByName", query = "SELECT r FROM Evento r WHERE r.descripcion = :descr and r.idEmpresa=:idEmpresa "),
-    @NamedQuery(name = "Evento.findByidEmpresa", query = "SELECT r FROM Evento r WHERE r.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Evento.findByTipo", query = "SELECT r FROM Evento r WHERE r.tipo = :tipo"),
-    @NamedQuery(name = "Evento.findByFechaHora", query = "SELECT r FROM Evento r WHERE r.fechahora = :fecha")})
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idEvento")
+    @Id    
     private Integer idEvento;
-    @Basic(optional = false)
-    @Column(name = "tipo")
+    
     private String tipo;
-    @Column(name = "fechahora")
-    @Temporal(TemporalType.DATE)
+    
     private Date fechahora;
-    @Column(name = "descripcion")
+    
     private String descripcion;
    
-    @Column(name = "idEmpresa")
+    
     private Integer idEmpresa;
 
     public Evento() {

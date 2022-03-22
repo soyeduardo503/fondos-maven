@@ -5,89 +5,61 @@
  */
 package sv.com.epsilon.entities;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "gasto")
-@XmlRootElement 
-@NamedQueries({
-    @NamedQuery(name = "Gasto.findAll", query = "SELECT g FROM Gasto g Where  g.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Gasto.findByName", query = "SELECT g FROM Gasto g WHERE g.nombre = :nombre and g.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Gasto.findByNombre", query = "SELECT g FROM Gasto g WHERE g.nombre = :nombre and g.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Gasto.findByDescripcion", query = "SELECT g FROM Gasto g WHERE g.descripcion = :descripcion and g.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Gasto.findByNombrePantalla", query = "SELECT g FROM Gasto g WHERE g.nombrePantalla = :nombrePantalla and g.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Gasto.findByAct", query = "SELECT g FROM Gasto g WHERE g.act = :act and g.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Gasto.findByCodigo", query = "SELECT g FROM Gasto g WHERE g.codigo = :codigo and g.idEmpresa=:idEmpresa"),    
-    @NamedQuery(name = "Gasto.findByFecha", query = "SELECT g FROM Gasto g WHERE g.fecha = :fecha and g.idEmpresa=:idEmpresa")
-    })
+
 public class Gasto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idGasto")
     private Integer idGasto;
-    @Basic(optional = false)
-    @Column(name = "Nombre")
-    private String nombre;
-    @Column(name = "Descripcion")
-    private String descripcion;
-    @Column(name = "NombrePantalla")
-    private String nombrePantalla;
-    @Column(name = "Act")
-    private String act;
-    @Column(name = "Codigo")
-    private String codigo;
-    @Column(name = "cheque")
-    private String cheque;
-    @Column(name = "total")
-    private Double total;
     
-    @Column(name = "idEmpresa")
+    private String nombre;
+    
+    private String descripcion;
+    
+    private String nombrePantalla;
+    
+    private String act;
+    
+    private String codigo;
+    
+    private String cheque;
+    
+    private Double total;
+        
     private String idEmpresa;
-    @Column(name = "Fecha")
-    @Temporal(TemporalType.DATE)
+    
     private Date fecha;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGasto")
+    
     private List<Recibo> reciboList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGasto")
+    
     private List<Imagen> imagenList;
     
-    @OneToMany(mappedBy = "idGasto",cascade = CascadeType.ALL)
     private List<Movimiento> movimientoList;
-    
-    @JoinColumn(name = "idTipoDesembolso", referencedColumnName = "idTipoDesembolso")
-    @ManyToOne(optional = false)
+        
     private Tipodesembolso idTipoDesembolso;
     
-    @JoinColumn(name = "idProveedor", referencedColumnName = "idProveedor")
-    @ManyToOne(optional = true)
     private Proveedor idProveedor;
 
     public Gasto() {

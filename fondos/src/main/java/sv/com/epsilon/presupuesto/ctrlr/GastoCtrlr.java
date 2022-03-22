@@ -36,7 +36,7 @@ public class GastoCtrlr {
 			throw new Exception("Monto total igual a cero");
 		
 		GastoFacade facade=new GastoFacade();
-		facade.persis(gasto);
+		facade.save(gasto);
 //		MovimientoFacade movimientoFacade=new MovimientoFacade();
 	
 			

@@ -23,30 +23,16 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "tablagasto")
-@XmlRootElement
-@NamedQueries({@NamedQuery(name = "Tablagasto.findByAct", query = "SELECT t FROM Tablagasto t WHERE t.act = :act and t.idEmpresa=:idEmpresa"),
-@NamedQuery(name = "Tablagasto.findAll", query = "SELECT r FROM Tablagasto r where r.idEmpresa=:idEmpresa"),
-@NamedQuery(name = "Tablagasto.findByIdTablagasto", query = "SELECT r FROM Tablagasto r WHERE r.idtablagasto = :idtablagasto and r.idEmpresa=:idEmpresa"),
-@NamedQuery(name = "Tablagasto.findByName", query = "SELECT r FROM Tablagasto r WHERE r.nombre = :nombre and r.idEmpresa=:idEmpresa"),
-   })
+
 public class Tablagasto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idtablagasto")
     private Integer idtablagasto;
-    @Column(name = "Nombre")
     private String nombre;
-    @Column(name = "Descripcion")
     private String descripcion;
-    @Column(name = "Act")
     private String act;
     
-    @Column(name = "idEmpresa")
     private Integer idEmpresa;
     public Tablagasto() {
     }

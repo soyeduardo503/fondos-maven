@@ -6,10 +6,9 @@
 package sv.com.epsilon.facade;
 
 
-import java.util.List;
+import java.util.Optional;
 
-import org.hibernate.Query;
-
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Parametro;
 
 /**
@@ -32,30 +31,12 @@ public class ParametroFacade extends WSClient<Parametro> {
     }
 
 	public Parametro findByName(String nombre) {
-		getSession();
-		try {
-		   Query Query = session.createQuery("Select p FROM Parametro p WHERE p.nombre = :nombre");
-		  	  Query.setParameter("nombre", nombre);
-		  	  return (Parametro) Query.uniqueResult();
-		}finally {
-			close();
-		}
+		Optional<Parametro> param = get("/parametro/nombre/"+nombre);
+		return param.isPresent()?param.get():null;
 	}
 	
 	public String getValueByName(String nombre) {
-		getSession();
-		try {
-		   Query Query = session.createQuery("Select  valor FROM Parametro p WHERE p.nombre = :nombre");
-		  	  Query.setParameter("nombre", nombre);
-		  	  List<String> list= Query.list();
-		  	  
-		  	  if(list.isEmpty())
-		  		  return "";
-		  	  else		  		  
-		  		  return list.get(0) ;
-		}finally {
-			close();
-		}
+		return findByName(nombre).getValor();
 	}
     
 }

@@ -30,82 +30,46 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "presupuesto")
-@NamedQueries({
-    @NamedQuery(name = "Presupuesto.findAll", query = "SELECT p FROM Presupuesto p Where p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByIdPresupuesto", query = "SELECT p FROM Presupuesto p WHERE p.idPresupuesto = :idPresupuesto "),
-    @NamedQuery(name = "Presupuesto.findByName", query = "SELECT p FROM Presupuesto p WHERE p.nombrePresupuesto = :nombrePresupuesto and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByNombrePresupuesto", query = "SELECT p FROM Presupuesto p WHERE p.nombrePresupuesto = :nombrePresupuesto and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByYear", query = "SELECT p FROM Presupuesto p WHERE p.year = :year and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByTotal", query = "SELECT p FROM Presupuesto p WHERE p.total = :total and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByAct", query = "SELECT p FROM Presupuesto p WHERE p.act = :act and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByActual", query = "SELECT p FROM Presupuesto p WHERE p.actual = :actual"),
-    @NamedQuery(name = "Presupuesto.findByFechaInicio", query = "SELECT p FROM Presupuesto p WHERE p.fechaInicio = :fechaInicio and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByFechaFin", query = "SELECT p FROM Presupuesto p WHERE p.fechaFin = :fechaFin and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByFechas", query = "SELECT p FROM Presupuesto p WHERE p.fechaFin = :fechaFin and p.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Presupuesto.findByFechaElaboracion", query = "SELECT p FROM Presupuesto p WHERE p.fechaElaboracion = :fechaElaboracion"),
-    @NamedQuery(name = "Presupuesto.findByIdUSuario", query = "SELECT p FROM Presupuesto p WHERE p.idUSuario = :idUSuario")})
+
 public class Presupuesto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idPresupuesto")
+    @Id    
     private Integer idPresupuesto;
-    @Basic(optional = false)
-    @Column(name = "NombrePresupuesto")
-    private String nombrePresupuesto;
-    @Basic(optional = false)
-    @Column(name = "Year")
-    private String year;
-    @Basic(optional = false)
-    @Column(name = "Total")
-    private double total;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Actual")
-    private Double actual;
-    @Basic(optional = false)
-    @Column(name = "FechaInicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
-    @Basic(optional = false)
-    @Column(name = "FechaFin")
-    @Temporal(TemporalType.DATE)
-    private Date fechaFin;
-    @Basic(optional = false)
-    @Column(name = "FechaElaboracion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaElaboracion;
-    @Basic(optional = false)
-    @Column(name = "IdUSuario")
-    private int idUSuario;
-    @Basic(optional = false)
-    @Column(name = "validasub")
-    private String validasub;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresupuesto")
-    private List<Categoria> categoriaList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresupuesto")
+    private String nombrePresupuesto;
+    
+    private String year;
+    
+    private double total;
+    
+    private Double actual;
+    
+    private Date fechaInicio;
+    
+    private Date fechaFin;
+    
+    private Date fechaElaboracion;
+    
+    private int idUSuario;
+    
+    private String validasub;
+    
+    private List<Categoria> categoriaList;
+        
     private List<Financiamiento> financiamientoList;
 
-
-    @Basic(optional = false)
-    @Column(name = "Act")
+   
     private String act;
     
 
-    @Basic(optional = false)
-    @Column(name = "codigo")    
+    
     private String codigo;
     
-    @Basic(optional = false)
-    @Column(name = "idCuenta")    
+    
     private Integer idCuenta;
     
-    @Basic(optional = false)
-    @Column(name = "idEmpresa")    
+    
     private Integer idEmpresa;
     
     public Presupuesto() {

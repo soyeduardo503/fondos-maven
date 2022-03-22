@@ -71,6 +71,20 @@ public class WSClient<T> {
 			return null;
 		}
 	}
+	
+	public Optional<T> get(String endpoint) {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<T> responseEntity = 
+				  restTemplate.exchange(
+				    url(endpoint),
+				    HttpMethod.GET,
+				    null,
+				    typeClass
+				  );
+		if(200!=responseEntity.getStatusCodeValue())
+			return Optional.empty();
+		return  Optional.ofNullable( responseEntity.getBody());
+	}
 	public Optional<T> find(String endpoint) {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<T> responseEntity = 
@@ -115,6 +129,8 @@ public class WSClient<T> {
 		return  responseEntity.getBody();
 	}
 	
+	
+	
 	public Integer count(Integer id) {
 		return count(id,"/count");
 	}
@@ -122,7 +138,11 @@ public class WSClient<T> {
 	public List<T> findAll(){
 		return getAll();
 	}
-	
+	public NumberResponse getNumber(String endpoint) {
+		RestTemplate restTemplate = new RestTemplate();
+		NumberResponse object =  restTemplate.getForObject(url(endpoint),NumberResponse.class);
+		return object;
+	}
 	public Integer count(int id,String endpoint) {
 		RestTemplate restTemplate = new RestTemplate();
 		NumberResponse object =  restTemplate.getForObject(url(endpoint+"/"+id),NumberResponse.class);
@@ -174,7 +194,7 @@ public class WSClient<T> {
 	
 	
 	
-	private String url(String endPoint) {
+	public String url(String endPoint) {
 		return URL_BASE+"/"+this.typeClass.getSimpleName().toLowerCase()+endPoint;
 	}
 	

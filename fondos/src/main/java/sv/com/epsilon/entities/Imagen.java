@@ -25,33 +25,19 @@ import org.hibernate.annotations.NamedQuery;
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "imagen")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Imagen.findAll", query = "SELECT i FROM Imagen i"),
-    @NamedQuery(name = "Imagen.findByIdURL", query = "SELECT i FROM Imagen i WHERE i.idURL = :idURL"),
-    @NamedQuery(name = "Imagen.findByIdGasto", query = "SELECT i FROM Imagen i WHERE i.idGasto = :idGasto"),
-    
-    @NamedQuery(name = "Imagen.findByUrl", query = "SELECT i FROM Imagen i WHERE i.url = :url"),
-    @NamedQuery(name = "Imagen.findByAlt", query = "SELECT i FROM Imagen i WHERE i.alt = :alt"),
-    @NamedQuery(name = "Imagen.findByAct", query = "SELECT i FROM Imagen i WHERE i.act = :act")})
+
 public class Imagen implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idURL")
     private Integer idURL;
-    @Column(name = "URL")
+    
     private String url;
-    @Column(name = "Alt")
+    
     private String alt;
-    @Column(name = "Act")
+    
     private String act;
-    @JoinColumn(name = "idGasto", referencedColumnName = "idGasto")
-    @ManyToOne(optional = false)
+    
     private Gasto idGasto;
 
     public Imagen() {
