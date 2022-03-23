@@ -7,10 +7,13 @@ package sv.com.epsilon.facade;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Chequera;
 import sv.com.epsilon.entities.Cuenta;
+import sv.com.epsilon.response.AccionResponse;
+import sv.com.epsilon.util.Log;
 
 /**
  *
@@ -31,6 +34,13 @@ public class ChequeraFacade extends WSClient<Chequera> {
 
 	public Integer findCurrentValue(Chequera chequera) {
 		return new BigInteger( String.valueOf( getNumber("/current/"+chequera.getIdCuenta()).getValue())).intValue();
+		
+	}
+
+	public void updateCurrent(Chequera chequeraSelected) {
+		Optional<AccionResponse> response = process("/chequera/update/");
+		Log.info("current value is updated: "+(response.isPresent()&&response.get().getStatus()==1));
+		
 		
 	}
 

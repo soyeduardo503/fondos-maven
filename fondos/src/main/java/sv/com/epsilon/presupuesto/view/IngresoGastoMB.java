@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -24,9 +25,14 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 
+import sv.com.epsilon.entities.Banco;
+import sv.com.epsilon.entities.Categoria;
+import sv.com.epsilon.entities.Chequera;
+import sv.com.epsilon.entities.Cuenta;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Movimiento;
 import sv.com.epsilon.entities.Tipodesembolso;
+import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
@@ -38,7 +44,6 @@ import sv.com.epsilon.presupuesto.view.autocomplete.CategoriaAutocompleteMB;
 import sv.com.epsilon.report.documentos.RptShow;
 import sv.com.epsilon.report.pojo.Cheque;
 import sv.com.epsilon.report.pojo.Documento;
-import sv.com.epsilon.util.Constantes.TipoPago;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
 import sv.com.epsilon.util.MessageGrowlContext;
@@ -63,13 +68,20 @@ public class IngresoGastoMB implements Serializable {
 	
 	@ManagedProperty(value="#{categoriaAutocompleteMB}")
 	private CategoriaAutocompleteMB categoriaAutocompleteMB;
-	
+	private List<Banco> listBanco;
+	private Banco bancoSelected;
+	private List<Cuenta> listCuenta;
+	private Cuenta cuentaSelected;
+	private List<Chequera> listChequera;
+	private Chequera chequeraSelected;
+	private Categoria categoriaPadreSelected;
 	private Gasto gasto=new Gasto();
 	private Movimiento movimiento=new Movimiento();
 	private List<CategoriaGasto> list=new ArrayList<CategoriaGasto>();
 	private CategoriaGasto detalle=new CategoriaGasto();
 	private String categoriaTxt="";
 	private String mensaje;
+	private HashMap<String,Object> filter;
 	private boolean showCheque;
 	private boolean showTransferencia;
 	private boolean showRecibo;
@@ -79,6 +91,16 @@ public class IngresoGastoMB implements Serializable {
 	{
 		movimiento.setMonto(0.0);
 	}
+	
+	public void preRender() {
+		if(!FacesContext.getCurrentInstance().isPostback()) {
+			listBanco=new BancoFacade().findAllActive();
+			if(listBanco.size()==1) {
+				
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 */
@@ -186,12 +208,11 @@ public class IngresoGastoMB implements Serializable {
 		showRecibo=false;
 		showTransferencia=false;
 		ChequeraFacade facade = new ChequeraFacade();
-		facade.setIdEmpresa(sesionMB.getIdEmpresa());
-		facade.setToken(sesionMB.getToken());
+		
 		switch (idTipoDesembolso.getIdTipoDesembolso()) {
 		case 1: 
 			showCheque=true;			
-			gasto.setCheque( facade.findCurrentValue().toString());
+			gasto.setCheque( String.valueOf( facade.findCurrentValue(chequeraSelected)));
 			break;
 		case 2:			
 			showTransferencia=true;
@@ -208,6 +229,20 @@ public class IngresoGastoMB implements Serializable {
 		}
 	}
 	
+	
+	
+	public List<Chequera> getListChequera() {
+		return listChequera;
+	}
+	public void setListChequera(List<Chequera> listChequera) {
+		this.listChequera = listChequera;
+	}
+	public Chequera getChequeraSelected() {
+		return chequeraSelected;
+	}
+	public void setChequeraSelected(Chequera chequeraSelected) {
+		this.chequeraSelected = chequeraSelected;
+	}
 	private boolean foundCategoria(CategoriaGasto cg) {
 		for(int i=0;i<list.size();i++) {
 			if(cg.getCategoria().getIdCategoria()==list.get(i).getCategoria().getIdCategoria())
@@ -242,7 +277,7 @@ public class IngresoGastoMB implements Serializable {
 	public void upload(FileUploadEvent event) {
 		try {
 			copyFile(event.getFile().getFileName(), event.getFile().getInputStream());
-			FacesMessage message = new FacesMessage("El archivo se ha subido con éxito!");
+			FacesMessage message = new FacesMessage("El archivo se ha subido con ï¿½xito!");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			//copyFile(categoriaTxt, null);
 		} catch (IOException e) {
@@ -262,12 +297,12 @@ public class IngresoGastoMB implements Serializable {
 			in.close();
 			out.flush();
 			out.close();
-			System.out.println("El archivo se ha creado con éxito!");
+			System.out.println("El archivo se ha creado con ï¿½xito!");
 	
-			DateFormat dateFormat = new SimpleDateFormat("yyyy–MM–dd HH_mm_ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyyï¿½MMï¿½dd HH_mm_ss");
 			Date date = new Date();
 			String ruta1 = destination + fileName;
-			String ruta2 = destination + dateFormat.format(date)+"–"+fileName;
+			String ruta2 = destination + dateFormat.format(date)+"ï¿½"+fileName;
 			System.out.println("Archivo: "+ruta1+" Renombrado a: "+ruta2);
 			File archivo=new File(ruta1);
 			archivo.renameTo(new File(ruta2));
@@ -321,13 +356,35 @@ public class IngresoGastoMB implements Serializable {
 		}
 		
 		
+		
+		
+		public List<Cuenta> getListCuenta() {
+			return listCuenta;
+		}
+		public void setListCuenta(List<Cuenta> listCuenta) {
+			this.listCuenta = listCuenta;
+		}
+		public Cuenta getCuentaSelected() {
+			return cuentaSelected;
+		}
+		public void setCuentaSelected(Cuenta cuentaSelected) {
+			this.cuentaSelected = cuentaSelected;
+		}
+		public Categoria getCategoriaPadreSelected() {
+			return categoriaPadreSelected;
+		}
+		public void setCategoriaPadreSelected(Categoria categoriaPadreSelected) {
+			this.categoriaPadreSelected = categoriaPadreSelected;
+		}
 		public void save() {
 			try {
 			//	gasto.setMovimientoList(createMovimientos());
 				GastoCtrlr.save(gasto);
 				createMovimientos();
-				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1)
+				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1) {
+					new ChequeraFacade().updateCurrent(chequeraSelected);
 					print();
+				}
 			} catch (Exception e) {
 				new MessageGrowlContext().sendError("Error guardando informacion: "+e.getMessage(), e.getMessage(), e);
 			}
@@ -342,14 +399,22 @@ public class IngresoGastoMB implements Serializable {
 				mov.setTipo("D");//debito
 				mov.setMonto(temp.getMonto());
 				mov.setFechaRegistro(new Date());
-				mov.setCuenta("99999");
+				mov.setCuenta(cuentaSelected.getNumero());
 				mov.setIdUsuario(this.sesionMB.getIdUser());
-				MovimientoCtrlr.save(mov);
+				try {
+					MovimientoCtrlr.save(mov);
+				} catch (Exception e) {
+					Log.error(e, "Error en creacion de movimientos");
+				}
 				//mvts.add(mov);
 				//mov.setIdGasto(gasto)
 				
 			});
 			return mvts;
+		}
+		
+		public void load() {
+			//TODO create a load a gasto saved
 		}
 		
 		

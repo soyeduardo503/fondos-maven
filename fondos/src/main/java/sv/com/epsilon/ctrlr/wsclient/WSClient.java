@@ -115,6 +115,20 @@ public class WSClient<T> {
 	
 	}
 	
+	public Optional<AccionResponse> process(String endpoint)  {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<AccionResponse> responseEntity = 
+				  restTemplate.exchange(
+				    url(endpoint),
+				    HttpMethod.GET,
+				    null,
+				    AccionResponse.class
+				  );
+		if(200!=responseEntity.getStatusCodeValue())
+			return Optional.empty();
+		return  Optional.ofNullable(responseEntity.getBody());
+	}
+	
 	public List<T> getList(String endpoint)  {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<T>> responseEntity = 
