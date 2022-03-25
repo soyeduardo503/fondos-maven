@@ -64,7 +64,7 @@ public class CuentaMB extends AbstractMantto<Cuenta, CuentaFacade> implements Se
 			chequera.setAct("A");
 			chequera.setCorrelativo(chequera.getDesde());
 			chequera.setIdCuenta(this.getItemSelected().getIdCuenta());
-			new ChequeraFacade().createPersist(chequera);
+			new ChequeraFacade().save(chequera);
 			this.updateDialogClose();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

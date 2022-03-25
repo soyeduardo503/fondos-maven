@@ -5,6 +5,7 @@
  */
 package sv.com.epsilon.facade;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Tipodesembolso;
 
 /**
@@ -12,7 +13,7 @@ import sv.com.epsilon.entities.Tipodesembolso;
  * @author Zeta
  */
 
-public class TipodesembolsoFacade extends AbstractFacade<Tipodesembolso> {
+public class TipodesembolsoFacade extends WSClient<Tipodesembolso> {
 
  
     public TipodesembolsoFacade() {

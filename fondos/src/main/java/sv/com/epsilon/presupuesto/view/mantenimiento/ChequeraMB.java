@@ -56,9 +56,9 @@ public class ChequeraMB extends AbstractMantto<Chequera, ChequeraFacade> impleme
 	public void update(Chequera c) {
 		try {
 			initFacade();
-			getFacade().persis(c);
+			getFacade().save(c);
 			new MessageGrowlContext().send("Guardado!!!!", "Datos guardados correctamente!!!");
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

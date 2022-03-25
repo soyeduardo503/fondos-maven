@@ -112,7 +112,7 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 		if(!FacesContext.getCurrentInstance().isPostback()) {
 		try {
 			PresupuestoFacade facade= new PresupuestoFacade();
-			facade.init(usuarioSessionMB.getToken(), usuarioSessionMB.getIdEmpresa());
+			//facade.init(usuarioSessionMB.getToken(), usuarioSessionMB.getIdEmpresa());
 			this.listPresupuesto=facade.findAllActive();
 			if(listPresupuesto!=null&&listPresupuesto.size()>0) {
 				this.presupuestoSelected=listPresupuesto.get(0);

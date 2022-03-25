@@ -5,6 +5,7 @@
  */
 package sv.com.epsilon.facade;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Evento;
 
 /**
@@ -12,7 +13,7 @@ import sv.com.epsilon.entities.Evento;
  * @author Zeta
  */
 
-public class EventoFacade extends AbstractFacade<Evento> {
+public class EventoFacade extends WSClient<Evento> {
 
 
     public EventoFacade() {

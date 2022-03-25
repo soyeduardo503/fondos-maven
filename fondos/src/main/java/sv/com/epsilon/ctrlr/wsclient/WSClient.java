@@ -1,5 +1,6 @@
 package sv.com.epsilon.ctrlr.wsclient;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.response.AccionResponse;
 import sv.com.epsilon.response.NumberResponse;
+import sv.com.epsilon.util.Log;
 
 public class WSClient<T> {
 
@@ -22,6 +28,8 @@ public class WSClient<T> {
 	private static String PORT="8000";
 	private static String CONTEXT="WSFondos";
 	private final static String URL_BASE="http://"+SERVER+":"+PORT+"/"+CONTEXT;
+	private String token="";
+	private Integer idEmpresa=1;
 	
 	
 	public WSClient(Class<T> cl) {
@@ -29,6 +37,7 @@ public class WSClient<T> {
 	}
 
 	public void save(T object) throws Exception {
+		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<?> request = new HttpEntity<>(object);
 		//request.getHeaders().add(, CONTEXT);
@@ -58,7 +67,7 @@ public class WSClient<T> {
 	
 	
 	public T findById(Integer id) {
-		Optional<T> ob = find("/byId/"+id);
+		Optional<T> ob = find("/id/"+id);
 		return ob.isPresent()? ob.get(): newObject() ;
 	}
 	
@@ -131,19 +140,30 @@ public class WSClient<T> {
 	
 	public List<T> getList(String endpoint)  {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List<T>> responseEntity = 
+		ResponseEntity<String> responseEntity = 
 				  restTemplate.exchange(
 				    url(endpoint),
 				    HttpMethod.GET,
 				    null,
-				    new ParameterizedTypeReference<List<T>>() {}
-				  );
+				    new ParameterizedTypeReference<String>() {}
+				  );//new TypeReference<
 		if(200!=responseEntity.getStatusCodeValue())
 			return new ArrayList<T>();
-		return  responseEntity.getBody();
+		try {
+			return  deserialize(responseEntity.getBody());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<T>();
+		}
 	}
 	
-	
+	public List<T>  deserialize(String json ) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+	    CollectionType listType = mapper.getTypeFactory().constructCollectionType(ArrayList.class, typeClass);
+	    List<T> ts = mapper.readValue(json, listType);
+	    return ts;   
+	}
 	
 	public Integer count(Integer id) {
 		return count(id,"/count");
@@ -209,6 +229,7 @@ public class WSClient<T> {
 	
 	
 	public String url(String endPoint) {
+		Log.info(URL_BASE+"/"+this.typeClass.getSimpleName().toLowerCase()+endPoint);
 		return URL_BASE+"/"+this.typeClass.getSimpleName().toLowerCase()+endPoint;
 	}
 	
@@ -223,5 +244,9 @@ public class WSClient<T> {
 		
 		List<Categoria> list = new WSClient<>(Categoria.class).getAll();
 		System.out.println(list.size());
+	}
+	public void init(String token, Integer idEmpresa) {
+		this.token=token;
+		this.idEmpresa=idEmpresa;
 	}
 }

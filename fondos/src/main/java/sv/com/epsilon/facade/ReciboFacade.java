@@ -5,6 +5,7 @@
  */
 package sv.com.epsilon.facade;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Recibo;
 
 /**
@@ -12,7 +13,7 @@ import sv.com.epsilon.entities.Recibo;
  * @author Zeta
  */
 
-public class ReciboFacade extends AbstractFacade<Recibo> {
+public class ReciboFacade extends WSClient<Recibo> {
 
 
     public ReciboFacade() {

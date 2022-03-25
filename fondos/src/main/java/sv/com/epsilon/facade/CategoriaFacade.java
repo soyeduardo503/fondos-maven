@@ -32,7 +32,7 @@ public class CategoriaFacade extends WSClient<Categoria> {
     }
     
     public Categoria obtenerCategoriasFromCategoriasPadre(Categoria categoria) throws Exception{
-    	List<Categoria> list=getList("/categorias_children/"+categoria.getCodigo());
+    	List<Categoria> list=getList("/categorias/children/"+categoria.getCodigo());
     	categoria.setCategoriaList(list);
     	return categoria;
 //    	try {
@@ -49,7 +49,7 @@ public class CategoriaFacade extends WSClient<Categoria> {
     }
 
 	public List<Categoria> findByPresupuesto(Presupuesto idPresupuesto) {
-		return getList("/categorias_presupuesto/id/"+idPresupuesto.getIdPresupuesto());
+		return getList("/categorias/presupuesto/id/"+idPresupuesto.getIdPresupuesto());
 		/*
 		getSession();
 		try {
@@ -65,7 +65,7 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 	
 	public List<Categoria> findByCodPresupuesto(Presupuesto idPresupuesto) {
-		return getList("/categorias_presupuesto/codigo/"+idPresupuesto.getCodigo());
+		return getList("/categorias/presupuesto/codigo/"+idPresupuesto.getCodigo());
 		/*
 		getSession();
 		try {
@@ -201,12 +201,12 @@ public class CategoriaFacade extends WSClient<Categoria> {
 //	}
 
 	public int CountBySubCategoria(Categoria cat) {
-		return count(cat.getIdCategoria(), "/categoria/count/children");
+		return count(cat.getIdCategoria(), "/count/children");
 		
 	}
 
 	public List<Categoria> findBiggest5Gastos(Presupuesto p) {
-		return getList("/categoria/top5/"+p.getIdPresupuesto());
+		return getList("/top5/"+p.getIdPresupuesto());
 //		getSession();
 //		try {
 //			String sql=" from categoria c where c.idPresupuesto==:p order by monto  " ;
@@ -224,7 +224,7 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 
 	public BigDecimal getMontoDisponible(String cod) {
-		return mount( "/categoria/mount/"+cod);
+		return mount( "/mount/"+cod);
 	}
 
 	public void saveList(List<Categoria> principales, Categoria padre) {
@@ -248,19 +248,19 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 
 	public List<Categoria> findAllChildrenSelectableActive() {
-	  return list("/categoria/count/children/act");
+	  return list("/count/children/act");
 	}
 
 	public void updateMontoDisponible(Double monto, String codigoPadre) {
 		
 		try {
-			update(new MontoUpdateRequest(codigoPadre, monto),"/categoria/disponible");
+			update(new MontoUpdateRequest(codigoPadre, monto),"/disponible");
 		} catch (Exception e) {
 			Log.error(e, "Error al update ");
 		}
 	}
 	public Categoria obtenerCategoriasFromCodigo(String cod){
-    	Optional<Categoria> c= find("/categoria/codigo/"+cod);
+    	Optional<Categoria> c= find("/codigo/"+cod);
     	return c.isPresent()?c.get():new Categoria();
     }
 

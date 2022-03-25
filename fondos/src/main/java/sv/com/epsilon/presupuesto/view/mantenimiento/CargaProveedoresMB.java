@@ -19,7 +19,6 @@ import org.primefaces.event.FlowEvent;
 import org.primefaces.model.file.UploadedFile;
 
 import sv.com.epsilon.entities.Proveedor;
-import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CargaProveedorCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CargaValidacionCtrlr;
@@ -152,7 +151,12 @@ public class CargaProveedoresMB implements Serializable{
 	
 	public void save() {
 		principales.forEach(cat->cat.setIdEmpresa(session.getIdEmpresa()));
-		new ProveedorFacade().saveList(this.principales);
+		try {
+			new ProveedorFacade().save(this.principales);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

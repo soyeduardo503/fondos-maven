@@ -29,6 +29,11 @@ public class EventoCtrlr {
 		e.setDescripcion(descripcion);
 		e.setFechahora(new Date());
 		e.setTipo(tipo);
-		new EventoFacade().create(e);
+		try {
+			new EventoFacade().save(e);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

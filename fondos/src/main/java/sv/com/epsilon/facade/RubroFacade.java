@@ -8,18 +8,15 @@ package sv.com.epsilon.facade;
 import java.util.HashMap;
 import java.util.List;
 
-import org.hibernate.Query;
-
-import sv.com.epsilon.entities.Chequera;
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Rubro;
-import sv.com.epsilon.util.Log;
 
 /**
  *
  * @author Zeta
  */
 
-public class RubroFacade extends AbstractFacade<Rubro> {
+public class RubroFacade extends WSClient<Rubro> {
 
 
     public RubroFacade() {
@@ -27,7 +24,7 @@ public class RubroFacade extends AbstractFacade<Rubro> {
     }
     
     public HashMap<String,Integer> findAllRubroActiveByName(){
-    	getSession();
+    	
     	try {
 	    	
 	    	List<Rubro> list=this.findAllActive();
@@ -36,7 +33,7 @@ public class RubroFacade extends AbstractFacade<Rubro> {
 	    		list.forEach(cs->hash.put(cs.getNombre(), cs.getIdRubro()));
 	    	return hash;
     	}finally {
-    		close();
+    	
     	}
     }
     

@@ -7,6 +7,7 @@ package sv.com.epsilon.facade;
 
 import java.io.Serializable;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Tablagasto;
 
 /**
@@ -14,7 +15,7 @@ import sv.com.epsilon.entities.Tablagasto;
  * @author Zeta
  */
 
-public class TablagastoFacade extends AbstractFacade<Tablagasto> implements Serializable{
+public class TablagastoFacade extends WSClient<Tablagasto> implements Serializable{
 
  
     /**

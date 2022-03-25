@@ -49,7 +49,7 @@ public class ListaCuentasMB implements Serializable {
 	}
 	public List<Cuenta> load() {
 		try {
-			return facade.findAllActiveByEmpresa();
+			return facade.findAllActive();
 		}catch (Exception e) {
 			Log.error(e,"Error en carga de cuentas");
 			return new ArrayList<Cuenta>();
