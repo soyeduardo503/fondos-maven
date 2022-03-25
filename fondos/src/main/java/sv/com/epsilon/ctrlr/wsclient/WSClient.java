@@ -35,6 +35,8 @@ public class WSClient<T> {
 	public WSClient(Class<T> cl) {
 		this.typeClass=cl;
 	}
+	
+	
 
 	public void save(T object) throws Exception {
 		

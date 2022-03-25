@@ -68,25 +68,23 @@
 							<p:column headerText="#" width="40">
 								<h:outputText value="#{i.idProveedor}" />
 							</p:column>
-							<p:column headerText="Nombre">
-								<h:outputText value="#{i.nombre}" />
-							</p:column>
-							<p:column headerText="Nombre Legal" width="250">
+							
+							<p:column headerText="Nombre Legal" width="250" filterBy="#{i.nombreLegal}" style="font-size:9pt;">
 								<h:outputText value="#{i.nombreLegal}" />
 							</p:column>
 							<p:column headerText="Tipo" width="75">
 								<h:outputText value="#{i.tipo}" converter="tipoPersonaConverter"/>
 							</p:column>
-							<p:column headerText="DUI" width="100">
-								<h:outputText value="#{i.dui}" />
+							<p:column headerText="DUI" width="80">
+								<h:outputText value="#{i.dui}"   style="font-size:8pt;" />
 							</p:column>
 							<p:column headerText="NIT" width="100">
-								<h:outputText value="#{i.nit}" />
+								<h:outputText value="#{i.nit}" style="font-size:8pt;" />
 							</p:column>
-							<p:column headerText="Cuenta" width="100">
-								<h:outputText value="#{i.ncuenta}" />
+							<p:column headerText="Cuenta" width="60">
+								<h:outputText value="#{i.ncuenta}" style="font-size:8pt;" />
 							</p:column>
-							<p:column headerText="NCR" width="100">
+							<p:column headerText="NCR" width="80" style="font-size:8pt;">
 								<h:outputText value="#{i.nrc}" />
 							</p:column>
 							

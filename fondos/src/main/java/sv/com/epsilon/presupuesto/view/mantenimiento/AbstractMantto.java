@@ -233,7 +233,7 @@ public abstract class  AbstractMantto<K,T> implements Serializable {
 		initFacade();
 		k.getMethod("setAct", new Class[]{String.class}).invoke(itemSelected, new Object[]{stateActive?"A":"I"});
 		 
-		callMethod="persis";
+		callMethod="save";
 		//Method[] m = facade.getClass().getMethods();
 //		System.out.println("facade "+facade.getClass());
 //		for (Method method : m) {
@@ -249,7 +249,7 @@ public abstract class  AbstractMantto<K,T> implements Serializable {
 	
 	public void edit() throws Exception{
 		initFacade();
-		callMethod="persis";
+		callMethod="save";
 		
 //		System.out.println("facade "+facade.getClass());
 //		for (Method method : m) {

@@ -59,6 +59,7 @@ public class Proveedor implements Serializable {
     private int idBanco;
 
     private String act;
+    private String codigo;
     
     public Proveedor() {
     }
@@ -227,6 +228,14 @@ public class Proveedor implements Serializable {
     public String toString() {
         return "sv.com.epsilon.Proveedor[ idProveedor=" + idProveedor + " ]";
     }
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
 	
     
