@@ -33,7 +33,7 @@ public class ChequeraFacade extends WSClient<Chequera> {
 	}
 
 	public Integer findCurrentValue(Chequera chequera) {
-		return new BigInteger( String.valueOf( getNumber("/current/"+chequera.getIdCuenta()).getValue())).intValue();
+		return new BigInteger( String.valueOf( getNumber("/current/"+chequera.getIdChequera()).getValue())).intValue();
 		
 	}
 
@@ -43,6 +43,13 @@ public class ChequeraFacade extends WSClient<Chequera> {
 		
 		
 	}
+
+	public List<Chequera> findByIdCuenta(Integer idCuenta) {
+		// TODO Auto-generated method stub
+		return getList("/cuenta/"+idCuenta);
+	}
+
+	
 
 
     

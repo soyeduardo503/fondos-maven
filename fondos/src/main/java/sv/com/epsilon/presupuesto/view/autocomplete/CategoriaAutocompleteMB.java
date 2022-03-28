@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import net.sf.jasperreports.charts.util.CategoryChartHyperlinkProvider;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
@@ -22,6 +23,7 @@ public class CategoriaAutocompleteMB {
 
 	@ManagedProperty(value="#{sesionMB}")
 	private UsuarioSessionMB sesionMB;
+	private String principalSelected;
 	 private List<String> list=new ArrayList<String>();
 	 private List<String> categorias=new ArrayList<String>();
 	 private HashMap<String,CategoriaGasto> categoriasCod=new HashMap<String,CategoriaGasto>();
@@ -43,6 +45,13 @@ public class CategoriaAutocompleteMB {
 				}
 			
 		}
+	}
+	
+	public void searchChildrenAplicable() {
+		categoriasCod=new HashMap<>();
+		List<Categoria> categorias=new CategoriaFacade().childrenAplicable(principalSelected);
+		categorias.forEach(cat->{categoriaAplicable(cat);});
+		
 	}
 	
 	private void categoriaAplicable(Categoria c) {
@@ -100,6 +109,24 @@ public class CategoriaAutocompleteMB {
 		return categoriasCod.get(categoriaTxt);
 		
 	}
+
+	public HashMap<String, CategoriaGasto> getCategoriasCod() {
+		return categoriasCod;
+	}
+
+	public void setCategoriasCod(HashMap<String, CategoriaGasto> categoriasCod) {
+		this.categoriasCod = categoriasCod;
+	}
+
+	public String getPrincipalSelected() {
+		return principalSelected;
+	}
+
+	public void setPrincipalSelected(String principalSelected) {
+		this.principalSelected = principalSelected;
+	}
+
+	
 	
 	
 

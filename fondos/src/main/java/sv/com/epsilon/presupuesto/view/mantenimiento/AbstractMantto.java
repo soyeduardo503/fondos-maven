@@ -452,13 +452,13 @@ public abstract class  AbstractMantto<K,T> implements Serializable {
 		this.c=null;
 		this.callMethod=null;
 		this.callMethodfindAll=null;
-		
-		try {
-			facade.getClass().getMethod("TrasactionCommit", new Class[]{}).invoke(facade, new Object[]{});
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+//		
+//		try {
+//			//facade.getClass().getMethod("TrasactionCommit", new Class[]{}).invoke(facade, new Object[]{});
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
 		this.facade=null;
 		this.formsView=null;
 		this.itemSelected=null;

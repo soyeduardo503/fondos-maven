@@ -16,74 +16,29 @@
 	<ui:define name="body">
 		
 				<div class="largecontent" >
-					
+					<f:event listener="#{ingresoGastoMB.preRender()}" type="preRenderView"></f:event>
 					<f:event listener="#{tipoDesembolsoMB.preRender()}" type="preRenderView"></f:event>
 					<f:event listener="#{categoriaAutocompleteMB.preRender()}" type="preRenderView"></f:event>
 					<f:event listener="#{proveedoresMB.preRender()}" type="preRenderView"></f:event>
 					
 						<h:form id="#{ingresoGastoMB.form}">
 					<p:growl id="msg"></p:growl>
-					<b:panel look="danger" title="Pantalla de ingreso de gastos" icon-awesome="arrow-up" collapsible="false">
+					<b:panel look="danger" title="Pantalla de registro de gastos" icon-awesome="arrow-up" collapsible="false">
 					
-					<p:panel>
-			<b:container fluid="true">
+					
+			
 				
 				<b:row>
-					<b:column col-xs="1">
-						<p:outputLabel value="Gasto"/>
-					</b:column>
-					<b:column col-xs="4" > 
-						<p:autoComplete value="#{ingresoGastoMB.gasto.nombre}"  size="40"  completeMethod="#{catalogoGastoMB.obtenerGastos}"></p:autoComplete>
-					</b:column>
+					
 					
 					
 				</b:row>
 				
-				<b:row>
-					<b:column col-xs="1">
-						<p:outputLabel value="Detalle"/>
-					</b:column>
-					<b:column col-xs="6" colspan="3">
-						<p:inputTextarea  value="#{ingresoGastoMB.gasto.descripcion}" cols="112" rows="5"/>
-					</b:column>
-					<b:column col-xs="2">
-						<b:row>
-							<b:column col-xs="10" colspan="1">
-								<p:outputLabel value="fecha registro"/>
-							</b:column>
-								<b:column col-xs="3" colspan="1">
-								<p:outputLabel value="#{ingresoGastoMB.gasto.fecha}">
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-								</p:outputLabel>
-							</b:column>
-						</b:row>
-					</b:column>
-					<b:column col-xs="3">
-					
-						<b:row>
-									
-									<b:column col-xs="10" colspan="1">
-										<p:outputLabel value="Fecha de movimiento"/>
-									</b:column>
-										<b:column col-xs="3" colspan="1">
-										<p:calendar value="#{ingresoGastoMB.movimiento.fecha}" mask="true" pattern="dd/MM/yyyy"/>
-									</b:column>		
-						</b:row>
-						
-						
-					</b:column>
-				</b:row>
-				<b:row>
-					<b:column col-xs="1">
-						<p:outputLabel value="Proveedor"/>
-					</b:column>
-					<b:column col-xs="6" colspan="3">
-						<p:selectOneMenu  value="#{ingresoGastoMB.gasto.idProveedor}" converter="proveedorConverter">
-							<f:selectItem itemLabel="" itemValue="" />
-							<f:selectItems value="#{proveedoresMB.list}" var="p" itemValue="#{p}" itemLabel="#{p.nombre}" />	
-						</p:selectOneMenu>
-					</b:column>
-				</b:row>
+				<ui:include src="/registro/gasto/header.xhtml" />
+				
+				<ui:include src="/registro/gasto/tipopago.xhtml" />
+				<ui:include src="/registro/gasto/rubro.xhtml" />
+				
 				<b:row>
 					
 					
@@ -96,88 +51,10 @@
 				<br />
 				<br />
 				
-				<b:row>
-					
 				
-					<b:column col-xs="4">
-									<b:row>
-										<b:column col-xs="3" colspan="1">
-											<p:outputLabel value="Tipo desembolso" />
-										</b:column>
-										<b:column col-xs="4" colspan="1">
-											<p:selectOneMenu
-												value="#{ingresoGastoMB.gasto.idTipoDesembolso}"
-												converter="tipoDesembolsoConverter" >
-												<f:selectItem itemValue="" itemLabel="" noSelectionOption="true"/>
-												<f:selectItems value="#{tipoDesembolsoMB.list}" var="td"
-													itemLabel="#{td.nombre}" itemValue="#{td}"></f:selectItems>
-													<p:ajax event="change" update=":#{ingresoGastoMB.form}:noCheque" listener="#{ingresoGastoMB.actualizarCheque(ingresoGastoMB.gasto.idTipoDesembolso)}" />
-											</p:selectOneMenu>
-										</b:column>
-										
-									</b:row>
-
-									<b:row>
-							
-							
-						</b:row>
-					</b:column>
-						<b:column col-xs="3" colspan="1">
-											<p:outputLabel value="No. Cheque/Recibo/Transferencia" />
-										</b:column>
-										<b:column col-xs="2" colspan="1">
-											
-												<p:inputText value="#{ingresoGastoMB.gasto.cheque}" id="noCheque" />
-										</b:column>
-				</b:row>
-				<b:row>
-						<b:column col-xs="7">
-							<b:row>
-								<b:column col-xs="2" >
-									<p:outputLabel value="Archivos relacionados"/>
-								</b:column>
-								<b:column col-xs="9"  >
-									<p:fileUpload label="Seleccionar archivos" cancelLabel="Cancelar" invalidFileMessage="Archivo no permitido"
-										uploadLabel="Cargar archivos"
-									 fileUploadListener="#{ingresoGastoMB.upload}"					multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"					sizeLimit="10000000" update="msg" />
-								</b:column>
+				
 			
-							</b:row>		
-					</b:column>
-			
-				</b:row>
-				
-				
-				<b:row >
-					<b:column col-xs="3" colspan="8" styleClass="ui-widget-header">
-						<p:spacer height="0"></p:spacer>
-					</b:column>
-				</b:row>
-			<b:row>
-				<b:column col-xs="1" >
-					<p:outputLabel value="Aplicado A:"/>
-				
-				</b:column>
-				<b:column col-xs="6" >
-					
-						<p:autoComplete id="idCategoria" value="#{ingresoGastoMB.categoriaTxt}" 
-						 size="60"   completeMethod="#{categoriaAutocompleteMB.obtenerListaCuentas}"  >
-							 <p:ajax event="itemSelect" listener="#{ingresoGastoMB.addCategoria()}" update="idOrgienCategorias,@this"/>
-						</p:autoComplete>
-					
-					
-				</b:column>
-				
-								<b:column col-xs="3">
-									<p:commandLink id="addCategoriaGasto" 	action="#{ingresoGastoMB.addCategoria()}">
-										<b:iconAwesome solid="true" value="plus-circle" style="font-size:2em;" />
-
-									</p:commandLink>
-
-								</b:column>
-							</b:row>
-			</b:container>
-			<p:defaultCommand target="addCategoriaGasto"></p:defaultCommand>
+		
 			
 			
 				<b:panel look="danger" title="Distribucion #{ingresoGastoMB.movimiento.monto}" id="idOrgienCategorias" icon-awesome="money" collapsible="false">
@@ -237,7 +114,7 @@
 						</b:container>
 					
 				</f:facet>
-			</p:panel>
+			
 					
 						
 					

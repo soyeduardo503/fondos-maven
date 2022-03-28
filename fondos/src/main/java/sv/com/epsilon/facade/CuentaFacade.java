@@ -5,6 +5,8 @@
  */
 package sv.com.epsilon.facade;
 
+import java.util.List;
+
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Cuenta;
 
@@ -20,6 +22,9 @@ public class CuentaFacade extends WSClient<Cuenta> {
         super(Cuenta.class);
     }
 
-	
+    public List<Cuenta> findByIdBanco(Integer idBanco) {
+		// TODO Auto-generated method stub
+		return getList("/banco/"+idBanco);
+	}
     
 }

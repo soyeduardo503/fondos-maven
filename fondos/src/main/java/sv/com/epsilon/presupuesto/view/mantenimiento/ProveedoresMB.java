@@ -127,9 +127,10 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	@Override
 	protected void setDefaultValue() {
 		if(sesionMB!=null) {
+			//TODO implement user
 			this.getItemSelected().setIdEmpresa(sesionMB.getIdEmpresa());
 			this.getItemSelected().setFechaIngreso(new Date());
-			this.getItemSelected().setIdUsuarioCreo(sesionMB.getIdUser());
+			//this.getItemSelected().setIdUsuarioCreo(sesionMB.getIdUser());
 		}
 	}
 

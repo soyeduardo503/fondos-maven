@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+
+
+
+
+	<b:row>
+
+		<b:column col-xs="6">
+			<b:row>
+				<p:outputLabel value="Detalle" />
+			</b:row>
+			<b:row>
+				<p:inputTextarea value="#{ingresoGastoMB.gasto.descripcion}"
+					cols="112" rows="5" />
+			</b:row>
+		</b:column>
+		<b:column col-xs="6" colspan="3">
+
+			<b:row>
+				<b:column col-xs="6" colspan="1">
+					<p:outputLabel value="fecha registro" />
+				</b:column>
+				<b:column col-xs="6" colspan="1">
+					<p:outputLabel value="Fecha de movimiento" />
+				</b:column>
+
+			</b:row>
+
+			<b:row>
+				<b:column col-xs="6" colspan="1">
+					<p:outputLabel value="#{ingresoGastoMB.currentDate}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+				</b:column>
+
+				<b:column col-xs="6" colspan="1">
+					<p:calendar value="#{ingresoGastoMB.gasto.fecha}" mask="true"
+						pattern="dd/MM/yyyy" />
+				</b:column>
+			</b:row>
+			
+			<b:row>
+				
+					<p:outputLabel value="Proveedor" />
+			</b:row>
+			<b:row>
+					<p:selectOneMenu value="#{ingresoGastoMB.gasto.idProveedor}"
+						converter="proveedorConverter" filter="true" autoWidth="true">
+						<f:selectItem itemLabel="" itemValue="" />
+						<f:selectItems value="#{proveedoresMB.list}" var="p"
+							itemValue="#{p}" itemLabel="#{p.nombre}" />
+					</p:selectOneMenu>
+			</b:row>	
+		</b:column>
+
+
+	</b:row>
+
+
+</ui:composition>

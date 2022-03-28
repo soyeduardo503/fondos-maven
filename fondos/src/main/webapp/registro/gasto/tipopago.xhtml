@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+
+
+
+
+
+	<p:spacer></p:spacer>
+	<b:row>
+		<b:column>
+			
+				<b:row>
+					<b:label value="Pago" severity="danger" large-screen="full-width" />
+				</b:row>
+				<b:row>
+					<b:column col-xs="3">
+						<b:row>
+							<b:column col-xs="8" colspan="1">
+								<p:outputLabel value="Tipo desembolso" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-xs="8" colspan="1">
+								<p:selectOneMenu
+									value="#{ingresoGastoMB.gasto.idTipoDesembolso}"
+									converter="tipoDesembolsoConverter">
+									<f:selectItem itemValue="" itemLabel="" selected="selected"
+										noSelectionOption="true" />
+									<f:selectItems value="#{tipoDesembolsoMB.list}" var="td"
+										itemLabel="#{td.nombre}" itemValue="#{td}"></f:selectItems>
+									<p:ajax event="change"
+										update=":#{ingresoGastoMB.form}:noCheque"
+										listener="#{ingresoGastoMB.actualizarCheque(ingresoGastoMB.gasto.idTipoDesembolso)}" />
+								</p:selectOneMenu>
+							</b:column>
+
+						</b:row>
+
+						<b:row>
+
+
+						</b:row>
+					</b:column>
+					<b:column col-xs="2">
+						<b:row>
+							BANCO
+						</b:row>
+						<b:row>
+							<p:selectOneMenu value="#{ingresoGastoMB.bancoSelected}">
+								<f:selectItem></f:selectItem>
+								<f:selectItems value="#{ingresoGastoMB.listBanco}" var="b"
+									itemLabel="#{b.nombre}" itemValue="#{b}" />
+							</p:selectOneMenu>
+						</b:row>
+
+					</b:column>
+					<b:column col-xs="2">
+						<b:row>
+							CUENTA
+						</b:row>
+						<b:row>
+							<p:selectOneMenu value="#{ingresoGastoMB.cuentaSelected}">
+								<f:selectItem></f:selectItem>
+								<f:selectItems value="#{ingresoGastoMB.listCuenta}" var="c"
+									itemLabel="#{c.numero}" itemValue="#{c}" />
+							</p:selectOneMenu>
+						</b:row>
+						
+					</b:column>
+					<b:column col-xs="2">
+						<b:row>
+							CHEQUERA
+						</b:row>
+						<b:row>
+							<p:selectOneMenu value="#{ingresoGastoMB.chequeraSelected}">
+								<f:selectItem></f:selectItem>
+								<f:selectItems value="#{ingresoGastoMB.listChequera}" var="c"
+									itemLabel="#{c.nombre}" itemValue="#{c}" />
+							</p:selectOneMenu>
+						</b:row>
+						
+					</b:column>
+					<b:column col-xs="3" colspan="1">
+						<p:outputLabel value="No. Cheque/Recibo/Transferencia" />
+						<p:inputText value="#{ingresoGastoMB.gasto.cheque}" id="noCheque" />
+					</b:column>
+
+
+				</b:row>
+			
+		</b:column>
+	</b:row>
+</ui:composition>

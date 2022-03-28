@@ -175,6 +175,10 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	public void findListSubCategoriaByCod(Categoria cat) {
 		findListRecursive(cat);
 	}
+	
+	public List<Categoria> childrenAplicable(String cod){
+		return getList("/children/"+cod);
+	}
 //		
 //		getSession();
 //		try {
@@ -248,8 +252,11 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 
 	public List<Categoria> findAllChildrenSelectableActive() {
-	  return list("/count/children/act");
+	  return list("/find/children/act");
 	}
+	public Integer coundAllChildrenSelectableActive() {
+		  return (Integer)getNumber("/children/act").getValue();
+		}
 
 	public void updateMontoDisponible(Double monto, String codigoPadre) {
 		
@@ -267,6 +274,11 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	
 	public void close() {
 		
+	}
+
+	public List<Categoria> findPrincipalByCodPresupuesto(Integer idPresupuesto) {
+		
+		return getList("/principales/id/"+idPresupuesto);
 	}
 	
 }

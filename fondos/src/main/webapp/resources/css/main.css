@@ -1395,4 +1395,9 @@ padding: 0.4em !important ;
 .ui-dataview-list-container{
 	max-width: 400px !important;
 }
+
+.label-danger {
+  background-color: linear-gradient(90deg, rgba(51,187,194,1) 0%, rgba(193,40,93,1) 0%, rgba(193,40,93,1) 53%, rgba(147,27,68,1) 100%) !important;
+  font-size: 1.2em;
+}
 	

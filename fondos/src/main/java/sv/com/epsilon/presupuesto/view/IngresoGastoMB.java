@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +32,13 @@ import sv.com.epsilon.entities.Chequera;
 import sv.com.epsilon.entities.Cuenta;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Movimiento;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
+import sv.com.epsilon.facade.CuentaFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
@@ -86,6 +90,13 @@ public class IngresoGastoMB implements Serializable {
 	private boolean showTransferencia;
 	private boolean showRecibo;
 	private String form="IDFormGasto";
+	private boolean automaticChequera=false;
+	private Date currentDate=Calendar.getInstance().getTime();
+	private Presupuesto presupuestoSelected;
+	private List<Presupuesto> listPresupuesto;
+	
+	private List<Categoria> listCategoriaPrincipal;
+	
 	
 	BigDecimal monto=new BigDecimal(0);
 	{
@@ -93,12 +104,9 @@ public class IngresoGastoMB implements Serializable {
 	}
 	
 	public void preRender() {
-		if(!FacesContext.getCurrentInstance().isPostback()) {
-			listBanco=new BancoFacade().findAllActive();
-			if(listBanco.size()==1) {
-				
-			}
-		}
+		if(!FacesContext.getCurrentInstance().isPostback())
+			GastoCtrlr.loadin(this);
+		
 	}
 	
 	/**
@@ -115,6 +123,15 @@ public class IngresoGastoMB implements Serializable {
 	}
 	
 	
+	
+
+	public boolean isAutomaticChequera() {
+		return automaticChequera;
+	}
+
+	public void setAutomaticChequera(boolean automaticChequera) {
+		this.automaticChequera = automaticChequera;
+	}
 
 	public Gasto getGasto() {
 		return gasto;
@@ -125,6 +142,30 @@ public class IngresoGastoMB implements Serializable {
 	
 	
 	
+	public Presupuesto getPresupuestoSelected() {
+		return presupuestoSelected;
+	}
+
+	public void setPresupuestoSelected(Presupuesto presupuestoSelected) {
+		this.presupuestoSelected = presupuestoSelected;
+	}
+
+	public List<Presupuesto> getListPresupuesto() {
+		return listPresupuesto;
+	}
+
+	public void setListPresupuesto(List<Presupuesto> listPresupuesto) {
+		this.listPresupuesto = listPresupuesto;
+	}
+
+	public List<Categoria> getListCategoriaPrincipal() {
+		return listCategoriaPrincipal;
+	}
+
+	public void setListCategoriaPrincipal(List<Categoria> listCategoriaPrincipal) {
+		this.listCategoriaPrincipal = listCategoriaPrincipal;
+	}
+
 	public Movimiento getMovimiento() {
 		return movimiento;
 	}
@@ -149,6 +190,30 @@ public class IngresoGastoMB implements Serializable {
 	
 	
 	
+	public List<Banco> getListBanco() {
+		return listBanco;
+	}
+
+	public void setListBanco(List<Banco> listBanco) {
+		this.listBanco = listBanco;
+	}
+
+	public Banco getBancoSelected() {
+		return bancoSelected;
+	}
+
+	public void setBancoSelected(Banco bancoSelected) {
+		this.bancoSelected = bancoSelected;
+	}
+
+	public Date getCurrentDate() {
+		return currentDate;
+	}
+
+	public void setCurrentDate(Date currentDate) {
+		this.currentDate = currentDate;
+	}
+
 	public void addCategoria(){
 		//categoriaTxt=detalle.getTxtCategoria();
 		if(!"".equals(categoriaTxt)){
@@ -208,7 +273,10 @@ public class IngresoGastoMB implements Serializable {
 		showRecibo=false;
 		showTransferencia=false;
 		ChequeraFacade facade = new ChequeraFacade();
-		
+		if(automaticChequera&&idTipoDesembolso.getIdTipoDesembolso()==1) {
+			gasto.setCheque( String.valueOf( facade.findCurrentValue(chequeraSelected)));
+			return ;
+		}
 		switch (idTipoDesembolso.getIdTipoDesembolso()) {
 		case 1: 
 			showCheque=true;			
