@@ -4,7 +4,9 @@
 package sv.com.epsilon.presupuesto.ctrlr;
 
 import java.util.Date;
+import java.util.List;
 
+import sv.com.epsilon.ctrlr.wsclient.SearchGastoWSClient;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.CategoriaFacade;
@@ -94,8 +96,8 @@ public class GastoCtrlr {
 	}
 
 
-	public void invocarBusqueda(SearchGasto search) {
-		
+	public List<Gasto> invocarBusqueda(SearchGasto search) throws Exception {
+		return new SearchGastoWSClient().searchParam(search);
 		
 	}
 	

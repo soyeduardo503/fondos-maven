@@ -38,7 +38,12 @@ public class SearchGastoMB implements Serializable{
 	public void invocacionBusqueda() {
 		
 		
-		new GastoCtrlr().invocarBusqueda(search);
+		try {
+			new GastoCtrlr().invocarBusqueda(search);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
