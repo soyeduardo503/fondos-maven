@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:composition template="../template.xhtml">
 	<ui:define name="title">
@@ -14,123 +14,119 @@
 	</ui:define>
 
 	<ui:define name="body">
-	
-					<f:event listener="#{proveedoresMB.preRender()}" type="preRenderView"></f:event>
-					<ui:include src="/componentes/headers/headerMantto.xhtml">
-									<ui:param name="bean" 		value="#{proveedoresMB}" />
-					</ui:include>
-					
-					<b:panel look="primary" collapsible="false" >
-						<h:form id="formSelect" >
-						<b:container fluid="true">
-								<b:row>
-									<b:column col-xs="5">
+
+		<f:event listener="#{proveedoresMB.preRender()}" type="preRenderView"></f:event>
+		<ui:include src="/componentes/headers/headerMantto.xhtml">
+			<ui:param name="bean" value="#{proveedoresMB}" />
+		</ui:include>
+
+		<b:panel look="primary" collapsible="false">
+			<h:form id="formSelect">
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="5">
 												Total de Proveedores
 									</b:column>
-									<b:column col-xs="3">
-										
-									</b:column>
-									<b:column col-xs="3">
+						<b:column col-xs="3">
+
+						</b:column>
+						<b:column col-xs="3">
 											Opciones
 									</b:column>
-									
-								</b:row>
-								<b:row>
-									<b:column col-xs="5">
-												<h:outputLabel id="totalProveedores" value="#{proveedores.list.size()}" />
-									</b:column>
-									<b:column col-xs="3">
-										
-									</b:column>
-									<b:column col-xs="3"  id="btnCrearCategorias">
-											<!-- Opciones -->
-											
-											<p:commandLink onclick="PF('loadWgtProv').show();" >
-												
-												<b:iconAwesome value="file-archive" solid="true" size="3x"/>
-											</p:commandLink>
-											
-									</b:column>
-									
-								</b:row>
-							
-						
-						</b:container>
-						
-					</h:form>					
-					<h:form id="#{proveedoresMB.idFormList}">
-						<p:dataTable value="#{proveedoresMB.list}" var="i" 
-						 editable="true" editMode="row"
-						rowIndexVar="rowIndex" scrollHeight="250" 
-						id="#{proveedoresMB.idTable}"	>
-							
-							
-							<p:column headerText="#" width="40">
-								<h:outputText value="#{i.idProveedor}" />
-							</p:column>
-							
-							<p:column headerText="Nombre Legal" width="250" filterBy="#{i.nombreLegal}" style="font-size:9pt;">
-								<h:outputText value="#{i.nombreLegal}" />
-							</p:column>
-							<p:column headerText="Tipo" width="75">
-								<h:outputText value="#{i.tipo}" converter="tipoPersonaConverter"/>
-							</p:column>
-							<p:column headerText="DUI" width="80">
-								<h:outputText value="#{i.dui}"   style="font-size:8pt;" />
-							</p:column>
-							<p:column headerText="NIT" width="100">
-								<h:outputText value="#{i.nit}" style="font-size:8pt;" />
-							</p:column>
-							<p:column headerText="Cuenta" width="60">
-								<h:outputText value="#{i.ncuenta}" style="font-size:8pt;" />
-							</p:column>
-							<p:column headerText="NCR" width="80" style="font-size:8pt;">
-								<h:outputText value="#{i.nrc}" />
-							</p:column>
-							
-							
-						
-						
-							<p:column style="padding-left:5px;" headerText="Opciones" width="150">
-							<div  style="float: left;">
-								<b:container fluid="true">
+
+					</b:row>
+					<b:row>
+						<b:column col-xs="5">
+							<h:outputLabel id="totalProveedores"
+								value="#{proveedores.list.size()}" />
+						</b:column>
+						<b:column col-xs="3">
+
+						</b:column>
+						<b:column col-xs="3" id="btnCrearCategorias">
+							<!-- Opciones -->
+
+							<p:commandLink onclick="PF('loadWgtProv').show();">
+
+								<b:iconAwesome value="file-excel" solid="true" size="3x" />
+							</p:commandLink>
+
+						</b:column>
+
+					</b:row>
+
+
+				</b:container>
+
+			</h:form>
+			<h:form id="#{proveedoresMB.idFormList}">
+				<p:dataTable value="#{proveedoresMB.list}" var="i" editable="true"
+					editMode="row" rowIndexVar="rowIndex" scrollHeight="250"
+					id="#{proveedoresMB.idTable}">
+
+
+					<p:column headerText="#" width="40">
+						<h:outputText value="#{i.idProveedor}" />
+					</p:column>
+
+					<p:column headerText="Nombre Legal" width="250"
+						filterBy="#{i.nombreLegal}" style="font-size:9pt;">
+						<h:outputText value="#{i.nombreLegal}" />
+					</p:column>
+					<p:column headerText="Tipo" width="75">
+						<h:outputText value="#{i.tipo}" converter="tipoPersonaConverter" />
+					</p:column>
+					<p:column headerText="DUI" width="80">
+						<h:outputText value="#{i.dui}" style="font-size:8pt;" />
+					</p:column>
+					<p:column headerText="NIT" width="100">
+						<h:outputText value="#{i.nit}" style="font-size:8pt;" />
+					</p:column>
+					<p:column headerText="Cuenta" width="60">
+						<h:outputText value="#{i.ncuenta}" style="font-size:8pt;" />
+					</p:column>
+					<p:column headerText="NCR" width="80" style="font-size:8pt;">
+						<h:outputText value="#{i.nrc}" />
+					</p:column>
+
+
+
+
+					<p:column style="padding-left:5px;" headerText="Opciones"
+						width="150">
+						<div style="float: left;">
+							<b:container fluid="true">
 								<ui:include src="/componentes/botones/eliminar.xhtml">
-									<ui:param name="mb" 		value="#{proveedoresMB}" />
+									<ui:param name="mb" value="#{proveedoresMB}" />
 									<ui:param name="bean" value="#{i}"></ui:param>
 									<ui:param name="cols" value="1"></ui:param>
 								</ui:include>
 								<ui:include src="/componentes/botones/editar.xhtml">
-									<ui:param name="mb" 		value="#{proveedoresMB}" />
+									<ui:param name="mb" value="#{proveedoresMB}" />
 									<ui:param name="bean" value="#{i}"></ui:param>
 									<ui:param name="cols" value="1"></ui:param>
-								</ui:include>	
-									
-								</b:container>
-							</div>	
-							</p:column>
-							
-						</p:dataTable>
-					</h:form>
-			
-			</b:panel>
-		
-		
-		
-		<h:form id="#{proveedoresMB.idFormNew}">
-			<p:dialog widgetVar="#{proveedoresMB.wtgDialog}" width="700" height="350" header="#{proveedoresMB.headerDialog}" id="#{proveedoresMB.idWtgNew}">
-				<b:container fluid="true">
-					<b:row></b:row>
-				</b:container>
-			</p:dialog>
-		</h:form>
-		<ui:include src="/componentes/dialogs/cargarProveedores.xhtml"/>
+								</ui:include>
+
+							</b:container>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+
+		</b:panel>
+
+
+		<ui:include src="/componentes/dialogs/nuevoProveedor.xhtml" />
+		<ui:include src="/componentes/dialogs/cargarProveedores.xhtml" />
 		<ui:include src="/componentes/dialogs/eliminar.xhtml">
 			<ui:param name="mb" value="#{proveedoresMB}"></ui:param>
-			<ui:param name="nombreObjeto" value="#{proveedoresMB.itemSelected.nombre}"></ui:param>
-			<ui:param name="wgtName" value="#{proveedoresMB.dialogDelete}"/>
+			<ui:param name="nombreObjeto"
+				value="#{proveedoresMB.itemSelected.nombre}"></ui:param>
+			<ui:param name="wgtName" value="#{proveedoresMB.dialogDelete}" />
 			<ui:param name="idName" value="#{proveedoresMB.idFormDelete}"></ui:param>
 		</ui:include>
-		<ui:include src="/componentes/lateralBar/editProveedor.xhtml"/>
+		<ui:include src="/componentes/lateralBar/editProveedor.xhtml" />
 	</ui:define>
 
 </ui:composition>

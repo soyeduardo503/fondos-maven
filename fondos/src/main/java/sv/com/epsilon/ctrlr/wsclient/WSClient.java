@@ -38,7 +38,7 @@ public class WSClient<T> {
 	
 	
 
-	public void save(T object) throws Exception {
+	public T save(T object) throws Exception {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<?> request = new HttpEntity<>(object);
@@ -49,6 +49,7 @@ public class WSClient<T> {
 			throw new Exception("Error when save the object");
 		else
 			object=(T) resp.get();
+		return object;
 	}
 	
 	public boolean update(Object object,String endpoint) throws Exception {
@@ -122,6 +123,19 @@ public class WSClient<T> {
 		if(!resp.isPresent()) {
 			throw new Exception("Error al intentar guardar list");
 		}
+		
+	
+	}
+	
+	public T search(T object) throws Exception {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<?> request = new HttpEntity<>(object);
+		Optional<T> resp = Optional.ofNullable( restTemplate.postForObject(url("/search"),request,typeClass));
+		
+		if(!resp.isPresent()) {
+			throw new Exception("Error al intentar guardar list");
+		}
+		return resp.get();
 		
 	
 	}

@@ -5,6 +5,7 @@ package sv.com.epsilon.presupuesto.view.mantenimiento;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
@@ -12,7 +13,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import sv.com.epsilon.entities.Banco;
 import sv.com.epsilon.entities.Proveedor;
+import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
@@ -32,6 +35,7 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{usuarioSessionMB}")	
 	private UsuarioSessionMB sesionMB;
+	private List<Banco> listBanco=new BancoFacade().findAllActive();
 
 	
 	
@@ -39,6 +43,10 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	 * 
 	 */
 	
+	public void setVoid() {
+		this.getItemSelected().setDui("");
+		//this.getItemSelected().setNit();
+	}
 	
 	
 	
@@ -62,6 +70,23 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	public void setSesionMB(UsuarioSessionMB sesionMB) {
 		this.sesionMB = sesionMB;
 	}
+
+	
+
+
+
+	public List<Banco> getListBanco() {
+		return listBanco;
+	}
+
+
+
+
+
+	public void setListBanco(List<Banco> listBanco) {
+		this.listBanco = listBanco;
+	}
+
 
 
 

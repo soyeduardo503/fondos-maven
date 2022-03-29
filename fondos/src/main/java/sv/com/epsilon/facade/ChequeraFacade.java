@@ -33,6 +33,7 @@ public class ChequeraFacade extends WSClient<Chequera> {
 	}
 
 	public Integer findCurrentValue(Chequera chequera) {
+		
 		return new BigInteger( String.valueOf( getNumber("/current/"+chequera.getIdChequera()).getValue())).intValue();
 		
 	}

@@ -5,8 +5,6 @@ package sv.com.epsilon.presupuesto.ctrlr;
 
 import java.util.Date;
 
-import javax.faces.context.FacesContext;
-
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.CategoriaFacade;
@@ -14,6 +12,7 @@ import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CuentaFacade;
 import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.view.IngresoGastoMB;
 
 /**
@@ -67,20 +66,36 @@ public class GastoCtrlr {
 		gastoMB.setListCategoriaPrincipal(new CategoriaFacade().findPrincipalByCodPresupuesto(idPresupuesto));
 		
 		gastoMB.setListBanco(new BancoFacade().findAllActive());
-			if(gastoMB.getListBanco().size()==1) {
-				gastoMB.setBancoSelected(gastoMB.getListBanco().get(0));
-				gastoMB.setListCuenta(new CuentaFacade().findByIdBanco(gastoMB.getBancoSelected().getIdBanco()));
-				if(gastoMB.getListCuenta().size()==1) {
-					gastoMB.setCuentaSelected(gastoMB.getListCuenta().get(0));
-					gastoMB.setListChequera(new ChequeraFacade().findByIdCuenta(gastoMB.getCuentaSelected().getIdCuenta()));
-					if(gastoMB.getListChequera().size()==1) {
-						gastoMB.setAutomaticChequera(true);
-						gastoMB.setChequeraSelected(gastoMB.getListChequera().get(0));
-					}
-					
-				}
+		if(gastoMB.getListBanco().isEmpty())
+			return ;
+			
+		gastoMB.setBancoSelected(gastoMB.getListBanco().get(0));
+		gastoMB.setListCuenta(new CuentaFacade().findByIdBanco(gastoMB.getBancoSelected().getIdBanco()));
+		if(gastoMB.getListCuenta().isEmpty()) 
+			return ;
+		
+		gastoMB.setCuentaSelected(gastoMB.getListCuenta().get(0));
+		gastoMB.setListChequera(new ChequeraFacade().findByIdCuenta(gastoMB.getCuentaSelected().getIdCuenta()));
+		if(gastoMB.getListChequera().isEmpty())
+			return ;
+		if(gastoMB.getListChequera().size()==1)
+				gastoMB.setAutomaticChequera(true);
+		gastoMB.setChequeraSelected(gastoMB.getListChequera().get(0));
 				
-			}
+					
+				
+				
+		
+		
+	}
+	
+	public void setDeaultChequera(IngresoGastoMB gastoMB) {
+		
+	}
+
+
+	public void invocarBusqueda(SearchGasto search) {
+		
 		
 	}
 	

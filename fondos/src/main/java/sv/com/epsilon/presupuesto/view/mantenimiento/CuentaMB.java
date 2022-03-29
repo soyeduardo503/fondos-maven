@@ -60,7 +60,9 @@ public class CuentaMB extends AbstractMantto<Cuenta, CuentaFacade> implements Se
 	@Override
 	public void save() {
 		try {
+			getItemSelected().setIdEmpresa(1);
 			saveWithoutclose();
+			chequera.setIdEmpresa(1);
 			chequera.setAct("A");
 			chequera.setCorrelativo(chequera.getDesde());
 			chequera.setIdCuenta(this.getItemSelected().getIdCuenta());
@@ -156,7 +158,7 @@ public class CuentaMB extends AbstractMantto<Cuenta, CuentaFacade> implements Se
 		
 		chequera=new Chequera();
 		getItemSelected().setAct("A");
-		getItemSelected().setIdEmpresa(getUsuarioSessionMB().getIdEmpresa());
+		//getItemSelected().setIdEmpresa(getUsuarioSessionMB().getIdEmpresa());
 	}
 
 	@Override

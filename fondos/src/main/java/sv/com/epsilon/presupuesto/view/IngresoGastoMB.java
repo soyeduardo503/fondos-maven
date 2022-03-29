@@ -98,6 +98,8 @@ public class IngresoGastoMB implements Serializable {
 	private List<Categoria> listCategoriaPrincipal;
 	
 	
+	private Integer idGastoSelected;
+	
 	BigDecimal monto=new BigDecimal(0);
 	{
 		movimiento.setMonto(0.0);
@@ -124,6 +126,14 @@ public class IngresoGastoMB implements Serializable {
 	
 	
 	
+
+	public Integer getIdGastoSelected() {
+		return idGastoSelected;
+	}
+
+	public void setIdGastoSelected(Integer idGastoSelected) {
+		this.idGastoSelected = idGastoSelected;
+	}
 
 	public boolean isAutomaticChequera() {
 		return automaticChequera;

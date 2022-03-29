@@ -16,9 +16,9 @@ public class MovimientoCtrlr {
 	
 	public static void save(Movimiento mov) throws Exception {
 		MovimientoFacade facade=new MovimientoFacade();
-		facade.save(mov);
-		new CategoriaFacade().updateMontoDisponible(mov.getMonto(),CodigoCtrlr.getCodigoPadre(
-				mov.getIdCategoria().getCodigo()));
+		facade.persist(mov);
+//		new CategoriaFacade().updateMontoDisponible(mov.getMonto(),CodigoCtrlr.getCodigoPadre(
+//				mov.getIdCategoria().getCodigo()));
 	}
 	
 }

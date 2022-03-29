@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+	<h:form id="#{proveedoresMB.idFormNew}">
+		<p:dialog widgetVar="#{proveedoresMB.wtgDialog}" width="900"
+			height="350" header="#{proveedoresMB.headerDialog}"
+			id="#{proveedoresMB.idWtgNew}">
+			<b:panel>
+				<b:row>
+					<b:column col-xs="6">
+						<b:row>
+							<h:outputLabel value="Nombre" />
+						</b:row>
+						<b:row>
+							<p:inputText value="#{proveedoresMB.itemSelected.nombre}"
+								size="50">
+								<p:ajax listener="#{proveedoresMB.same()}" event="keyup"
+									update="legal" />
+							</p:inputText>
+						</b:row>
+					</b:column>
+					<b:column col-xs="4"
+						style="border-collapse: collapse !important;   border-width: 1px !important;  border-color: #7ea8f8 !important;  border-style: solid !important;  color: #000000 !important;">
+						<b:label value="Tipo" severity="primary" large-screen="full-width" />
+						<p:selectOneRadio id="console"
+							value="#{proveedoresMB.itemSelected.tipo}" unselectable="true">
+							<f:selectItem itemLabel="Natural" itemValue="N" />
+							<f:selectItem itemLabel="Juridico" itemValue="J" />
+							<p:ajax event="change" listener="#{proveedoresMB.setVoid()}"
+								update="dui" />
+						</p:selectOneRadio>
+					</b:column>
+					
+					
+
+
+				</b:row>
+
+		<p:spacer></p:spacer>
+				<b:row>
+				<b:column col-xs="6">
+						<b:row>
+							<h:outputLabel value="Nombre Legal" />
+						</b:row>
+						<b:row>
+							<p:inputText value="#{proveedoresMB.itemSelected.nombreLegal}"
+							size="50" id="legal" />
+						</b:row>
+						<b:row>
+							<h:outputLabel value="Banco y cuenta" />
+						</b:row>
+						<b:row>
+							<b:column col-xs="6">
+								<p:selectOneMenu value="#{proveedoresMB.itemSelected.idBanco}">
+									<f:selectItem itemValue="" itemLabel=""></f:selectItem>
+									<f:selectItems value="#{proveedoresMB.listBanco}" var="b" itemValue="#{b.idBanco}" itemLabel="#{b.nombre}"></f:selectItems>
+								</p:selectOneMenu>
+								
+							</b:column>
+							<b:column col-xs="6">
+								<p:inputText value="#{proveedoresMB.itemSelected.ncuenta}" id="ncuenta"></p:inputText>
+							</b:column>
+							
+						</b:row>
+					</b:column>
+					<b:column col-xs="6">
+					<b:row>
+								<h:outputLabel value="DUI" />
+					</b:row>
+					<b:row>
+						<p:inputText value="#{proveedoresMB.itemSelected.dui}" id="dui"
+							disabled="#{proveedoresMB.itemSelected.tipo eq 'J' }"></p:inputText>
+					</b:row>
+					<b:row>
+							<h:outputLabel value="NIT" />
+						</b:row>
+						<b:row>
+							<p:inputText value="#{proveedoresMB.itemSelected.nit}" id="nit"></p:inputText>
+						</b:row>
+						<b:row>
+							<h:outputLabel value="NCR" />
+						</b:row>
+						
+						<b:row>
+							<p:inputText value="#{proveedoresMB.itemSelected.nrc}"></p:inputText>
+						</b:row>
+				</b:column>
+
+
+				</b:row>
+				
+				<hr/>
+				<hr/>
+					
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+									<ui:param name="mb" 		value="#{proveedoresMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{proveedoresMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{proveedoresMB.wtgDialog}"></ui:param>
+						</ui:include>
+						
+					</b:row>	
+				
+				</b:panel>
+		</p:dialog>
+	</h:form>
+</ui:composition>
