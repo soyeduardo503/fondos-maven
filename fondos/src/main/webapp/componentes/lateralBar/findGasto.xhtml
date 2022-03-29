@@ -1,66 +1,101 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"  
-    
-                      xmlns:b="http://bootsfaces.net/ui">
-	
-	<h:form id="findGasto" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="findGasto">
 		<p:sidebar position="right" id="findGasto" widgetVar="findGasto">
-			
-			<b:panel look="primary" title="Busqueda de Gasto" collapsible="false"> 
+
+			<b:panel look="primary" title="Busqueda de Gasto" collapsible="false">
 				<b:container fluid="true">
+
+
 					<b:row>
-						<b:column col-xs="12">
-							<b:row>
-							
-									<h:outputText value="Proveedor" />
-							
-							</b:row>
-							<b:row>
-									<p:inputText value="#{bancoMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
-							</b:row>
-						</b:column>
+
+						<h:outputText value="Proveedor" />
+
+					</b:row>
+					<b:row>
+						<p:inputText value="#{searchGastoMB.search.textProveedor}"
+							placeholder="Nombre" size="15" maxlength="15"></p:inputText>
+						<p:selectOneMenu value="#{searchGastoMB.search.proveedor}"
+							converter="proveedorConverter">
+							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							<f:selectItems value="#{searchGastoMB.listProveedor}" var="pr"
+								itemLabel="#{pr.nombre}" itemValue="#{pr}" />
+						</p:selectOneMenu>
+					</b:row>
+
+					<b:row>
+
+						<h:outputText value="Proveedor" />
+
+					</b:row>
+					<b:row>
+						<p:inputText value="#{searchGastoMB.search.textProveedor}"
+							size="15" maxlength="15"></p:inputText>
+					</b:row>
 					
-					</b:row>
-				
-				
+					<hr />
+
 					<b:row>
-						
-						<b:column col-xs="12">
-							<b:row>
-								<h:outputText value="Activo" />
-							</b:row>
-							<b:row>
-								<p:selectOneMenu value="#{bancoMB.itemSelected.act}">
-															<f:selectItem itemLabel="Si" itemValue="A"/>
-															<f:selectItem itemLabel="No" itemValue="I"/>
-								</p:selectOneMenu>
-							</b:row>
-														
-						</b:column>
+						<h:outputText value="Descripcion" />
 					</b:row>
+					<b:row>
+						<p:inputNumber value="#{searchGastoMB.search.description}" />
+					</b:row>
+
+					<hr />
+
+					<b:row>
+						<h:outputText value="Monto" />
+					</b:row>
+					<b:row>
+						<p:inputNumber value="#{searchGastoMB.search.monto}" />
+					</b:row>
+
+
 					<hr />
 					<b:row>
-						<b:column col-xs="2"/>
-						<ui:include src="/componentes/botones/guardarEdit.xhtml">
-									<ui:param name="mb" 		value="#{bancoMB}" />									
-									<ui:param name="cols" value="4"></ui:param>
-						</ui:include>
-						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
-									<ui:param name="mb" 		value="#{bancoMB}" />
-									<ui:param name="cols" value="4"></ui:param>
-									<ui:param name="wgt" value="#{bancoMB.dialogEdit}"></ui:param>
-						</ui:include>
+						<h:outputText value="Cheque" />
 					</b:row>
+					<b:row>
+						<p:inputNumber value="#{searchGastoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
+					</b:row>
+
+
+					<hr />
+
+					<b:row>
+							<h:outputText value="Fecha" />	
+							<b:label value="Fecha" severity="danger" large-screen="full-width" />
+																							
+					</b:row>
+					<b:row>
+							<b:column col-xs="6">Inicial</b:column>
+							<b:column col-xs="6">Final</b:column>
+																							
+					</b:row>
+					<b:row>
+							<b:column col-xs="6"><p:calendar value="#{searchGastoMB.search.fechaInicial}"/> </b:column>
+							<b:column col-xs="6"><p:calendar value="#{searchGastoMB.search.fechaFinal}"/></b:column>
+							
+					</b:row>					
 					
-				</b:container>
+					
+					<hr />
+
+
+
+
 				
-			
+
+				</b:container>
+
+
 			</b:panel>
-			
+
 		</p:sidebar>
 	</h:form>
 </ui:composition>

@@ -26,8 +26,13 @@
 				<b:column col-xs="6" colspan="1">
 					<p:outputLabel value="fecha registro" />
 				</b:column>
-				<b:column col-xs="6" colspan="1">
+				<b:column col-xs="5" colspan="1">
 					<p:outputLabel value="Fecha de movimiento" />
+				</b:column>
+				<b:column col-xs="1" offset="0">
+					<p:commandLink onclick="PF('findGasto').show();">
+						<b:iconAwesome value="search" solid="true" size="4x"/>
+					</p:commandLink> 
 				</b:column>
 
 			</b:row>
