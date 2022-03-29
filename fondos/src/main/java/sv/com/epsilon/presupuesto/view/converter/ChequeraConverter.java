@@ -8,21 +8,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import sv.com.epsilon.entities.Banco;
-import sv.com.epsilon.facade.BancoFacade;
+import sv.com.epsilon.entities.Categoria;
+import sv.com.epsilon.entities.Chequera;
+import sv.com.epsilon.facade.CategoriaFacade;
+import sv.com.epsilon.facade.ChequeraFacade;
 
 /**
  * @author usuario07
  *
  */
-@FacesConverter(value="bancoConverter")
-public class BancoConverter extends AbstractConverter<Banco,BancoFacade> implements Converter {
+@FacesConverter(value="chequeraConverter")
+public class ChequeraConverter extends AbstractConverter<Chequera,ChequeraFacade> implements Converter {
 
 	/**
 	 * 
 	 */
-	public BancoConverter() {
-		super(Banco.class,BancoFacade.class);
+	public ChequeraConverter() {
+		super(Chequera.class,ChequeraFacade.class);
 	}
 
 	
@@ -42,14 +44,11 @@ public class BancoConverter extends AbstractConverter<Banco,BancoFacade> impleme
 	 */
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object objEntity) {
-		
-		if(objEntity==null)
+		if(objEntity==null||objEntity instanceof  String)
 			return "";
-		if(objEntity instanceof  String)
-			return "";
-		if(objEntity instanceof Banco)
-			return ((Banco) objEntity).getNombre();
-		return this.find(objEntity).getNombre();
+		if(objEntity instanceof Chequera)
+			return ((Chequera) objEntity).getNombre();
+		return this.getKeyString(objEntity);
 	}
 
 }

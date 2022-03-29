@@ -106,8 +106,11 @@ public class IngresoGastoMB implements Serializable {
 	}
 	
 	public void preRender() {
-		if(!FacesContext.getCurrentInstance().isPostback())
+		if(!FacesContext.getCurrentInstance().isPostback()) {
+			this.gasto.setFecha(new Date());
+			gasto.setFechaRegistro(new Date());
 			GastoCtrlr.loadin(this);
+		}
 		
 	}
 	
@@ -277,34 +280,40 @@ public class IngresoGastoMB implements Serializable {
 		
 	}
 	
+	public void updateNumberCurrentCheque() {
+		ChequeraFacade facade = new ChequeraFacade();
+		if(chequeraSelected!=null)
+			gasto.setCheque(facade.findCurrentValue(chequeraSelected));
+	}
+	
 	public void actualizarCheque(Tipodesembolso idTipoDesembolso) {
-		this.gasto.setCheque("");
+		this.gasto.setCheque(null);
 		showCheque=false;
 		showRecibo=false;
 		showTransferencia=false;
 		ChequeraFacade facade = new ChequeraFacade();
 		if(automaticChequera&&idTipoDesembolso.getIdTipoDesembolso()==1) {
-			gasto.setCheque( String.valueOf( facade.findCurrentValue(chequeraSelected)));
+			gasto.setCheque(facade.findCurrentValue(chequeraSelected));
 			return ;
 		}
-		switch (idTipoDesembolso.getIdTipoDesembolso()) {
-		case 1: 
-			showCheque=true;			
-			gasto.setCheque( String.valueOf( facade.findCurrentValue(chequeraSelected)));
-			break;
-		case 2:			
-			showTransferencia=true;
-			
-			break;
-		case 3: 
-			
-			showRecibo=true;
-			
-			
-			break;	
-		default:
-			break;
-		}
+//		switch (idTipoDesembolso.getIdTipoDesembolso()) {
+//		case 1: 
+//			showCheque=true;			
+//			gasto.setCheque( String.valueOf( facade.findCurrentValue(chequeraSelected)));
+//			break;
+//		case 2:			
+//			showTransferencia=true;
+//			
+//			break;
+//		case 3: 
+//			
+//			showRecibo=true;
+//			
+//			
+//			break;	
+//		default:
+//			break;
+//		}
 	}
 	
 	
@@ -457,6 +466,7 @@ public class IngresoGastoMB implements Serializable {
 		public void save() {
 			try {
 			//	gasto.setMovimientoList(createMovimientos());
+				gasto.setNombre(gasto.getDescripcion());
 				GastoCtrlr.save(gasto);
 				createMovimientos();
 				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1) {
