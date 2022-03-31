@@ -43,7 +43,7 @@ public class Gasto implements Serializable {
     
     private String codigo;
     
-    private String cheque;
+    private Integer cheque;
     
     private Double total;
         
@@ -185,7 +185,7 @@ public class Gasto implements Serializable {
 
   
 
-    public String getCheque() {
+    public Integer getCheque() {
 		return cheque;
 	}
 
@@ -193,7 +193,7 @@ public class Gasto implements Serializable {
 
 
 
-	public void setCheque(String cheque) {
+	public void setCheque(Integer cheque) {
 		this.cheque = cheque;
 	}
 

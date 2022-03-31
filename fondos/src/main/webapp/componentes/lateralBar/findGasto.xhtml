@@ -17,8 +17,9 @@
 
 					</b:row>
 					<b:row>
-
-						<p:selectOneMenu value="#{searchGastoMB.search.proveedor}" filterMatchMode="startWith" filter="true"
+						<p:inputText value="#{searchGastoMB.search.textProveedor}"
+							placeholder="Nombre" size="15" maxlength="15"></p:inputText>
+						<p:selectOneMenu value="#{searchGastoMB.search.proveedor}"
 							converter="proveedorConverter">
 							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
 							<f:selectItems value="#{searchGastoMB.listProveedor}" var="pr"
@@ -26,16 +27,23 @@
 						</p:selectOneMenu>
 					</b:row>
 
+					<b:row>
 
+						<h:outputText value="Proveedor" />
 
+					</b:row>
+					<b:row>
+						<p:inputText value="#{searchGastoMB.search.textProveedor}"
+							size="15" maxlength="15"></p:inputText>
+					</b:row>
+					
 					<hr />
 
 					<b:row>
 						<h:outputText value="Descripcion" />
 					</b:row>
-					<b:row >
-						<b:column col-xs="1"> <p:inputNumber value="#{searchGastoMB.search.description}"						size="50" /></b:column>
-						
+					<b:row>
+						<p:inputNumber value="#{searchGastoMB.search.description}" />
 					</b:row>
 
 					<hr />
@@ -44,75 +52,47 @@
 						<h:outputText value="Monto" />
 					</b:row>
 					<b:row>
-						<p:inputNumber value="#{searchGastoMB.search.monto}"
-							placeholder="ej 120.00" />
+						<p:inputNumber value="#{searchGastoMB.search.monto}" />
 					</b:row>
 
 
 					<hr />
 					<b:row>
-						<b:label value="Cheque"  severity="primary" large-screen="full-width"/>
+						<h:outputText value="Cheque" />
 					</b:row>
 					<b:row>
-						<p:inputNumber value="#{searchGastoMB.search.numeroCheque}"
-							placeholder="ej. 25 o 1-10" />
+						<p:inputNumber value="#{searchGastoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
 					</b:row>
 
 
 					<hr />
 
 					<b:row>
-						
-						<b:label value="Fecha" severity="primary" large-screen="full-width" />
-
+							<h:outputText value="Fecha" />	
+							<b:label value="Fecha" severity="danger" large-screen="full-width" />
+																							
 					</b:row>
 					<b:row>
-						<b:column col-xs="6">Inicial</b:column>
-						<b:column col-xs="6">Final</b:column>
-
+							<b:column col-xs="6">Inicial</b:column>
+							<b:column col-xs="6">Final</b:column>.
+																							
 					</b:row>
 					<b:row>
-						<b:column col-xs="6">
-							<p:calendar value="#{searchGastoMB.search.fechaInicial}" />
-						</b:column>
-						<b:column col-xs="6">
-							<p:calendar value="#{searchGastoMB.search.fechaFinal}" />
-						</b:column>
-
-					</b:row>
-
-
+							<b:column col-xs="6"><p:calendar value="#{searchGastoMB.search.fechaInicial}"/> </b:column>
+							<b:column col-xs="6"><p:calendar value="#{searchGastoMB.search.fechaFinal}"/></b:column>
+							
+					</b:row>					
+					
+					
 					<hr />
-
-					<b:row>
-						<b:column col-xs="6" styleClass="btn btn-info">
-							<p:commandLink action="#{searchGastoMB.invocacionBusqueda()}"
-								oncomplete="PF('findGasto').hide();">
-								<b:iconAwesome value="search" solid="true"
-									styleClass="iconWhite" size="2x" />
-								<br />
-								Encontrar
-							</p:commandLink>
-						</b:column>
-						<b:column col-xs="6" styleClass="btn btn-danger">
-							<p:commandLink onclick="PF('findGasto').hide();">
-
-
-
-								<b:iconAwesome value="window-close" styleClass="iconWhite"
-									size="2x" />
-									<br/>
-									Cancelar
-
-
-							</p:commandLink>
-
-						</b:column>
-					</b:row>
+					<p:commandLink value="Ok" action="#{searchGastoMB.search}" >
+					
+					</p:commandLink>
 
 
 
 
+				
 
 				</b:container>
 

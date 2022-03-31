@@ -51,7 +51,7 @@
 							BANCO
 						</b:row>
 						<b:row>
-							<p:selectOneMenu value="#{ingresoGastoMB.bancoSelected}">
+							<p:selectOneMenu value="#{ingresoGastoMB.bancoSelected}" converter="bancoConverter">
 								<f:selectItem></f:selectItem>
 								<f:selectItems value="#{ingresoGastoMB.listBanco}" var="b"
 									itemLabel="#{b.nombre}" itemValue="#{b}" />
@@ -64,7 +64,7 @@
 							CUENTA
 						</b:row>
 						<b:row>
-							<p:selectOneMenu value="#{ingresoGastoMB.cuentaSelected}">
+							<p:selectOneMenu value="#{ingresoGastoMB.cuentaSelected}" converter="cuentaConverter">
 								<f:selectItem></f:selectItem>
 								<f:selectItems value="#{ingresoGastoMB.listCuenta}" var="c"
 									itemLabel="#{c.numero}" itemValue="#{c}" />
@@ -77,10 +77,11 @@
 							CHEQUERA
 						</b:row>
 						<b:row>
-							<p:selectOneMenu value="#{ingresoGastoMB.chequeraSelected}">
+							<p:selectOneMenu value="#{ingresoGastoMB.chequeraSelected}" converter="chequeraConverter" >
 								<f:selectItem></f:selectItem>
 								<f:selectItems value="#{ingresoGastoMB.listChequera}" var="c"
-									itemLabel="#{c.nombre}" itemValue="#{c}" />
+									itemLabel="#{c.nombre}" itemValue="#{c}"  />
+									<p:ajax event="change" listener="#{ingresoGastoMB.updateNumberCurrentCheque()}" />
 							</p:selectOneMenu>
 						</b:row>
 						

@@ -47,6 +47,9 @@ public class Financiamiento implements Serializable {
     private String nombre;
     @Column(name = "Cuenta")
     private String cuenta;
+    @Column(name = "monto")
+    private Double Monto;
+    
     @OneToMany(mappedBy = "idFinanciamiento")
     private List<Movimiento> movimientoList;
     
