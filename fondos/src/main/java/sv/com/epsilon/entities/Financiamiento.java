@@ -8,6 +8,7 @@ package sv.com.epsilon.entities;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -49,6 +52,14 @@ public class Financiamiento implements Serializable {
     private String cuenta;
     @Column(name = "monto")
     private Double Monto;
+    
+    @Column(name = "Fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    
+    @Column(name = "fechaRegistro")
+    @Temporal(TemporalType.DATE)
+    private Date fechaRegistro;
     
     @OneToMany(mappedBy = "idFinanciamiento")
     private List<Movimiento> movimientoList;
@@ -137,8 +148,46 @@ public class Financiamiento implements Serializable {
     public void setMovimientoList(List<Movimiento> movimientoList) {
         this.movimientoList = movimientoList;
     }
+    
+    
 
-    @Override
+    public Double getMonto() {
+		return Monto;
+	}
+
+
+
+	public void setMonto(Double monto) {
+		Monto = monto;
+	}
+
+
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+
+
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idFinanciamiento != null ? idFinanciamiento.hashCode() : 0);

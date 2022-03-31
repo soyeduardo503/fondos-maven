@@ -17,37 +17,17 @@
 
 		<div class="largecontent">
 
-
-
+			<f:event listener="#{registroEntradaMB.preRender()}" type="preRenderView"></f:event>
+			
 
 			<h:form id="IDFormGasto">
 				<p:growl id="msg"></p:growl>
-				<b:panel look="success" title="Pantalla de registro de ingresos($)"
+				<b:panel look="info" title="Pantalla de registro de ingresos($)"
 					icon-awesome="arrow-up" collapsible="false">
-					<b:row>
-						<b:column col-xs="6">
-							<b:row>
-								<b:label value="Descripcion" severity="success"									large-screen="full-width" />
-							</b:row>
-							<b:row>	
-								<p:inputTextarea value="#{registroEntradaMB.abono.}" placeholder="Descripcion de donacion/abono">								
-								</p:inputTextarea>						
-							</b:row>
-						</b:column>
-						<b:column col-xs="6">
-							<b:row>
-								Monto
-							</b:row>
-							<b:row>
-								<p:inputText />
-							</b:row>
-						</b:column>
-
-					</b:row>
-					<b:row>
-						
+				
 					
-					</b:row>
+					<ui:include src="/registro/ingreso/header.xhtml">
+					</ui:include>
 				</b:panel>
 
 				<p:sidebar widgetVar="findIngreso" baseZIndex="10000"

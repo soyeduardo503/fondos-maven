@@ -4,10 +4,12 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import sv.com.epsilon.presupuesto.ctrlr.AsignacionCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.DisponibleCtrlr;
@@ -38,7 +40,11 @@ public class RegistroEntradaMB implements Serializable {
 
 	
 	
-	
+	public void preRender() {
+		if(!FacesContext.getCurrentInstance().isPostback()) {
+			reset();
+		}
+	}
 	
 	/**
 	 * 
@@ -63,6 +69,8 @@ public class RegistroEntradaMB implements Serializable {
 	}
 	public void reset() {
 		abono=new Financiamiento();
+		abono.setFecha(new Date());
+		abono.setFechaRegistro(new Date());
 	}
 		
 	

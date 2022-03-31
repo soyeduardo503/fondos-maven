@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+
+	<b:row>
+		<b:column col-xs="6">
+			<b:row>
+				<b:label value="Descripcion" severity="info"
+					large-screen="full-width" style="font-size:1.2em;" />
+			</b:row>
+			<b:row>
+				<p:inputTextarea value="#{registroEntradaMB.abono.nombre}"
+					placeholder="Descripcion de donacion/abono" cols="100">
+				</p:inputTextarea>
+			</b:row>
+		</b:column>
+		<b:column col-xs="3">
+			
+			<b:row>
+								<b:label value="Fecha de registro" severity="info"
+					large-screen="full-width" style="font-size:1.2em;" />
+							</b:row>
+			<b:row>
+				<p:outputLabel value="#{registroEntradaMB.abono.fechaRegistro}">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</p:outputLabel>
+			</b:row>
+			<b:row>
+					Fecha de movimiento
+			</b:row>
+			<b:row>
+							<p:calendar value="#{registroEntradaMB.abono.fecha}" mask="true"
+						pattern="dd/MM/yyyy" />
+			</b:row>
+			
+			
+		</b:column>
+		<b:column col-xs="3">
+		
+				<b:row>
+									<b:label value="Monto" severity="info"
+					large-screen="full-width" style="font-size:1.2em;" />
+							</b:row>
+			<b:row>
+				<p:inputNumber value="#{registroEntradaMB.abono.monto}" />
+			</b:row>
+		</b:column>
+
+	</b:row>
+
+</ui:composition>
