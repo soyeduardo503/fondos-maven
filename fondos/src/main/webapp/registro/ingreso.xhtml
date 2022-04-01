@@ -17,17 +17,34 @@
 
 		<div class="largecontent">
 
-			<f:event listener="#{registroEntradaMB.preRender()}" type="preRenderView"></f:event>
-			
+			<f:event listener="#{registroEntradaMB.preRender()}"
+				type="preRenderView"></f:event>
+
 
 			<h:form id="IDFormGasto">
 				<p:growl id="msg"></p:growl>
 				<b:panel look="info" title="Pantalla de registro de ingresos($)"
 					icon-awesome="arrow-up" collapsible="false">
-				
-					
+
+
 					<ui:include src="/registro/ingreso/header.xhtml">
 					</ui:include>
+					<b:row>
+						<b:column col-xs="3" />
+						<p:commandLink action="#{registroEntradaMB.save()}">
+							<b:column col-xs="2" styleClass="btn btn-info">
+								<b:iconAwesome value="save" solid="true" /> Guardar</b:column>
+						</p:commandLink>
+						
+						<p:commandLink actionListener="#{registroEntradaMB.reset()}" update="IDFormGasto">
+							<b:column col-xs="2" styleClass="btn btn-danger">
+							<b:iconAwesome value="window-close" /> cancelar</b:column>
+						</p:commandLink>
+						
+
+						
+					</b:row>
+
 				</b:panel>
 
 				<p:sidebar widgetVar="findIngreso" baseZIndex="10000"

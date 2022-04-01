@@ -13,9 +13,12 @@
 					large-screen="full-width" style="font-size:1.2em;" />
 			</b:row>
 			<b:row>
-				<p:inputTextarea value="#{registroEntradaMB.abono.nombre}"
-					placeholder="Descripcion de donacion/abono" cols="100">
-				</p:inputTextarea>
+				<b:inputTextarea placeholder="Descripcion de donacion/abono" value="#{registroEntradaMB.abono.nombre}" small-screen="full-width">
+					 <f:facet name="append">
+					       <b:iconAwesome name="info-circle" size="2x"/>
+					 </f:facet>
+				</b:inputTextarea>
+				
 			</b:row>
 		</b:column>
 		<b:column col-xs="3">
@@ -46,8 +49,11 @@
 					large-screen="full-width" style="font-size:1.2em;" />
 							</b:row>
 			<b:row>
-				<p:inputNumber value="#{registroEntradaMB.abono.monto}" />
+				<b:inputText  value="#{registroEntradaMB.abono.monto}"  placeholder="0.00"  	large-screen="full-width" small-screen="full-width"></b:inputText>
+				
 			</b:row>
+			<hr/>
+			
 		</b:column>
 
 	</b:row>

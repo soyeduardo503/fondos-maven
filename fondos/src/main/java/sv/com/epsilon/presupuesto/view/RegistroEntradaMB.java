@@ -11,13 +11,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import sv.com.epsilon.presupuesto.ctrlr.AsignacionCtrlr;
-import sv.com.epsilon.presupuesto.ctrlr.DisponibleCtrlr;
-import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Financiamiento;
-import sv.com.epsilon.entities.Presupuesto;
+import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
-import sv.com.epsilon.util.ExecuteForm;
 
 /**
  * @author usuario07
@@ -72,7 +68,18 @@ public class RegistroEntradaMB implements Serializable {
 		abono.setFecha(new Date());
 		abono.setFechaRegistro(new Date());
 	}
-		
+	
+	
+	public void save() {
+		try {
+			new FinanciamientoFacade().save(this.abono);
+			this.reset();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+	}
 	
 	
 }
