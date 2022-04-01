@@ -5,7 +5,13 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 
-
+	<b:row>
+				<b:label value="Donador" severity="info"
+					large-screen="full-width" style="font-size:1.2em;" />
+			</b:row>
+	<b:row>
+				<b:inputText value="#{registroEntradaMB.abono.donador}" placeholder="Nombre del donador" large-screen="full-width" small-screen="full-width" />
+	</b:row>
 	<b:row>
 		<b:column col-xs="6">
 			<b:row>
@@ -36,7 +42,7 @@
 					Fecha de movimiento
 			</b:row>
 			<b:row>
-							<p:calendar value="#{registroEntradaMB.abono.fecha}" mask="true"
+							<p:calendar value="#{registroEntradaMB.abono.fecha}" mask="true" placeholder="02/02/2020"
 						pattern="dd/MM/yyyy" />
 			</b:row>
 			

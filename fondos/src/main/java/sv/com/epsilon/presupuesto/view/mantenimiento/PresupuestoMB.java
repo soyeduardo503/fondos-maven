@@ -203,7 +203,8 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		try 
 		{
 		if(!FacesContext.getCurrentInstance().isPostback()){	
-			init(usuarioSessionMB.getToken(), usuarioSessionMB.getIdEmpresa());
+			if(usuarioSessionMB.getToken()!=null)
+				init(usuarioSessionMB.getToken(), usuarioSessionMB.getIdEmpresa());
 			initFacade();
 			closeFacade();
 			this.setList(getFacade().findAllActive());

@@ -12,8 +12,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import sv.com.epsilon.entities.Financiamiento;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
+import sv.com.epsilon.util.ExecuteForm;
+import sv.com.epsilon.util.MessageGrowlContext;
 
 /**
  * @author usuario07
@@ -63,8 +66,11 @@ public class RegistroEntradaMB implements Serializable {
 	public void setAbono(Financiamiento abono) {
 		this.abono = abono;
 	}
-	public void reset() {
+	public void reset() {//TODO delete presupuesto 1
 		abono=new Financiamiento();
+		abono.setAct("A");
+		abono.setIdEmpresa(1);
+		abono.setIdPresupuesto(new Presupuesto(1));
 		abono.setFecha(new Date());
 		abono.setFechaRegistro(new Date());
 	}
@@ -74,6 +80,8 @@ public class RegistroEntradaMB implements Serializable {
 		try {
 			new FinanciamientoFacade().save(this.abono);
 			this.reset();
+			new MessageGrowlContext().send("Movimiento guardado!!!","Accion completada");
+			new ExecuteForm().update("IDFormGasto");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -50,6 +50,8 @@ public class Financiamiento implements Serializable {
     private String nombre;
     @Column(name = "Cuenta")
     private String cuenta;
+    @Column(name = "donador")
+    private String donador;
     @Column(name = "monto")
     private Double Monto;
     
@@ -151,7 +153,19 @@ public class Financiamiento implements Serializable {
     
     
 
-    public Double getMonto() {
+    public String getDonador() {
+		return donador;
+	}
+
+
+
+	public void setDonador(String donador) {
+		this.donador = donador;
+	}
+
+
+
+	public Double getMonto() {
 		return Monto;
 	}
 
