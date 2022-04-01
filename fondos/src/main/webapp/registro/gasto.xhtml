@@ -108,7 +108,10 @@
 							<b:row >
 								<b:column col-xs="3"/>
 								<b:column col-xs="2" styleClass="btn btn-info" >
-								<p:commandLink  actionListener="#{ingresoGastoMB.save()}"> <b:iconAwesome value="save" solid="true" /> Guardar</p:commandLink></b:column>
+								<h:commandLink  actionListener="#{ingresoGastoMB.save()}"> 
+									<b:iconAwesome value="save" solid="true" /> Guardar
+								</h:commandLink>
+									</b:column>
 								<b:column col-xs="2" styleClass="btn btn-success" ><h:commandLink action="#{ingresoGastoMB.print()}" style="color: #fff;" target="_blank" ><b:iconAwesome value="file-pdf" solid="true"/> Print</h:commandLink></b:column>
 								<b:column col-xs="2" styleClass="btn btn-danger" ><b:iconAwesome value="window-close"/> cancelar</b:column>
 							</b:row>
