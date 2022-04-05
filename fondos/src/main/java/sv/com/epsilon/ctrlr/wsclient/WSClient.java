@@ -243,6 +243,10 @@ public class WSClient<T> {
 	}
 	
 	
+	public boolean remove(T delete) throws Exception {
+		return delete(delete);
+	}
+	
 	
 	public String url(String endPoint) {
 		Log.info(URL_BASE+"/"+this.typeClass.getSimpleName().toLowerCase()+endPoint);
