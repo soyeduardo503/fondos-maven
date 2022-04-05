@@ -32,14 +32,14 @@ public class ChequeraFacade extends WSClient<Chequera> {
 		
 	}
 
-	public Integer findCurrentValue(Chequera chequera) {
+	public Integer findCurrentValue(Integer idChequera) {
 		
-		return new BigInteger( String.valueOf( getNumber("/current/"+chequera.getIdChequera()).getValue())).intValue();
+		return new BigInteger( String.valueOf( getNumber("/current/"+idChequera).getValue())).intValue();
 		
 	}
 
-	public void updateCurrent(Chequera chequeraSelected) {
-		Optional<AccionResponse> response = process("/chequera/update/");
+	public void updateCurrent(Integer idChequeraSelected) {
+		Optional<AccionResponse> response = process("/chequera/update/"+idChequeraSelected);
 		Log.info("current value is updated: "+(response.isPresent()&&response.get().getStatus()==1));
 		
 		

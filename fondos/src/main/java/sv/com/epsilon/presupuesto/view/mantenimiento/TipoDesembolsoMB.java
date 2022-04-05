@@ -9,6 +9,7 @@ import java.util.Calendar;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.TipodesembolsoFacade;
@@ -75,9 +76,10 @@ public class TipoDesembolsoMB extends AbstractMantto<Tipodesembolso, Tipodesembo
 	@Override
 	public void preRender() {
 		try {
-			
-			this.callLoad();
-			defineHeaders();
+			if(FacesContext.getCurrentInstance().isPostback()) {
+				this.callLoad();
+				defineHeaders();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

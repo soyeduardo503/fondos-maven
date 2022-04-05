@@ -27,9 +27,23 @@
 							</p:column>
 							
 							<p:column headerText="Chequeras" width="100">
-								<p:commandLink action="#{chequeraMB.open(i)}" oncomplete="PF('WgtChequera').show();" update="idChequeraNew">
-									<b:iconAwesome value="search"/>
-								</p:commandLink>
+								<b:container fluid="true">
+									<b:row>
+										<b:column colXs="6">
+											<p:commandLink title="buscar" action="#{chequeraMB.open(i)}" oncomplete="PF('WgtChequera').show();" update="idChequeraNew">
+												<b:iconAwesome value="search"/>
+											</p:commandLink>
+										</b:column>
+										<b:column colXs="6">
+											<p:commandLink title="Agregar" action="#{chequeraMB.create(i)}" oncomplete="PF('WgtCreateChequera').show();" update="idCreateChequeraNew">
+												<b:iconAwesome value="plus"/>
+											</p:commandLink>
+										</b:column>
+									</b:row>
+								
+								</b:container>
+								
+								
 							</p:column>
 							
 							

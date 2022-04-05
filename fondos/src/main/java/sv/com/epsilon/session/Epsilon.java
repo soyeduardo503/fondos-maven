@@ -23,6 +23,11 @@ public class Epsilon implements Serializable {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
 
 	private HashMap<String, Object> values = new HashMap<String, Object>();
 
@@ -81,16 +86,16 @@ public class Epsilon implements Serializable {
 	}
 
 	public String getToken() {
-		return (values.get("token")).toString();
+		return (getValues().get("token")).toString();
 	}
 	
 	public Integer getIdEmpresa() {
-		return (Integer) (values.get("idEmpresa")!=null?values.get("idEmpresa"):1);
+		return (Integer) (getValues().get("idEmpresa")!=null?values.get("idEmpresa"):1);
 	}
 
 	public String getContext() {
-		if( values.get("context")!=null)
-			return values.get("context").toString();
+		if( getValues().get("context")!=null)
+			return getValues().get("context").toString();
 		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getContextName();
 		String allPath=FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 		Log.info("->"+contextPath);
@@ -101,20 +106,22 @@ public class Epsilon implements Serializable {
 	}
 
 	public String getUser() {
-		return values.get("user").toString();
+		return getValues().get("user").toString();
 	}
 
 	public Integer getIdRol() {
-		return Integer.parseInt(values.get("idRol").toString());
+		return Integer.parseInt(getValues().get("idRol").toString());
 	}
 	
 	public Integer getIdUser() {
-		return  Integer.parseInt( values.get("idUser").toString());
+		return  Integer.parseInt( getValues().get("idUser").toString());
 	}
 
 	
 
 	public HashMap<String, Object> getValues() {
+		if(values==null)
+			values=new HashMap<String, Object>();
 		return values;
 	}
 

@@ -96,6 +96,7 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	}
 	
 	{
+		//TODO eliminar presupuesto quemado
 		presupuestoSelected=new PresupuestoFacade().findById(1);
 		this.addValue("context","fondos");
 	}

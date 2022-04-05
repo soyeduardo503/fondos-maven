@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+
+<b:column col-xs="2">
+						<b:row>
+							BANCO
+						</b:row>
+						<b:row>
+							<p:selectOneMenu value="#{ingresoGastoMB.bancoSelected}" converter="bancoConverter">
+								<f:selectItem></f:selectItem>
+								<f:selectItems value="#{ingresoGastoMB.listBanco}" var="b"
+									itemLabel="#{b.nombre}" itemValue="#{b}" />
+							</p:selectOneMenu>
+						</b:row>
+
+					</b:column>
+					<b:column col-xs="2">
+						<b:row>
+							CUENTA
+						</b:row>
+						<b:row>
+							<p:selectOneMenu value="#{ingresoGastoMB.cuentaSelected}" converter="cuentaConverter">
+								<f:selectItem></f:selectItem>
+								<f:selectItems value="#{ingresoGastoMB.listCuenta}" var="c"
+									itemLabel="#{c.numero}" itemValue="#{c}" />
+							</p:selectOneMenu>
+						</b:row>
+						
+					</b:column>
+
+
+
+</ui:composition>

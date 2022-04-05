@@ -33,7 +33,7 @@ public class CategoriaConverter extends AbstractConverter<Categoria,CategoriaFac
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String key) {
 	
 		if("".equalsIgnoreCase(key))
-			return find("1");
+			return null;
 		return this.find(key);
 	}
 

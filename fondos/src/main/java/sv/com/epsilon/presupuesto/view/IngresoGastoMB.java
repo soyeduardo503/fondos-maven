@@ -39,6 +39,7 @@ import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CuentaFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.facade.TipodesembolsoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
@@ -77,7 +78,7 @@ public class IngresoGastoMB implements Serializable {
 	private List<Cuenta> listCuenta;
 	private Cuenta cuentaSelected;
 	private List<Chequera> listChequera;
-	private Chequera chequeraSelected;
+	private Integer idChequeraSelected;
 	private Categoria categoriaPadreSelected;
 	private Gasto gasto=new Gasto();
 	private Movimiento movimiento=new Movimiento();
@@ -96,11 +97,14 @@ public class IngresoGastoMB implements Serializable {
 	private List<Presupuesto> listPresupuesto;
 	
 	private List<Categoria> listCategoriaPrincipal;
+	private List<Tipodesembolso> listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
 	
 	
 	private Integer idGastoSelected;
 	
 	BigDecimal monto=new BigDecimal(0);
+
+	private boolean chequeraBloq;
 	{
 		movimiento.setMonto(0.0);
 	}
@@ -110,6 +114,7 @@ public class IngresoGastoMB implements Serializable {
 			this.gasto.setFecha(new Date());
 			gasto.setFechaRegistro(new Date());
 			GastoCtrlr.loadin(this);
+			//this.actualizarCheque(null);
 		}
 		
 	}
@@ -129,6 +134,14 @@ public class IngresoGastoMB implements Serializable {
 	
 	
 	
+
+	public List<Tipodesembolso> getListTipoDesembolso() {
+		return listTipoDesembolso;
+	}
+
+	public void setListTipoDesembolso(List<Tipodesembolso> listTipoDesembolso) {
+		this.listTipoDesembolso = listTipoDesembolso;
+	}
 
 	public Integer getIdGastoSelected() {
 		return idGastoSelected;
@@ -282,8 +295,8 @@ public class IngresoGastoMB implements Serializable {
 	
 	public void updateNumberCurrentCheque() {
 		ChequeraFacade facade = new ChequeraFacade();
-		if(chequeraSelected!=null)
-			gasto.setCheque(facade.findCurrentValue(chequeraSelected));
+		if(idChequeraSelected!=null&&idChequeraSelected>0)
+			gasto.setCheque(facade.findCurrentValue(idChequeraSelected));
 	}
 	
 	public void actualizarCheque(Tipodesembolso idTipoDesembolso) {
@@ -292,44 +305,40 @@ public class IngresoGastoMB implements Serializable {
 		showRecibo=false;
 		showTransferencia=false;
 		ChequeraFacade facade = new ChequeraFacade();
-		if(automaticChequera&&idTipoDesembolso.getIdTipoDesembolso()==1) {
-			gasto.setCheque(facade.findCurrentValue(chequeraSelected));
+		if(idTipoDesembolso.getIdTipoDesembolso()==1) {
+			setIdChequeraSelected(getListChequera().get(0).getIdChequera());
+			gasto.setCheque(facade.findCurrentValue(idChequeraSelected));
+			
 			return ;
+		}else {
+			this.setIdChequeraSelected(0);
+			this.gasto.setCheque(null);
+			
+
+
 		}
-//		switch (idTipoDesembolso.getIdTipoDesembolso()) {
-//		case 1: 
-//			showCheque=true;			
-//			gasto.setCheque( String.valueOf( facade.findCurrentValue(chequeraSelected)));
-//			break;
-//		case 2:			
-//			showTransferencia=true;
-//			
-//			break;
-//		case 3: 
-//			
-//			showRecibo=true;
-//			
-//			
-//			break;	
-//		default:
-//			break;
-//		}
+
 	}
 	
 	
 	
+	
+	
+	public boolean isChequeraBloq() {
+		return chequeraBloq;
+	}
+
+	public void setChequeraBloq(boolean chequeraBloq) {
+		this.chequeraBloq = chequeraBloq;
+	}
+
 	public List<Chequera> getListChequera() {
 		return listChequera;
 	}
 	public void setListChequera(List<Chequera> listChequera) {
 		this.listChequera = listChequera;
 	}
-	public Chequera getChequeraSelected() {
-		return chequeraSelected;
-	}
-	public void setChequeraSelected(Chequera chequeraSelected) {
-		this.chequeraSelected = chequeraSelected;
-	}
+	
 	private boolean foundCategoria(CategoriaGasto cg) {
 		for(int i=0;i<list.size();i++) {
 			if(cg.getCategoria().getIdCategoria()==list.get(i).getCategoria().getIdCategoria())
@@ -445,6 +454,14 @@ public class IngresoGastoMB implements Serializable {
 		
 		
 		
+		public Integer getIdChequeraSelected() {
+			return idChequeraSelected;
+		}
+
+		public void setIdChequeraSelected(Integer idChequeraSelected) {
+			this.idChequeraSelected = idChequeraSelected;
+		}
+
 		public List<Cuenta> getListCuenta() {
 			return listCuenta;
 		}
@@ -470,7 +487,7 @@ public class IngresoGastoMB implements Serializable {
 				GastoCtrlr.save(gasto);
 				createMovimientos();
 				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1) {
-					new ChequeraFacade().updateCurrent(chequeraSelected);
+					new ChequeraFacade().updateCurrent(idChequeraSelected);
 					print();
 				}
 			} catch (Exception e) {

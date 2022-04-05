@@ -36,7 +36,8 @@ public class ChequeraConverter extends AbstractConverter<Chequera,ChequeraFacade
 	
 		if("".equalsIgnoreCase(key))
 			return null;
-		return this.find(key);
+		String[] obj=key.split("-");
+		return this.find(String.valueOf(obj[0]));
 	}
 
 	/* (non-Javadoc)

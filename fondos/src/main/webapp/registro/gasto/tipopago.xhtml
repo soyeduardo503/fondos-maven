@@ -26,15 +26,15 @@
 						</b:row>
 						<b:row>
 							<b:column col-xs="8" colspan="1">
-								<p:selectOneMenu
+								<p:selectOneMenu id="tpPago"
 									value="#{ingresoGastoMB.gasto.idTipoDesembolso}"
 									converter="tipoDesembolsoConverter">
-									<f:selectItem itemValue="" itemLabel="" selected="selected"
+									<f:selectItem  itemLabel="" selected="selected"
 										noSelectionOption="true" />
-									<f:selectItems value="#{tipoDesembolsoMB.list}" var="td"
+									<f:selectItems value="#{ingresoGastoMB.listTipoDesembolso}" var="td"
 										itemLabel="#{td.nombre}" itemValue="#{td}"></f:selectItems>
 									<p:ajax event="change"
-										update=":#{ingresoGastoMB.form}:noCheque"
+										update=":#{ingresoGastoMB.form}:noCheque,cheq"
 										listener="#{ingresoGastoMB.actualizarCheque(ingresoGastoMB.gasto.idTipoDesembolso)}" />
 								</p:selectOneMenu>
 							</b:column>
@@ -48,40 +48,15 @@
 					</b:column>
 					<b:column col-xs="2">
 						<b:row>
-							BANCO
-						</b:row>
-						<b:row>
-							<p:selectOneMenu value="#{ingresoGastoMB.bancoSelected}" converter="bancoConverter">
-								<f:selectItem></f:selectItem>
-								<f:selectItems value="#{ingresoGastoMB.listBanco}" var="b"
-									itemLabel="#{b.nombre}" itemValue="#{b}" />
-							</p:selectOneMenu>
-						</b:row>
-
-					</b:column>
-					<b:column col-xs="2">
-						<b:row>
-							CUENTA
-						</b:row>
-						<b:row>
-							<p:selectOneMenu value="#{ingresoGastoMB.cuentaSelected}" converter="cuentaConverter">
-								<f:selectItem></f:selectItem>
-								<f:selectItems value="#{ingresoGastoMB.listCuenta}" var="c"
-									itemLabel="#{c.numero}" itemValue="#{c}" />
-							</p:selectOneMenu>
-						</b:row>
-						
-					</b:column>
-					<b:column col-xs="2">
-						<b:row>
 							CHEQUERA
 						</b:row>
 						<b:row>
-							<p:selectOneMenu value="#{ingresoGastoMB.chequeraSelected}" converter="chequeraConverter" >
-								<f:selectItem></f:selectItem>
-								<f:selectItems value="#{ingresoGastoMB.listChequera}" var="c"
-									itemLabel="#{c.nombre}" itemValue="#{c}"  />
-									<p:ajax event="change" listener="#{ingresoGastoMB.updateNumberCurrentCheque()}" />
+							<p:selectOneMenu value="#{ingresoGastoMB.idChequeraSelected}"  id="cheq" disabled="#{ingresoGastoMB.gasto.idTipoDesembolso.idTipoDesembolso !=1}" >
+								<f:selectItem itemLabel="" itemValue="0" selected="selected"
+										noSelectionOption="true" ></f:selectItem>
+								<f:selectItems value="#{ingresoGastoMB.listChequera}" var="c" 
+									itemLabel="#{c.nombre}" itemValue="#{c.idChequera}"  />
+									<p:ajax event="change" update="noCheque" listener="#{ingresoGastoMB.updateNumberCurrentCheque()}" />
 							</p:selectOneMenu>
 						</b:row>
 						

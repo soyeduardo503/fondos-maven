@@ -287,8 +287,13 @@ public abstract class  AbstractMantto<K,T> implements Serializable {
 	public void remove() throws Exception{
 		initFacade();
 		callMethod="remove";
-		facade.getClass().getMethod(callMethod, new Class[]{Object.class}).invoke(facade, new Object[]{itemSelected});
-		this.list.remove(itemSelected);
+		try {
+		boolean d=(boolean) facade.getClass().getMethod(callMethod, new Class[]{Object.class}).invoke(facade, new Object[]{itemSelected});
+		if(d)
+			this.list.remove(itemSelected);
+		}catch (Exception e) {
+			new MessageGrowlContext().sendError("No se puede borrar este elemento", "El elemento se utiliza en otras instancias", e);
+		}
 		updateDialogClose();
 	}
 

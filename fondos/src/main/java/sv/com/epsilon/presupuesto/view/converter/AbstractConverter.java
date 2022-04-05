@@ -43,18 +43,18 @@ public abstract class AbstractConverter<K,T> {
 	}
 	
 	public Object getKey(Object obj){
-		System.out.println(obj);
+		//System.out.println(obj);
 		if(obj!=null){
 			;
 			Field[] fields= obj.getClass().getDeclaredFields();
-			System.out.println(fields.length);
+			//System.out.println(fields.length);
 			if(fields.length>0)
 			for(Field f: fields){
 				Annotation[] anotacions = f.getAnnotations();
 				if(anotacions.length>0){ 
 					for(Annotation a:anotacions){
-						System.out.println(a.annotationType().getName());
-						System.out.println(a.annotationType().getSimpleName());
+//						System.out.println(a.annotationType().getName());
+//						System.out.println(a.annotationType().getSimpleName());
 						if(a.annotationType().getSimpleName().equals("Id")){
 							//.isInstance( javax.persistence.Id.class)){
 							return getValue(obj,f);

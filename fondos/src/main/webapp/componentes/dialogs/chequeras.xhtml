@@ -8,10 +8,10 @@
                       xmlns:b="http://bootsfaces.net/ui">
 	
 	<h:form id="idChequeraNew">
-	<p:dialog widgetVar="WgtChequera" id="idWgtChequera" width="900" height="500" header="Modificacion de chequeras">
+	<p:dialog widgetVar="WgtChequera" id="idWgtChequera" width="900" height="300" header="Modificacion de chequeras">
 	
        
-		<b:container fluid="true">
+		<b:panel look="info">
 		<b:row>
 			<b:column col-xs="12">
 				<p:dataTable value="#{chequeraMB.list}" var="c" id="idChequeras">
@@ -41,71 +41,9 @@
 			</b:column>
 			</b:row>
 			<br/>
-			<br/>
-			<br/>
-			<b:row>
-				
-				<b:column col-xs="4">
-					<h5>Crear nueva chequera</h5>
-				 	<p:selectBooleanButton onLabel="Yes" offLabel="No"  value="#{chequeraMB.showNew}"    onIcon="pi check-square" offIcon="pi pi-times"  >
-				 		<p:ajax  listener="#{chequeraMB.hidePanel()}" process="@this"/>
-				 	</p:selectBooleanButton>
-				</b:column>
-				<b:column col-xs="4">
-					<h5>Opciones</h5>
-					<p:panel id="btnSaveC" >
-					 	<p:commandLink onclick="PF('WgtChequera').hide();" rendered="#{!chequeraMB.showNew}"  styleClass="btn btn-info">
-					 				<b:iconAwesome value="save" solid="true" styleClass="iconWhite" size="2x"/>
-					 	</p:commandLink>
-					 	
-				 	</p:panel>
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column col-xs="4"/>
-				
-			</b:row>
-			<br/>
-			<br/>
-			<br/>
-			</b:container>
-			<p:panel id="panelChequeraNuevo" >
-			<b:panel look="info"  title="Nueva chequera" collapsible="false" rendered="#{chequeraMB.showNew}">
-				
+	
 			
-				<b:row>
-					
-							
-								<b:column col-xs="4">Nombre</b:column>
-								<b:column col-xs="4">Desde</b:column>
-								<b:column col-xs="4">Hasta</b:column>
-							</b:row>
-							<b:row>
-								<b:column col-xs="4"><p:inputText id="Nombre" value="#{chequeraMB.itemSelected.nombre}" size="20" maxlength="15"></p:inputText></b:column>
-								<b:column col-xs="4"><p:inputText id="desde" value="#{chequeraMB.itemSelected.desde}" size="20" maxlength="15"></p:inputText></b:column>
-								<b:column col-xs="4"><p:inputText id="hasta" value="#{chequeraMB.itemSelected.hasta}" size="20" maxlength="15"></p:inputText></b:column>
-							
-						
-				</b:row>
-			
-				<br/>
-				<br/>
-				<b:row>
-						<b:column col-xs="2"/>
-						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
-									<ui:param name="mb" 		value="#{chequeraMB}" />									
-									<ui:param name="cols" value="4"></ui:param>
-						</ui:include>
-						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
-									<ui:param name="mb" 		value="#{chequeraMB}" />
-									<ui:param name="cols" value="4"></ui:param>
-									<ui:param name="wgt" value="#{chequeraMB.wtgDialog}"></ui:param>
-						</ui:include>
-						
-					</b:row>	
-						
 		</b:panel>
-		</p:panel>
 		
 	</p:dialog>
 	</h:form>

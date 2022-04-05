@@ -33,8 +33,8 @@
 							<br/>
 				<br/>
 				<hr/>
-				<br/>
-				<br/>	
+			
+		
 					<h:form>
 		
 					
@@ -55,15 +55,26 @@
 		<h:form id="#{cuentaMB.idFormNew}">
 			<ui:include src="/componentes/dialogs/cuentasNuevas.xhtml"/>
 		</h:form>
+		
 		<h:form id="#{bancoMB.idFormNew}">
 			<ui:include src="/componentes/dialogs/bancosNuevos.xhtml"/>
 		</h:form>
+		
+		<ui:include src="/componentes/dialogs/createChequera.xhtml"></ui:include>
+		
 		<ui:include src="/componentes/dialogs/eliminar.xhtml">
 			<ui:param name="mb" value="#{cuentaMB}"></ui:param>
 			<ui:param name="nombreObjeto" value="#{cuentaMB.itemSelected.numero}"></ui:param>
 			<ui:param name="wgtName" value="#{cuentaMB.dialogDelete}"/>
 			<ui:param name="idName" value="#{cuentaMB.idFormDelete}"></ui:param>
 		</ui:include>
+		<ui:include src="/componentes/dialogs/eliminar.xhtml">
+			<ui:param name="mb" value="#{bancoMB}"></ui:param>
+			<ui:param name="nombreObjeto" value="#{bancoMB.itemSelected.nombre}"></ui:param>
+			<ui:param name="wgtName" value="#{bancoMB.dialogDelete}"/>
+			<ui:param name="idName" value="#{bancoMB.idFormDelete}"></ui:param>
+		</ui:include>
+		
 		<ui:include src="/componentes/lateralBar/editCuenta.xhtml"/>
 		<ui:include src="/componentes/lateralBar/editBanco.xhtml"/>
 		<ui:include src="/componentes/dialogs/chequeras.xhtml"/>

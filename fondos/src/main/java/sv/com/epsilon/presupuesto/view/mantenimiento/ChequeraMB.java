@@ -64,6 +64,15 @@ public class ChequeraMB extends AbstractMantto<Chequera, ChequeraFacade> impleme
 		}
 		
 	}
+	
+	public void create(Cuenta cuenta) {
+		Chequera c=new Chequera();
+		c.setAct("A");
+		c.setIdCuenta(cuenta.getIdCuenta());
+		//TODO DELETE VALUE STATIC
+		c.setIdEmpresa(1);
+		this.setItemSelected(c);
+	}
 
 
 	@Override
@@ -88,6 +97,7 @@ public class ChequeraMB extends AbstractMantto<Chequera, ChequeraFacade> impleme
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override

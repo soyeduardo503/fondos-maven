@@ -21,7 +21,7 @@
 							</b:row>
 				<b:row>
 					
-						<p:selectOneMenu value="#{categoriaAutocompleteMB.principalSelected}" >
+						<p:selectOneMenu value="#{categoriaAutocompleteMB.principalSelected}"  >
 							<f:selectItems value="#{ingresoGastoMB.listCategoriaPrincipal}" 
 								var="c" itemValue="#{c.codigo}" itemLabel="#{c.nombre}" />
 							<p:ajax listener="#{categoriaAutocompleteMB.searchChildrenAplicable()}" update="idCategoria,codigoCategoriaPpal"/>	

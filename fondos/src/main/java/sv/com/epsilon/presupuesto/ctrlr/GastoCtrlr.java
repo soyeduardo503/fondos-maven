@@ -82,7 +82,7 @@ public class GastoCtrlr {
 			return ;
 		if(gastoMB.getListChequera().size()==1)
 				gastoMB.setAutomaticChequera(true);
-		gastoMB.setChequeraSelected(gastoMB.getListChequera().get(0));
+		//gastoMB.setIdChequeraSelected(gastoMB.getListChequera().get(0).getIdChequera());
 				
 					
 				
