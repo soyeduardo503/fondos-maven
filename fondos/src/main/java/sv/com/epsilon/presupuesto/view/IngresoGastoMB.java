@@ -313,7 +313,7 @@ public class IngresoGastoMB implements Serializable {
 		}else {
 			this.setIdChequeraSelected(0);
 			this.gasto.setCheque(null);
-			
+			chequeraBloq=true;
 
 
 		}
@@ -490,11 +490,25 @@ public class IngresoGastoMB implements Serializable {
 					new ChequeraFacade().updateCurrent(idChequeraSelected);
 					print();
 				}
+				
+				
+				new MessageGrowlContext().send("Gasto Registrado!!!", "Se guardo la informacion");
+				empty();
 			} catch (Exception e) {
 				new MessageGrowlContext().sendError("Error guardando informacion: "+e.getMessage(), e.getMessage(), e);
 			}
 		}
 		
+		private void empty() {
+			this.gasto=new Gasto();
+			this.categoriaTxt="";
+			this.chequeraBloq=true;
+			gasto.setIdTipoDesembolso(null);
+			list=new ArrayList<CategoriaGasto>();
+			
+			
+		}
+
 		public List<Movimiento> createMovimientos(){
 			List<Movimiento> mvts=new ArrayList<>();
 			this.list.forEach(temp->{
