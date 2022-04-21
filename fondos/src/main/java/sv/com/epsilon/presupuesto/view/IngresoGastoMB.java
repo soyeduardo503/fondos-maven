@@ -97,7 +97,7 @@ public class IngresoGastoMB implements Serializable {
 	private List<Presupuesto> listPresupuesto;
 	
 	private List<Categoria> listCategoriaPrincipal;
-	private List<Tipodesembolso> listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
+	private List<Tipodesembolso> listTipoDesembolso;
 	
 	
 	private Integer idGastoSelected;
@@ -114,6 +114,7 @@ public class IngresoGastoMB implements Serializable {
 			this.gasto.setFecha(new Date());
 			gasto.setFechaRegistro(new Date());
 			GastoCtrlr.loadin(this);
+			listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
 			//this.actualizarCheque(null);
 		}
 		
@@ -484,8 +485,9 @@ public class IngresoGastoMB implements Serializable {
 			try {
 			//	gasto.setMovimientoList(createMovimientos());
 				gasto.setNombre(gasto.getDescripcion());
+				gasto.setMovimientoList(createMovimientos());
 				GastoCtrlr.save(gasto);
-				createMovimientos();
+				//createMovimientos();
 				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1) {
 					new ChequeraFacade().updateCurrent(idChequeraSelected);
 					print();
@@ -505,7 +507,7 @@ public class IngresoGastoMB implements Serializable {
 			this.chequeraBloq=true;
 			gasto.setIdTipoDesembolso(null);
 			list=new ArrayList<CategoriaGasto>();
-			
+			new ExecuteForm().update(this.form);
 			
 		}
 
@@ -521,11 +523,11 @@ public class IngresoGastoMB implements Serializable {
 				mov.setCuenta(cuentaSelected.getNumero());
 				mov.setIdUsuario(this.sesionMB.getIdUser());
 				try {
-					MovimientoCtrlr.save(mov);
+					//MovimientoCtrlr.save(mov);
 				} catch (Exception e) {
 					Log.error(e, "Error en creacion de movimientos");
 				}
-				//mvts.add(mov);
+				mvts.add(mov);
 				//mov.setIdGasto(gasto)
 				
 			});

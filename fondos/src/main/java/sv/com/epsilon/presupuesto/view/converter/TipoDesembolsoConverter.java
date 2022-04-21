@@ -33,7 +33,7 @@ public class TipoDesembolsoConverter extends AbstractConverter<Tipodesembolso,Ti
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String key) {
 	
 		if("".equalsIgnoreCase(key))
-			return find("1");
+			return null;
 		return this.find(key);
 	}
 
@@ -42,7 +42,8 @@ public class TipoDesembolsoConverter extends AbstractConverter<Tipodesembolso,Ti
 	 */
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object objEntity) {
-		
+		if(objEntity==null)
+			return "";
 		return this.getKeyString(objEntity);
 	}
 

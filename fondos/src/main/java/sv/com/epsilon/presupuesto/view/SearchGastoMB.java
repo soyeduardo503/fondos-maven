@@ -31,7 +31,7 @@ public class SearchGastoMB implements Serializable{
 	 */
 	
 	
-	private SearchGasto search;
+	private SearchGasto search=new SearchGasto();
 	private List<Proveedor> listProveedor=new ProveedorFacade().findAllActive();
 	
 	

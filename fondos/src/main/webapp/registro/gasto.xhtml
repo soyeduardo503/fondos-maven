@@ -68,7 +68,7 @@
 						</p:column>
 						<p:column headerText="$">
 							<p:inputText value="#{g.monto}" >
-								<p:ajax event="keyup" listener="#{ingresoGastoMB.recalcularTotal()}" update=":IDFormGasto:totalMovimiento"/>
+								<p:ajax listener="#{ingresoGastoMB.recalcularTotal()}" update=":IDFormGasto:totalMovimiento"/>
 							</p:inputText>
 						</p:column>
 						<p:column headerText="">
@@ -107,7 +107,7 @@
 							<b:row >
 								<b:column col-xs="3"/>
 								<b:column col-xs="2" styleClass="btn btn-info" >
-								<h:commandLink  actionListener="#{ingresoGastoMB.save()}"> 
+								<h:commandLink  actionListener="#{ingresoGastoMB.save()}" target="_blank"> 
 									<b:iconAwesome value="save" solid="true" /> Guardar
 								</h:commandLink>
 									</b:column>

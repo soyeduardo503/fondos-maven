@@ -17,8 +17,7 @@
 
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchGastoMB.search.textProveedor}"
-							placeholder="Nombre" size="15" maxlength="15"></p:inputText>
+						
 						<p:selectOneMenu value="#{searchGastoMB.search.proveedor}"
 							converter="proveedorConverter">
 							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
@@ -27,15 +26,7 @@
 						</p:selectOneMenu>
 					</b:row>
 
-					<b:row>
-
-						<h:outputText value="Proveedor" />
-
-					</b:row>
-					<b:row>
-						<p:inputText value="#{searchGastoMB.search.textProveedor}"
-							size="15" maxlength="15"></p:inputText>
-					</b:row>
+					
 					
 					<hr />
 
@@ -43,7 +34,7 @@
 						<h:outputText value="Descripcion" />
 					</b:row>
 					<b:row>
-						<p:inputNumber value="#{searchGastoMB.search.description}" />
+						<p:inputText value="#{searchGastoMB.search.description}"  />
 					</b:row>
 
 					<hr />
@@ -52,7 +43,7 @@
 						<h:outputText value="Monto" />
 					</b:row>
 					<b:row>
-						<p:inputNumber value="#{searchGastoMB.search.monto}" />
+						<p:inputText value="#{searchGastoMB.search.monto}" required="false" />
 					</b:row>
 
 
@@ -61,7 +52,7 @@
 						<h:outputText value="Cheque" />
 					</b:row>
 					<b:row>
-						<p:inputNumber value="#{searchGastoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
+						<p:inputText value="#{searchGastoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
 					</b:row>
 
 
@@ -85,12 +76,33 @@
 					
 					
 					<hr />
-					<p:commandLink value="Ok" action="#{searchGastoMB.search}" >
-					
+					<b:row>
+					<b:column col-xs="2"/>
+					<p:commandLink  action="#{searchGastoMB.invocacionBusqueda}" >
+						<b:column col-xs="4" styleClass="btn btn-info">
+							<b:row>
+								<b:iconAwesome value="search" solid="true"/>
+							</b:row>
+							<b:row>
+								<p:outputLabel value="Buscar"/>
+							</b:row>
+						</b:column>
 					</p:commandLink>
+						
+					<p:commandLink  onclick="PF('findGasto').hide();" >
+						<b:column col-xs="4" styleClass="btn btn-danger">
+							<b:row>
+								<b:iconAwesome value="window-close" />
+							</b:row>
+							<b:row>
+								<p:outputLabel value="Cancelar"/>
+							</b:row>
+						</b:column>
+					</p:commandLink>
+					
 
 
-
+				</b:row>
 
 				
 

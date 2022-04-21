@@ -39,7 +39,7 @@ public class ChequeraFacade extends WSClient<Chequera> {
 	}
 
 	public void updateCurrent(Integer idChequeraSelected) {
-		Optional<AccionResponse> response = process("/chequera/update/"+idChequeraSelected);
+		Optional<AccionResponse> response = process("/update/"+idChequeraSelected);
 		Log.info("current value is updated: "+(response.isPresent()&&response.get().getStatus()==1));
 		
 		
