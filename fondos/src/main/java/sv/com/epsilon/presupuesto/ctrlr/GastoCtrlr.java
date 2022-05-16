@@ -25,7 +25,7 @@ public class GastoCtrlr {
 
 	
 	
-	public static  void save(Gasto gasto) throws  Exception{
+	public static  Integer save(Gasto gasto) throws  Exception{
 		
 		gasto.setIdEmpresa("1");
 		if(gasto.getCheque()==null)
@@ -45,7 +45,8 @@ public class GastoCtrlr {
 			throw new Exception("Monto total igual a cero");
 		
 		GastoFacade facade=new GastoFacade();
-		facade.save(gasto);
+		gasto=facade.save(gasto);
+		return gasto.getIdGasto();
 //		MovimientoFacade movimientoFacade=new MovimientoFacade();
 	
 			

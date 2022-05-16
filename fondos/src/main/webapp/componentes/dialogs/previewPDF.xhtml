@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="previewDocument">
+		<p:dialog width="700" widgetVar="previewDlg" height="400"
+			id="idPreview">
+			<p:media value="#{chequeViewMB.reportValue}" width="100%"  cache="false" player="pdf"
+				height="300px">
+        Your browser can't display pdf, to download pdf instead.
+					#{chequeViewMB.reportValue}
+    	</p:media>
+		</p:dialog>
+	</h:form>
+
+
+
+
+</ui:composition>

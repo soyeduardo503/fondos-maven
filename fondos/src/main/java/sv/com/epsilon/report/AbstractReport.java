@@ -1,9 +1,11 @@
 package sv.com.epsilon.report;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -37,12 +40,92 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 	private   String              formato;
 	private   String              contentType;
 	private   Class<?>            xClass;
-	
+	public final static  String pathPDF=init(); 
 	
 	
 	public AbstractReport(){
 		mostrarEnPantalla=true;
 		formato="pdf";
+	}
+	
+	private  static String init() {
+		String pathPDF=null;
+		if(new File("C:\\files\\pdf\\").exists())
+			pathPDF=("C:\\files\\pdf\\");
+		else
+			pathPDF=("/opt/epsilon/pdf/");
+		return pathPDF;
+	}
+	
+	public String getEmptyPDFPath() {
+		return pathPDF+"empty.pdf";
+	}
+
+	public String  returnReport() throws Exception{
+		
+		InputStream          in                  = null;
+//		ServletOutputStream  servletOutputStream = null;
+		List<Object[]>       parametros          = null;	
+		try{						
+			Log.info("Imprimiendo Reporte..."+nombreReporte+ "\n# Reportes:"+reportes.size());
+			
+				
+	
+			int c=0;JasperPrint jasperPrint=null;
+			for(ReportFactory rf:reportes){
+				jasperPrint = JasperFillManager.fillReport(rf.getUrl(), rf.getParametros(), new JREmptyDataSource());
+				Log.info("1-Reporte url:"+rf.getUrl()+" Nombre:"+this.nombreReporte);
+				in = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(rf.getUrl());
+				if(in==null)
+					in=new FileInputStream(rf.getUrl());
+				
+				c++;
+				Log.info("Reporte "+c+" Parametros         :"+(rf.getParametros()==null?"null":rf.getParametros().toString()));
+				Log.info("Reporte "+c+" Tipo de data source:"+ rf.getTipoDataSource());
+				Log.info("Reporte "+c+" Coleccion          :"+(rf.getCollecion()==null?"null":rf.getCollecion().size()));
+				Log.info("Reporte "+c+" Bean          :"+(rf.getCollecion()==null?"null":rf.getCollecion().get(0).getClass().getSimpleName()));
+				Log.info("Reporte "+c+" URL                :"+ rf.getUrl());
+				
+				
+			
+			}			
+			
+			addExtencion();
+						
+			parametros=new ArrayList<Object[]>();
+			parametros.add(new Object[]{JRExporterParameter.JASPER_PRINT_LIST,jasperPrintList});			
+			if(nombreReporte.endsWith(".html"))
+				parametros.add(new Object[]{JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE});
+						
+			if(nombreReporte.endsWith(".xls")) {
+				parametros.add(new Object[]{JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE});
+				parametros.add(new Object[]{JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE});
+				parametros.add(new Object[]{JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE});
+				
+			    //we set the one page per sheet parameter here
+				parametros.add(new Object[]{JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE});
+				parametros.add(new Object[] {JRXlsExporterParameter.IGNORE_PAGE_MARGINS,Boolean.TRUE});
+				
+			}
+			String name=Calendar.getInstance().getTimeInMillis()+"R.pdf";
+			//name="empty.pdf";
+			JasperExportManager.exportReportToPdfFile(jasperPrint,pathPDF+name);
+			return name;
+		}catch(Exception ex){
+			Log.error("Error al mostrar el reporte",ex );
+			throw ex;
+		}finally{			
+			clean();
+			reportes=null;
+			if(in!=null){
+				in.close();
+				in = null;
+			}
+			if(parametros!=null){
+				parametros.clear();
+				parametros=null;
+			}
+		}		
 	}
 		
 	/**
@@ -58,7 +141,7 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 		try{						
 			Log.info("Imprimiendo Reporte..."+nombreReporte+ "\n# Reportes:"+reportes.size());
 			
-			
+				
 			jasperPrintList=new ArrayList<JasperPrint>();
 	
 			int c=0;
@@ -160,6 +243,7 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 			 HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 			 httpServletResponse.setContentType(contentType);
 			 Log.info(fileAttachment);
+			 Log.info(isMostrarEnPantalla()?"inline":"attachment");
 			 httpServletResponse.addHeader(content, (isMostrarEnPantalla()?"inline":"attachment")+"; filename="+ fileAttachment);			 
 			 servletOutputStream = httpServletResponse.getOutputStream();
 			} catch (Exception e) {

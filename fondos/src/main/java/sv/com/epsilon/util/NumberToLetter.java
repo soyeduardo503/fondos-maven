@@ -82,14 +82,14 @@ public class NumberToLetter {
            		{
            		
     			
-           			parte_decimal = " DÓLARES con "+Convertir(Num[1],false,mayusculas)+" CENTAVOS DE DÓLAR";
+           			parte_decimal = " Dï¿½LARES con "+Convertir(Num[1],false,mayusculas)+" CENTAVOS DE Dï¿½LAR";
            		}
            	else
            		parte_decimal=" punto "+Convertir(Num[1],false,mayusculas);
            }else
            {
         	   if(moneda )
-        		   parte_decimal ="DÓLARES";
+        		   parte_decimal ="Dï¿½LARES";
         	   
            }
            //se convierte el numero a literal
@@ -161,13 +161,13 @@ public class NumberToLetter {
             			}else if(Num[1].trim().length()>2){
             				Num[1]=Num[1].substring(0, 2);
             			}
-            			parte_decimal=(financiero? " DÓLARES con "+ Num[1] + "/100 ":" CON "+Convertir(Num[1],false,mayusculas))+" CENTAVOS ";
+            			parte_decimal=(financiero? " DOLARES con "+ Num[1] + "/100 ":" CON "+Convertir(Num[1],false,mayusculas))+" CENTAVOS ";
             		}
             	else
             		parte_decimal=" punto "+ceroDecimal+Convertir(Num[1],false,mayusculas);
             }else{
             	   if(moneda )
-            		   parte_decimal ="DÓLARES";
+            		   parte_decimal ="DOLARES";
             	   
             }
             //se convierte el numero a literal

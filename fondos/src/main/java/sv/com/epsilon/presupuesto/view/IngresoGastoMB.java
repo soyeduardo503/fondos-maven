@@ -4,6 +4,8 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +27,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import sv.com.epsilon.entities.Banco;
 import sv.com.epsilon.entities.Categoria;
@@ -34,11 +38,8 @@ import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Movimiento;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Tipodesembolso;
-import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
-import sv.com.epsilon.facade.CuentaFacade;
-import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.facade.TipodesembolsoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
@@ -99,6 +100,9 @@ public class IngresoGastoMB implements Serializable {
 	private List<Categoria> listCategoriaPrincipal;
 	private List<Tipodesembolso> listTipoDesembolso;
 	
+	private boolean disablePost=true;
+	
+	
 	
 	private Integer idGastoSelected;
 	
@@ -116,6 +120,9 @@ public class IngresoGastoMB implements Serializable {
 			GastoCtrlr.loadin(this);
 			listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
 			//this.actualizarCheque(null);
+			
+		
+			
 		}
 		
 	}
@@ -169,6 +176,14 @@ public class IngresoGastoMB implements Serializable {
 	
 	
 	
+	public boolean isDisablePost() {
+		return disablePost;
+	}
+
+	public void setDisablePost(boolean disablePost) {
+		this.disablePost = disablePost;
+	}
+
 	public Presupuesto getPresupuestoSelected() {
 		return presupuestoSelected;
 	}
@@ -408,24 +423,11 @@ public class IngresoGastoMB implements Serializable {
 		}
 		}
 		
-		public void print() {
-			Documento doc=new Documento();
-			doc.setExt("PDF");
-			doc.setNombre("Cheque FPT");
-			if(new File("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper").exists())
-				doc.setPath("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper");
-			else
-				doc.setPath("/opt/epsilon/reporte/cheque.jasper");
-			Cheque cheque=new Cheque();
-			String cantidadLetras=new NumberToLetter().Convertir(String.valueOf(gasto.getTotal()),true, true, true);
-			cheque.setCantidad(gasto.getTotal());
-
-			cheque.setCantidadLetras(cantidadLetras);
-			cheque.setConcepto(this.gasto.getNombre());
-			cheque.setProveedor(gasto.getIdProveedor().getNombreLegal());
-			new RptShow().callReport(doc, cheque);
-		}
 		
+		
+		
+		
+
 		public List<CategoriaGasto> getList() {
 			return list;
 		}
@@ -485,29 +487,44 @@ public class IngresoGastoMB implements Serializable {
 			try {
 			//	gasto.setMovimientoList(createMovimientos());
 				gasto.setNombre(gasto.getDescripcion());
-				gasto.setMovimientoList(createMovimientos());
-				GastoCtrlr.save(gasto);
-				//createMovimientos();
+				//gasto.setMovimientoList(createMovimientos());
+				Integer id=GastoCtrlr.save(gasto);
+				this.gasto.setIdGasto(id);
+				List<Movimiento> listMovToSave = createMovimientos();
+				try {
+					listMovToSave.forEach(mov->{
+						try {
+							MovimientoCtrlr.save(mov);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					});
+				} catch (Exception e) {
+					Log.error(e, "Error en creacion de movimientos");
+				}
 				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1) {
 					new ChequeraFacade().updateCurrent(idChequeraSelected);
-					print();
+					
 				}
 				
 				
 				new MessageGrowlContext().send("Gasto Registrado!!!", "Se guardo la informacion");
-				empty();
+				disablePost=false;
 			} catch (Exception e) {
 				new MessageGrowlContext().sendError("Error guardando informacion: "+e.getMessage(), e.getMessage(), e);
 			}
 		}
 		
-		private void empty() {
+		public void emptyForm() {
 			this.gasto=new Gasto();
 			this.categoriaTxt="";
 			this.chequeraBloq=true;
 			gasto.setIdTipoDesembolso(null);
 			list=new ArrayList<CategoriaGasto>();
+			disablePost=true;
 			new ExecuteForm().update(this.form);
+			
 			
 		}
 
@@ -522,11 +539,7 @@ public class IngresoGastoMB implements Serializable {
 				mov.setFechaRegistro(new Date());
 				mov.setCuenta(cuentaSelected.getNumero());
 				mov.setIdUsuario(this.sesionMB.getIdUser());
-				try {
-					//MovimientoCtrlr.save(mov);
-				} catch (Exception e) {
-					Log.error(e, "Error en creacion de movimientos");
-				}
+				mov.setIdGasto(gasto);
 				mvts.add(mov);
 				//mov.setIdGasto(gasto)
 				

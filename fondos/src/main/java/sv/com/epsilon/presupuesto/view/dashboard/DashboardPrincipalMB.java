@@ -41,8 +41,9 @@ public class DashboardPrincipalMB {
 	}
 	
 	public void preRender() {
-		List<Presupuesto> list;
+		
 		if(!FacesContext.getCurrentInstance().isPostback()) {
+			List<Presupuesto> list;
 			this.list=new ArrayList<PresupuestoDashboard>();
 			 list=new PresupuestoFacade().findAllActive();
 			 for(Presupuesto p:list) {
@@ -50,8 +51,7 @@ public class DashboardPrincipalMB {
 				pd.setPresupuesto(p);
 				double gastado=(p.getTotal()-p.getActual());
 				double porcentaje=(gastado/p.getTotal())*100;
-				double disponible=100-porcentaje;
-				pd.setPercent(new  BigDecimal(disponible).intValue());
+				pd.setPercent(new  BigDecimal(porcentaje).intValue());
 				this.list.add(pd);
 			}
 		}

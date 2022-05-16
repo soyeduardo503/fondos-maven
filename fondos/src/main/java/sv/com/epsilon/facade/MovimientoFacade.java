@@ -25,7 +25,7 @@ public class MovimientoFacade extends WSClient<Movimiento> {
 
 	public void persist(Movimiento mov) throws Exception{
 		mov=super.save(mov);
-		Optional<AccionResponse> eval = process( "/categoria/update/"+mov.getIdCategoria().getIdCategoria()+"/"+mov.getMonto());
+		Optional<AccionResponse> eval = process( "/categoria/update/"+mov.getIdCategoria().getCodigo()+"/"+mov.getMonto());
 		if(!eval.isPresent()) {
 			throw new Exception("Error al guardar datos relacionados al movimiento");
 		}
