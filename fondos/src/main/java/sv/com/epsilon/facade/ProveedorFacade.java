@@ -10,6 +10,7 @@ import java.util.List;
 
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Proveedor;
+import sv.com.epsilon.response.NumberResponse;
 
 /**
  *
@@ -23,7 +24,13 @@ public class ProveedorFacade  extends WSClient<Proveedor> {
         super(Proveedor.class);
     }
     
-    
+    public String getCode() {
+    	NumberResponse number= getNumber("/newcode");
+    	if(number.getCod()==0)
+    		return "FPT"+number.getValue();
+    	else 
+    		return "FPT"+01;
+    }
    
   
  

@@ -55,7 +55,9 @@
 					<p:outputLabel value="Proveedor" />
 			</b:row>
 			<b:row>
-					<p:selectOneMenu value="#{ingresoGastoMB.gasto.idProveedor}"
+					<b:commandButton action="#{proveedoresMB.openFaster()}" update="idDlgFastProveedor" oncomplete="PF('wgtFastProveedor').show();" icon="plus-sign" look="success"/>
+					<ui:include src="/dialog/fast-proveedor.xhtml"></ui:include>
+					<p:selectOneMenu value="#{ingresoGastoMB.gasto.idProveedor}" id="idProveedorGasto"
 						converter="proveedorConverter" filter="true" autoWidth="true">
 						<f:selectItem itemLabel="" itemValue="" />
 						<f:selectItems value="#{proveedoresMB.list}" var="p"

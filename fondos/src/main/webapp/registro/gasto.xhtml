@@ -22,7 +22,7 @@
 					
 						<h:form id="#{ingresoGastoMB.form}">
 					<p:growl id="msg"></p:growl>
-					<b:panel look="danger" title="Pantalla de registro de gastos" icon-awesome="arrow-up" collapsible="false">
+					<b:panel look="danger" title="Pantalla de registro de gastos" icon-awesome="arrow-up" collapsible="false" >
 					
 					
 			
@@ -68,7 +68,8 @@
 						</p:column>
 						<p:column headerText="$">
 							<p:inputText value="#{g.monto}" >
-								<p:ajax listener="#{ingresoGastoMB.recalcularTotal()}" update=":IDFormGasto:totalMovimiento"/>
+								<p:ajax event="change" listener="#{ingresoGastoMB.recalcularTotal()}" update=":IDFormGasto:totalMovimiento"/>
+								<p:ajax event="keyup" listener="#{ingresoGastoMB.recalcularTotal()}" update=":IDFormGasto:totalMovimiento"/>
 							</p:inputText>
 						</p:column>
 						<p:column headerText="">
@@ -105,14 +106,25 @@
 					
 						<b:container fluid="true">
 							<b:row >
-								<b:column col-xs="3"/>
-								<b:column col-xs="2" styleClass="btn btn-info" >
-								<h:commandLink  actionListener="#{ingresoGastoMB.save()}" target="_blank"> 
+								<b:column col-xs="2"/>
+								
+								<p:commandLink  actionListener="#{ingresoGastoMB.save()}" update="btnPrint,btnAddnNew,btnSave" id="btnSave" disabled="#{!ingresoGastoMB.disablePost}"  > 
+									<b:column col-xs="2" styleClass="btn btn-info" >	
 									<b:iconAwesome value="save" solid="true" /> Guardar
-								</h:commandLink>
 									</b:column>
-								<b:column col-xs="2" styleClass="btn btn-success" ><h:commandLink action="#{ingresoGastoMB.print()}" style="color: #fff;" target="_blank" ><b:iconAwesome value="file-pdf" solid="true"/> Print</h:commandLink></b:column>
-								<b:column col-xs="2" styleClass="btn btn-danger" ><b:iconAwesome value="window-close"/> cancelar</b:column>
+								</p:commandLink>
+									
+								<h:commandLink  action="#{chequeViewMB.print(ingresoGastoMB.gasto)}"  target="_blank" style="color: #fff;" id="btnPrint" disabled="#{ingresoGastoMB.disablePost}">	
+									<b:column col-xs="2" styleClass="btn btn-success"  ><b:iconAwesome value="file-pdf" solid="true"/> Print</b:column>
+								</h:commandLink>
+								
+							
+								<p:commandLink disabled="#{ingresoGastoMB.disablePost}"  id="btnAddnNew"  action="#{ingresoGastoMB.emptyForm()}">
+									<b:column col-xs="2" styleClass="btn btn-primary" >
+									
+										<b:iconAwesome value="plus" solid="true"/> Nuevo
+									</b:column>
+								</p:commandLink>
 							</b:row>
 						</b:container>
 					
@@ -139,10 +151,11 @@
 					
 	</div>
 	
-							
-			
+	
 		
 	</ui:define>
+	
+	
 
 </ui:composition>
 </html>

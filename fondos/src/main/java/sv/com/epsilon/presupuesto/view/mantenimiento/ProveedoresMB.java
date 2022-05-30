@@ -37,19 +37,25 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	private UsuarioSessionMB sesionMB;
 	private List<Banco> listBanco=new BancoFacade().findAllActive();
 
-	
+	private Proveedor fast=new Proveedor();
 	
 	/**
 	 * 
 	 */
 	
-	public void setVoid() {
+	public void openFaster() {
 		this.getItemSelected().setDui("");
+		fast=new Proveedor();
+		fast.setCodigo(getFacade().getCode());
+		fast.setIdEmpresa(1);
+		fast.setIdUsuarioCreo(sesionMB.getIdUser());
 		//this.getItemSelected().setNit();
 	}
 	
 	
-	
+	public void openNewFast() {
+		
+	}
 	
 	
 	public ProveedoresMB() {
@@ -88,6 +94,31 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	}
 
 
+
+
+
+	public Proveedor getFast() {
+		return fast;
+	}
+
+
+
+
+
+	public void setFast(Proveedor fast) {
+		this.fast = fast;
+	}
+
+
+	public void saveFast() {
+		try {
+			fast=this.getFacade().save(fast);
+			this.getList().add(fast);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 
