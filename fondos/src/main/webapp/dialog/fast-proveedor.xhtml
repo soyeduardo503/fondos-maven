@@ -39,9 +39,32 @@
 
 				
 			</b:row>
+		
+			<b:row>
+				<b:column colSm="4">
+					<b:row>
+						<h:outputText value="NIT" />
+					</b:row>
+					<b:row>
+						<b:inputText value="#{proveedoresMB.fast.nit}"/>
+					</b:row>
+
+				</b:column>
+				<b:column col-xs="2"/>
+				<b:column colSm="4">
+					<b:row>
+						<h:outputText value="DUI" />
+					</b:row>
+					<b:row>
+						<b:inputText value="#{proveedoresMB.fast.dui}"/>
+					</b:row>
+				</b:column>
+
+				
+			</b:row>
 			<b:row>
 				<b:column col-xs="2" />
-					<p:commandLink action="#{proveedoresMB.saveFast()}" update="idProveedorGasto">
+					<p:commandLink action="#{proveedoresMB.saveFast()}" update="idProveedorGasto" oncomplete="PF('wgtFastProveedor').hide();">
 						<b:column col-xs="4" styleClass="btn btn-info">						
 							<b:iconAwesome value="save" solid="true" styleClass="iconWhite"		size="2x" />
 						</b:column>						

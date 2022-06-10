@@ -40,6 +40,8 @@ import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
+import sv.com.epsilon.facade.CorrelativoreciboFacade;
+import sv.com.epsilon.facade.ReciboFacade;
 import sv.com.epsilon.facade.TipodesembolsoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
@@ -321,18 +323,28 @@ public class IngresoGastoMB implements Serializable {
 		showRecibo=false;
 		showTransferencia=false;
 		ChequeraFacade facade = new ChequeraFacade();
-		if(idTipoDesembolso.getIdTipoDesembolso()==1) {
+		CorrelativoreciboFacade correFacade=new CorrelativoreciboFacade();
+		switch (idTipoDesembolso.getIdTipoDesembolso()) {
+		case 1:
 			setIdChequeraSelected(getListChequera().get(0).getIdChequera());
 			gasto.setCheque(facade.findCurrentValue(idChequeraSelected));
 			
 			return ;
-		}else {
+			
+		case 2:
+			gasto.setCheque(correFacade.findCurrentValue());
+			return ;
+		default:
 			this.setIdChequeraSelected(0);
 			this.gasto.setCheque(null);
 			chequeraBloq=true;
-
-
+			break;
 		}
+		
+		
+
+
+		
 
 	}
 	

@@ -112,6 +112,8 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 
 	public void saveFast() {
 		try {
+			fast.setNcuenta("");
+			fast.setNombre(fast.getNombreLegal());
 			fast=this.getFacade().save(fast);
 			this.getList().add(fast);
 		} catch (Exception e) {
