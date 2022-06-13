@@ -4,3 +4,4 @@ fondos/src/main/java/sv/com/epsilon/presupuesto/test/Test.java
 fondos/target/classes/sv/com/epsilon/presupuesto/test/Test.class
 *.pdf
 *.class
+*.class
