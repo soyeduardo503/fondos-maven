@@ -165,6 +165,15 @@
 			<artifactId>javax.ws.rs-api</artifactId>
 			<version>2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
 
 		<!-- <dependency> <groupId>org.jboss.resteasy</groupId> <artifactId>resteasy-client</artifactId> 
 			<version>3.1.4.Final</version> </dependency> <dependency> <groupId>org.jboss.resteasy</groupId> 

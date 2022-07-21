@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+
+		<div class="largecontent">
+
+			
+
+
+			<h:form id="#{cajachicaMB.formList}">
+				<p:growl id="msg"></p:growl>
+				<b:panel look="info" title="Pantalla de registro de Caja chica($)"
+					icon-awesome="arrow-up" collapsible="false">
+
+					<b:row>
+						<b:badge value="Filtrar por" large-screen="full-width" small-screen="full-width" />
+					</b:row>
+					<b:row>
+						<b:column col-xs="3" />
+							
+						
+						<p:commandLink actionListener="#{registroEntradaMB.reset()}" update="#{cajachicaMB.idTable}">
+							<b:column col-xs="2" styleClass="btn btn-danger">
+							<b:iconAwesome value="window-close" /> cancelar</b:column>
+						</p:commandLink>
+						
+
+						
+					</b:row>
+
+				</b:panel>
+
+				<p:sidebar widgetVar="findIngreso" baseZIndex="10000"
+					position="right">
+					<h3></h3>
+				</p:sidebar>
+
+			</h:form>
+			<h:form id="frmDialogs">
+				<ui:include src="/dialog/dialogIngresoGasto.xhtml" />
+			</h:form>
+
+
+		</div>
+
+
+
+
+	</ui:define>
+
+</ui:composition>
+</html>
