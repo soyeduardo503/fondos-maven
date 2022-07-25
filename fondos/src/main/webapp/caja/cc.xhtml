@@ -20,26 +20,38 @@
 			
 
 
-			<h:form id="#{cajachicaMB.formList}">
+			<h:form id="#{cajachicaMB.idTable}">
 				<p:growl id="msg"></p:growl>
-				<b:panel look="info" title="Pantalla de registro de Caja chica($)"
+				<b:panel look="info" title="#{cajachicaMB.headerPage}"
 					icon-awesome="arrow-up" collapsible="false">
 
 					<b:row>
 						<b:badge value="Filtrar por" large-screen="full-width" small-screen="full-width" />
 					</b:row>
 					<b:row>
-						<b:column col-xs="3" />
-							
-						
-						<p:commandLink actionListener="#{registroEntradaMB.reset()}" update="#{cajachicaMB.idTable}">
-							<b:column col-xs="2" styleClass="btn btn-danger">
-							<b:iconAwesome value="window-close" /> cancelar</b:column>
+						<b:column col-xs="3" >
+							Año
+						</b:column>
+					</b:row>	
+					<b:row>
+						<b:column col-xs="3" >
+							<p:selectOneMenu value="#{cajachicaMB.yearSelected}">
+								<f:selectItems value="#{cajachicaMB.listYear}" var="y" ></f:selectItems>
+							</p:selectOneMenu>
+						</b:column>
+						<b:column col-xs="4" />
+						<b:column col-xs="4" >
+						<p:commandLink actionListener="#{cajachicaMB.loadYear()}" update="#{cajachicaMB.idTable}">
+							<b:column col-xs="6" styleClass="btn btn-info"><b:iconAwesome value="search" />Buscar</b:column>
 						</p:commandLink>
+						</b:column>
 						
 
 						
 					</b:row>
+					<p:dataTable value="#{cajachicaMB.list}" var="cc" stickyHeader="true" id="#{cajachicaMB.idTable}">
+					
+					</p:dataTable>
 
 				</b:panel>
 
@@ -50,7 +62,7 @@
 
 			</h:form>
 			<h:form id="frmDialogs">
-				<ui:include src="/dialog/dialogIngresoGasto.xhtml" />
+				
 			</h:form>
 
 

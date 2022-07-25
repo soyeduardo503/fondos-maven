@@ -8,11 +8,13 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Cajachica;
 import sv.com.epsilon.facade.CajachicaFacade;
 
 @ViewScoped
 @ManagedBean
+@Data
 public class CajachicaMB implements Serializable {
 
 	/**
@@ -28,6 +30,7 @@ public class CajachicaMB implements Serializable {
 	private String headerConfirma="crear nueva caja?";
 	private String idTable="listOfCaja";
 	private String idAdd="addCajaDialog";
+	private String idPage="idPageCC";
 	private String wgt="dlgCajaAdd";
 	private Integer yearSelected=Calendar.getInstance().get(Calendar.YEAR);
 	private List<Integer> listYear=initList();
@@ -51,81 +54,7 @@ public class CajachicaMB implements Serializable {
 	public void load() {
 		list=cajaFacade.findAll();
 	}
-	public Cajachica getSelected() {
-		return selected;
-	}
-	public void setSelected(Cajachica selected) {
-		this.selected = selected;
-	}
-	public List<Cajachica> getList() {
-		return list;
-	}
-	public void setList(List<Cajachica> list) {
-		this.list = list;
-	}
-	public String getFormList() {
-		return formList;
-	}
-	public void setFormList(String formList) {
-		this.formList = formList;
-	}
-	public String getFormCreate() {
-		return formCreate;
-	}
-	public void setFormCreate(String formCreate) {
-		this.formCreate = formCreate;
-	}
 	
-	public Integer getYearSelected() {
-		return yearSelected;
-	}
-	public void setYearSelected(Integer yearSelected) {
-		this.yearSelected = yearSelected;
-	}
-	public List<Integer> getListYear() {
-		return listYear;
-	}
-	public void setListYear(List<Integer> listYear) {
-		this.listYear = listYear;
-	}
-	public String getHeaderPage() {
-		return headerPage;
-	}
-	public void setHeaderPage(String headerPage) {
-		this.headerPage = headerPage;
-	}
-	public String getHeaderTable() {
-		return headerTable;
-	}
-	public void setHeaderTable(String headerTable) {
-		this.headerTable = headerTable;
-	}
-	public String getHeaderConfirma() {
-		return headerConfirma;
-	}
-	public void setHeaderConfirma(String headerConfirma) {
-		this.headerConfirma = headerConfirma;
-	}
-	
-	
-	public String getIdTable() {
-		return idTable;
-	}
-	public void setIdTable(String idTable) {
-		this.idTable = idTable;
-	}
-	public String getIdAdd() {
-		return idAdd;
-	}
-	public void setIdAdd(String idAdd) {
-		this.idAdd = idAdd;
-	}
-	public String getWgt() {
-		return wgt;
-	}
-	public void setWgt(String wgt) {
-		this.wgt = wgt;
-	}
 	public void closeone() {
 		selected.setAct("C");
 		
