@@ -49,8 +49,41 @@
 
 						
 					</b:row>
-					<p:dataTable value="#{cajachicaMB.list}" var="cc" stickyHeader="true" id="#{cajachicaMB.idTable}">
-					
+					<p:dataTable value="#{cajachicaMB.list}" var="cc"  id="#{cajachicaMB.idTable}" rowKey="#{cc.idCajachica}"  rowIndexVar="rowindex">
+						<p:column headerText="" width="10" >
+							<h:outputText value="#{rowindex+1}"></h:outputText>
+						</p:column>
+						<p:column headerText="Nombre" width="30">
+							<h:outputText value="#{cc.nombre}"></h:outputText>
+						</p:column>
+						<p:column headerText="Monto" width="20">
+							<h:outputText value="#{cc.montofinal}"></h:outputText>
+						</p:column>
+						<p:column headerText="Recibo desde" width="10">
+							<h:outputText value="#{cc.vinicial}"></h:outputText>
+						</p:column>
+						<p:column headerText="Recibo final" width="10">
+							<h:outputText value="#{cc.vfinal}"></h:outputText>
+						</p:column>
+						
+						<p:column headerText="Inicio" width="10">
+							<h:outputText value="#{cc.fechaInicio}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Fin" width="10">
+							<h:outputText value="#{cc.fechaFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Estado" width="20">
+							<h:outputText value="#{cc.act}"></h:outputText>
+						</p:column>
+						<p:column headerText="" width="20">
+							<p:commandLink actionListener="#{cajachicaMB.loadDetalle(cc)}">
+								<b:iconAwesome value="search" solid="true" />
+							</p:commandLink>
+						</p:column>
 					</p:dataTable>
 
 				</b:panel>
@@ -61,9 +94,7 @@
 				</p:sidebar>
 
 			</h:form>
-			<h:form id="frmDialogs">
-				
-			</h:form>
+			
 
 
 		</div>

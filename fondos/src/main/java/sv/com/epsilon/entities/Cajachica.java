@@ -8,23 +8,15 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
+import lombok.Data;
 
 /**
  *
  * @author Zeta
  */
-
+@Data
 public class Cajachica implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,107 +50,6 @@ public class Cajachica implements Serializable {
     }
 
     
-    public Integer getIdEmpresa() {
-		return idEmpresa;
-	}
-
-
-	public void setIdEmpresa(Integer idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-
-	
-
-   
-    public Integer getIdCajachica() {
-		return idCajachica;
-	}
-
-	public void setIdCajachica(Integer idCajachica) {
-		this.idCajachica = idCajachica;
-	}
-
-	
-	public String getAct() {
-		return act;
-	}
-
-	public void setAct(String act) {
-		this.act = act;
-	}
-
-	
-
-	public Integer getVinicial() {
-		return vinicial;
-	}
-
-
-	public void setVinicial(Integer vinicial) {
-		this.vinicial = vinicial;
-	}
-
-
-	public Integer getVfinal() {
-		return vfinal;
-	}
-
-
-	public void setVfinal(Integer vfinal) {
-		this.vfinal = vfinal;
-	}
-
-
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-
-	
-
-	public Integer getYear() {
-		return year;
-	}
-
-
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-
-
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-
-	public Date getFechaFin() {
-		return fechaFin;
-	}
-
-
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	
-	
-
-	public Double getMontofinal() {
-		return montofinal;
-	}
-
-
-	public void setMontofinal(Double montofinal) {
-		this.montofinal = montofinal;
-	}
 
 
 	@Override

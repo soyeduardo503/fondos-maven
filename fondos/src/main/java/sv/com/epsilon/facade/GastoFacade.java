@@ -28,5 +28,10 @@ public class GastoFacade extends WSClient<Gasto> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public List<Gasto> findByRange(Integer vinicial, Integer vfinal, Integer tipodesembolso) {
+		
+		return getList("/"+vinicial+"/"+vfinal+"/"+tipodesembolso);
+	}
     
 }

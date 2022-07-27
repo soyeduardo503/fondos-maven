@@ -10,7 +10,9 @@ import javax.faces.view.ViewScoped;
 
 import lombok.Data;
 import sv.com.epsilon.entities.Cajachica;
+import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.facade.CajachicaFacade;
+import sv.com.epsilon.presupuesto.ctrlr.CajachicaCtrlr;
 
 @ViewScoped
 @ManagedBean
@@ -30,12 +32,16 @@ public class CajachicaMB implements Serializable {
 	private String headerConfirma="crear nueva caja?";
 	private String idTable="listOfCaja";
 	private String idAdd="addCajaDialog";
+	private String idDetail="idWgtDetail";
+	private String idWgtDetail="wgtVarDetailCC";
+	private String idFormDetail="idWgtDetailform";
+	private String idTableDetail="idTableDetail";
 	private String idPage="idPageCC";
 	private String wgt="dlgCajaAdd";
 	private Integer yearSelected=Calendar.getInstance().get(Calendar.YEAR);
 	private List<Integer> listYear=initList();
 	private CajachicaFacade cajaFacade=new CajachicaFacade();
-	
+	private List<Gasto> listGasto=new ArrayList<Gasto>();
 	
 	public CajachicaMB() {
 		super();
@@ -46,6 +52,11 @@ public class CajachicaMB implements Serializable {
 			list.add(yearSelected);
 		}
 		return list;
+	}
+	
+	public void loadDetalle(Cajachica cc) {
+		this.selected=cc;
+		listGasto=new CajachicaCtrlr().loadGastoByCC(selected);
 	}
 	
 	public void loadYear() {

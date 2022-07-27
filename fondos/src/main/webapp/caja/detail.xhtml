@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="#{cajachicaMB.idDetail}">
+		<p:dialog widgetVar="#{cajachicaMB.idFormDetail}" width="600">
+			<p:dataTable value="#{cajachicaMB.listGasto}" id="#{cajachicaMB.idTableDetail}" var="g" rowIndexVar="indexVar">
+				<p:column width="10">
+					<h:outputText value="#{indexVar+1}"/>
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{g.descripcion}"/>
+				</p:column>
+				<p:column headerText="No.">
+					<h:outputText value="#{g.cheque}"/>
+				</p:column>
+				<p:column headerText="Fecha">
+					<h:outputText value="#{g.fecha}"/>
+				</p:column>
+				<p:column headerText="Tipo desembolso">
+					<h:outputText value="#{g.idTipoDesembolso.nombre}"/>
+				</p:column>
+				<p:column headerText="Total">
+					<h:outputText value="#{g.total}"/>
+				</p:column>
+				
+			</p:dataTable>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>
