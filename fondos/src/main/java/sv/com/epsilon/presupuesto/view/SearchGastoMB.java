@@ -9,6 +9,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
@@ -33,6 +34,7 @@ public class SearchGastoMB implements Serializable{
 	
 	private SearchGasto search=new SearchGasto();
 	private List<Proveedor> listProveedor=new ProveedorFacade().findAllActive();
+	private List<Gasto> list;
 	
 	
 	public SearchGastoMB() {
@@ -45,7 +47,8 @@ public class SearchGastoMB implements Serializable{
 		
 		
 		try {
-			new GastoCtrlr().invocarBusqueda(search);
+			list=new GastoCtrlr().invocarBusqueda(search);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,6 +81,18 @@ public class SearchGastoMB implements Serializable{
 	
 	
 	
+	public List<Gasto> getList() {
+		return list;
+	}
+
+
+
+	public void setList(List<Gasto> list) {
+		this.list = list;
+	}
+
+
+
 	public void edit() {
 		System.out.println("OK");
 	}

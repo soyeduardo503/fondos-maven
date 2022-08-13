@@ -23,7 +23,7 @@ import sv.com.epsilon.presupuesto.view.IngresoGastoMB;
  */
 public class GastoCtrlr {
 
-	
+	private GastoFacade facade=new GastoFacade();;
 	
 	public static  Integer save(Gasto gasto) throws  Exception{
 		
@@ -44,8 +44,8 @@ public class GastoCtrlr {
 		if(gasto.getTotal()==0)
 			throw new Exception("Monto total igual a cero");
 		
-		GastoFacade facade=new GastoFacade();
-		gasto=facade.save(gasto);
+		
+		gasto=new GastoFacade().save(gasto);
 		return gasto.getIdGasto();
 //		MovimientoFacade movimientoFacade=new MovimientoFacade();
 	
@@ -100,6 +100,10 @@ public class GastoCtrlr {
 	public List<Gasto> invocarBusqueda(SearchGasto search) throws Exception {
 		return new SearchGastoWSClient().searchParam(search);
 		
+	}
+	
+	public List<Gasto> find(Integer idStarted,Integer idFinished,Integer type){
+		return facade.findByRange(idStarted, idFinished, type);
 	}
 	
 }

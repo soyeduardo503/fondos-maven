@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+
+
+			<div class="titlePage">
+						<b:container fluid="true">
+								<b:row>
+									<b:column col-xs="10">
+										<h2 class="headerPage"><h:outputText value="Consulta de gastos"  /></h2>	
+									</b:column>
+									<b:column col-xs="1" styleClass="">
+										<p:commandLink onclick="PF('findGasto').show();">
+											<b:iconAwesome value="search" solid="true" size="2x" style="color: white;" />
+										</p:commandLink>
+									</b:column>
+								</b:row>
+						
+						</b:container>
+						
+			</div>
+
+		<b:panel look="primary" collapsible="false">
+
+			<h:form id="idGastosTable">
+
+
+
+				<p:dataTable value="#{searchGastoMB.list}"
+					id="idTableGastos" var="g" rowIndexVar="indexVar">
+					<p:column width="10">
+						<h:outputText value="#{indexVar+1}" />
+					</p:column>
+					<p:column headerText="Descripcion">
+						<h:outputText value="#{g.descripcion}" />
+					</p:column>
+					<p:column headerText="No.">
+						<h:outputText value="#{g.cheque}" />
+					</p:column>
+					<p:column headerText="Fecha">
+						<h:outputText value="#{g.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Tipo desembolso">
+						<h:outputText value="#{g.idTipoDesembolso.nombre}" />
+					</p:column>
+					<p:column headerText="Total">
+						<h:outputText value="#{g.total}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+		</b:panel>
+
+		<ui:include src="/componentes/lateralBar/findGasto.xhtml" />
+
+
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -30,8 +30,10 @@ public class GastoFacade extends WSClient<Gasto> {
 	}
 
 	public List<Gasto> findByRange(Integer vinicial, Integer vfinal, Integer tipodesembolso) {
-		
-		return getList("/"+vinicial+"/"+vfinal+"/"+tipodesembolso);
+		if(tipodesembolso==0)
+			return getList("/range/"+vinicial+"/"+vfinal+"/"+tipodesembolso);
+		else
+			return getList("/range/"+vinicial+"/"+vfinal);
 	}
     
 }

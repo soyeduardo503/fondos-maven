@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui">
 
 <ui:composition template="../template.xhtml">
 	<ui:define name="title">
@@ -14,9 +14,34 @@
 	</ui:define>
 
 	<ui:define name="body">
-
-		<div class="largecontent">
-
+	
+		<h:form id="idFormDetailGs">
+		<p:dialog widgetVar="wgtDlgGs" width="900" id="idGsDlg" header="Detalle" height="700">
+			<p:dataTable value="#{listasGastoDetailMB.list}" id="#{listasGastoDetailMB.idTable}" var="g" rowIndexVar="indexVar">
+				<p:column width="10">
+					<h:outputText value="#{indexVar+1}"/>
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{g.descripcion}"/>
+				</p:column>
+				<p:column headerText="No.">
+					<h:outputText value="#{g.cheque}"/>
+				</p:column>
+				<p:column headerText="Fecha">
+					<h:outputText value="#{g.fecha}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Tipo desembolso">
+					<h:outputText value="#{g.idTipoDesembolso.nombre}"/>
+				</p:column>
+				<p:column headerText="Total">
+					<h:outputText value="#{g.total}"/>
+				</p:column>
+				
+			</p:dataTable>
+		</p:dialog>
+	</h:form>
 			
 
 
@@ -49,60 +74,58 @@
 
 						
 					</b:row>
-					<p:dataTable value="#{cajachicaMB.list}" var="cc"  id="#{cajachicaMB.idTable}" rowKey="#{cc.idCajachica}"  rowIndexVar="rowindex">
-						<p:column headerText="" width="10" >
-							<h:outputText value="#{rowindex+1}"></h:outputText>
-						</p:column>
+					<p:dataTable value="#{cajachicaMB.list}" var="caj"  id="#{cajachicaMB.idTable}"  rowIndexVar="rowindex">
 						<p:column headerText="Nombre" width="30">
-							<h:outputText value="#{cc.nombre}"></h:outputText>
+							<h:outputText value="#{caj.nombre}"></h:outputText>
 						</p:column>
 						<p:column headerText="Monto" width="20">
-							<h:outputText value="#{cc.montofinal}"></h:outputText>
+							<h:outputText value="#{caj.montofinal}"></h:outputText>
 						</p:column>
 						<p:column headerText="Recibo desde" width="10">
-							<h:outputText value="#{cc.vinicial}"></h:outputText>
+							<h:outputText value="#{caj.vinicial}"></h:outputText>
 						</p:column>
 						<p:column headerText="Recibo final" width="10">
-							<h:outputText value="#{cc.vfinal}"></h:outputText>
+							<h:outputText value="#{caj.vfinal}"></h:outputText>
 						</p:column>
-						
 						<p:column headerText="Inicio" width="10">
-							<h:outputText value="#{cc.fechaInicio}">
+							<h:outputText value="#{caj.fechaInicio}">
 								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Fin" width="10">
-							<h:outputText value="#{cc.fechaFin}">
+							<h:outputText value="#{caj.fechaFin}">
 								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Estado" width="20">
-							<h:outputText value="#{cc.act}"></h:outputText>
+							<h:outputText value="#{caj.act}"></h:outputText>
 						</p:column>
 						<p:column headerText="" width="20">
-							<p:commandLink actionListener="#{cajachicaMB.loadDetalle(cc)}">
-								<b:iconAwesome value="search" solid="true" />
-							</p:commandLink>
+							
+							<p:commandButton value="ver" action="#{listasGastoDetailMB.loadGastosCC()}" oncomplete="PF('wgtDlgGs').show();">
+								<f:setPropertyActionListener value="#{caj}" target="#{listasGastoDetailMB.cc}"/>
+								
+							</p:commandButton>
+							
 						</p:column>
 					</p:dataTable>
 
 				</b:panel>
 
-				<p:sidebar widgetVar="findIngreso" baseZIndex="10000"
-					position="right">
-					<h3></h3>
-				</p:sidebar>
+				
 
 			</h:form>
 			
 
 
-		</div>
+	
 
 
 
 
 	</ui:define>
+	
+
 
 </ui:composition>
 </html>

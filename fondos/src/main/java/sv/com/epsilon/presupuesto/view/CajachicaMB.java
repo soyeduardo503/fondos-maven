@@ -6,9 +6,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
-import lombok.Data;
 import sv.com.epsilon.entities.Cajachica;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.facade.CajachicaFacade;
@@ -16,7 +15,6 @@ import sv.com.epsilon.presupuesto.ctrlr.CajachicaCtrlr;
 
 @ViewScoped
 @ManagedBean
-@Data
 public class CajachicaMB implements Serializable {
 
 	/**
@@ -46,6 +44,237 @@ public class CajachicaMB implements Serializable {
 	public CajachicaMB() {
 		super();
 	}
+	
+	
+	
+	public Cajachica getSelected() {
+		return selected;
+	}
+
+
+
+	public void setSelected(Cajachica selected) {
+		this.selected = selected;
+	}
+
+
+
+	public List<Cajachica> getList() {
+		return list;
+	}
+
+
+
+	public void setList(List<Cajachica> list) {
+		this.list = list;
+	}
+
+
+
+	public String getFormList() {
+		return formList;
+	}
+
+
+
+	public void setFormList(String formList) {
+		this.formList = formList;
+	}
+
+
+
+	public String getFormCreate() {
+		return formCreate;
+	}
+
+
+
+	public void setFormCreate(String formCreate) {
+		this.formCreate = formCreate;
+	}
+
+
+
+	public String getHeaderPage() {
+		return headerPage;
+	}
+
+
+
+	public void setHeaderPage(String headerPage) {
+		this.headerPage = headerPage;
+	}
+
+
+
+	public String getHeaderTable() {
+		return headerTable;
+	}
+
+
+
+	public void setHeaderTable(String headerTable) {
+		this.headerTable = headerTable;
+	}
+
+
+
+	public String getHeaderConfirma() {
+		return headerConfirma;
+	}
+
+
+
+	public void setHeaderConfirma(String headerConfirma) {
+		this.headerConfirma = headerConfirma;
+	}
+
+
+
+	public String getIdTable() {
+		return idTable;
+	}
+
+
+
+	public void setIdTable(String idTable) {
+		this.idTable = idTable;
+	}
+
+
+
+	public String getIdAdd() {
+		return idAdd;
+	}
+
+
+
+	public void setIdAdd(String idAdd) {
+		this.idAdd = idAdd;
+	}
+
+
+
+	public String getIdDetail() {
+		return idDetail;
+	}
+
+
+
+	public void setIdDetail(String idDetail) {
+		this.idDetail = idDetail;
+	}
+
+
+
+	public String getIdWgtDetail() {
+		return idWgtDetail;
+	}
+
+
+
+	public void setIdWgtDetail(String idWgtDetail) {
+		this.idWgtDetail = idWgtDetail;
+	}
+
+
+
+	public String getIdFormDetail() {
+		return idFormDetail;
+	}
+
+
+
+	public void setIdFormDetail(String idFormDetail) {
+		this.idFormDetail = idFormDetail;
+	}
+
+
+
+	public String getIdTableDetail() {
+		return idTableDetail;
+	}
+
+
+
+	public void setIdTableDetail(String idTableDetail) {
+		this.idTableDetail = idTableDetail;
+	}
+
+
+
+	public String getIdPage() {
+		return idPage;
+	}
+
+
+
+	public void setIdPage(String idPage) {
+		this.idPage = idPage;
+	}
+
+
+
+	public String getWgt() {
+		return wgt;
+	}
+
+
+
+	public void setWgt(String wgt) {
+		this.wgt = wgt;
+	}
+
+
+
+	public Integer getYearSelected() {
+		return yearSelected;
+	}
+
+
+
+	public void setYearSelected(Integer yearSelected) {
+		this.yearSelected = yearSelected;
+	}
+
+
+
+	public List<Integer> getListYear() {
+		return listYear;
+	}
+
+
+
+	public void setListYear(List<Integer> listYear) {
+		this.listYear = listYear;
+	}
+
+
+
+	public CajachicaFacade getCajaFacade() {
+		return cajaFacade;
+	}
+
+
+
+	public void setCajaFacade(CajachicaFacade cajaFacade) {
+		this.cajaFacade = cajaFacade;
+	}
+
+
+
+	public List<Gasto> getListGasto() {
+		return listGasto;
+	}
+
+
+
+	public void setListGasto(List<Gasto> listGasto) {
+		this.listGasto = listGasto;
+	}
+
+
+
 	private List<Integer> initList() {
 		List<Integer> list= new ArrayList<Integer>();
 		for(int u=2022;u<=Calendar.getInstance().get(Calendar.YEAR);u++) {
