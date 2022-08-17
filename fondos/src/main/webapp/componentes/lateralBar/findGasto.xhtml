@@ -87,7 +87,7 @@
 								<p:outputLabel value="Buscar"/>
 							</b:row>
 						</b:column>
-						<p:ajax update=":idGastosTable"/>
+						<p:ajax update="idDlgGastoWtg"/>
 					</p:commandLink>
 						
 					<p:commandLink  onclick="PF('findGasto').hide();" >
@@ -113,5 +113,43 @@
 			</b:panel>
 
 		</p:sidebar>
+		
+		
+					
+		<p:dialog widgetVar="dlgGastosWtg" id="idDlgGastoWtg" header="Gastos encontrados">
+			<b:panel look="primary" collapsible="false">
+	
+				
+	
+	
+	
+					<p:dataTable value="#{searchGastoMB.list}"
+						id="idTableGastos" var="g" rowIndexVar="indexVar">
+						<p:column width="10">
+							<h:outputText value="#{indexVar+1}" />
+						</p:column>
+						<p:column headerText="Descripcion">
+							<h:outputText value="#{g.descripcion}" />
+						</p:column>
+						<p:column headerText="No.">
+							<h:outputText value="#{g.cheque}" />
+						</p:column>
+						<p:column headerText="Fecha">
+							<h:outputText value="#{g.fecha}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Tipo desembolso">
+							<h:outputText value="#{g.idTipoDesembolso.nombre}" />
+						</p:column>
+						<p:column headerText="Total">
+							<h:outputText value="#{g.total}" />
+						</p:column>
+	
+					</p:dataTable>
+	
+			</b:panel>
+
+		</p:dialog>
 	</h:form>
 </ui:composition>
