@@ -78,7 +78,7 @@
 					<hr />
 					<b:row>
 					<b:column col-xs="2"/>
-					<p:commandLink  action="#{searchGastoMB.invocacionBusqueda}" >
+					<p:commandLink  action="#{searchGastoMB.invocacionBusqueda}"  >
 						<b:column col-xs="4" styleClass="btn btn-info">
 							<b:row>
 								<b:iconAwesome value="search" solid="true"/>
@@ -87,7 +87,6 @@
 								<p:outputLabel value="Buscar"/>
 							</b:row>
 						</b:column>
-						<p:ajax update="idDlgGastoWtg"/>
 					</p:commandLink>
 						
 					<p:commandLink  onclick="PF('findGasto').hide();" >
@@ -116,7 +115,7 @@
 		
 		
 					
-		<p:dialog widgetVar="dlgGastosWtg" id="idDlgGastoWtg" header="Gastos encontrados">
+		<p:dialog widgetVar="dlgGastosWtg" id="idDlgGastoWtg" header="Gastos encontrados" width="1000" height="700">
 			<b:panel look="primary" collapsible="false">
 	
 				
@@ -128,12 +127,13 @@
 						<p:column width="10">
 							<h:outputText value="#{indexVar+1}" />
 						</p:column>
+						<p:column headerText="Proveedor">
+							<h:outputText value="#{g.idProveedor.nombre}" />
+						</p:column>
 						<p:column headerText="Descripcion">
 							<h:outputText value="#{g.descripcion}" />
 						</p:column>
-						<p:column headerText="No.">
-							<h:outputText value="#{g.cheque}" />
-						</p:column>
+						
 						<p:column headerText="Fecha">
 							<h:outputText value="#{g.fecha}">
 								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
@@ -141,6 +141,12 @@
 						</p:column>
 						<p:column headerText="Tipo desembolso">
 							<h:outputText value="#{g.idTipoDesembolso.nombre}" />
+						</p:column>
+						<p:column headerText="No.">
+							<h:outputText value="#{g.cheque}" />
+						</p:column>
+						<p:column headerText="No.">
+							<h:outputText value="#{g.cheque}" />
 						</p:column>
 						<p:column headerText="Total">
 							<h:outputText value="#{g.total}" />
@@ -151,5 +157,29 @@
 			</b:panel>
 
 		</p:dialog>
+		
+		<p:confirmDialog message="Sin registros encontrados" widgetVar="noFoundG" width="600" height="150">
+			<b:container fluid="true">
+				<b:row>
+					<b:column col-xs="4"/>
+					
+						
+					<p:commandLink  onclick="PF('noFoundG').hide();PF('findGasto').show();" >
+						<b:column col-xs="4" styleClass="btn btn-danger">
+							<b:row>
+								<b:iconAwesome value="window-close" />
+							</b:row>
+							<b:row>
+								<p:outputLabel value="Cancelar"/>
+							</b:row>
+						</b:column>
+					</p:commandLink>
+					
+
+
+				</b:row>
+			</b:container>
+		</p:confirmDialog>
+		
 	</h:form>
 </ui:composition>

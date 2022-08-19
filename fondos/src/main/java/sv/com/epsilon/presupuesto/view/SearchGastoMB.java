@@ -14,6 +14,7 @@ import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
+import sv.com.epsilon.util.ExecuteForm;
 
 /**
  * @author martinezc
@@ -48,7 +49,7 @@ public class SearchGastoMB implements Serializable{
 		
 		try {
 			list=new GastoCtrlr().invocarBusqueda(search);
-			
+			loadFound();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,5 +98,15 @@ public class SearchGastoMB implements Serializable{
 		System.out.println("OK");
 	}
 	
+	public void loadFound() {
+		if(list!=null&&list.size()>0)
+			new ExecuteForm().ExecuteUpdate(new String[]{"findGasto:idDlgGastoWtg"}, new String[]{"PF('findGasto').hide();","PF('dlgGastosWtg').show();"});
+		else
+			new ExecuteForm().ExecuteUpdate(new String[]{}, new String[]{"PF('findGasto').hide();","PF('noFoundG').show();"});
+	}
+	
+	public void loadGasto(Gasto g) {
+		
+	}
 
 }
