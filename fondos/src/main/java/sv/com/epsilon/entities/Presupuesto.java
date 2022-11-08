@@ -72,6 +72,8 @@ public class Presupuesto implements Serializable {
     
     private Integer idEmpresa;
     
+    private Integer isPrimary;
+    
     public Presupuesto() {
     }
 
@@ -199,7 +201,15 @@ public class Presupuesto implements Serializable {
 
     
 
-    public String getCodigo() {
+    public Integer getIsPrimary() {
+		return isPrimary;
+	}
+
+	public void setIsPrimary(Integer isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
+	public String getCodigo() {
 		return codigo;
 	}
 

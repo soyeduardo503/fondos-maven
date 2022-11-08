@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import sv.com.epsilon.entities.Tablagasto;
 import sv.com.epsilon.facade.TablagastoFacade;
@@ -80,9 +81,10 @@ public class TablaGastoMB extends AbstractMantto<Tablagasto, TablagastoFacade> i
 	@Override
 	public void preRender() {
 		try {
-			
-			this.callLoad();
-			defineHeaders();
+			if(!FacesContext.getCurrentInstance().isPostback()) {
+				this.callLoad();
+				defineHeaders();
+			}
 		} catch (Exception e) {
 	
 			e.printStackTrace();

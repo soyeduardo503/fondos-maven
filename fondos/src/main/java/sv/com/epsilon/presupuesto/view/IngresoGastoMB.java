@@ -4,8 +4,6 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,10 +13,12 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -26,9 +26,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import sv.com.epsilon.entities.Banco;
 import sv.com.epsilon.entities.Categoria;
@@ -41,21 +40,17 @@ import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CorrelativoreciboFacade;
-import sv.com.epsilon.facade.ReciboFacade;
 import sv.com.epsilon.facade.TipodesembolsoFacade;
+import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.presupuesto.view.autocomplete.CategoriaAutocompleteMB;
-import sv.com.epsilon.report.documentos.RptShow;
-import sv.com.epsilon.report.pojo.Cheque;
-import sv.com.epsilon.report.pojo.Documento;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
 import sv.com.epsilon.util.MessageGrowlContext;
-import sv.com.epsilon.util.NumberToLetter;
 import sv.com.epsilon.util.Util;
 
 /**
@@ -101,10 +96,11 @@ public class IngresoGastoMB implements Serializable {
 	
 	private List<Categoria> listCategoriaPrincipal;
 	private List<Tipodesembolso> listTipoDesembolso;
+	private List<String> imgBase64;
 	
 	private boolean disablePost=true;
 	
-	
+	private String code=initCode();
 	
 	private Integer idGastoSelected;
 	
@@ -121,12 +117,27 @@ public class IngresoGastoMB implements Serializable {
 			gasto.setFechaRegistro(new Date());
 			GastoCtrlr.loadin(this);
 			listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
-			//this.actualizarCheque(null);
-			
+			presupuestoSelected=sesionMB.getPresupuestoSelected();
 		
 			
 		}
 		
+	}
+	
+	private String initCode() {
+		StringBuilder sb=new StringBuilder();
+		Random ran = new Random();
+		String[] letter=new String[] {"A","P","J","R"};
+		
+		sb.append(letter[(char)ran.nextInt(3)]).append(letter[(char)ran.nextInt(3)]).append(letter[(char)ran.nextInt(3)]).append(System.currentTimeMillis());
+				
+		return sb.toString();
+	}
+
+	public void load(Gasto g) {
+		this.gasto=g;
+		this.list= new CategoriaGastoCtrlr().convert(g.getIdGasto());
+		new ExecuteForm().update(form);
 	}
 	
 	/**
@@ -391,45 +402,49 @@ public class IngresoGastoMB implements Serializable {
 		
 			
 		list.forEach(gasto->{		
-				monto=Util.addAndRound2(monto, new BigDecimal(gasto.getMonto()));
+				monto=Util.addAndRound2(monto, new BigDecimal(gasto.getMonto()!=null?gasto.getMonto():0.0));
 		});
 		
 		gasto.setTotal(monto.doubleValue());
 		
 		
 	}
+	
+	 
 	public void upload(FileUploadEvent event) {
 		try {
 			copyFile(event.getFile().getFileName(), event.getFile().getInputStream());
-			FacesMessage message = new FacesMessage("El archivo se ha subido con �xito!");
+			FacesMessage message = new FacesMessage("El archivo se ha subido con exito!");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			//copyFile(categoriaTxt, null);
 		} catch (IOException e) {
 			Log.error(e,"Error en carga de archivo");
+		}finally {
+			new ExecuteForm().Update(":"+this.form+":img-content");
 		}
 
 		}
 		public void copyFile(String fileName, InputStream in) {
 		try {
-			String destination="C:\\files\\img\\epsilon\\";
-			OutputStream out = new FileOutputStream(new File(destination + fileName));
-			int read = 0;
-			byte[] bytes = new byte[1024];
-			while ((read = in.read(bytes)) != -1) {
-			out.write(bytes, 0, read);
+			if(imgBase64==null) {
+				imgBase64=new ArrayList<String>();
 			}
+			
+			
+			
+			
+			
+			imgBase64.add(Base64.getEncoder().encodeToString(in.readAllBytes()));
+			
 			in.close();
-			out.flush();
-			out.close();
+			
 			System.out.println("El archivo se ha creado con �xito!");
 	
-			DateFormat dateFormat = new SimpleDateFormat("yyyy�MM�dd HH_mm_ss");
-			Date date = new Date();
-			String ruta1 = destination + fileName;
-			String ruta2 = destination + dateFormat.format(date)+"�"+fileName;
-			System.out.println("Archivo: "+ruta1+" Renombrado a: "+ruta2);
-			File archivo=new File(ruta1);
-			archivo.renameTo(new File(ruta2));
+			
+			
+			
+			
+			
 		} catch (IOException e) {
 			Log.error(e,"Error en carga de archivo");
 		}
@@ -439,6 +454,14 @@ public class IngresoGastoMB implements Serializable {
 		
 		
 		
+
+		public List<String> getImgBase64() {
+			return imgBase64;
+		}
+
+		public void setImgBase64(List<String> imgBase64) {
+			this.imgBase64 = imgBase64;
+		}
 
 		public List<CategoriaGasto> getList() {
 			return list;
@@ -497,18 +520,19 @@ public class IngresoGastoMB implements Serializable {
 		}
 		public void save() {
 			try {
-			//	gasto.setMovimientoList(createMovimientos());
+				
 				gasto.setNombre(gasto.getDescripcion());
-				//gasto.setMovimientoList(createMovimientos());
+				gasto.setKpresupuesto(getPresupuestoSelected().getIdPresupuesto());
 				Integer id=GastoCtrlr.save(gasto);
 				this.gasto.setIdGasto(id);
 				List<Movimiento> listMovToSave = createMovimientos();
 				try {
 					listMovToSave.forEach(mov->{
 						try {
-							MovimientoCtrlr.save(mov);
+							mov.setIdGasto(new Gasto(id));
+							mov.setIdPresupuesto(presupuestoSelected);
+							new MovimientoCtrlr().save(mov);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					});
@@ -523,6 +547,7 @@ public class IngresoGastoMB implements Serializable {
 				
 				new MessageGrowlContext().send("Gasto Registrado!!!", "Se guardo la informacion");
 				disablePost=false;
+				this.code= initCode();
 			} catch (Exception e) {
 				new MessageGrowlContext().sendError("Error guardando informacion: "+e.getMessage(), e.getMessage(), e);
 			}
@@ -562,9 +587,18 @@ public class IngresoGastoMB implements Serializable {
 		public void load() {
 			//TODO create a load a gasto saved
 		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(String code) {
+			this.code = code;
+		}
 		
 		
 
+		
 		
 	
 	

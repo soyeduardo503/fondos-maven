@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+
+	<f:event listener="#{searchMovimientoMB.preRender}" type="preRenderView"></f:event>
+			<div class="titlePage">
+						<b:container fluid="true">
+								<b:row>
+									<b:column col-xs="10">
+										<h2 class="headerPage"><h:outputText value="Consulta de movimientos"  /></h2>	
+									</b:column>
+									<b:column col-xs="2" styleClass="">
+										<!-- Agregar selector de presupuesto -->
+									</b:column>
+									<b:column col-xs="1" styleClass="">
+										<p:commandLink onclick="PF('findGasto').show();">
+											<b:iconAwesome value="search" solid="true" size="2x" style="color: white;" />
+										</p:commandLink>
+									</b:column>
+								</b:row>
+						
+						</b:container>
+						
+			</div>
+<style>
+    .ui-filter-column .ui-column-customfilter .custom-filter {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+		<b:panel look="primary" collapsible="false">
+
+			<h:form id="idGastosTable" >
+			
+
+
+				<p:dataTable value="#{searchMovimientoMB.list}" id="idTableGastos" widgetVar="idTableGastos" 
+					var="g" rowIndexVar="indexVar">
+				
+
+					<p:column width="10">
+						<h:outputText value="#{indexVar+1}" />
+					</p:column>
+					<p:column headerText="Proveedor" filterBy="#{g.idProveedor.nombre}">
+						<h:outputText value="#{g.idProveedor.nombre}" />
+					</p:column>
+					<p:column headerText="Descripcion" filterBy="#{g.descripcion}" >
+						<h:outputText value="#{g.descripcion}" />
+					</p:column>
+
+					<p:column headerText="Fecha" >
+						<h:outputText value="#{g.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Tipo desembolso"  field="tipoDesembolso"  filterMatchMode="exact" filterBy="#{g.idTipoDesembolso.nombre}" >
+						  
+						  	<f:facet name="filter">
+			                    <p:selectOneMenu onchange="PF('idTableGastos').filter()" styleClass="ui-custom-filter">
+			                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+			                        <f:selectItem itemValue="Cheque" itemLabel="Cheque" />
+			                        <f:selectItem itemValue="Efectivo" itemLabel="Efectivo" />
+			                        <f:selectItem itemValue="Transferencia" itemLabel="Transferencia" />
+			                    </p:selectOneMenu>
+			              
+						  </f:facet>
+						<h:outputText value="#{g.idTipoDesembolso.nombre}" />
+					</p:column>
+					
+					
+
+					<p:column headerText="No. cheque/recibo/transferencia">
+						<h:outputText value="#{g.cheque}" />
+					</p:column>
+					<p:column headerText="Total ($)" >
+						<h:outputText value="#{g.total}" />
+					</p:column>
+					<p:column headerText="Status" >
+						<h:outputText value="#{g.status}" converter="statusConverter" />
+					</p:column>
+
+					<p:column headerText="Opcion">
+						<p:commandLink styleClass="btn btn-danger">
+							<b:iconAwesome value="undo" />
+							<h:outputText value="Revertir"/>
+						</p:commandLink>
+						<p:commandLink styleClass="btn btn-primary"
+							action="#{ingresoGastoMB.load(g)}"
+							oncomplete="PF('dlgGastosWtg').hide();">
+							<b:iconAwesome value="window-restore" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+
+			</h:form>
+		</b:panel>
+
+		<ui:include src="/componentes/lateralBar/findMovimiento.xhtml" />
+
+
+	</ui:define>
+
+</ui:composition>
+</html>

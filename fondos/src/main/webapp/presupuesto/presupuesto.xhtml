@@ -23,7 +23,7 @@
 				<b:panel  title="Fondos vs Gastos" collapsible="false" icon-awesome="sitemap" icon-solid="true">
 					<ui:repeat  var="p" value="#{dashboardPrincipalMB.list}" >
 						<p:commandLink  action="#{menuUsuarioMB.goTo('detallepresupuesto')}" >
-						<f:setPropertyActionListener target="#{sesionMB.presupuestoSelected}" value="#{p.presupuesto}" />
+						<f:setPropertyActionListener target="#{usuarioSessionMB.presupuestoSelected}" value="#{p.presupuesto}" />
 						
 						
 						<b:panel col-xs="3" look="warning" collapsible="false" title="#{p.presupuesto.nombrePresupuesto}">

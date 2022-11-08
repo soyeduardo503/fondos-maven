@@ -19,6 +19,7 @@ import org.primefaces.model.file.UploadedFile;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CargaCatalogoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CargaValidacionCtrlr;
 import sv.com.epsilon.util.ExecuteForm;
@@ -43,6 +44,7 @@ public class CargaCategoriaMB {
     private UploadedFile fileCSV;
     
     private Double montoTotal;
+    private boolean changeAmount=false;
     private boolean ok=false;
     
     
@@ -77,7 +79,19 @@ public class CargaCategoriaMB {
 	
 	
 	
-	 public Double getMontoTotal() {
+	 public boolean isChangeAmount() {
+		return changeAmount;
+	}
+	public void setChangeAmount(boolean changeAmount) {
+		this.changeAmount = changeAmount;
+	}
+	public List<Categoria> getPrincipales() {
+		return principales;
+	}
+	public void setPrincipales(List<Categoria> principales) {
+		this.principales = principales;
+	}
+	public Double getMontoTotal() {
 		return montoTotal;
 	}
 	public void setMontoTotal(Double montoTotal) {
@@ -113,8 +127,8 @@ public class CargaCategoriaMB {
 		        	ctlr.validarCargaCategorias(list);
 		        	this.montoTotal=ctlr.getMontoAcumuladoPrincipal();
 		        	
-		        	if(montoTotal>presupuesto.getTotal()) {
-		        		throw new Exception("Monto asignado a categorias principales es mayor al del presupuesto");
+		        	if(montoTotal!=presupuesto.getTotal()) {
+		        		this.changeAmount=true;
 		        	}
 		            this.fileCSV = file;
 		            FacesMessage msg = new FacesMessage("Completado", this.fileCSV.getFileName() + " fue cargado.");
@@ -146,6 +160,21 @@ public class CargaCategoriaMB {
 	public void save() {
 		principales.forEach(cat->cat.setIdPresupuesto(presupuesto));
 		new CategoriaFacade().saveList(this.principales,null);
+		if(changeAmount) {
+			presupuesto.setTotal(montoTotal);
+			try {
+				new PresupuestoFacade().update(presupuesto);
+			} catch (Exception e) {
+			
+				e.printStackTrace();
+			}
+		}
+		try {
+			new CategoriaFacade().updateReference(this.getPresupuesto().getCodigo());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

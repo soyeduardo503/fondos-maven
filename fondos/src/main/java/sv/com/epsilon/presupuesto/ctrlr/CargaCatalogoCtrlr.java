@@ -30,6 +30,7 @@ public class CargaCatalogoCtrlr {
 	private final static Integer DESCRIPCION=2;
 	private final static Integer MONTO=3;
 	private final static Integer TIPO=4;
+	private Integer idEmpresa=1;
 	private HashMap<String,Integer> rubros=new RubroFacade().findAllRubroActiveByName();
 	
 	public CargaCatalogoCtrlr() {
@@ -55,7 +56,8 @@ public class CargaCatalogoCtrlr {
 						monto=0.0;
 					}
 					
-					Categoria categoria=new Categoria(codPresupuesto+values[CODIGO],values[NOMBRE],values[DESCRIPCION],monto,rubros.get(values[TIPO]));
+					Categoria categoria=new Categoria(codPresupuesto+values[CODIGO],values[NOMBRE],values[DESCRIPCION],monto,rubros.get(values[TIPO].trim()));
+					categoria.setIdEmpresa(idEmpresa);
 					list.add(categoria);
 				}
 				first=false;

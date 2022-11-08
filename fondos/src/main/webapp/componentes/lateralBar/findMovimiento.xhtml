@@ -7,10 +7,24 @@
 	<h:form id="findGasto">
 		<p:sidebar position="right" id="findGasto" widgetVar="findGasto">
 
-			<b:panel look="primary" title="Busqueda de Gasto" collapsible="false">
+			<b:panel look="primary" title="Busqueda por filtros" collapsible="false">
 				<b:container fluid="true">
+		
+					<b:row>
 
+						<h:outputText value="Revertidos" />
 
+					</b:row>
+
+					<b:row>
+	 
+						 <p:selectBooleanButton onLabel="Si" offLabel="No" value="#{searchMovimientoMB.search.revertido}" />
+
+					</b:row>
+ 
+					<b:row>
+  <hr style="border-top: 1px solid #8c8b8b;"/>
+					</b:row>
 					<b:row>
 
 						<h:outputText value="Proveedor" />
@@ -18,10 +32,10 @@
 					</b:row>
 					<b:row>
 						
-						<p:selectOneMenu value="#{searchGastoMB.search.proveedor}"
+						<p:selectOneMenu value="#{searchMovimientoMB.search.proveedor}"
 							converter="proveedorConverter">
 							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
-							<f:selectItems value="#{searchGastoMB.listProveedor}" var="pr"
+							<f:selectItems value="#{searchMovimientoMB.listProveedor}" var="pr"
 								itemLabel="#{pr.nombre}" itemValue="#{pr}" />
 						</p:selectOneMenu>
 					</b:row>
@@ -34,7 +48,7 @@
 						<h:outputText value="Descripcion" />
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchGastoMB.search.description}"  />
+						<p:inputText value="#{searchMovimientoMB.search.description}"  />
 					</b:row>
 
 					<hr />
@@ -43,7 +57,7 @@
 						<h:outputText value="Monto" />
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchGastoMB.search.monto}" required="false" />
+						<p:inputText value="#{searchMovimientoMB.search.monto}" required="false" />
 					</b:row>
 
 
@@ -52,7 +66,7 @@
 						<h:outputText value="Cheque" />
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchGastoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
+						<p:inputText value="#{searchMovimientoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
 					</b:row>
 
 
@@ -69,8 +83,8 @@
 																							
 					</b:row>
 					<b:row>
-							<b:column col-xs="6"><p:calendar value="#{searchGastoMB.search.fechaInicial}"/> </b:column>
-							<b:column col-xs="6"><p:calendar value="#{searchGastoMB.search.fechaFinal}"/></b:column>
+							<b:column col-xs="6"><p:calendar value="#{searchMovimientoMB.search.fechaInicial}"/> </b:column>
+							<b:column col-xs="6"><p:calendar value="#{searchMovimientoMB.search.fechaFinal}"/></b:column>
 							
 					</b:row>					
 					
@@ -78,7 +92,7 @@
 					<hr />
 					<b:row>
 					<b:column col-xs="2"/>
-					<p:commandLink  action="#{searchGastoMB.invocacionBusqueda}"  >
+					<p:commandLink  action="#{searchMovimientoMB.invocacionBusqueda}"  >
 						<b:column col-xs="4" styleClass="btn btn-info">
 							<b:row>
 								<b:iconAwesome value="search" solid="true"/>
@@ -115,51 +129,7 @@
 		
 		
 					
-		<p:dialog widgetVar="dlgGastosWtg" id="idDlgGastoWtg" header="Gastos encontrados" width="1000" height="700">
-			<b:panel look="primary" collapsible="false">
-	
-				
-	
-	
-	
-					<p:dataTable value="#{searchGastoMB.list}"
-						id="idTableGastos" var="g" rowIndexVar="indexVar">
-						<p:column width="10">
-							<h:outputText value="#{indexVar+1}" />
-						</p:column>
-						<p:column headerText="Proveedor">
-							<h:outputText value="#{g.idProveedor.nombre}" />
-						</p:column>
-						<p:column headerText="Descripcion">
-							<h:outputText value="#{g.descripcion}" />
-						</p:column>
-						
-						<p:column headerText="Fecha">
-							<h:outputText value="#{g.fecha}">
-								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
-							</h:outputText>
-						</p:column>
-						<p:column headerText="Tipo desembolso">
-							<h:outputText value="#{g.idTipoDesembolso.nombre}" />
-						</p:column>
-
-						<p:column headerText="No.">
-							<h:outputText value="#{g.cheque}" />
-						</p:column>
-						<p:column headerText="Total ($)">
-							<h:outputText value="#{g.total}" />
-						</p:column>
-						
-						<p:column headerText="Opcion">
-							<p:commandLink styleClass="btn btn-danger"><b:iconAwesome value="undo" /> </p:commandLink>
-							<p:commandLink styleClass="btn btn-primary" action="#{ingresoGastoMB.load(g)}" oncomplete="PF('dlgGastosWtg').hide();"><b:iconAwesome value="window-restore"/> </p:commandLink>
-						</p:column>
-	
-					</p:dataTable>
-	
-			</b:panel>
-
-		</p:dialog>
+		
 		
 		<p:confirmDialog message="Sin registros encontrados" widgetVar="noFoundG" width="600" height="150">
 			<b:container fluid="true">

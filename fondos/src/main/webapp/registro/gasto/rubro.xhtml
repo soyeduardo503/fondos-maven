@@ -73,15 +73,14 @@
 				</b:row>
 				<b:row>
 					
-						<p:fileUpload label="Seleccionar archivos" cancelLabel="Cancelar"
-							invalidFileMessage="Archivo no permitido"
-							uploadLabel="Cargar archivos"
-							fileUploadListener="#{ingresoGastoMB.upload}" multiple="true"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="10000000"
-							update="msg" />
 					
 
 				</b:row>
+				<p:commandLink onclick="PF('wgtImg').show();">
+					<b:iconAwesome value="image" solid="true"/>
+				</p:commandLink>
+				
+				<p:graphicImage url="http://localhost:9000/WSImageHandler/QR/get-qrcode-img/#{ingresoGastoMB.code}" height="100" width="100" stream="true"/>
 
 			</b:column>
 
@@ -91,7 +90,14 @@
 
 		</b:row>
 
-
+	<p:dialog widgetVar="wgtImg" id="img-content" width="700" height="350">
+		<p:galleria var="img64" value="#{ingresoGastoMB.imgBase64}">
+			 <p:graphicImage  value="#{img64}"  alt="no image" style="width: 100%" stream="true" />
+		        <f:facet name="thumbnail">
+		            <p:graphicImage value="#{img64}" alt="no image" stream="true" />
+		        </f:facet>
+		</p:galleria>
+	</p:dialog>
 
 	</b:panel>
 </ui:composition>

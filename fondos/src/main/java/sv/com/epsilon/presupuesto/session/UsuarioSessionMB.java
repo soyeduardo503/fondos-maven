@@ -14,10 +14,9 @@ import javax.faces.context.FacesContext;
 import sv.com.epsilon.ctrlr.wsclient.AppCtrlr;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
-import sv.com.epsilon.entities.SessionActive;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.presupuesto.ctrlr.PresupuestoCtrlr;
 import sv.com.epsilon.session.Epsilon;
-import sv.com.epsilon.session.pojo.SessionActiveRequest;
 import sv.com.epsilon.session.pojo.SessionActiveResponse;
 import sv.com.epsilon.util.RedirectNv;
 
@@ -152,6 +151,17 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 
 
 	public Presupuesto getPresupuestoSelected() {
+		int idEmpresa=0;
+		if(presupuestoSelected==null) {
+			
+			if(getIdEmpresa()==null) {
+				getValues().put("idEmpresa",1);
+				idEmpresa=1;
+			}				
+			else
+				idEmpresa=getIdEmpresa();
+			presupuestoSelected=new PresupuestoCtrlr().predeterminado(idEmpresa);
+		}
 		return presupuestoSelected;
 	}
 

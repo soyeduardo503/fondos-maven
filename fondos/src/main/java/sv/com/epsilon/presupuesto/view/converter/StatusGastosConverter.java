@@ -14,7 +14,7 @@ import sv.com.epsilon.util.Log;
  *
  */
 @FacesConverter(value="statusConverter")
-public class StatusConverter implements Converter {
+public class StatusGastosConverter implements Converter {
 
 	/**
 	 * 
@@ -23,17 +23,14 @@ public class StatusConverter implements Converter {
 	private static final String FINALIZE="F";
 	private static final String INACTIVE="I";
 	private static final String REVERT="R";
-	private static final String LIQUIDATED="L";
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Log.info("valor de getAsObject "+arg2);
 		switch(arg2) {
 		case "Activo" : return ACTIVE;
-		case "Aplicado" : return ACTIVE;
 		case "Finalizado" : return FINALIZE;
 		case "Inactive": return INACTIVE;
-		case "Liquidado": return LIQUIDATED;
 		}
 		
 		
@@ -49,7 +46,6 @@ public class StatusConverter implements Converter {
 			case FINALIZE: return "Finalizado";
 			case INACTIVE: return "Inactivo";
 			case REVERT: return "Revertido";
-			case LIQUIDATED: return "Liquidado";
 		}
 		return (String.valueOf(arg2).equals("A"))?"1":"I";
 		

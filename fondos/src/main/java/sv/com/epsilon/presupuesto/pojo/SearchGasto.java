@@ -8,6 +8,7 @@ import java.util.List;
 
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Gasto;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 
 /**
@@ -29,6 +30,9 @@ public class SearchGasto {
 	private String description;
 	private List<Categoria> listCategoria;
 	private List<Gasto> gastos;
+	private String tipo;
+	private Presupuesto presupuesto;
+	private boolean revertido=false;
 	
 	
 	public SearchGasto() {
@@ -88,6 +92,26 @@ public class SearchGasto {
 	public void setGastos(List<Gasto> gastos) {
 		this.gastos = gastos;
 	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public Presupuesto getPresupuesto() {
+		return presupuesto;
+	}
+	public void setPresupuesto(Presupuesto presupuesto) {
+		this.presupuesto = presupuesto;
+	}
+	public boolean isRevertido() {
+		return revertido;
+	}
+	public void setRevertido(boolean revertido) {
+		this.revertido = revertido;
+	}
+	
+	
 	
 	
 	

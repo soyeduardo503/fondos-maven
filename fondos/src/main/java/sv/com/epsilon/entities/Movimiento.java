@@ -50,6 +50,8 @@ public class Movimiento implements Serializable {
     
     
     private Financiamiento idFinanciamiento;
+    
+    private Presupuesto idPresupuesto;
 
     public Movimiento() {
     }
@@ -148,6 +150,16 @@ public class Movimiento implements Serializable {
 
 	public void setIdCategoria(Categoria idCategoria) {
 		this.idCategoria = idCategoria;
+	}
+	
+	
+
+	public Presupuesto getIdPresupuesto() {
+		return idPresupuesto;
+	}
+
+	public void setIdPresupuesto(Presupuesto idPresupuesto) {
+		this.idPresupuesto = idPresupuesto;
 	}
 
 	@Override

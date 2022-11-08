@@ -76,7 +76,7 @@ public class TipoDesembolsoMB extends AbstractMantto<Tipodesembolso, Tipodesembo
 	@Override
 	public void preRender() {
 		try {
-			if(FacesContext.getCurrentInstance().isPostback()) {
+			if(!FacesContext.getCurrentInstance().isPostback()) {
 				this.callLoad();
 				defineHeaders();
 			}

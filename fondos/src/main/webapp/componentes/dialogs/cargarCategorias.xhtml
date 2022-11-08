@@ -9,7 +9,7 @@
 
 
 		
-<h:form id="loadCategoriasFromFile">
+<h:form id="loadCategoriasFromFile"  >
 			<p:dialog widgetVar="loadWgtCat" width="1100" height="600" header="Carga de archivo" id="idLoadCat" modal="true">
 				<b:panel>
 					<f:facet name="header"><h:outputText value="Carga de categorias" /> </f:facet>
@@ -48,11 +48,12 @@
 									
 										<b:column col-xs="12">
 											  <p:fileUpload mode="advanced"
-								                      multiple="false"
-								                      sizeLimit="202400000" allowTypes="/(\.|\/)(csv)$/"
-								                      invalidSizeMessage="Maximo archivo permitido 2MB"
+								                      multiple="false" auto="true"
+								                      sizeLimit="202400000"
+								                      invalidSizeMessage="Maximo archivo permitido 2MB" 
 								                      invalidFileMessage="only csv | CSV  is allowed"
 								                      update="detailUploadFile,totalItem,montoTotal,saveBtnCat"  
+								                      
 								                      listener="#{cargaCategoriaMB.handleFileUpload}"/>
 										</b:column>						
 									</b:row>
@@ -138,5 +139,6 @@
 			</p:dialog>
 		</h:form>
 		
+
 		
 </ui:composition>

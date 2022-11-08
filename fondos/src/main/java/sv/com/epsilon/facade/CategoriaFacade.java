@@ -49,7 +49,7 @@ public class CategoriaFacade extends WSClient<Categoria> {
     }
 
 	public List<Categoria> findByPresupuesto(Presupuesto idPresupuesto) {
-		return getList("/categorias/presupuesto/id/"+idPresupuesto.getIdPresupuesto());
+		return getList("/byPresupuesto/id/"+idPresupuesto.getIdPresupuesto());
 		/*
 		getSession();
 		try {
@@ -240,8 +240,8 @@ public class CategoriaFacade extends WSClient<Categoria> {
 							cat.setIdCategoriaPadre(padre); 
 						try {
 							this.save(cat);
-							if(cat.getCategoriaList().size()>0) 
-								this.saveList(cat.getCategoriaList(), cat); 
+//							if(cat.getCategoriaList().size()>0) 
+//								this.saveList(cat.getCategoriaList(), cat); 
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -266,6 +266,9 @@ public class CategoriaFacade extends WSClient<Categoria> {
 			Log.error(e, "Error al update ");
 		}
 	}
+	
+	
+	
 	public Categoria obtenerCategoriasFromCodigo(String cod){
     	Optional<Categoria> c= find("/codigo/"+cod);
     	return c.isPresent()?c.get():new Categoria();
@@ -279,6 +282,11 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	public List<Categoria> findPrincipalByCodPresupuesto(Integer idPresupuesto) {
 		
 		return getList("/principales/id/"+idPresupuesto);
+	}
+
+	public void updateReference(String codigo) throws Exception {
+		action("/catagoria/update/reference/"+codigo);
+		
 	}
 	
 }

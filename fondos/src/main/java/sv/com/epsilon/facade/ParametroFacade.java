@@ -31,7 +31,7 @@ public class ParametroFacade extends WSClient<Parametro> {
     }
 
 	public Parametro findByName(String nombre) {
-		Optional<Parametro> param = get("/parametro/nombre/"+nombre);
+		Optional<Parametro> param = get("/nombre/"+nombre);
 		return param.isPresent()?param.get():null;
 	}
 	

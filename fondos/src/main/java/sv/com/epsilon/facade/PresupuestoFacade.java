@@ -8,6 +8,7 @@ package sv.com.epsilon.facade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -73,6 +74,12 @@ public class PresupuestoFacade  extends WSClient<Presupuesto> {
 			return  responseEntity.getBody();
 		
 		//return years;
+	}
+
+
+	public Optional<Presupuesto> select(Integer idEmpresa) {
+		
+		return get("/default/byEmpresa/"+idEmpresa);
 	}
 
 

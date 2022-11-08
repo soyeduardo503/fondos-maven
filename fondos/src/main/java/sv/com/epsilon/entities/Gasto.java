@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Gasto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
     private Integer idGasto;
     
     private String nombre;
@@ -62,15 +61,29 @@ public class Gasto implements Serializable {
     private Tipodesembolso idTipoDesembolso;
     
     private Proveedor idProveedor;
+    
+    private Integer kpresupuesto;
+    private String status;
 
     public Gasto() {
     }
 
     
     
+    
    
 
-    public Date getFechaRegistro() {
+    public Gasto(Integer idGasto) {
+		super();
+		this.idGasto = idGasto;
+	}
+
+
+
+
+
+
+	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
 
@@ -201,6 +214,24 @@ public class Gasto implements Serializable {
 
 
 
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
+
+
+
 	@XmlTransient
     public List<Recibo> getReciboList() {
         return reciboList;
@@ -242,6 +273,25 @@ public class Gasto implements Serializable {
 	public void setIdProveedor(Proveedor idProveedor) {
 		this.idProveedor = idProveedor;
 	}
+
+
+
+	
+
+
+	public Integer getKpresupuesto() {
+		return kpresupuesto;
+	}
+
+
+
+
+
+
+	public void setKpresupuesto(Integer kpresupuesto) {
+		this.kpresupuesto = kpresupuesto;
+	}
+
 
 
 

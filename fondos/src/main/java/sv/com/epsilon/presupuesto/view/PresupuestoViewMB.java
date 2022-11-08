@@ -31,7 +31,7 @@ public class PresupuestoViewMB implements Serializable{
 	/**
 	 * 
 	 */
-	@ManagedProperty(value="#{sesionMB}")
+	@ManagedProperty(value="#{usuarioSessionMB}")
 	private UsuarioSessionMB session;
 	private Presupuesto presupuesto;
 	private TreeNode nodo;

@@ -119,10 +119,12 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	@Override
 	public void save(){
 		Presupuesto item = getItemSelected();
+		item.setIdEmpresa(1);//TODO update when is ready
 		getItemSelected().setCodigo(codTemp);
 		getItemSelected().setActual(item.getTotal());
 		getItemSelected().setAct("A");
 		getItemSelected().setFechaElaboracion(new Date());
+		getItemSelected().setValidasub("N");
 		List<Categoria> categorias=new ArrayList<Categoria>();
 		try {
 			super.saveWithoutclose();

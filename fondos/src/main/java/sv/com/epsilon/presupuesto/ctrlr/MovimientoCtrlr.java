@@ -3,8 +3,9 @@
  */
 package sv.com.epsilon.presupuesto.ctrlr;
 
+import java.util.List;
+
 import sv.com.epsilon.entities.Movimiento;
-import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.MovimientoFacade;
 
 /**
@@ -13,12 +14,15 @@ import sv.com.epsilon.facade.MovimientoFacade;
  */
 public class MovimientoCtrlr {
 
-	
-	public static void save(Movimiento mov) throws Exception {
-		MovimientoFacade facade=new MovimientoFacade();
+	private MovimientoFacade facade=new MovimientoFacade();
+	public  void save(Movimiento mov) throws Exception {
+		
 		facade.persist(mov);
 //		new CategoriaFacade().updateMontoDisponible(mov.getMonto(),CodigoCtrlr.getCodigoPadre(
 //				mov.getIdCategoria().getCodigo()));
 	}
 	
+	public List<Movimiento> load(Integer idGasto){
+		return facade.list("/byGasto/"+idGasto);
+	}
 }

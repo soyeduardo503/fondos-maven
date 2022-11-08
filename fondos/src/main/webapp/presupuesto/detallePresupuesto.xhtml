@@ -30,8 +30,8 @@
 												<p:outputLabel value="#{presupuestoViewMB.presupuesto.nombrePresupuesto}"/>
 												<p:outputLabel value="#{presupuestoViewMB.presupuesto.year}"/>
 											</f:facet>
-											<p:outputLabel value="Monto Asignable"  /> <p:outputLabel value="#{ingresoMontoMB.obtenerDisponibleAsignado(sesionMB.presupuestoSelected)}"  />
-											<h:outputText value="Monto Total" /> <h:outputText value="#{sesionMB.presupuestoSelected.total}" />
+											<p:outputLabel value="Monto Asignable"  /> <p:outputLabel value="#{ingresoMontoMB.obtenerDisponibleAsignado(usuarioSessionMB.presupuestoSelected)}"  />
+											<h:outputText value="Monto Total" /> <h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}" />
 									</p:panelGrid>
 										
 									

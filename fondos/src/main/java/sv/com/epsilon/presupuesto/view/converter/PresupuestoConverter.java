@@ -8,9 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
-import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
 
 /**
