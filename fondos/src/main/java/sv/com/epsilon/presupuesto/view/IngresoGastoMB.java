@@ -555,6 +555,8 @@ public class IngresoGastoMB implements Serializable {
 		
 		public void emptyForm() {
 			this.gasto=new Gasto();
+			gasto.setAct("A");
+			gasto.setStatus("A");
 			this.categoriaTxt="";
 			this.chequeraBloq=true;
 			gasto.setIdTipoDesembolso(null);

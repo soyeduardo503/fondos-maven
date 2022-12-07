@@ -285,7 +285,7 @@ public class CategoriaFacade extends WSClient<Categoria> {
 	}
 
 	public void updateReference(String codigo) throws Exception {
-		action("/catagoria/update/reference/"+codigo);
+		action("/update/reference/"+codigo,false);
 		
 	}
 	

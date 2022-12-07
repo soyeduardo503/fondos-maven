@@ -93,15 +93,26 @@
 					</p:column>
 
 					<p:column headerText="Opcion">
-						<p:commandLink styleClass="btn btn-danger">
-							<b:iconAwesome value="undo" />
-							<h:outputText value="Revertir"/>
-						</p:commandLink>
-						<p:commandLink styleClass="btn btn-primary"
-							action="#{ingresoGastoMB.load(g)}"
-							oncomplete="PF('dlgGastosWtg').hide();">
-							<b:iconAwesome value="window-restore" />
-						</p:commandLink>
+						<b:container fluid="true">
+							<b:row>
+								<b:column col-xs="2">
+									<p:commandLink styleClass="btn btn-danger" style="font-size:0.9em;" action="#{revertMB.action()}">
+										<b:iconAwesome value="undo" />
+										<h:outputText value="Revertir" style="font-size:0.7em;" />
+										
+									</p:commandLink>
+								</b:column>
+								<b:column col-xs="2"/>
+								<b:column col-xs="2">
+									<p:commandLink styleClass="btn btn-primary"
+										action="#{ingresoGastoMB.load(g)}"
+										oncomplete="PF('dlgGastosWtg').hide();">
+										<b:iconAwesome value="window-restore" />
+										<h:outputText value="Ver" style="font-size:0.7em;" />
+									</p:commandLink>
+								</b:column>
+						</b:row>
+						</b:container>
 					</p:column>
 
 				</p:dataTable>

@@ -52,12 +52,15 @@ public class WSClient<T> {
 		return object;
 	}
 	
-	public boolean action(String endpoint) throws Exception {
+	public boolean action(String endpoint,boolean post) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		//request.getHeaders().add(, CONTEXT);
-		
-		Optional<AccionResponse> resp = Optional.ofNullable( restTemplate.postForObject(url(endpoint),null,AccionResponse.class));
+		Optional<AccionResponse> resp=null;
+		if(post)
+			 resp= Optional.ofNullable( restTemplate.postForObject(url(endpoint),null,AccionResponse.class));
+		else
+			resp=process(endpoint);
 		if(!resp.isPresent())
 			throw new Exception("Error when update the object");
 		else

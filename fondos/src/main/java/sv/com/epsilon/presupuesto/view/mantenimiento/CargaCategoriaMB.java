@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -47,8 +48,8 @@ public class CargaCategoriaMB {
     private boolean changeAmount=false;
     private boolean ok=false;
     
-    
-    
+    @ManagedProperty("#{categoriaMB}")
+    private CategoriaMB categoriaMB;
      
 
 	
@@ -110,6 +111,14 @@ public class CargaCategoriaMB {
 		this.fileCSV = fileCSV;
 	}
 	
+	
+	
+	public CategoriaMB getCategoriaMB() {
+		return categoriaMB;
+	}
+	public void setCategoriaMB(CategoriaMB categoriaMB) {
+		this.categoriaMB = categoriaMB;
+	}
 	/**
 	 * Se lee el archivo y se convierte a la lista que se guardara
 	 * */
@@ -175,6 +184,8 @@ public class CargaCategoriaMB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		new ExecuteForm().execute("PF('loadWgtCat').hide();");
+		categoriaMB.loadCategories();
 	}
 	
 	

@@ -42,9 +42,9 @@ public class Epsilon implements Serializable {
 		
 	}
 	
-	public String getValueFromCookie(String key) {
+	public Cookie getValueFromCookie(String key) {
 		Map<String, Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
-		return  cookies.get(key)!=null?cookies.get(key).toString():"";
+		return  cookies.get(key)!=null?(Cookie)cookies.get(key):null;
 //		HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 //	    Cookie cookie = null;
 //
@@ -56,7 +56,10 @@ public class Epsilon implements Serializable {
 		 Cookie oreo = new Cookie(key, value);
 		 //oreo.setDomain("epsilon-sv.com");
 		 oreo.setMaxAge(2419200);
+		 oreo.setPath("/");
+		 
 		 response.addCookie(oreo);
+		 
 	 }
 	
 	public Object getCookie(String key) {

@@ -9,6 +9,9 @@
            <h:form id="IDFrmMenu">
            	
            		<b:container fluid="true">
+           			<b:row>
+           				<h:outputText value="#{usuarioSessionMB.user}"/>
+           			</b:row>
 	           		<b:listLinks  style="widht:100%;">
 	           			   <b:navCommandLink value="Principal" actionListener="#{menuUsuarioMB.goTo('presupuesto')}"          icon-awesome="home" />
 	           			   <hr style="border-top: 1px solid #8c8b8b;"/>

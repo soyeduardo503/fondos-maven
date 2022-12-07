@@ -41,9 +41,14 @@
 												<f:selectItem itemLabel="seleccione un item" noSelectionOption="true" selected="selected" />
 												<f:selectItems value="#{categoriaMB.listPresupuesto}" var="p" itemLabel="#{p.nombrePresupuesto}" 
 												itemValue="#{p}"/>
-												<p:ajax update="#{categoriaMB.idFormList},totalCategoriasPerPre,btnCrearCategorias" listener="#{categoriaMB.loadCategories()}" />
+													<p:ajax update="#{categoriaMB.idFormList},totalCategoriasPerPre,btnCrearCategorias" listener="#{categoriaMB.loadCategories()}" />
 											</p:selectOneMenu>
+											<p:commandLink>
+												<b:iconAwesome value="refresh" solid="true" size="2x"/>
+												<p:ajax update="#{categoriaMB.idFormList},totalCategoriasPerPre,btnCrearCategorias" listener="#{categoriaMB.loadCategories()}" />
+											</p:commandLink>
 									</b:column>
+									
 									<b:column col-xs="3">
 											<h:outputLabel id="totalCategoriasPerPre" value="#{categoriaMB.list.size()}" />
 									</b:column>
@@ -82,7 +87,11 @@
 								
 							</p:column>
 							
-							
+							<p:column headerText="Monto" width="50">
+								
+										<h:outputText value="#{i.monto}" />
+								
+							</p:column>
 							
 						
 							<p:column headerText="Categoria Padre"  filterMatchMode="exact">
@@ -110,11 +119,7 @@
 									<b:iconAwesome value="pencil" />
 									<f:setPropertyActionListener value="#{i}" target="#{categoriaMB.itemSelected}" />
 								</p:commandLink>
-								<p:commandLink actionListener="#{organigramViewMB.createModelFromCategoria(i)}" >
-									<b:iconAwesome value="sitemap" />
-									<f:setPropertyActionListener value="#{i}" target="#{organigramViewMB.c}" />
-								</p:commandLink>
-								
+																
 							</p:column>
 							
 						</p:dataTable>

@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 
 import sv.com.epsilon.ctrlr.wsclient.AppCtrlr;
 import sv.com.epsilon.entities.Categoria;
@@ -18,6 +19,7 @@ import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.PresupuestoCtrlr;
 import sv.com.epsilon.session.Epsilon;
 import sv.com.epsilon.session.pojo.SessionActiveResponse;
+import sv.com.epsilon.util.Log;
 import sv.com.epsilon.util.RedirectNv;
 
 /**
@@ -51,27 +53,32 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 			//String token=super.getValueFromCookie("token");
 			
 			String	token=fromURL();
-			System.out.println("token in other context->"+token);
-			this.addValue("token", token);
-			if(token!=null) {
-				 SessionActiveResponse active;
-				try {
-					active = new AppCtrlr().findSessionActive(token,"");
-					 if( getValue("context").equals(active.getContext())){
-						 this.addValue("idRol",active.getIdRol());
-						 this.addValue("user", active.getUser());
-						 this.addValue("idUser", active.getIdUser());
-						 this.addValue("idEmpresa", active.getIdEmpresa());
-					 }
-				} catch (Exception e) {
-					
-					e.printStackTrace();
-				}
-				
-				 
-				 
-			}
+			fieldValues(token);
 		
+		}
+	}
+	
+	public void fieldValues(String token) {
+		System.out.println("token in other context->"+token);
+		this.addValue("token", token);
+		super.setCookie("token", token);
+		if(token!=null) {
+			 SessionActiveResponse active;
+			try {
+				active = new AppCtrlr().findSessionActive(token,"");
+				 if( getValue("context").equals(active.getContext())){
+					 this.addValue("idRol",active.getIdRol());
+					 this.addValue("user", active.getUser());
+					 this.addValue("idUser", active.getIdUser());
+					 this.addValue("idEmpresa", active.getIdEmpresa());
+				 }
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			
+			 
+			 
 		}
 	}
 	
@@ -86,10 +93,10 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	}
 	public void loadTokenFromURL(){
 		if(!FacesContext.getCurrentInstance().isPostback()) {
-			String token=super.getValueFromCookie("token");
+			Cookie token=super.getValueFromCookie("token");
 			System.out.println("token in other context->"+token);
 			this.addValue("token", token);
-			RedirectNv.goMain(getContext(),token);
+			RedirectNv.goMain(getContext(),token.getValue());
 		}
 		
 	}
@@ -102,7 +109,9 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	
 	
 	public UsuarioSessionMB() {
-		
+		Cookie token=super.getValueFromCookie("token");
+		Log.info("token found->"+token.getValue());
+		fieldValues(token.getValue());
 	}
 	
 	
