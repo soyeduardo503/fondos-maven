@@ -5,76 +5,47 @@
  */
 package sv.com.epsilon.entities;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
+
+
 import javax.xml.bind.annotation.XmlTransient;
+
+import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
  *
  * @author Zeta
  */
-@Entity
-@Table(name = "financiamiento")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Financiamiento.findAll", query = "SELECT f FROM Financiamiento f Where  f.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Financiamiento.findByAct", query = "SELECT c FROM Financiamiento c where c.act=:act and c.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Financiamiento.findByIdFinanciamiento", query = "SELECT f FROM Financiamiento f WHERE f.idFinanciamiento = :idFinanciamiento"),
-    @NamedQuery(name = "Financiamiento.findByName", query = "SELECT f FROM Financiamiento f WHERE f.nombre = :nombre and  f.idEmpresa=:idEmpresa"),
-    @NamedQuery(name = "Financiamiento.findByCuenta", query = "SELECT f FROM Financiamiento f WHERE f.cuenta = :cuenta and  f.idEmpresa=:idEmpresa")})
 public class Financiamiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idFinanciamiento")
     private Integer idFinanciamiento;
-    @Column(name = "Nombre")
+
     private String nombre;
-    @Column(name = "Cuenta")
+
     private String cuenta;
-    @Column(name = "donador")
+
     private String donador;
-    @Column(name = "monto")
+
     private Double Monto;
     
-    @Column(name = "Fecha")
-    @Temporal(TemporalType.DATE)
     private Date fecha;
     
-    @Column(name = "fechaRegistro")
-    @Temporal(TemporalType.DATE)
+
     private Date fechaRegistro;
     
-    @OneToMany(mappedBy = "idFinanciamiento")
+
     private List<Movimiento> movimientoList;
     
-    @Basic(optional = false)
-    @Column(name = "act")
+    
     private String act;
     
-    @JoinColumn(name = "idPresupuesto", referencedColumnName = "idPresupuesto")
-    @ManyToOne(optional = true)
     private Presupuesto idPresupuesto;
     
-    @Column(name = "idEmpresa")
+    
     private Integer idEmpresa;
 
     public Financiamiento() {

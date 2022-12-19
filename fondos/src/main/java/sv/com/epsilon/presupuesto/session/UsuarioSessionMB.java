@@ -109,9 +109,13 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	
 	
 	public UsuarioSessionMB() {
+		try {
 		Cookie token=super.getValueFromCookie("token");
 		Log.info("token found->"+token.getValue());
 		fieldValues(token.getValue());
+		}catch (Exception e) {
+			System.out.println("token null");
+		}
 	}
 	
 	

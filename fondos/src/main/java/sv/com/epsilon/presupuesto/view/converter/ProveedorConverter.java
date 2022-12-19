@@ -44,7 +44,8 @@ public class ProveedorConverter extends AbstractConverter<Proveedor,ProveedorFac
 	 */
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object objEntity) {
-		
+		if(objEntity!=null&&  "".equals( objEntity.toString()))
+			return "";
 		return this.getKeyString(objEntity);
 	}
 

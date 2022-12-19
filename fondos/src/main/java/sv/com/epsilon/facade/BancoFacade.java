@@ -8,8 +8,6 @@ package sv.com.epsilon.facade;
 import java.util.HashMap;
 import java.util.List;
 
-import org.hibernate.Query;
-
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Banco;
 

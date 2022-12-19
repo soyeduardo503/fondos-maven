@@ -8,7 +8,7 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Id;
+import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
  *
@@ -19,7 +19,6 @@ public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-
     private Integer idProveedor;
 
     private String nombre;

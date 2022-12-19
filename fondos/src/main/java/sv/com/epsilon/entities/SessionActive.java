@@ -8,6 +8,8 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import sv.com.epsilon.ctrlr.annotation.Id;
+
 /**
  *
  * @author eduardx
@@ -16,7 +18,7 @@ import java.util.Date;
 public class SessionActive implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Id
     private Integer idSessionActive;
     
     private String mac;

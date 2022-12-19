@@ -8,21 +8,7 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
+import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
  *
@@ -32,8 +18,8 @@ import org.hibernate.annotations.NamedQuery;
 public class Recibo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
     
+    @Id
     private Integer idRecibo;
     
     private String nombre;

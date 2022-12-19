@@ -9,9 +9,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.Query;
-import org.hibernate.Transaction;
-
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;

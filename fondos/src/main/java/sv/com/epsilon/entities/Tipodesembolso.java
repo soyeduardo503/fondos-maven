@@ -8,8 +8,9 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlTransient;
+
+import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
  *

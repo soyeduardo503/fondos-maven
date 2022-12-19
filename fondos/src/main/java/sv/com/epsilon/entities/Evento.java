@@ -8,19 +8,7 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
+import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
  *
@@ -30,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id    
+    @Id
     private Integer idEvento;
     
     private String tipo;

@@ -8,9 +8,7 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Id;
-
-import lombok.Data;
+import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
  *
@@ -20,8 +18,8 @@ import lombok.Data;
 public class Cajachica implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
     
+    @Id
     private Integer idCajachica;
     
 
