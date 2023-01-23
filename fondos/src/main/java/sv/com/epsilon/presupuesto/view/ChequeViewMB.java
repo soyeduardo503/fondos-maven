@@ -34,14 +34,14 @@ public class ChequeViewMB {
 	private StreamedContent init()
 	{
 		  File testPdfFile = new File("C:\\files\\pdf\\empty.pdf");
-		  try {
-			  
-			return  new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf");
-			
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		}
+//		  try {
+//			  
+//			//return  new DefaultStreamedContent(new FileInputStream(testPdfFile), "application/pdf");
+//			
+//		} catch (FileNotFoundException e) {
+//			
+//			e.printStackTrace();
+//		}
 		  return null;
 		
 	}

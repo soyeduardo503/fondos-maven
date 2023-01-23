@@ -21,12 +21,13 @@ public class NodoCtrlr {
 		
 	}
 
+	
 	public void actualizarNodo(ViewNode nodo,DefaultTreeNode tree) {
 		if(nodo.getHijos()>0) {
-			for(TreeNode son:tree.getChildren()) {
-				ViewNode nod = (ViewNode)son.getData();
-			}
-			
+//			for(TreeNode son:tree.getChildren()) {
+//				ViewNode nod = (ViewNode)son.getData();
+//			}
+//			
 		}
 	
 	}

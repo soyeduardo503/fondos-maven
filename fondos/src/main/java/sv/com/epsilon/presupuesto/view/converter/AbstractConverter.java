@@ -32,7 +32,8 @@ public abstract class AbstractConverter<K,T> {
 			initFacade();
 		//	Object key=getKey(entity);
 			String callMethodfindAll="findById";
-			 return (K) facade.getClass().getMethod(callMethodfindAll, new Class[]{Integer.class}).invoke(facade, new Object[]{Integer.parseInt(key.toString())});
+			 K value= (K) facade.getClass().getMethod(callMethodfindAll, new Class[]{Integer.class}).invoke(facade, new Object[]{Integer.parseInt(key.toString())});
+			 return value;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			
@@ -50,7 +51,7 @@ public abstract class AbstractConverter<K,T> {
 			//System.out.println(fields.length);
 			if(fields.length>0)
 			for(Field f: fields){
-				Annotation[] anotacions = f.getAnnotations();
+				Annotation[] anotacions = f.getDeclaredAnnotations();
 				if(anotacions.length>0){ 
 					for(Annotation a:anotacions){
 //						System.out.println(a.annotationType().getName());

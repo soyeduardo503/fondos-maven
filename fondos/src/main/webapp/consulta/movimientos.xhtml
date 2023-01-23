@@ -97,6 +97,7 @@
 							<b:row>
 								<b:column col-xs="2">
 									<p:commandLink styleClass="btn btn-danger" style="font-size:0.9em;" action="#{revertMB.action()}">
+										<f:setPropertyActionListener value="#{g}" target=""></f:setPropertyActionListener>
 										<b:iconAwesome value="undo" />
 										<h:outputText value="Revertir" style="font-size:0.7em;" />
 										

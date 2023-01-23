@@ -59,7 +59,7 @@
 									</b:row>
 									<b:row>
 										<b:column> 
-											<p:dataTable id="detailUploadFile" value="#{cargaCategoriaMB.list}" var="c" >
+											<p:dataTable id="detailUploadFile" value="#{cargaCategoriaMB.list}" var="c"  lazy="true">
 												<p:column headerText="Codigo">
 													<h:outputText value="#{c.codigo}"/>
 												</p:column>

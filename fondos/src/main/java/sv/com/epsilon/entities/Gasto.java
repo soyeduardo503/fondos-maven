@@ -255,6 +255,8 @@ public class Gasto implements Serializable {
     
    
     public Proveedor getIdProveedor() {
+    	if(idProveedor==null)
+    		idProveedor=new Proveedor();
 		return idProveedor;
 	}
 
