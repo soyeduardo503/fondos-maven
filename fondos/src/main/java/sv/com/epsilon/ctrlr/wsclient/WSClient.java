@@ -12,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -32,10 +31,23 @@ public class WSClient<T> {
 	private Integer idEmpresa=1;
 	
 	
+	
 	public WSClient(Class<T> cl) {
 		this.typeClass=cl;
 	}
 	
+	public Integer callProcedure(List<Object> param,String endpoint) {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		//request.getHeaders().add(, CONTEXT);
+		Optional<AccionResponse> resp=null;
+		
+		resp= Optional.ofNullable( restTemplate.postForObject(url(endpoint),null,AccionResponse.class));
+		if(resp.isPresent())
+			return resp.get().getStatus();
+		else
+			return -1;
+	}
 	
 
 	public T save(T object) throws Exception {

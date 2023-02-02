@@ -15,7 +15,9 @@ import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.ProveedorFacade;
+import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
+import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
@@ -42,10 +44,17 @@ public class SearchMovimientoMB implements Serializable{
 	private SearchGasto search=new SearchGasto();
 	private List<Proveedor> listProveedor=new ProveedorFacade().findAllActive();
 	private List<Gasto> list;
-	
+	private Gasto gasto=null;
+	private List<CategoriaGasto> listDetalle =null;
 	
 	public SearchMovimientoMB() {
 		
+	}
+	
+	public void load(Gasto g) {
+		this.gasto=g;
+		 listDetalle = new CategoriaGastoCtrlr().convert(g.getIdGasto());
+		new ExecuteForm().ExecuteUpdate("idDetailGasto","PF('wgtDetail').show();");
 	}
 	
 	public void preRender() {
@@ -136,4 +145,21 @@ public class SearchMovimientoMB implements Serializable{
 		
 	}
 
+	public Gasto getGasto() {
+		return gasto;
+	}
+
+	public void setGasto(Gasto gasto) {
+		this.gasto = gasto;
+	}
+
+	public List<CategoriaGasto> getListDetalle() {
+		return listDetalle;
+	}
+
+	public void setListDetalle(List<CategoriaGasto> listDetalle) {
+		this.listDetalle = listDetalle;
+	}
+
+	
 }

@@ -26,17 +26,20 @@ public class CategoriaGastoCtrlr {
 	public List<CategoriaGasto> convert(Integer idGasto ){
 		List<Movimiento>listMov =new MovimientoCtrlr().load(idGasto);
 		list=new ArrayList<CategoriaGasto>();
-		listMov.forEach(CategoriaGastoCtrlr::fillValue);
+		listMov.forEach(v->{
+			list.add(fillValue(v));
+		});
+//		listMov.forEach(CategoriaGastoCtrlr::fillValue);
 		
 		
 		return list;
 	}
 	
-	public static void fillValue(Movimiento mov) {
+	public  CategoriaGasto fillValue(Movimiento mov) {
 		CategoriaGasto catGas=new CategoriaGasto();
 		catGas.setMonto(mov.getMonto());
 		catGas.setCategoria(mov.getIdCategoria());
-		
+		return catGas;
 		//catGas.setTxtCategoria(mov.);
 	}
 	

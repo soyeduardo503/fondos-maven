@@ -1407,4 +1407,17 @@ padding: 0.4em !important ;
   background-color: linear-gradient(90deg, rgba(51,187,194,1) 0%, rgba(193,40,93,1) 0%, rgba(193,40,93,1) 53%, rgba(147,27,68,1) 100%) !important;
   font-size: 1.2em;
 }
+
+.demoFont {
+font-family: Tahoma, Geneva, sans-serif;
+font-size: 25px;
+letter-spacing: 2px;
+word-spacing: 2px;
+color: #000000;
+font-weight: 700;
+text-decoration: none;
+font-style: normal;
+font-variant: normal;
+text-transform: none;
+}
 	

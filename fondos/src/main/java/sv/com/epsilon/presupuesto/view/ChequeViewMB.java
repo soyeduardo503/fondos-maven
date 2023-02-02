@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
@@ -19,6 +20,7 @@ import sv.com.epsilon.report.pojo.Cheque;
 import sv.com.epsilon.report.pojo.Documento;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
+import sv.com.epsilon.util.Meses;
 import sv.com.epsilon.util.NumberToLetter;
 
 /**
@@ -67,7 +69,7 @@ public class ChequeViewMB {
 		cheque.setCantidadLetras(cantidadLetras);
 		cheque.setConcepto(gasto.getNombre());
 		cheque.setProveedor(gasto.getIdProveedor().getNombreLegal());
-		
+		cheque.setFecha(Meses.obtenerTexto(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.MONTH)));
 		
 		
 		try {

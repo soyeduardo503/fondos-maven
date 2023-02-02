@@ -106,8 +106,8 @@
 								<b:column col-xs="2"/>
 								<b:column col-xs="2">
 									<p:commandLink styleClass="btn btn-primary"
-										action="#{ingresoGastoMB.load(g)}"
-										oncomplete="PF('dlgGastosWtg').hide();">
+										actionListener="#{searchMovimientoMB.load(g)}"
+										oncomplete="PF('wgtDetail').show();">
 										<b:iconAwesome value="window-restore" />
 										<h:outputText value="Ver" style="font-size:0.7em;" />
 									</p:commandLink>
@@ -123,7 +123,7 @@
 		</b:panel>
 
 		<ui:include src="/componentes/lateralBar/findMovimiento.xhtml" />
-
+		<ui:include src="/dialog/gasto/detail.xhtml"></ui:include>
 
 	</ui:define>
 

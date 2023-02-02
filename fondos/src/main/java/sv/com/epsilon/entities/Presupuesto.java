@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.xml.bind.annotation.XmlTransient;
 
 import sv.com.epsilon.ctrlr.annotation.Id;
@@ -60,6 +61,9 @@ public class Presupuesto implements Serializable {
     private Integer idEmpresa;
     
     private Integer isPrimary;
+    
+        
+    private Integer sizesubs;
     
     public Presupuesto() {
     }
@@ -187,8 +191,17 @@ public class Presupuesto implements Serializable {
     
 
     
+    
 
-    public Integer getIsPrimary() {
+    public Integer getSizesubs() {
+		return sizesubs;
+	}
+
+	public void setSizesubs(Integer sizesubs) {
+		this.sizesubs = sizesubs;
+	}
+
+	public Integer getIsPrimary() {
 		return isPrimary;
 	}
 

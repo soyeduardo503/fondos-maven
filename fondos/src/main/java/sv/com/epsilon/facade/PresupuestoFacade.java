@@ -37,7 +37,7 @@ public class PresupuestoFacade  extends WSClient<Presupuesto> {
 ////    	getSession();
 ////    	try {
 ////	    	String qName="Presupuesto.findByAct";
-////	    	   Transaction tx = session.beginTransaction();
+////	    	   Transaction tx = 
 ////	    	  Query tr =session.createQuery("Select p from Presupuesto p where p.act=:act").setParameter("act", "A").setCacheMode(null);
 ////	         //Query t = session.getNamedQuery(qName).setParameter("act", "A");
 ////	        

@@ -13,9 +13,7 @@
 	</ui:define>
 
 	<ui:define name="body">
-		<div id="wrapper">
-			<div id="main">
-				<div class="inner">
+		
 					<f:event listener="#{locacionMB.preRender()}" type="preRenderView"></f:event>
 					<f:event listener="#{tipoLocacionMB.preRender()}" type="preRenderView"></f:event>
 					<h2><h:outputText value="#{locacionMB.headerPage}" /></h2>
@@ -114,10 +112,7 @@
 							
 						</p:dataTable>
 					</h:form>
-				</div>
-			</div>
-
-		</div>
+			
 		<h:form id="#{locacionMB.idFormNew}">
 			<p:dialog widgetVar="#{locacionMB.wtgDialog}" width="700" height="300" header="Nuevo" id="#{locacionMB.idWtgNew}">
 				<p:panel>

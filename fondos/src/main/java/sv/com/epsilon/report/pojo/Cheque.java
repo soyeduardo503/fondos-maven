@@ -9,6 +9,7 @@ public class Cheque {
 	private String cantidadLetras;
 	private Double cantidad;
 	private String concepto;
+	private String fecha;
 	
 	
 	public Cheque(String proveedor, String cantidadLetras, Double cantidad, String concepto) {
@@ -43,6 +44,16 @@ public class Cheque {
 	}
 	public void setConcepto(String concepto) {
 		this.concepto = concepto;
+	}
+
+
+	public String getFecha() {
+		return fecha;
+	}
+
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 	
 	

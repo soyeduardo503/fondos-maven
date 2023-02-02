@@ -4,6 +4,7 @@
 package sv.com.epsilon.presupuesto.view.converter;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -44,7 +45,10 @@ public class TipoDesembolsoConverter extends AbstractConverter<Tipodesembolso,Ti
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object objEntity) {
 		if(objEntity==null)
 			return "";
-		return this.getKeyString(objEntity);
+		if(arg1 instanceof HtmlOutputText)
+			return ((Tipodesembolso) objEntity).getNombre();
+		else
+			return this.getKeyString(objEntity);
 	}
 
 }

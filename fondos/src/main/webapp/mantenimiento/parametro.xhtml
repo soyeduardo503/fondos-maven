@@ -13,9 +13,7 @@
 	</ui:define>
 
 	<ui:define name="body">
-		<div id="wrapper">
-			<div id="main">
-				<div class="inner">
+		<b:panel look="#{varMB.PRIMARY}" collapsible="false">
 					<f:event listener="#{parametroMB.preRender()}" type="preRenderView"></f:event>
 					<h2><h:outputText value="#{parametroMB.headerPage}" /></h2>
 					<h:form id="#{parametroMB.idFormList}">
@@ -72,10 +70,7 @@
 							
 						</p:dataTable>
 					</h:form>
-				</div>
-			</div>
-
-		</div>
+				</b:panel>
 		<h:form id="#{parametroMB.idFormNew}">
 			<p:dialog widgetVar="#{parametroMB.wtgDialog}" width="700" height="300" header="Nuevo">
 				<p:panel>

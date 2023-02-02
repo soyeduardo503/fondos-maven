@@ -27,7 +27,7 @@
 													
 									
 										<b:column col-xs="12">
-											  <p:fileUpload mode="advanced"
+											  <p:fileUpload mode="advanced" 
 								                      multiple="false"
 								                      sizeLimit="202400000" allowTypes="/(\.|\/)(csv)$/"
 								                      invalidSizeMessage="Maximo archivo permitido 2MB"
@@ -38,7 +38,7 @@
 									</b:row>
 									<b:row>
 										<b:column> 
-											<p:dataTable id="detailUploadFile" value="#{cargaProveedoreMB.list}" var="c" >
+											<p:dataTable id="detailUploadFile" value="#{cargaProveedoreMB.list}" var="c"  lazy="false">
 												<p:column headerText="Codigo">
 													<h:outputText value="#{c.codigo}"/>
 												</p:column>

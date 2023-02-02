@@ -4,6 +4,109 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
+	<h:form id="idDetailGasto">
+		<p:dialog widgetVar="wgtDetail" id="detail" width="900"  header="Gasto No. #{searchMovimientoMB.gasto.idGasto}">
+			<b:panel look="#{varMB.PRIMARY}" collapsible="false">
+				<b:container fluid="true">
+
+					<b:row>
+						<b:column col-sm="3" styleClass="btn btn-info">
+						Fecha Ingreso
+					</b:column>
+						<b:column col-sm="3" styleClass="btn btn-info">
+						Fecha Transaccion
+					</b:column>
+
+					<b:column col-sm="3" styleClass="btn btn-info">
+						Tipo desembolso
+					</b:column>
+					<b:column col-sm="3" styleClass="btn btn-info">
+						Cheque/transf/recibo
+					</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-sm="3">
+							<h:outputText value="#{searchMovimientoMB.gasto.fechaRegistro}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</b:column>
+						<b:column col-sm="3">
+							<h:outputText value="#{searchMovimientoMB.gasto.fecha}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</b:column>
+
+						<b:column col-sm="3">
+							<h:outputText
+								value="#{searchMovimientoMB.gasto.idTipoDesembolso}"
+								converter="tipoDesembolsoConverter" />
+						</b:column>
+						<b:column col-sm="3">
+							<h:outputText value="#{searchMovimientoMB.gasto.cheque}" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-sm="8" styleClass="btn btn-info">
+						Proveedor
+					</b:column>
+					<b:column col-sm="1">
+						</b:column>
+						<b:column col-sm="3" styleClass="btn btn-info">
+						Monto total $
+					</b:column>
+						
+					</b:row>
+					<b:row>
+						<b:column col-sm="8" styleClass="demoFont">
+							<h:outputText
+								value="#{searchMovimientoMB.gasto.idProveedor.nombre}"
+								style="font-size:1.4em;" />
+						</b:column>
+						<b:column col-sm="1">
+						</b:column>
+						<b:column col-sm="3">
+							<h:outputText style="font-size:1.6em;"
+								value="#{searchMovimientoMB.gasto.total}"></h:outputText>
+						</b:column>
+
+						
+					</b:row>
+					<b:row>
+						<b:column col-sm="12" styleClass="btn btn-info">
+							Descripcion
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-sm="12">
+
+							<h:outputText value="#{searchMovimientoMB.gasto.descripcion}"></h:outputText>
+
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-sm="12" styleClass="btn btn-warning">
+							<p:outputLabel value="Detalle" />
+						</b:column>
+					</b:row>
+					<b:row>
+
+						
+						<p:dataTable value="#{searchMovimientoMB.listDetalle}" var="det"
+							rowIndexVar="rowIndex">
+							<p:column headerText="#">
+							
+							#{rowIndex+1}</p:column>
+							<p:column headerText="Catergoira">#{det.categoria.nombre}</p:column>
+
+							<p:column headerText="Monto">#{det.monto}</p:column>
+						</p:dataTable>
+
+					</b:row>
 
 
+
+				</b:container>
+			</b:panel>
+		</p:dialog>
+	</h:form>
 </ui:composition>
