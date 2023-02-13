@@ -55,6 +55,13 @@ public class NumberResponse {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+
+	public int getIntValue() {
+		return Integer.parseInt(value.toString());
+		
+	}
 	
 
 }

@@ -23,17 +23,35 @@ import sv.com.epsilon.util.Log;
 public class WSClient<T> {
 
 	private Class<T>  typeClass;
-	private static String SERVER="localhost";
-	private static String PORT="8000";
-	private static String CONTEXT="WSFondos";
-	private final static String URL_BASE="http://"+SERVER+":"+PORT+"/"+CONTEXT;
+	private  String SERVER="localhost";
+	private  String PORT="8000";
+	private  String CONTEXT="WSFondos";
+	private  String URL_BASE="http://"+SERVER+":"+PORT+"/"+CONTEXT;
 	private String token="";
 	private Integer idEmpresa=1;
+	private boolean noNameClass=false;
 	
 	
 	
 	public WSClient(Class<T> cl) {
 		this.typeClass=cl;
+	}
+	public WSClient(Class<T> c,String server,String port, String context) {
+		this.typeClass=c;
+		target(server, port, context);
+	}
+	public void target(String server,String port, String context) {
+		this.SERVER=server;
+		this.PORT=port;
+		this.CONTEXT=context;
+		URL_BASE="http://"+SERVER+":"+PORT+"/"+CONTEXT;
+		
+	}
+	
+	public WSClient(Class<T> c,String server,String port, String context,boolean noNameClass) {
+		this.typeClass=c;
+		this.noNameClass=noNameClass;
+		target(server, port, context);
 	}
 	
 	public Integer callProcedure(List<Object> param,String endpoint) {
@@ -276,6 +294,10 @@ public class WSClient<T> {
 	
 	
 	public String url(String endPoint) {
+		if(noNameClass) {
+			Log.info(URL_BASE+"/"+endPoint);
+			return URL_BASE+"/"+endPoint;
+		}
 		Log.info(URL_BASE+"/"+this.typeClass.getSimpleName().toLowerCase()+endPoint);
 		return URL_BASE+"/"+this.typeClass.getSimpleName().toLowerCase()+endPoint;
 	}

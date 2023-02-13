@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:form id="frmImage">
+	<p:dialog id="idImage" widgetVar="wgtImageView" width="700" height="500" header="Imagenes">
+		<b:container fluid="true">
+			<b:row>
+				<p:galleria value="#{imageViewMB.list}" var="photo"  circular="true"
+						numVisible="7"  id="gall"
+						verticalViewPortHeight="480px"						
+						style="max-width: 640px">
+						<p:graphicImage url="http://info.epsilon-sv.com:9001/WSImageHandler/image/get/#{photo}" alt="no disponible"
+							style="width: 100%; display: block" />
+						<f:facet name="thumbnail">
+							<p:graphicImage url="http://info.epsilon-sv.com:9001/WSImageHandler/image/get/#{photo}"
+								alt="no disponible" style="width: 30%; height:20%; display: block" />
+						</f:facet>
+					</p:galleria>
+			</b:row>
+			<b:row>
+				<b:column col-xs="2"></b:column>
+				<b:column col-xs="8"></b:column>
+				<b:column col-xs="2"></b:column>
+			</b:row>
+			
+			
+		</b:container>
+
+	</p:dialog>
+
+
+</h:form>
+
+
+
+
+</ui:composition>

@@ -20,22 +20,26 @@
 								Principales
 							</b:row>
 				<b:row>
-					
-						<p:selectOneMenu value="#{categoriaAutocompleteMB.principalSelected}"  >
-							<f:selectItems value="#{ingresoGastoMB.listCategoriaPrincipal}" 
-								var="c" itemValue="#{c.codigo}" itemLabel="#{c.nombre}" />
-							<p:ajax listener="#{categoriaAutocompleteMB.searchChildrenAplicable()}" update="idCategoria,codigoCategoriaPpal"/>	
-						</p:selectOneMenu>
-					
-					
+
+					<p:selectOneMenu
+						value="#{categoriaAutocompleteMB.principalSelected}">
+						<f:selectItems value="#{ingresoGastoMB.listCategoriaPrincipal}"
+							var="c" itemValue="#{c.codigo}" itemLabel="#{c.nombre}" />
+						<p:ajax
+							listener="#{categoriaAutocompleteMB.searchChildrenAplicable()}"
+							update="idCategoria,codigoCategoriaPpal" />
+					</p:selectOneMenu>
+
+
 				</b:row>
 				<b:row>
 						Codigo
 				</b:row>
 				<b:row>
-					<h:outputText id="codigoCategoriaPpal" value="#{categoriaAutocompleteMB.principalSelected}"/>		
+					<h:outputText id="codigoCategoriaPpal"
+						value="#{categoriaAutocompleteMB.principalSelected}" />
 				</b:row>
-				
+
 				<b:row>								
 								Seleccionables
 				</b:row>
@@ -68,19 +72,20 @@
 
 			<b:column col-xs="6">
 				<b:row>
-					<b:label value="Archivos relacionados" severity="primary" style="font-size:1.2em;font-family: Tahoma, Geneva, sans-serif;" large-screen="full-width" />
-							
+			
 				</b:row>
 				<b:row>
-					
-					
+
+
 
 				</b:row>
-				<p:commandLink onclick="PF('wgtImg').show();">
-					<b:iconAwesome value="image" solid="true"/>
+				<p:commandLink action="#{imageViewMB.load()}" update=":frmImage" oncomplete="PF('wgtImageView').show();">
+					<b:iconAwesome value="plus" solid="true" style="font-size:1.6em" />
 				</p:commandLink>
-				
-				<p:graphicImage url="http://localhost:9000/WSImageHandler/QR/get-qrcode-img/#{ingresoGastoMB.code}" height="100" width="100" stream="true"/>
+
+				<p:graphicImage
+					url="http://localhost:9001/WSImageHandler/QR/get-qrcode-img/#{ingresoGastoMB.code}"
+					height="100" width="100" stream="true" />
 
 			</b:column>
 
@@ -90,14 +95,15 @@
 
 		</b:row>
 
-	<p:dialog widgetVar="wgtImg" id="img-content" width="700" height="350">
-		<p:galleria var="img64" value="#{ingresoGastoMB.imgBase64}">
-			 <p:graphicImage  value="#{img64}"  alt="no image" style="width: 100%" stream="true" />
-		        <f:facet name="thumbnail">
-		            <p:graphicImage value="#{img64}" alt="no image" stream="true" />
-		        </f:facet>
-		</p:galleria>
-	</p:dialog>
+		<p:dialog widgetVar="wgtImg" id="img-content" width="700" height="350">
+			<p:galleria var="img64" value="#{ingresoGastoMB.imgBase64}">
+				<p:graphicImage value="#{img64}" alt="no image" style="width: 100%"
+					stream="true" />
+				<f:facet name="thumbnail">
+					<p:graphicImage value="#{img64}" alt="no image" stream="true" />
+				</f:facet>
+			</p:galleria>
+		</p:dialog>
 
 	</b:panel>
 </ui:composition>

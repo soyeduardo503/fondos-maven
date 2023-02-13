@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Banco;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Chequera;
@@ -34,12 +35,14 @@ import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CorrelativoreciboFacade;
+import sv.com.epsilon.facade.ImageBucketFacade;
 import sv.com.epsilon.facade.TipodesembolsoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
+import sv.com.epsilon.presupuesto.pojo.ImageBucket;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.presupuesto.view.autocomplete.CategoriaAutocompleteMB;
 import sv.com.epsilon.util.ExecuteForm;
@@ -97,6 +100,8 @@ public class IngresoGastoMB implements Serializable {
 	private String code=initCode();
 	
 	private Integer idGastoSelected;
+	private List<ImageBucket> listImages;
+	
 	
 	BigDecimal monto=new BigDecimal(0);
 
@@ -149,6 +154,28 @@ public class IngresoGastoMB implements Serializable {
 	
 	
 	
+	
+	public void fetchImg() {
+		List<ImageBucket> list=new ImageBucketFacade().fetch();
+		if(this.listImages==null||listImages.isEmpty()) {
+			listImages=list;
+		}else {
+			listImages.addAll(list);
+		}
+	
+		
+		
+	}
+	
+	
+
+	public List<ImageBucket> getListImages() {
+		return listImages;
+	}
+
+	public void setListImages(List<ImageBucket> listImages) {
+		this.listImages = listImages;
+	}
 
 	public List<Tipodesembolso> getListTipoDesembolso() {
 		return listTipoDesembolso;
