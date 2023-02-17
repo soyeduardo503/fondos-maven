@@ -89,7 +89,9 @@
 									
 								
 							</p:column>
-						
+							<p:column headerText="Default" width="50">							
+								<h:outputText value="*"  rendered="#{i.evalPrincipal()}" />								
+							</p:column>
 							<p:column style="padding-left:5px;" headerText="Opciones">
 							<div  style="float: left;">
 								<b:container fluid="true">
@@ -101,7 +103,7 @@
 									
 								
 									<b:column col-xs="1">	
-										<p:commandLink actionListener="#{presupuestoMB.openEdit(i)}" oncomplete="PF('formaDesembolso').show();" >
+										<p:commandLink actionListener="#{presupuestoMB.openEdit(i)}" update="#{presupuestoMB.idFormEdit}" oncomplete="PF('formaDesembolso').show();" >
 											<b:iconAwesome value="pencil"  styleClass="editBtn" />
 											
 										</p:commandLink>
@@ -121,6 +123,7 @@
 		
 		
 		<ui:include src="/componentes/dialogs/nuevoPresupuesto.xhtml"/>
+		<ui:include src="/componentes/lateralBar/editPresupuesto.xhtml"/>
 		<ui:include src="/componentes/dialogs/eliminar.xhtml">
 			<ui:param name="mb" value="#{presupuestoMB}"></ui:param>
 			<ui:param name="nombreObjeto" value="#{presupuestoMB.itemSelected.nombrePresupuesto}"></ui:param>

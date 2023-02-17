@@ -11,6 +11,7 @@ public class CategoriaGasto {
 	private Double disponible;
 	private Presupuesto presupuesto;
 	private String txtCategoria;
+	private Integer idMovimiento=0;
 	
 	
 	public CategoriaGasto() {
@@ -85,6 +86,16 @@ public class CategoriaGasto {
 
 	public void setDisponible(Double disponible) {
 		this.disponible = disponible;
+	}
+
+
+	public Integer getIdMovimiento() {
+		return idMovimiento;
+	}
+
+
+	public void setIdMovimiento(Integer idMovimiento) {
+		this.idMovimiento = idMovimiento;
 	}
 
 	

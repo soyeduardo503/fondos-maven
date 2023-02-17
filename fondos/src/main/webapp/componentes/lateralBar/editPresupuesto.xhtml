@@ -7,8 +7,9 @@
     
                       xmlns:b="http://bootsfaces.net/ui">
 	
+	<h:form id="#{presupuestoMB.idFormEdit}">
 <p:sidebar position="right" id="editObject" widgetVar="#{presupuestoMB.dialogEdit}">
-			<h:form id="#{presupuestoMB.idFormNew}">
+			
 			<b:panel look="primary" title="#{presupuestoMB.itemSelected.nombrePresupuesto}" collapsible="false"> 
 				<b:container fluid="true">
 						<b:row>
@@ -17,9 +18,9 @@
 						</b:row>
 						<b:row>
 							<b:column col-xs="8"><p:inputText value="#{presupuestoMB.itemSelected.nombrePresupuesto}"  size="50" maxlength="50" >
-													<p:ajax event="change" listener="#{presupuestoMB.asignarCodigo()}"/>
+													
 												</p:inputText></b:column>
-							<b:column col-xs="4"><h:outputText value="#{presupuestoMB.codTemp}" id="codigo"/></b:column>						
+							<b:column col-xs="4"><h:outputText value="#{presupuestoMB.itemSelected.codigo}" id="codigo"/></b:column>						
 						</b:row>
 						<b:row>
 							<b:column col-xs="6"><h:outputText value="Monto" /></b:column>
@@ -38,11 +39,12 @@
 							<b:column col-xs="6"><p:calendar value="#{presupuestoMB.itemSelected.fechaFin}" pattern="dd/MM/yyyy"/></b:column>						
 						</b:row>
 						
+						
 						<b:row>
 							<b:column col-xs="4"><h:outputText value="Cuentas" /></b:column>
 							<b:column col-xs="4">
 								<p:selectOneMenu value="#{presupuestoMB.itemSelected.idCuenta}">
-									<f:selectItems value="#{listaCuentasMB.list}" var="c" itemLabel="#{c.banco}- #{c.numero}" itemValue="#{c.idCuenta}"/>
+									<f:selectItems value="#{listaCuentasMB.list}" var="c" itemLabel="#{c.numero}" itemValue="#{c.idCuenta}"/>
 								</p:selectOneMenu>
 							</b:column>						
 						</b:row>	
@@ -57,7 +59,7 @@
 						</b:column>
 					</b:row>
 				</b:container>
-				<p:panelGrid columns="2">
+				
 														
 						
 						
@@ -69,11 +71,23 @@
 															<f:selectItem itemLabel="Inactivo" itemValue="I"/>
 															<f:selectItem itemLabel="Finalizado" itemValue="F"/>
 															</p:selectOneMenu>
-					<p:commandButton action="#{presupuestoMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
-					<p:commandButton action="#{presupuestoMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
-				</p:panelGrid>
+					<hr />
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+									<ui:param name="mb" 		value="#{proveedoresMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{proveedoresMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{proveedoresMB.dialogEdit}"></ui:param>
+						</ui:include>
+					</b:row>
+				
 			
 			</b:panel>
-			</h:form>
+			
 		</p:sidebar>
+		</h:form>
 </ui:composition>

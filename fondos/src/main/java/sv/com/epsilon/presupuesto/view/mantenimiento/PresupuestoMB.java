@@ -107,9 +107,10 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		if(Calendar.getInstance().get(Calendar.MONTH)>9) {
 			yearSelected++;
 		}
-		
+		this.getItemSelected().setSizesubs(6);
 		
 		this.getItemSelected().setYear(yearSelected+"");
+		
 	}
 	
 	
@@ -125,6 +126,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		getItemSelected().setAct("A");
 		getItemSelected().setFechaElaboracion(new Date());
 		getItemSelected().setValidasub("N");
+		getItemSelected().setSizesubs(6);
 		List<Categoria> categorias=new ArrayList<Categoria>();
 		try {
 			super.saveWithoutclose();
@@ -238,6 +240,8 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		if(new CategoriaFacade().CountByPresupuesto(getItemSelected())==0){
 			try {
 				super.remove();
+				this.setList(getFacade().findAllActive());
+				new ExecuteForm().Update(this.getIdFormList());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

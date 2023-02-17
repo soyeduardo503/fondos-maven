@@ -17,18 +17,23 @@ import sv.com.epsilon.ctrlr.annotation.Id;
 public class Imagen implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    
     private Integer idURL;
     
     private String url;
     
-    private String alt;
+    private byte[] alt;
     
     private String act;
     
     private Gasto idGasto;
 
     public Imagen() {
+    }
+    
+    public Imagen(byte[] alt,Gasto gasto) {
+    	this.alt=alt;
+    	this.idGasto=gasto;
     }
 
     public Imagen(Integer idURL) {
@@ -51,11 +56,11 @@ public class Imagen implements Serializable {
         this.url = url;
     }
 
-    public String getAlt() {
+    public byte[] getAlt() {
         return alt;
     }
 
-    public void setAlt(String alt) {
+    public void setAlt(byte[] alt) {
         this.alt = alt;
     }
 

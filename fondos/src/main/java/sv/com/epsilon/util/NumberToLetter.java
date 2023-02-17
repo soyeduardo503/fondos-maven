@@ -149,7 +149,7 @@ public class NumberToLetter {
             if(Num[1].startsWith("0"));
              ceroDecimal =buscarInicialDecimalCero(Num[1]);
             
-            if(Num[1]!=null&&!Num[1].equals("00")&&!Num[1].equals("0")){
+            if(Num[1]!=null&&!Num[1].equals("0")){
             	//String dc=Convertir(Num[1],false,mayusculas);
             	
             	

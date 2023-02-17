@@ -1408,6 +1408,19 @@ padding: 0.4em !important ;
   font-size: 1.2em;
 }
 
+
+.paid {
+        background-color: #54a90a !important;
+        background-image: none !important;
+        color: #ffffff !important;
+}
+.revert {
+        background-color: #ff5733 !important;
+        background-image: none !important;
+        color: #ffffff !important;
+}
+
+
 .demoFont {
 font-family: Tahoma, Geneva, sans-serif;
 font-size: 25px;

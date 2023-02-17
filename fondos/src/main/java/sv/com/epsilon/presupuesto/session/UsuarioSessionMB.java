@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.session;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,6 +41,7 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	private Categoria categoriaSelected;
 	private Presupuesto presupuestoSelected;
 	private Presupuesto presupuestoSelectedDlg;
+	private Integer idPresupuestoSelected;
 	private List<Presupuesto> listPresupuesto;
 	
 	
@@ -93,26 +95,30 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	}
 	public void loadTokenFromURL(){
 		if(!FacesContext.getCurrentInstance().isPostback()) {
-			Cookie token=super.getValueFromCookie("token");
-			System.out.println("token in other context->"+token);
+			Optional<Cookie> token=super.getValueFromCookie("token");
+			System.out.println("token in other context->"+(token.isPresent()?token.get():"NO_TOKEN"));			
 			this.addValue("token", token);
-			RedirectNv.goMain(getContext(),token.getValue());
+			RedirectNv.goMain(getContext(),token.get().getValue());
 		}
 		
 	}
 	
 	{
 		//TODO eliminar presupuesto quemado
-		presupuestoSelected=new PresupuestoFacade().findById(1);
+		if(idPresupuestoSelected==null||idPresupuestoSelected==0) {
+			idPresupuestoSelected=1;
+		}
+		presupuestoSelected=new PresupuestoFacade().findById(idPresupuestoSelected);
 		this.addValue("context","fondos");
 	}
 	
 	
 	public UsuarioSessionMB() {
 		try {
-		Cookie token=super.getValueFromCookie("token");
-		Log.info("token found->"+token.getValue());
-		fieldValues(token.getValue());
+			Optional<Cookie> token=super.getValueFromCookie("token");
+			Log.info("token found->"+(token.isPresent()?token.get():"NO_TOKEN"));
+		if(token.isPresent())
+			fieldValues(token.get().getValue());
 		}catch (Exception e) {
 			System.out.println("token null");
 		}

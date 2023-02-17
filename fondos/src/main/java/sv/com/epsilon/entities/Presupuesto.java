@@ -208,6 +208,10 @@ public class Presupuesto implements Serializable {
 	public void setIsPrimary(Integer isPrimary) {
 		this.isPrimary = isPrimary;
 	}
+	
+	public boolean evalPrincipal() {
+		return isPrimary!=null&&isPrimary==1;
+	}
 
 	public String getCodigo() {
 		return codigo;

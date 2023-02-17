@@ -36,6 +36,7 @@ import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CorrelativoreciboFacade;
 import sv.com.epsilon.facade.ImageBucketFacade;
+import sv.com.epsilon.facade.ImagenFacade;
 import sv.com.epsilon.facade.TipodesembolsoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
@@ -136,7 +137,23 @@ public class IngresoGastoMB implements Serializable {
 	public void load(Gasto g) {
 		this.gasto=g;
 		this.list= new CategoriaGastoCtrlr().convert(g.getIdGasto());
+		disablePost=false;
 		new ExecuteForm().update(form);
+		
+	}
+	
+	public void copy(Gasto g) {
+		this.gasto=g;
+		
+		this.list= new CategoriaGastoCtrlr().copy(g.getIdGasto(),true);
+		gasto.setIdGasto(null);
+		gasto.setFecha(new Date());
+		gasto.setFechaRegistro(new Date());
+		actualizarCheque(gasto.getIdTipoDesembolso());
+		disablePost=true;
+		new MessageGrowlContext().send("Datos cargados ","Datos copiados de gasto: "+g.getIdGasto() );
+		new ExecuteForm().update(form);
+		
 	}
 	
 	/**
@@ -544,6 +561,7 @@ public class IngresoGastoMB implements Serializable {
 				
 				gasto.setNombre(gasto.getDescripcion());
 				gasto.setKpresupuesto(getPresupuestoSelected().getIdPresupuesto());
+				gasto.setStatus("A");
 				Integer id=GastoCtrlr.save(gasto);
 				this.gasto.setIdGasto(id);
 				List<Movimiento> listMovToSave = createMovimientos();
@@ -551,7 +569,7 @@ public class IngresoGastoMB implements Serializable {
 					listMovToSave.forEach(mov->{
 						try {
 							mov.setIdGasto(new Gasto(id));
-							mov.setIdPresupuesto(presupuestoSelected);
+							mov.setIdPresupuesto(presupuestoSelected);							
 							new MovimientoCtrlr().save(mov);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -559,6 +577,10 @@ public class IngresoGastoMB implements Serializable {
 					});
 				} catch (Exception e) {
 					Log.error(e, "Error en creacion de movimientos");
+				}
+				fetchImg();
+				if(listImages.size()>0) {
+					new ImagenFacade().save(listImages,gasto);
 				}
 				if(gasto.getIdTipoDesembolso().getIdTipoDesembolso()==1) {
 					new ChequeraFacade().updateCurrent(idChequeraSelected);
@@ -600,7 +622,10 @@ public class IngresoGastoMB implements Serializable {
 				mov.setCuenta(cuentaSelected.getNumero());
 				mov.setIdUsuario(this.sesionMB.getIdUser());
 				mov.setIdGasto(gasto);
-				mvts.add(mov);
+				if(temp.getIdMovimiento()!=0) {
+					mov.setIdMovimiento(temp.getIdMovimiento());
+				}
+				mvts.add(mov);				
 				//mov.setIdGasto(gasto)
 				
 			});

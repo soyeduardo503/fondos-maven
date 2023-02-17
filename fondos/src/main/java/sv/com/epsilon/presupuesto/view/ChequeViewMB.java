@@ -6,6 +6,8 @@ package sv.com.epsilon.presupuesto.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 
 import javax.faces.bean.ManagedBean;
@@ -63,13 +65,15 @@ public class ChequeViewMB {
 	public void print(Gasto gasto){
 		Documento doc = create(gasto);
 		Cheque cheque=new Cheque();
-		String cantidadLetras=new NumberToLetter().Convertir(String.valueOf(gasto.getTotal()),true, true, true);
+		BigDecimal total=new BigDecimal(gasto.getTotal()).setScale(2,RoundingMode.HALF_UP);
+		String cantidadLetras=new NumberToLetter().Convertir(total.toString(),true, true, true);
+		
 		cheque.setCantidad(gasto.getTotal());
 
-		cheque.setCantidadLetras(cantidadLetras);
+		cheque.setCantidadLetras(cantidadLetras.toUpperCase());
 		cheque.setConcepto(gasto.getNombre());
 		cheque.setProveedor(gasto.getIdProveedor().getNombreLegal());
-		cheque.setFecha(Meses.obtenerTexto(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.MONTH)));
+		cheque.setFecha(Meses.obtenerTexto(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.MONTH)).toUpperCase());
 		
 		
 		try {

@@ -115,14 +115,14 @@
 		
 		
 					
-		<p:dialog widgetVar="dlgGastosWtg" id="idDlgGastoWtg" header="Gastos encontrados" width="1000" height="700">
+		<p:dialog widgetVar="dlgGastosWtg" id="idDlgGastoWtg" header="Gastos encontrados" width="1100" height="700">
 			<b:panel look="primary" collapsible="false">
 	
 				
 	
 	
 	
-					<p:dataTable value="#{searchGastoMB.list}"
+					<p:dataTable value="#{searchGastoMB.list}" rowStyleClass="#{g.status eq 'R'?'revert':''}"
 						id="idTableGastos" var="g" rowIndexVar="indexVar">
 						<p:column width="10">
 							<h:outputText value="#{indexVar+1}" />
@@ -152,7 +152,8 @@
 						
 						<p:column headerText="Opcion">
 							<p:commandLink styleClass="btn btn-danger"><b:iconAwesome value="undo" /> </p:commandLink>
-							<p:commandLink styleClass="btn btn-primary" action="#{ingresoGastoMB.load(g)}" oncomplete="PF('dlgGastosWtg').hide();"><b:iconAwesome value="window-restore"/> </p:commandLink>
+							<p:commandLink title="copiar" styleClass="btn btn-info" action="#{ingresoGastoMB.copy(g)}" oncomplete="PF('dlgGastosWtg').hide();"><b:iconAwesome value="copy" /> </p:commandLink>
+							<p:commandLink title="cargar" styleClass="btn btn-primary" action="#{ingresoGastoMB.load(g)}" oncomplete="PF('dlgGastosWtg').hide();"><b:iconAwesome value="eye"/> </p:commandLink>
 						</p:column>
 	
 					</p:dataTable>

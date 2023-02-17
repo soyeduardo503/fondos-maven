@@ -6,6 +6,7 @@ package sv.com.epsilon.session;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
@@ -42,9 +43,9 @@ public class Epsilon implements Serializable {
 		
 	}
 	
-	public Cookie getValueFromCookie(String key) {
+	public Optional<Cookie> getValueFromCookie(String key) {
 		Map<String, Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
-		return  cookies.get(key)!=null?(Cookie)cookies.get(key):null;
+		return  cookies.get(key)!=null?Optional.of((Cookie)cookies.get(key)):Optional.empty();
 //		HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 //	    Cookie cookie = null;
 //
