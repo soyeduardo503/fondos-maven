@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -15,11 +16,13 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.response.AccionResponse;
 import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.Log;
 
+@Data
 public class WSClient<T> {
 
 	private Class<T>  typeClass;
@@ -53,6 +56,12 @@ public class WSClient<T> {
 		this.noNameClass=noNameClass;
 		target(server, port, context);
 	}
+	public WSClient(Class<T> c,String server,String port, String context,boolean noNameClass,String token) {
+		this.typeClass=c;
+		this.noNameClass=noNameClass;
+		this.token=token;
+		target(server, port, context);
+	}
 	
 	public Integer callProcedure(List<Object> param,String endpoint) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -72,7 +81,7 @@ public class WSClient<T> {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<?> request = new HttpEntity<>(object);
-		//request.getHeaders().add(, CONTEXT);
+		request.getHeaders().add("Authorization",token);
 		
 		Optional<?> resp = Optional.ofNullable( restTemplate.postForObject(url("/"),request,typeClass));
 		if(!resp.isPresent())
@@ -131,11 +140,14 @@ public class WSClient<T> {
 	
 	public Optional<T> get(String endpoint) {
 		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", token);
+		HttpEntity<String> entity = new HttpEntity<>("body", headers);
 		ResponseEntity<T> responseEntity = 
 				  restTemplate.exchange(
 				    url(endpoint),
 				    HttpMethod.GET,
-				    null,
+				    entity,
 				    typeClass
 				  );
 		if(200!=responseEntity.getStatusCodeValue())

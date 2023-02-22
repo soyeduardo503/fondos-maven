@@ -4,6 +4,7 @@
 package sv.com.epsilon.presupuesto.session;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +13,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sv.com.epsilon.ctrlr.wsclient.AppCtrlr;
 import sv.com.epsilon.entities.Categoria;
@@ -98,6 +102,7 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 			Optional<Cookie> token=super.getValueFromCookie("token");
 			System.out.println("token in other context->"+(token.isPresent()?token.get():"NO_TOKEN"));			
 			this.addValue("token", token);
+			this.setCookie("token",token.get().getValue());
 			RedirectNv.goMain(getContext(),token.get().getValue());
 		}
 		
@@ -117,13 +122,25 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		try {
 			Optional<Cookie> token=super.getValueFromCookie("token");
 			Log.info("token found->"+(token.isPresent()?token.get():"NO_TOKEN"));
-		if(token.isPresent())
-			fieldValues(token.get().getValue());
+			if(token.isPresent()) {
+				fieldValues(token.get().getValue());
+			}
 		}catch (Exception e) {
 			System.out.println("token null");
 		}
 	}
 	
+	
+	public void callSelectedValues() {
+		
+	}
+	
+	public String createValues() throws JsonProcessingException {
+		HashMap<String,String> values=new HashMap<String, String>();
+		values.put("idPresupuesto",this.idPresupuestoSelected+"");
+		ObjectMapper mapper=new ObjectMapper();
+		return mapper.writeValueAsString(values);
+	}
 	
 //	public void login() throws Exception {
 //		
