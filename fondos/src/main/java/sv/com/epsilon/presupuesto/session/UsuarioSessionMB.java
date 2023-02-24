@@ -17,11 +17,15 @@ import javax.servlet.http.Cookie;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.ctrlr.wsclient.AppCtrlr;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.facade.ValuesSessionFacade;
 import sv.com.epsilon.presupuesto.ctrlr.PresupuestoCtrlr;
+import sv.com.epsilon.presupuesto.pojo.ValuesToken;
+import sv.com.epsilon.presupuesto.pojo.WgtDialog;
 import sv.com.epsilon.session.Epsilon;
 import sv.com.epsilon.session.pojo.SessionActiveResponse;
 import sv.com.epsilon.util.Log;
@@ -33,6 +37,7 @@ import sv.com.epsilon.util.RedirectNv;
  */
 @ManagedBean
 @SessionScoped
+@Slf4j
 public class UsuarioSessionMB extends Epsilon implements Serializable {
 
 	/**
@@ -47,11 +52,17 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	private Presupuesto presupuestoSelectedDlg;
 	private Integer idPresupuestoSelected;
 	private List<Presupuesto> listPresupuesto;
-	
-	
-	
-	
+	private WgtDialog<Presupuesto> dialog=new WgtDialog<Presupuesto>() {
 		
+		@Override
+		public void define() {
+			this.headerText="Seleccione un presupuesto con el que trabajara";
+			this.setWgt("presupuestoSession");
+			this.setId("idPresupuestoSession");
+			
+		}
+	};
+	
 	
 	public void preRender(){
 		if(!FacesContext.getCurrentInstance().isPostback()) {
@@ -88,6 +99,16 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		}
 	}
 	
+	
+	
+	public WgtDialog<Presupuesto> getDialog() {
+		return dialog;
+	}
+
+	public void setDialog(WgtDialog<Presupuesto> dialog) {
+		this.dialog = dialog;
+	}
+
 	public void isOk() {
 		
 		RedirectNv.goMain(getContext(),getToken());
@@ -131,9 +152,38 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	}
 	
 	
+	public void eventSelectBudget() {
+		log.info("the budget selected is "+this.idPresupuestoSelected);
+		saveSelected();
+	}
+	
+	
 	public void callSelectedValues() {
+		Optional<ValuesToken> pValues = new ValuesSessionFacade().fetch();
+		if(pValues.isPresent()) {
+			ValuesToken v = pValues.get();
+			try {
+				String value=v.value("idPresupuestoSelected");
+				this.idPresupuestoSelected=Integer.parseInt(value);
+			} catch (JsonProcessingException e) {
+				Log.error(e, "no se logro descargar data");
+			}
+		}
+	}
+	
+	public void saveSelected() {
+		ValuesToken values=new ValuesToken();
+		values.setToken(getToken());
+		try {
+			values.setValues(createValues());
+			new ValuesSessionFacade().save(values);
+		} catch (Exception e) {
+			log.error( "No se logro guardar ",e);
+		}
 		
 	}
+	
+	
 	
 	public String createValues() throws JsonProcessingException {
 		HashMap<String,String> values=new HashMap<String, String>();
@@ -164,8 +214,17 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		
 	}
 
+	
 
 	
+	public Integer getIdPresupuestoSelected() {
+		return idPresupuestoSelected;
+	}
+
+	public void setIdPresupuestoSelected(Integer idPresupuestoSelected) {
+		this.idPresupuestoSelected = idPresupuestoSelected;
+	}
+
 	@javax.annotation.PreDestroy
 	public void PreDestroy() {
 		

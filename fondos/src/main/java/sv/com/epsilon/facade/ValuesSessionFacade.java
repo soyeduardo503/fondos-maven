@@ -19,10 +19,10 @@ import sv.com.epsilon.presupuesto.pojo.ValuesToken;
  * @author Zeta
  */
 
-public class SessionFacade extends WSClient<ValuesToken> {
+public class ValuesSessionFacade extends WSClient<ValuesToken> {
 
 
-    public SessionFacade() {
+    public ValuesSessionFacade() {
         super(ValuesToken.class,"localhost","8181","WSEpsilonUSER",true);
         setToken( getValueFromCookie("token").get().getValue());
     }
@@ -37,8 +37,8 @@ public class SessionFacade extends WSClient<ValuesToken> {
 	}
     
    
-    public Optional<ValuesToken> fetch(String token){
-    	Optional<ValuesToken> value=get("/values/previous/"+token);
+    public Optional<ValuesToken> fetch(){
+    	Optional<ValuesToken> value=get("/values/previous/"+getToken());
     	
     	return   			value;
     }

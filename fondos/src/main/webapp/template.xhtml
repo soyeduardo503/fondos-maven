@@ -45,6 +45,7 @@ spans.forEach((span, idx) => {
 </h:head>
 
 <h:body>
+	
 	<b:panel look="primary" collapsible="false"  id="ppanel" style="min-height:90%; max-height:100%;">
 		<f:facet name="heading">
 			<b:container fluid="true">	
@@ -57,7 +58,9 @@ spans.forEach((span, idx) => {
 					</b:column>
 					<b:column col-xs="1">
 						<div style="position: relative; float: right; right: 10px;">
-							
+							<p:commandLink onclick="PF('#{usuarioSessionMB.dialog.wgt}').show();" action="#{presupuestoMB.load()}" update=":idFormSelectBudget">
+								<b:iconAwesome solid="true" value="list" style="color:white;"/>
+							</p:commandLink>
 							<ui:include src="/dialog/dialogPresupuestos.xhtml"></ui:include>
 						</div>
 					</b:column>

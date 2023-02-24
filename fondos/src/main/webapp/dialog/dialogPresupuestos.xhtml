@@ -2,15 +2,33 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	<h:form id="idFormSelectBudget">
+	<p:dialog id="#{usuarioSessionMB.dialog.id}" widgetVar="#{usuarioSessionMB.dialog.wgt}" header="#{usuarioSessionMB.dialog.headerText}" width="#{usuarioSessionMB.dialog.width}" height="#{usuarioSessionMB.dialog.height}">
+		<b:container fluid="true">
+			<b:row>
+				<b:column colXs="8">Seleccione un presupuesto</b:column>
+			</b:row>
+			<b:row>
+				<b:column colXs="12">
+					<p:selectOneMenu  value="#{usuarioSessionMB.idPresupuestoSelected}" >
+						<f:selectItems value="#{presupuestoMB.list}" var="p" itemLabel="#{p}"
+                            itemValue="#{p.idPresupuesto}"></f:selectItems>
+                              <p:column><b:iconAwesome value="money-bill" solid="true"/> #{p} </p:column>
+					</p:selectOneMenu>
+					
+				</b:column>
+			</b:row>	
+		</b:container>
+
+
+	</p:dialog>
+
+	</h:form>
 
 
 
 
-		
 
-		
-		
-	
+
 </ui:composition>
