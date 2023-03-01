@@ -57,13 +57,15 @@ spans.forEach((span, idx) => {
 					<b:column col-xs="9">
 					</b:column>
 					<b:column col-xs="1">
+					
 						<div style="position: relative; float: right; right: 10px;">
-							<p:commandLink onclick="PF('#{usuarioSessionMB.dialog.wgt}').show();" action="#{presupuestoMB.load()}" update=":idFormSelectBudget">
-								<b:iconAwesome solid="true" value="list" style="color:white;"/>
-							</p:commandLink>
+						<h:form id="idFormSelectBudget">		
 							<ui:include src="/dialog/dialogPresupuestos.xhtml"></ui:include>
+						</h:form>
 						</div>
+					
 					</b:column>
+					
 				</b:row>
 			</b:container>
 		

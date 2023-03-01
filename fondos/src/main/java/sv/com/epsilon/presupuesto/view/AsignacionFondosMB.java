@@ -33,7 +33,7 @@ import sv.com.epsilon.util.ExecuteForm;
 @ViewScoped
 public class AsignacionFondosMB {
 
-	@ManagedProperty(value = "#{sesionMB}")
+	@ManagedProperty(value = "#{usuarioSessionMB}")
 	private UsuarioSessionMB sesionMB;
 	private Categoria itemSelected;
 	private Presupuesto presupuesto;
@@ -59,6 +59,9 @@ public class AsignacionFondosMB {
 	
 	public void preRender() {
 		if(!FacesContext.getCurrentInstance().isPostback()) {
+			if(sesionMB.getIdPresupuestoSelected()!=null) {
+				presupuesto=sesionMB.getPresupuestoSelected();
+			}
 			cargarPresupuesto();
 		}
 	}

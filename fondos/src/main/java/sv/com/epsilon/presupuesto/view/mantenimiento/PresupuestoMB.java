@@ -299,11 +299,28 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	}
 	
 	
-	  public String flow(FlowEvent event) {
+	public String flow(FlowEvent event) {
 	       
 	            return event.getNewStep();
 	        
-	    }
+	 }
+	
+	public String color(Presupuesto pr) {
+		return pr.getIsPrimary()==1?"#FF0099":"#484848";
+	}
+	
+	
+	public void makeDefault(Presupuesto p) {
+		try {
+			new PresupuestoFacade().makeMain(p);
+		
+			this.getList().forEach(pr->pr.defaultValuePrimary(p.getIdPresupuesto()));
+			new ExecuteForm().Update(this.getIdFormList());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 		public UsuarioSessionMB getUsuarioSessionMB() {

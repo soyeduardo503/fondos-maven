@@ -90,7 +90,9 @@
 								
 							</p:column>
 							<p:column headerText="Default" width="50">							
-								<h:outputText value="*"  rendered="#{i.evalPrincipal()}" />								
+								<p:commandLink actionListener="#{presupuestoMB.makeDefault(i)}" >
+									<b:iconAwesome value="star" solid="true" style="color:#{presupuestoMB.color(i)}"/>
+								</p:commandLink>								
 							</p:column>
 							<p:column style="padding-left:5px;" headerText="Opciones">
 							<div  style="float: left;">

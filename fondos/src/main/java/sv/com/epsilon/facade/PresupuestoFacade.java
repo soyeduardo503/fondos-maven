@@ -83,6 +83,12 @@ public class PresupuestoFacade  extends WSClient<Presupuesto> {
 	}
 
 
+	public void makeMain(Presupuesto p) throws Exception {
+		this.action("/set-default/"+p.getIdPresupuesto(), false);
+		
+	}
+
+
 	
  
 }

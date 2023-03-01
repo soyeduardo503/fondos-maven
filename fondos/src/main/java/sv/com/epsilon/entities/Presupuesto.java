@@ -220,6 +220,13 @@ public class Presupuesto implements Serializable {
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
+	
+	public void defaultValuePrimary(Integer id) {
+		if(id==this.getIdPresupuesto())
+			this.setIsPrimary(1);
+		else
+			setIsPrimary(0);
+	}
 
 	@Override
     public int hashCode() {

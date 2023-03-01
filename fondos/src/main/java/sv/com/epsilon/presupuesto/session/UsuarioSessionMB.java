@@ -28,7 +28,9 @@ import sv.com.epsilon.presupuesto.pojo.ValuesToken;
 import sv.com.epsilon.presupuesto.pojo.WgtDialog;
 import sv.com.epsilon.session.Epsilon;
 import sv.com.epsilon.session.pojo.SessionActiveResponse;
+import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
+import sv.com.epsilon.util.MessageGrowlContext;
 import sv.com.epsilon.util.RedirectNv;
 
 /**
@@ -74,6 +76,7 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		
 		}
 	}
+	
 	
 	public void fieldValues(String token) {
 		System.out.println("token in other context->"+token);
@@ -154,7 +157,16 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	
 	public void eventSelectBudget() {
 		log.info("the budget selected is "+this.idPresupuestoSelected);
+		Presupuesto pr = new PresupuestoFacade().findById(idPresupuestoSelected);
+		this.presupuestoSelected=pr;
+		this.presupuestoSelectedDlg=pr;
 		saveSelected();
+		new MessageGrowlContext().send("Presupuesto seleccionado: "+pr.getNombrePresupuesto(), getContext());
+	}
+	
+	public void loadWgtSelect() {
+		loadPresupuestos();
+		new ExecuteForm().Update("idFormSelectBudget:"+dialog.getId());
 	}
 	
 	
@@ -212,6 +224,18 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		
 		setValido(false);
 		
+	}
+	
+	public String color(Presupuesto pr) {
+		if(idPresupuestoSelected!=null&&idPresupuestoSelected!=0)
+			return pr.getIdPresupuesto()==idPresupuestoSelected?"#FF0099":"#484848";
+		return "#484848";
+	}
+	
+	
+	public void seleccionar(Presupuesto pr) {
+		this.idPresupuestoSelected=pr.getIdPresupuesto();
+		eventSelectBudget();
 	}
 
 	

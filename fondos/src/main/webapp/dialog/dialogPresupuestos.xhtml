@@ -3,28 +3,39 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
-	<h:form id="idFormSelectBudget">
-	<p:dialog id="#{usuarioSessionMB.dialog.id}" widgetVar="#{usuarioSessionMB.dialog.wgt}" header="#{usuarioSessionMB.dialog.headerText}" width="#{usuarioSessionMB.dialog.width}" height="#{usuarioSessionMB.dialog.height}">
+	<p:growl/>
+	<p:commandLink oncomplete="PF('#{usuarioSessionMB.dialog.wgt}').show();" action="#{usuarioSessionMB.loadWgtSelect}" update="idSeleccionador">
+								<b:iconAwesome solid="true" value="list" style="color:white;"/>
+						</p:commandLink>
+	<p:sidebar position="right" id="#{usuarioSessionMB.dialog.id}" widgetVar="#{usuarioSessionMB.dialog.wgt}" >
+	
 		<b:container fluid="true">
-			<b:row>
+			<b:row styleClass="titlePage">
 				<b:column colXs="8">Seleccione un presupuesto</b:column>
 			</b:row>
+			
 			<b:row>
 				<b:column colXs="12">
-					<p:selectOneMenu  value="#{usuarioSessionMB.idPresupuestoSelected}" >
-						<f:selectItems value="#{presupuestoMB.list}" var="p" itemLabel="#{p}"
-                            itemValue="#{p.idPresupuesto}"></f:selectItems>
-                              <p:column><b:iconAwesome value="money-bill" solid="true"/> #{p} </p:column>
-					</p:selectOneMenu>
+					<p:dataTable value="#{usuarioSessionMB.listPresupuesto}" var="p" id="idSeleccionador">
+					  
+						<p:column><f:facet name="header"></f:facet> #{p.nombrePresupuesto} </p:column>
+						<p:column> <f:facet name="header"></f:facet>
+							<p:commandLink oncomplete="PF('#{usuarioSessionMB.dialog.wgt}').hide();" action="#{usuarioSessionMB.seleccionar(p)}">					
+								<b:iconAwesome value="heart" solid="true" style="color:#{usuarioSessionMB.color(p)}" />
+							</p:commandLink> 
+						</p:column>
+					</p:dataTable>
+					
+					
 					
 				</b:column>
 			</b:row>	
 		</b:container>
 
+	
+	</p:sidebar>
 
-	</p:dialog>
 
-	</h:form>
 
 
 
