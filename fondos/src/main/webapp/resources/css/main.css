@@ -1433,4 +1433,38 @@ font-style: normal;
 font-variant: normal;
 text-transform: none;
 }
+
+select:hover {
+  background-color: transparent;
+  color: white;
+  padding: 15px 5px 15px 25px;
+}
+
+select option {
+  background-color: white;
+  color: gray;
+  width: 310px;
+  padding: 10px 15px;
+  height: 20px;
+  cursor: pointer;
+}
+
+select option:hover {
+  padding-left: 25px;
+  width: 270px;
+  color: #EC6F66;
+}
+
+#headerRed {
+	font-family: Georgia, serif;
+font-size: 24px;
+letter-spacing: -1.4px;
+word-spacing: 0.6px;
+color: #FF1420;
+font-weight: normal;
+text-decoration: none;
+font-style: normal;
+font-variant: small-caps;
+text-transform: none;
+}
 	

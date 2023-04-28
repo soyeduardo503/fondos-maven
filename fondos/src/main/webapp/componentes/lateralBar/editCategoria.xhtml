@@ -7,7 +7,7 @@
     
                       xmlns:b="http://bootsfaces.net/ui">
 	
-<p:sidebar position="right" id="editObject" widgetVar="#{categoriaMB.idWtgNew}">
+<p:sidebar position="right" id="editObject" widgetVar="#{categoriaMB.dialogEdit}">
 			<h:form id="#{categoriaMB.idFormNew}">
 			<b:panel look="primary" title="#{categoriaMB.itemSelected.nombre}" collapsible="false"> 
 				<b:container fluid="true">
@@ -79,8 +79,8 @@
 															<f:selectItem itemLabel="Si" itemValue="A"/>
 															<f:selectItem itemLabel="No" itemValue="I"/>
 															</p:selectOneMenu>
-					<p:commandButton action="#{categoriaMB.save()}" icon="ui-icon-plus" value="guardar"></p:commandButton>																			
-					<p:commandButton action="#{categoriaMB.cancel()}" icon="ui-icon-minus" value="cancelar"></p:commandButton>
+					<p:commandLink  styleClass="btn btn-info" action="#{categoriaMB.save()}" icon="ui-icon-plus" > <b:iconAwesome value="save" solid="true"/> Guardar</p:commandLink>																		
+					<p:commandLink styleClass="btn btn-danger"  action="#{categoriaMB.cancel()}" icon="ui-icon-minus" ><b:iconAwesome value="window-close"/> cancelar</p:commandLink>
 				</p:panelGrid>
 			
 			</b:panel>

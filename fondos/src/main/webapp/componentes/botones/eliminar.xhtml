@@ -7,11 +7,11 @@
     
                       xmlns:b="http://bootsfaces.net/ui">
              <b:column col-xs="#{cols}" >         
-					<p:commandLink  action="#{mb.openDeleteDialog()}"  >
+					<p:commandLink  action="#{mb.openDeleteDialog()}" styleClass="btn btn-danger" >
 						
 						
 				
-						<b:iconAwesome value="trash" solid="true" styleClass="deleteBtn"/>
+						<b:iconAwesome value="trash" solid="true" />
 				
 						<f:setPropertyActionListener target="#{mb.itemSelected}" value= "#{bean}"/>
 					</p:commandLink>

@@ -134,10 +134,18 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	
 	{
 		//TODO eliminar presupuesto quemado
-		if(idPresupuestoSelected==null||idPresupuestoSelected==0) {
-			idPresupuestoSelected=1;
+		Optional<Presupuesto> defaultPresupuesto = new  PresupuestoFacade().defaultValue();
+		if(defaultPresupuesto.isPresent()) {
+			presupuestoSelected=defaultPresupuesto.get();
+			idPresupuestoSelected=presupuestoSelected.getIdPresupuesto();
+		
+			
+		}else {
+			if(idPresupuestoSelected==null||idPresupuestoSelected==0) {
+				idPresupuestoSelected=1;
+			}
+			presupuestoSelected=new PresupuestoFacade().findById(idPresupuestoSelected);
 		}
-		presupuestoSelected=new PresupuestoFacade().findById(idPresupuestoSelected);
 		this.addValue("context","fondos");
 	}
 	

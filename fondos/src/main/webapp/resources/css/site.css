@@ -264,6 +264,19 @@ h1 {
 	color: #D20005;
 }
 
+h2 {
+		font-family: Georgia, serif;
+font-size: 24px;
+letter-spacing: -1.4px;
+word-spacing: 0.6px;
+color: #D20005;
+font-weight: normal;
+text-decoration: none;
+font-style: normal;
+font-variant: small-caps;
+text-transform: none;
+}
+
 .tablePrimeFaces {
     width: 90%;
      margin: 0; 

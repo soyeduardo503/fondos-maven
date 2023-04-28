@@ -89,6 +89,18 @@ public class PresupuestoFacade  extends WSClient<Presupuesto> {
 	}
 
 
+	public Optional<Presupuesto> defaultValue() {
+		
+		return  select(1);
+	}
+
+
+	public void saveAmount(Presupuesto presupuesto) throws Exception {
+		this.update(presupuesto, "/amount");
+		
+	}
+
+
 	
  
 }

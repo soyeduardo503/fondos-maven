@@ -4,26 +4,22 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.NodeExpandEvent;
-import org.primefaces.model.TreeNode;
-
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
-import sv.com.epsilon.presupuesto.ctrlr.AsignacionCtrlr;
-import sv.com.epsilon.presupuesto.pojo.NodeModel;
-import sv.com.epsilon.presupuesto.pojo.ViewNode;
+import sv.com.epsilon.presupuesto.ctrlr.AsignacionMontosCtrlr;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
+import sv.com.epsilon.util.MessageGrowlContext;
 
 /**
  * @author 50364
@@ -46,9 +42,10 @@ public class AsignacionFondosMB {
 	private BigDecimal  asignable=new BigDecimal(0);
 	private String percentAsignable="100";
 	private String codSelected="N/F";
+	private List<Categoria> listModified;
+	private boolean showAllCat=false;
 	
-	
-	
+	private Categoria catModSelected;
 	
 	/**
 	 * 
@@ -83,7 +80,9 @@ public class AsignacionFondosMB {
 			if(presupuesto!=null) {
 				CategoriaFacade facade=new CategoriaFacade();
 				//presupuesto= sesionMB.getPresupuestoSelected();
-				allCategoria=facade.findByCodPresupuesto(presupuesto);
+				allCategoria = facade.findByCodPresupuesto7(presupuesto);
+				
+				
 				//crearEstructuraCompleta();
 				//facade.close();
 				
@@ -119,23 +118,30 @@ public class AsignacionFondosMB {
 	
 	public void asignarCodigo(Categoria c) {
 		this.itemSelected=c;
-		
+		//this.catModSelected=c;
 		this.codSelected=c.getCodigo().substring(0, c.getCodigo().length()-2);
 		new ExecuteForm().update(":IDFrmTableDetail:detalleAsignacionFondo");
 	}
 	
-	public void calcularAsignanablePresupuesto() {
-		
-		this.asignable=new BigDecimal( AsignacionCtrlr.disponible(presupuesto));
-		percentAsignable=""+new AsignacionCtrlr().percentComplete(presupuesto, asignable.doubleValue());
-	}
 	
-	public void validar() {
-		
+	
+//	public void calcularAsignanablePresupuesto() {
+//		
+//		this.asignable=new BigDecimal( AsignacionCtrlr.disponible(presupuesto));
+//		percentAsignable=""+new AsignacionCtrlr().percentComplete(presupuesto, asignable.doubleValue());
+//	}
+	
+	
+	
+	
+	public boolean isShowAllCat() {
+		return showAllCat;
 	}
 
-	
-	
+	public void setShowAllCat(boolean showAllCat) {
+		this.showAllCat = showAllCat;
+	}
+
 	public List<Categoria> getAllCategoria() {
 		return allCategoria;
 	}
@@ -234,7 +240,33 @@ public class AsignacionFondosMB {
 		this.percentAsignable = percentAsignable;
 	}
 	
+	public void tempCategoriaSelected(Categoria cat) {
+		this.catModSelected=cat;
+	}
 	
+	
+	public void refactorAmount(Categoria catModSelected) {
+	  AsignacionMontosCtrlr.calcularMontos(allCategoria, catModSelected, presupuesto);
+	  
+	  new ExecuteForm().update(":IDFrmTableDetail:detalleAsignacionFondo");
+	  new MessageGrowlContext().send("Presupuesto modificado ", "total $ "+presupuesto.getTotal());
+	}
+	
+	public void save() {
+		try {
+			new AsignacionMontosCtrlr().save(presupuesto, allCategoria);
+		} catch (Exception e) {
+			new MessageGrowlContext().sendError("Error en guardar asignacion", e.getMessage(), e);
+			
+		}
+		new MessageGrowlContext().send("Informacion guardada!!!", "Registros guardados");
+	}
+	
+	public Integer percent(Categoria c) {
+		return AsignacionMontosCtrlr.calcularPorcentaje( c, presupuesto);
+	}
+	
+
 	
 	
 	

@@ -119,6 +119,16 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	GeneradorCodigo gc=new GeneradorCodigo();
 	@Override
 	public void save(){
+		if(getItemSelected().getIdPresupuesto()!=null&&getItemSelected().getIdPresupuesto()>0) {
+			try {
+				new PresupuestoFacade().update(getItemSelected());
+				new ExecuteForm().Execute("PF('"+getDialogEdit()+"').hide();");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
 		Presupuesto item = getItemSelected();
 		item.setIdEmpresa(1);//TODO update when is ready
 		getItemSelected().setCodigo(codTemp);
@@ -198,7 +208,13 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		this.setHeaderDialog("Nuevo Presupuesto");
 		this.setHeaderPage("Mantenimiento Presupuestos");
 		this.setHeaderTable("Tabla de Presupuesto ");
-		
+		setDialogEdit("dlgEditPresupuesto");
+		setDialogDelete("DlgDeletePresupuesto");
+		setIdFormDelete("idDlgPresupuesto");
+		setIdFormEdit("idEditPresupuesto");
+		setIdFormNew("idNewPresupuesto");
+		setIdWtgNew("idNewPresupuestoWgt");
+		setWtgDialog("wgtNewPresupuesto");
 	}
 	
 

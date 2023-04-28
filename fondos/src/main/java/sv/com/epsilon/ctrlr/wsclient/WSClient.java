@@ -3,6 +3,7 @@ package sv.com.epsilon.ctrlr.wsclient;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,7 +82,8 @@ public class WSClient<T> {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<?> request = new HttpEntity<>(object);
-		request.getHeaders().add("Authorization",token);
+		if(token!=null)
+			request.getHeaders().add("Authorization",token);
 		
 		Optional<?> resp = Optional.ofNullable( restTemplate.postForObject(url("/"),request,typeClass));
 		if(!resp.isPresent())
@@ -169,15 +171,16 @@ public class WSClient<T> {
 	}
 	
 	public boolean update(Object object) throws Exception {
-		return update(object,url("/update"));
+		return update(object,"/update");
 		
 	}
 	
 	public void save(List<T> object) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<?> request = new HttpEntity<>(object);
-		Optional<?> resp = Optional.ofNullable( restTemplate.postForObject(url("s/"),request,typeClass));
-		if(!resp.isPresent()) {
+		
+		Optional<AccionResponse> resp = Optional.ofNullable( restTemplate.postForObject(url("s"),request,AccionResponse.class));
+		if(!resp.isPresent()||resp.get().getStatus()!=0) {
 			throw new Exception("Error al intentar guardar list");
 		}
 		

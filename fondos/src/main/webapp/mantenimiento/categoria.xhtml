@@ -115,7 +115,7 @@
 							
 							</p:column>
 							<p:column>
-								<p:commandLink actionListener="#{categoriaMB.openEdit(i)}" oncomplete="PF('#{categoriaMB.idWtgNew}').show();" >
+								<p:commandLink actionListener="#{categoriaMB.openEdit(i)}" styleClass="btn btn-info"  >
 									<b:iconAwesome value="pencil" />
 									<f:setPropertyActionListener value="#{i}" target="#{categoriaMB.itemSelected}" />
 								</p:commandLink>

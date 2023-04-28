@@ -52,7 +52,7 @@ public class AppCtrlr {
 		if(resp.getAuthority().equals("N")) {
 			throw new Exception("No Autorizado");
 		}
-		endpoint =  "/context";
+		endpoint =  "/context/";
 		SistemaResponse sis=(SistemaResponse)new WSClientCtrlr().sendRequest(new SistemaRWS(context), endpoint,SistemaResponse.class,token);
 		
 		return sis;

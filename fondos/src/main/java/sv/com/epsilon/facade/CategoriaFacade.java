@@ -78,6 +78,23 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		}*/
 	}
 	
+	public List<Categoria> findByCodPresupuesto7(Presupuesto idPresupuesto) {
+		return getList("/categorias/presupuesto/codigo/mod/"+idPresupuesto.getCodigo());
+		/*
+		getSession();
+		try {
+			String sql="Select i From Categoria i" +
+	    			" Where i.codigo like :codPresupuesto " +
+	    			" Order By i.codigo ";
+	    	Query q=session.createQuery(sql).setParameter("codPresupuesto",idPresupuesto.getCodigo()+"%"
+	    			);
+	    	List<Categoria> list=(List<Categoria>)q.list();
+	    	return list;
+		}finally {
+			close();
+		}*/
+	}
+	
 	public List<Categoria> findByPresupuestoWithoutClose(Presupuesto idPresupuesto) {
 		return findByPresupuesto(idPresupuesto);/*
 		getSession();
@@ -285,5 +302,6 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		action("/update/reference/"+codigo,false);
 		
 	}
+	
 	
 }
