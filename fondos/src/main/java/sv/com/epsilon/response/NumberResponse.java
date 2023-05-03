@@ -63,5 +63,9 @@ public class NumberResponse {
 		
 	}
 	
+	public double getDoubleValue() {
+		return Double.parseDouble(value.toString());
+	}
+	
 
 }

@@ -72,7 +72,7 @@ public class NodeModel {
 			for(Categoria cat:list ){
 				int percent=AsignacionCtrlr.calcPercent(montoTotal, cat.getMonto());
 				int hijos=cat.getCategoriaList()!=null?cat.getCategoriaList().size():0;
-				ViewNode nodo=new ViewNode(cat.getNombre(),hijos,cat.getMonto(),cat.getActual(),cat.getMonto()-cat.getActual(),cat,cat,percent,cat.getCodigo(),montoTotal);
+				ViewNode nodo=new ViewNode(cat.getNombre(),hijos,cat.getMonto(),cat.getActual(),cat.getMonto()-(cat.getActual()!=null?cat.getActual():0),cat,cat,percent,cat.getCodigo(),montoTotal);
 				TreeNode node=new DefaultTreeNode(nodo, nodoRoot);
 				if(cat.getCategoriaList()!=null&&!cat.getCategoriaList().isEmpty()){
 					

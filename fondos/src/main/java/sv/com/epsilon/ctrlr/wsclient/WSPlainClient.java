@@ -24,7 +24,7 @@ import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.Log;
 
 @Data
-public class WSClient<T> {
+public class WSPlainClient<T> {
 
 	private Class<T>  typeClass;
 	private  String SERVER="localhost";
@@ -33,14 +33,14 @@ public class WSClient<T> {
 	private  String URL_BASE="http://"+SERVER+":"+PORT+"/"+CONTEXT;
 	private String token="";
 	private Integer idEmpresa=1;
-	private boolean noNameClass=false;
+	private boolean noNameClass=true;
 	
 	
 	
-	public WSClient(Class<T> cl) {
+	public WSPlainClient(Class<T> cl) {
 		this.typeClass=cl;
 	}
-	public WSClient(Class<T> c,String server,String port, String context) {
+	public WSPlainClient(Class<T> c,String server,String port, String context) {
 		this.typeClass=c;
 		target(server, port, context);
 	}
@@ -52,12 +52,12 @@ public class WSClient<T> {
 		
 	}
 	
-	public WSClient(Class<T> c,String server,String port, String context,boolean noNameClass) {
+	public WSPlainClient(Class<T> c,String server,String port, String context,boolean noNameClass) {
 		this.typeClass=c;
 		this.noNameClass=noNameClass;
 		target(server, port, context);
 	}
-	public WSClient(Class<T> c,String server,String port, String context,boolean noNameClass,String token) {
+	public WSPlainClient(Class<T> c,String server,String port, String context,boolean noNameClass,String token) {
 		this.typeClass=c;
 		this.noNameClass=noNameClass;
 		this.token=token;
@@ -326,7 +326,7 @@ public class WSClient<T> {
 	}
 	public static void main(String[] args) throws Exception {
 		
-		List<Categoria> list = new WSClient<>(Categoria.class).getAll();
+		List<Categoria> list = new WSPlainClient<>(Categoria.class).getAll();
 		System.out.println(list.size());
 	}
 	public void init(String token, Integer idEmpresa) {

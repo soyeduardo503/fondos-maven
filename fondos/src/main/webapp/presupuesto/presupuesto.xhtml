@@ -80,7 +80,14 @@
 						</p:commandLink>
 					</ui:repeat>
 				</b:panel>
+				
 				</h:form>
+				<b:panel look="success" title="Top Gastos">
+					<p:dataTable value="#{dashboardPrincipalMB.listTop5Gasto}" var="l" >
+						<p:column headerText="Gasto">#{l.description}</p:column>
+						<p:column headerText="Monto">$ #{l.value}</p:column>
+					</p:dataTable>
+				</b:panel>
 				</b:panel>
 				
 		<ui:include src="/componentes/dialogs/estructura.xhtml"/>

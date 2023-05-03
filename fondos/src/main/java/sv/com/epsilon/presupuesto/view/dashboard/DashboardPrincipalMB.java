@@ -14,7 +14,9 @@ import javax.faces.context.FacesContext;
 
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.facade.Top5Facade;
 import sv.com.epsilon.presupuesto.pojo.PresupuestoDashboard;
+import sv.com.epsilon.presupuesto.pojo.Top5Gasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 
 /**
@@ -30,6 +32,7 @@ public class DashboardPrincipalMB {
 	 */
 
 	private List<PresupuestoDashboard> list;
+	private List<Top5Gasto> listTop5Gasto;
 	
 	@ManagedProperty(value = "#{sesionMB}")
 	private UsuarioSessionMB sessionMb; 
@@ -54,16 +57,32 @@ public class DashboardPrincipalMB {
 				pd.setPercent(new  BigDecimal(porcentaje).intValue());
 				this.list.add(pd);
 			}
+			 callTop5();
 		}
 		
 		
 	}
+	
+	public void callTop5() {
+		listTop5Gasto=new Top5Facade().findByPresupuesto(1);
+	}
+	
+	
+	
 	public void selectPresupuesto(Presupuesto p) {
 		this.sessionMb.setPresupuestoSelected(p);
 		
 	}
 	
 	
+
+	public List<Top5Gasto> getListTop5Gasto() {
+		return listTop5Gasto;
+	}
+
+	public void setListTop5Gasto(List<Top5Gasto> listTop5Gasto) {
+		this.listTop5Gasto = listTop5Gasto;
+	}
 
 	public List<PresupuestoDashboard> getList() {
 		return list;

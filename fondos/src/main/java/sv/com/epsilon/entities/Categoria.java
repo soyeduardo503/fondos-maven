@@ -160,7 +160,7 @@ public class Categoria  implements Serializable, Comparable<Categoria> {
     }
 
     public Double getActual() {
-        return actual;
+        return actual!=null?actual:0;
     }
 
     public void setActual(Double actual) {
