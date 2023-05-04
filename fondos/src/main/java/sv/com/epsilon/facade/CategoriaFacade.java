@@ -265,8 +265,8 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		
 	}
 
-	public List<Categoria> findAllChildrenSelectableActive() {
-	  return list("/find/children/act");
+	public List<Categoria> findAllChildrenSelectableActive(String idPresupuesto) {
+	  return list("/find/children/act/"+idPresupuesto);
 	}
 	public Integer coundAllChildrenSelectableActive() {
 		  return (Integer)getNumber("/children/act").getValue();

@@ -147,7 +147,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 				for(Categoria categoria:list){
 					Categoria cat=new Categoria();
 					cat.setNombre(categoria.getNombre());
-					gc.makeCode(cat);
+					gc.code(cat);
 					cat.setIdPresupuesto(item);
 					cat.setMonto(0.0);
 					cat.setActual(0.0);
@@ -178,7 +178,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		for(Categoria c2:list){
 			Categoria cat=new Categoria();
 			cat.setNombre(c2.getNombre());
-			gc.makeCode(cat);
+			gc.code(cat);
 			cat.setIdPresupuesto(null);
 			cat.setMonto(0.0);
 			cat.setActual(0.0);

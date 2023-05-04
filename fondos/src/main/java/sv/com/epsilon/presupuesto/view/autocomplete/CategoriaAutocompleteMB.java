@@ -21,7 +21,7 @@ import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 @ViewScoped
 public class CategoriaAutocompleteMB {
 
-	@ManagedProperty(value="#{sesionMB}")
+	@ManagedProperty(value="#{usuarioSessionMB}")
 	private UsuarioSessionMB sesionMB;
 	private String principalSelected;
 	 private List<String> list=new ArrayList<String>();
@@ -35,11 +35,11 @@ public class CategoriaAutocompleteMB {
 	
 	public void preRender(){
 		if(!FacesContext.getCurrentInstance().isPostback()){
-			List<Categoria> categorias=new CategoriaFacade().findAllChildrenSelectableActive();
+			List<Categoria> categorias=new CategoriaFacade().findAllChildrenSelectableActive(sesionMB.getPresupuestoSelected().getCodigo());
 			//for(Presupuesto presupuesto: presupuestos){
 //				String cod=new StringBuilder(presupuesto.getNombrePresupuesto()).toString();
 				for(Categoria c:categorias){
-					if(c.getMonto()==0)
+//					if(c.getMonto()==0)
 						categoriaAplicable(c);
 						
 				}

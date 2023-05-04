@@ -39,7 +39,7 @@ public class FinanciamientoMB extends AbstractMantto<Categoria, CategoriaFacade>
 	}
 	
 	public void asignarCodigo(){
-		generardorCodigo.makeCode(this.getItemSelected());
+		generardorCodigo.code(this.getItemSelected());
 		new ExecuteForm().Update(this.getIdFormNew()+":codigo");
 	}
 

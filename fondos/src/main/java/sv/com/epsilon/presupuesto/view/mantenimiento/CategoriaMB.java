@@ -50,15 +50,31 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 	private DefaultDiagramModel diagram;
 	private List<Presupuesto> listPresupuesto;
 	private Presupuesto presupuestoSelected;
+	private Categoria catPadre;
 	private String formCarga="loadCategoriasFromFile";
 	
 	public CategoriaMB() {
 		super(Categoria.class,CategoriaFacade.class);
 	}
 	
-	public void asignarCodigo(){
-		generardorCodigo.makeCode(this.getItemSelected());
+	public void asignarCodigo(String catPadre){
+		generardorCodigo.makeCode(this.getItemSelected(),catPadre);
 		new ExecuteForm().Update(this.getIdFormNew()+":codigo");
+	}
+	
+	public void loadNewChildren(Categoria catPadre) {
+		this.catPadre=catPadre;
+		try {
+			this.resetObj();
+			this.getItemSelected().setMonto(0);
+			asignarCodigo(catPadre.getCodigo());
+			
+			new ExecuteForm().ExecuteUpdate("idCreateCategoriaNew", "PF('WgtCreateCategoria').show();");
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	@Override
 	public void edit(){
@@ -114,15 +130,20 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 			PresupuestoFacade facade= new PresupuestoFacade();
 			//facade.init(usuarioSessionMB.getToken(), usuarioSessionMB.getIdEmpresa());
 			this.listPresupuesto=facade.findAllActive();
+			if(usuarioSessionMB.getPresupuestoSelected()!=null) {
+				this.presupuestoSelected=usuarioSessionMB.getPresupuestoSelected();
+			}else
 			if(listPresupuesto!=null&&listPresupuesto.size()>0) {
 				this.presupuestoSelected=listPresupuesto.get(0);
-				loadCategories();
+				
 			}
-			//this.callLoad();
-			defineHeaders();
+			
+			loadCategories();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			defineHeaders();
 		}
 		}
 	}

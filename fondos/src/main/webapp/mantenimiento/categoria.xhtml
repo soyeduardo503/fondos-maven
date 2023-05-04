@@ -116,10 +116,13 @@
 							</p:column>
 							<p:column>
 								<p:commandLink actionListener="#{categoriaMB.openEdit(i)}" styleClass="btn btn-info"  >
-									<b:iconAwesome value="pencil" />
+									<b:iconAwesome value="edit" solid="true"  />
 									<f:setPropertyActionListener value="#{i}" target="#{categoriaMB.itemSelected}" />
 								</p:commandLink>
-																
+								<p:commandLink actionListener="#{categoriaMB.loadNewChildren(i)}" styleClass="btn btn-primary">
+									<f:setPropertyActionListener value="#{i}" target="#{categoriaMB.itemSelected}" />
+									<b:iconAwesome value="plus" solid="true" />
+								</p:commandLink>								
 							</p:column>
 							
 						</p:dataTable>
@@ -136,6 +139,7 @@
 			</h:form>   
 		</p:dialog>
 		<ui:include src="/componentes/dialogs/estructura.xhtml"/>
+		<ui:include src="/componentes/dialogs/nuevoCategoria.xhtml" />
 	</ui:define>
 
 </ui:composition>

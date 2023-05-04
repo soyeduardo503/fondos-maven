@@ -1,0 +1,75 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+	<h:form id="idCreateCategoriaNew">
+	<p:dialog widgetVar="WgtCreateCategoria" id="idWgtCreateCategoria" width="900" height="300" header="Creacion de Categorias">
+	
+       
+
+			<b:panel look="info"  title="Nueva Categoria" collapsible="false"
+			>
+				
+			
+				<b:row>
+					
+							
+								<b:column col-xs="4">Nombre</b:column>
+								<b:column col-xs="4">Descripcion</b:column>
+								<b:column col-xs="4">Codigo</b:column>
+							</b:row>
+							<b:row>
+								<b:column col-xs="4"><p:inputText id="Nombre" value="#{categoriaMB.itemSelected.nombre}" size="20" maxlength="15"></p:inputText></b:column>
+								<b:column col-xs="4"><p:inputText id="desde" value="#{categoriaMB.itemSelected.descripcion}" size="20" maxlength="15"></p:inputText></b:column>
+								<b:column col-xs="4"><p:inputText id="hasta" value="#{categoriaMB.itemSelected.codigo}" size="20" maxlength="15" disabled="true"></p:inputText></b:column>
+							
+						
+				</b:row>
+				<b:row>
+					
+							
+								<b:column col-xs="4">Monto</b:column>
+								<b:column col-xs="4">Categoria padre</b:column>
+								
+							</b:row>
+							<b:row>
+								<b:column col-xs="4"><p:inputText id="monto" value="#{categoriaMB.itemSelected.monto}" size="20" maxlength="15" disabled="#{categoriaMB.itemSelected.codigo.length()>9}"></p:inputText></b:column>
+								<b:column col-xs="4"><p:inputText id="padre" value="#{categoriaMB.itemSelected.idCategoriaPadre.nombre}" size="20" maxlength="15" disabled="true"></p:inputText></b:column>
+								
+							
+						
+				</b:row>
+				<br/>
+				<br/>
+				<b:row>
+						<b:column col-xs="2"/>
+						         
+						<p:commandLink  action="#{categoriaMB.save()}"  oncomplete="PF('WgtCreateCategoria').hide();">
+						 	<b:column col-xs="4" styleClass="btn btn-info" >
+						
+				
+									<b:iconAwesome value="save" solid="true" styleClass="iconWhite" size="2x"/>
+							
+							</b:column>				
+						</p:commandLink>
+					
+						
+						
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{CategoriaMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="WgtCreateCategoria"></ui:param>
+						</ui:include>
+						
+					</b:row>	
+						
+		</b:panel>
+		
+	</p:dialog>
+	</h:form>
+</ui:composition>

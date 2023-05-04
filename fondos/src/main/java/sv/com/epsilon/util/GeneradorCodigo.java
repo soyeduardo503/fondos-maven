@@ -4,12 +4,14 @@
 package sv.com.epsilon.util;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.facade.CategoriaFacade;
+import sv.com.epsilon.response.AccionResponse;
 
 /**
  * @author usuario07
@@ -37,8 +39,15 @@ public class GeneradorCodigo implements Serializable {
 	
 	
 	
-	public synchronized void makeCode(Categoria cat){
-		
+	public synchronized void makeCode(Categoria cat,String codigo){
+		categoriaFacade.setNoNameClass(false);
+		Optional<AccionResponse> resp= categoriaFacade.process("/codigo/children/"+codigo);
+		if(resp.isPresent()) {
+			cat.setCodigo(resp.get().getDesc());
+		}
+	}
+	
+	public void code(Categoria cat) {
 		Categoria c2;
 		try {
 			c2 = categoriaFacade.obtenerCategoriasFromCategoriasPadre(cat.getIdCategoriaPadre());
