@@ -5,19 +5,27 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 	<h:form id="IDFrmTableDetail">
 		<b:panel look="info" collapsible="false"
-			title="#{presupuestoViewMB.presupuesto.nombrePresupuesto}" 
-			icon-awesome="traffic-light" icon-solid="true"  icon-size="3x">
+			title="#{presupuestoViewMB.presupuesto.nombrePresupuesto}"
+			icon-awesome="traffic-light" icon-solid="true" icon-size="3x">
 			<p:dataTable value="#{presupuestoViewMB.listCatDist}" var="cat"
 				lazy="true">
-				<p:column headerText="Codigo" width="120">#{cat.codigo}</p:column>
-				<p:column headerText="Nombre" width="300">#{cat.nombre}</p:column>
-				<p:column headerText="Monto" width="120">#{cat.monto}</p:column>
-				<p:column headerText="Gastado" width="120">#{cat.actual}</p:column>
+				<p:column headerText="Codigo" width="60">#{cat.codigo}</p:column>
+				<p:column headerText="Nombre" width="400">#{cat.nombre}</p:column>
+				<p:column headerText="Monto" width="80">
+					<h:outputText value="#{cat.monto}">
+						<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Gastado" width="120">
+					<h:outputText value="#{cat.actual}">
+						<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+					</h:outputText>
+				</p:column>
 				<p:column headerText="Disponible" width="120">
 					<h:outputText value="#{cat.monto-cat.actual}">
 						<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 					</h:outputText>
-					</p:column>
+				</p:column>
 				<p:column headerText="%" width="60">
 					<h:outputText value="#{((cat.monto-cat.actual)/cat.monto)}">
 						<f:convertNumber type="percent" />

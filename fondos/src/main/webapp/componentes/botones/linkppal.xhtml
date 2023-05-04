@@ -1,0 +1,13 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	<b:column col-xs="4">
+		<p:commandLink actionListener="#{menuUsuarioMB.goTo(link)}">
+			<b:iconAwesome solid="true" value="#{icon}"
+				style="color: #{colors.getColor(color)}; font-size:4.6em;" />
+		</p:commandLink>
+	</b:column>
+	
+</ui:composition>

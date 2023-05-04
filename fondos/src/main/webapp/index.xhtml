@@ -19,9 +19,23 @@
 					<b:column col-xs="4"/>
 					<b:column col-xs="4">
 						<b:row>
-							<b:column col-xs="4"><b:iconAwesome solid="true" value="chart-pie" style="color:#6b9080; font-size:4.6em;"/> </b:column>
-							<b:column col-xs="4"><b:iconAwesome solid="true" value="money-bill" style="color:#2ec4b6; font-size:4.6em;" /> </b:column>
-							<b:column col-xs="4"><b:iconAwesome solid="true" value="chart-line" style="color:#0a9396; font-size:4.6em;"/> </b:column>
+							<ui:include src="/componentes/botones/linkppal.xhtml">
+									<ui:param name="link" 		value="presupuesto" />
+									<ui:param name="icon" 		value="chart-line" />
+									<ui:param name="color" 		value="rose" />
+							</ui:include>
+							<ui:include src="/componentes/botones/linkppal.xhtml">
+									<ui:param name="link" 		value="cajachica" />
+									<ui:param name="icon" 		value="money-bill" />
+									<ui:param name="color" 		value="darkcyan" />
+							</ui:include>
+							<ui:include src="/componentes/botones/linkppal.xhtml">
+									<ui:param name="link" 		value="mantenimientoproveedores" />
+									<ui:param name="icon" 		value="truck" />
+									<ui:param name="color" 		value="gamboge" />
+							</ui:include>
+							
+							
 						</b:row>
 					</b:column>
 				</b:row>
@@ -30,9 +44,23 @@
 					<b:column col-xs="4"/>
 					<b:column col-xs="4">
 						<b:row>
-							<b:column col-xs="4"><b:iconAwesome solid="true" value="plus-square" style="color:#669bbc; font-size:4.6em;"/> </b:column>
-							<b:column col-xs="4"><b:iconAwesome solid="true" value="shopping-cart" style="color:#118ab2; font-size:4.6em;"/> </b:column>
-							<b:column col-xs="4"><b:iconAwesome solid="true" value="credit-card" style="color:#003566; font-size:4.6em;"/> </b:column>
+							<ui:include src="/componentes/botones/linkppal.xhtml">
+									<ui:param name="link" 		value="mantenimientopresupuesto" />
+									<ui:param name="icon" 		value="plus-square" />
+									<ui:param name="color" 		value="rufous" />
+							</ui:include>
+							<ui:include src="/componentes/botones/linkppal.xhtml">
+									<ui:param name="link" 		value="gasto" />
+									<ui:param name="icon" 		value="shopping-cart" />
+									<ui:param name="color" 		value="orangewheel" />
+							</ui:include>
+							<ui:include src="/componentes/botones/linkppal.xhtml">
+									<ui:param name="link" 		value="ingreso" />
+									<ui:param name="icon" 		value="credit-card" />
+									<ui:param name="color" 		value="azure" />
+							</ui:include>
+							
+							
 						</b:row>
 					</b:column>
 				</b:row>

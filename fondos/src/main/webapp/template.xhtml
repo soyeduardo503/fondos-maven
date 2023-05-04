@@ -48,12 +48,14 @@ spans.forEach((span, idx) => {
 	
 	<b:panel look="primary" collapsible="false"  id="ppanel" style="min-height:90%; max-height:100%;">
 		<f:facet name="heading">
+			
 			<b:container fluid="true">	
 				<b:row>
-					<b:column col-xs="2" style="font-size:1.6em;">
+				<p:commandLink actionListener="#{menuUsuarioMB.goTo('ppal')}">
+					<b:column col-xs="2" style="font-size:1.6em; color: white;">
 					 	<b:iconAwesome value="money" /> Fondos
 					</b:column>
-					
+				</p:commandLink>		
 					<b:column col-xs="9">
 					</b:column>
 					<b:column col-xs="1">
@@ -68,7 +70,7 @@ spans.forEach((span, idx) => {
 					
 				</b:row>
 			</b:container>
-		
+			
 		</f:facet>
 		<b:row>
 			<b:column col-xs="2">

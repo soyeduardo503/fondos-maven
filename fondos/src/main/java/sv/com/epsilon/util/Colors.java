@@ -3,6 +3,7 @@
  */
 package sv.com.epsilon.util;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -22,6 +23,7 @@ public enum Colors {
 	vanilla(233, 216, 166, 1),
 	gamboge(238, 155, 0, 1),
 	orangepantone(251, 86, 7, 1),
+	orangewheel(247, 127, 0, 1),
 	rust(187, 62, 3, 1),
 	rufous(174, 32, 18, 1),
 	auburn(155, 34, 38, 1),
@@ -54,5 +56,9 @@ public enum Colors {
 	
 	public static Stream<Colors> getByCount(Integer i){
 		return Stream.of(values()).limit(i);
+	}
+	
+	public static Optional<Colors> getByCount(String name){
+		return Stream.of(values()).filter(c->c.name().equalsIgnoreCase(name)).findAny();
 	}
 }
