@@ -40,7 +40,7 @@ public class GeneradorCodigo implements Serializable {
 	
 	
 	public synchronized void makeCode(Categoria cat,String codigo){
-		categoriaFacade.setNoNameClass(false);
+		categoriaFacade.setNoNameClass(true);
 		Optional<AccionResponse> resp= categoriaFacade.process("/codigo/children/"+codigo);
 		if(resp.isPresent()) {
 			cat.setCodigo(resp.get().getDesc());

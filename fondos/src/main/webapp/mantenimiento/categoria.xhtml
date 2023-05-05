@@ -119,8 +119,8 @@
 									<b:iconAwesome value="edit" solid="true"  />
 									<f:setPropertyActionListener value="#{i}" target="#{categoriaMB.itemSelected}" />
 								</p:commandLink>
-								<p:commandLink actionListener="#{categoriaMB.loadNewChildren(i)}" styleClass="btn btn-primary">
-									<f:setPropertyActionListener value="#{i}" target="#{categoriaMB.itemSelected}" />
+								<p:commandLink actionListener="#{categoriaMB.loadNewChildren(i)}" styleClass="btn btn-primary" rendered="#{i.codigo.length() ne 11}">
+									
 									<b:iconAwesome value="plus" solid="true" />
 								</p:commandLink>								
 							</p:column>

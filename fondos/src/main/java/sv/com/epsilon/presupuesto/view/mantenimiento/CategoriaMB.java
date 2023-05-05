@@ -65,15 +65,27 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 	public void loadNewChildren(Categoria catPadre) {
 		this.catPadre=catPadre;
 		try {
-			this.resetObj();
+			resetObj();
 			this.getItemSelected().setMonto(0);
 			asignarCodigo(catPadre.getCodigo());
-			
+			this.getItemSelected().setIdCategoriaPadre(catPadre);
+			Categoria cat=getItemSelected();
 			new ExecuteForm().ExecuteUpdate("idCreateCategoriaNew", "PF('WgtCreateCategoria').show();");
 		} catch (InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	
+	@Override
+	public void resetObj() throws InstantiationException, IllegalAccessException {
+		super.resetObj();
+		getItemSelected().setAct("A");
+		getItemSelected().setIdPresupuesto(null);
+		getItemSelected().setActual(0.0);
+		getItemSelected().setIdEmpresa(getIdEmpresa());
+		getItemSelected().setIdRubro(1);
 		
 	}
 	@Override

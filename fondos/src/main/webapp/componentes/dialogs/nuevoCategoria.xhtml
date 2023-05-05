@@ -14,32 +14,45 @@
 
 			<b:panel look="info"  title="Nueva Categoria" collapsible="false"
 			>
-				
-			
+								
+	
+				<b:row>
+					<b:column col-xs="4">Nombre</b:column>
+				</b:row>			
+				<b:row>
+					<b:column col-xs="4"><p:inputText id="Nombre" value="#{categoriaMB.itemSelected.nombre}" size="50" maxlength="500"></p:inputText></b:column>
+				</b:row>
+				<b:row>
+					<b:column col-xs="4">Descripcion</b:column>
+				</b:row>			
+				<b:row>
+					<b:column col-xs="4"><p:inputText id="desc" value="#{categoriaMB.itemSelected.descripcion}" size="130" maxlength="500"></p:inputText></b:column>
+				</b:row>
 				<b:row>
 					
 							
-								<b:column col-xs="4">Nombre</b:column>
-								<b:column col-xs="4">Descripcion</b:column>
+								
+								
 								<b:column col-xs="4">Codigo</b:column>
+								<b:column col-xs="4">Monto</b:column>
+								<b:column col-xs="4">Categoria padre</b:column>
 							</b:row>
 							<b:row>
-								<b:column col-xs="4"><p:inputText id="Nombre" value="#{categoriaMB.itemSelected.nombre}" size="20" maxlength="15"></p:inputText></b:column>
-								<b:column col-xs="4"><p:inputText id="desde" value="#{categoriaMB.itemSelected.descripcion}" size="20" maxlength="15"></p:inputText></b:column>
-								<b:column col-xs="4"><p:inputText id="hasta" value="#{categoriaMB.itemSelected.codigo}" size="20" maxlength="15" disabled="true"></p:inputText></b:column>
-							
+								
+								
+								<b:column col-xs="4"><p:inputText id="cod" value="#{categoriaMB.itemSelected.codigo}" size="20" maxlength="15" disabled="true"></p:inputText></b:column>
+								<b:column col-xs="4"><p:inputText id="monto" value="#{categoriaMB.itemSelected.monto}" size="20" maxlength="15" disabled="#{categoriaMB.itemSelected.codigo.length()>9}"></p:inputText></b:column>
+								<b:column col-xs="4"><p:inputText id="padre" value="#{categoriaMB.itemSelected.idCategoriaPadre.nombre}" size="20" maxlength="15" disabled="true"></p:inputText></b:column>
 						
 				</b:row>
 				<b:row>
 					
 							
-								<b:column col-xs="4">Monto</b:column>
-								<b:column col-xs="4">Categoria padre</b:column>
+								
 								
 							</b:row>
 							<b:row>
-								<b:column col-xs="4"><p:inputText id="monto" value="#{categoriaMB.itemSelected.monto}" size="20" maxlength="15" disabled="#{categoriaMB.itemSelected.codigo.length()>9}"></p:inputText></b:column>
-								<b:column col-xs="4"><p:inputText id="padre" value="#{categoriaMB.itemSelected.idCategoriaPadre.nombre}" size="20" maxlength="15" disabled="true"></p:inputText></b:column>
+								
 								
 							
 						
