@@ -35,12 +35,16 @@ public class AsignacionMontosCtrlr {
 	
 	
 	public void save(Presupuesto presupuesto, List<Categoria> list) throws Exception {
-		try {
-			new CategoriaFacade().save(list);
-		} catch (Exception e) {
-			log.error("Error al guardar categorias", e);
-			throw new Exception("Error al guardar informacion");
-		}
+		
+			list.forEach(l->			{
+				try {
+					new CategoriaFacade().save(l);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+		
 		try {
 			new PresupuestoFacade().saveAmount(presupuesto);
 		}catch (Exception e) {
