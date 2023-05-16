@@ -62,6 +62,23 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 		new ExecuteForm().Update(this.getIdFormNew()+":codigo");
 	}
 	
+
+	public void loadNewChildrenPPl() {
+		
+		try {
+			resetObj();
+			this.getItemSelected().setMonto(0);
+			asignarCodigo(presupuestoSelected.getCodigo());
+			
+			
+			new ExecuteForm().ExecuteUpdate("idCreateCategoriaNew", "PF('WgtCreateCategoria').show();");
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void loadNewChildren(Categoria catPadre) {
 		this.catPadre=catPadre;
 		try {

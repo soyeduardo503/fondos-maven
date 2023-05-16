@@ -27,9 +27,9 @@ public class CargaCatalogoCtrlr {
 	private final static Integer CODIGO=0;
 	private final static Integer NOMBRE=1;
 	
-	private final static Integer DESCRIPCION=2;
-	private final static Integer MONTO=3;
-	private final static Integer TIPO=4;
+	private final static Integer DESCRIPCION=1;
+	private final static Integer MONTO=2;
+	private final static Integer TIPO=3;
 	private Integer idEmpresa=1;
 	private HashMap<String,Integer> rubros=new RubroFacade().findAllRubroActiveByName();
 	

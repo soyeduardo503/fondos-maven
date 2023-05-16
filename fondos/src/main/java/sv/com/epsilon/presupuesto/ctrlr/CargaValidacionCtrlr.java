@@ -1,6 +1,8 @@
 package sv.com.epsilon.presupuesto.ctrlr;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -28,7 +30,7 @@ public class CargaValidacionCtrlr {
 	
 	
 	public Double getMontoAcumuladoPrincipal() {
-		return montoAcumuladoPrincipal;
+		return new BigDecimal( montoAcumuladoPrincipal).setScale(2, RoundingMode.HALF_UP).doubleValue();
 	}
 
 
@@ -45,23 +47,31 @@ public class CargaValidacionCtrlr {
 	}
 
 	public void validarCargaCategorias(List<Categoria> list) throws Exception {
+		List<Categoria> principalesList=list.stream().filter(pl->pl.getCodigo().length()==LENGHT_PRINCIPAL).toList();
+		principalesList.forEach(v->principal.put(v.getCodigo(), v));
 		Collections.sort(list);
+		
 		for(Categoria cat:list) {
-			if(cat.getCodigo().length()==LENGHT_PRINCIPAL) {
-				if(principal.get(cat.getCodigo())!=null) {
-					throw new Exception("Codigo principal duplicado "+cat.getCodigo());
-				}else {
-					principal.put(cat.getCodigo(), cat);
-				}
-			}else {
-				/*se buscara el padre*/
-				String codigoCatPadre=cat.getCodigo().substring(0, LENGHT_PRINCIPAL);
-				Categoria catPadre = principal.get(codigoCatPadre);
-				if(catPadre==null)
+			String restCode=cat.getCodigo().substring(0, cat.getCodigo().length()-2);
+			if(cat.getCodigo().length()>7) {
+				if( list.stream().filter(v->restCode.equals(v.getCodigo())).count()==0)
 					abandonados.add(cat);
-				else
-					buscarPadre(catPadre, cat);
 			}
+//			if(cat.getCodigo().length()==LENGHT_PRINCIPAL) {
+//				if(principal.get(cat.getCodigo())!=null) {
+//					throw new Exception("Codigo principal duplicado "+cat.getCodigo());
+//				}else {
+//					principal.put(cat.getCodigo(), cat);
+//				}
+//			}else {
+//				/*se buscara el padre*/
+//				String codigoCatPadre=cat.getCodigo().substring(0, LENGHT_PRINCIPAL);
+//				Categoria catPadre = principal.get(codigoCatPadre);
+//				if(catPadre==null)
+//					abandonados.add(cat);
+//				else
+//					buscarPadre(catPadre, cat);
+//			}
 			
 			/*
 			 * 
