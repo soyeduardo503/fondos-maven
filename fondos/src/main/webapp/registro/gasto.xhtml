@@ -60,7 +60,9 @@
 				<b:panel look="danger" title="Distribucion #{ingresoGastoMB.movimiento.monto}" id="idOrgienCategorias" icon-awesome="money" collapsible="false">
 					<p:dataTable value="#{ingresoGastoMB.list}" var="g" >
 						
-						
+						<p:column headerText="Cod">
+							<h:outputText value="#{g.categoria.codigo}" />
+						</p:column>
 						<p:column headerText="Categoria">
 							<h:outputText value="#{g.categoria.nombre}" />
 						</p:column>

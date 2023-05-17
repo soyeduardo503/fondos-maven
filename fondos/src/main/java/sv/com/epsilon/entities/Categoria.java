@@ -238,7 +238,7 @@ public class Categoria  implements Serializable, Comparable<Categoria> {
             return false;
         }
         Categoria other = (Categoria) object;
-        if ((this.idCategoria == null && other.idCategoria != null) || (this.idCategoria != null && !this.idCategoria.equals(other.idCategoria))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;

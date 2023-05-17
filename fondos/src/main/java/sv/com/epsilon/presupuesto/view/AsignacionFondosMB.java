@@ -58,6 +58,7 @@ public class AsignacionFondosMB {
 		if(!FacesContext.getCurrentInstance().isPostback()) {
 			if(sesionMB.getIdPresupuestoSelected()!=null) {
 				presupuesto=sesionMB.getPresupuestoSelected();
+				presupuesto=new PresupuestoFacade().findById(presupuesto.getIdPresupuesto());
 			}
 			cargarPresupuesto();
 		}

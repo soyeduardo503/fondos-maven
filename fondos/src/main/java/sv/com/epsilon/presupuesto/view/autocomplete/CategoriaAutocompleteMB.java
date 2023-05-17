@@ -2,6 +2,7 @@ package sv.com.epsilon.presupuesto.view.autocomplete;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.websocket.Session;
 
 import net.sf.jasperreports.charts.util.CategoryChartHyperlinkProvider;
 import sv.com.epsilon.entities.Categoria;
@@ -28,6 +30,7 @@ public class CategoriaAutocompleteMB {
 	 private List<String> categorias=new ArrayList<String>();
 	 private HashMap<String,CategoriaGasto> categoriasCod=new HashMap<String,CategoriaGasto>();
 	 //private List<CategoriaGasto> aplicables=new ArrayList<CategoriaGasto>();
+	 private List<Categoria> principales=null;
 	
 	public CategoriaAutocompleteMB() {
 		
@@ -36,8 +39,12 @@ public class CategoriaAutocompleteMB {
 	public void preRender(){
 		if(!FacesContext.getCurrentInstance().isPostback()){
 			List<Categoria> categorias=new CategoriaFacade().findAllChildrenSelectableActive(sesionMB.getPresupuestoSelected().getCodigo());
+			principales=new CategoriaFacade().findPrincipalByCodPresupuesto(sesionMB.getIdPresupuestoSelected());
+			
 			//for(Presupuesto presupuesto: presupuestos){
 //				String cod=new StringBuilder(presupuesto.getNombrePresupuesto()).toString();
+			if(categorias.stream().findFirst().isPresent())
+				principalSelected=principales.get(0).getCodigo();
 				for(Categoria c:categorias){
 //					if(c.getMonto()==0)
 						categoriaAplicable(c);
