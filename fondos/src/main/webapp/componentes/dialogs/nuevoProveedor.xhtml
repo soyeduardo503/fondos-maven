@@ -30,25 +30,25 @@
 							value="#{proveedoresMB.itemSelected.tipo}" unselectable="true">
 							<f:selectItem itemLabel="Natural" itemValue="N" />
 							<f:selectItem itemLabel="Juridico" itemValue="J" />
-							<p:ajax event="change" listener="#{proveedoresMB.setVoid()}"
-								update="dui" />
+							<p:ajax event="change" 
+								update="dui,slcRetencion" />
 						</p:selectOneRadio>
 					</b:column>
-					
-					
+
+
 
 
 				</b:row>
 
-		<p:spacer></p:spacer>
+				<p:spacer></p:spacer>
 				<b:row>
-				<b:column col-xs="6">
+					<b:column col-xs="6">
 						<b:row>
 							<h:outputLabel value="Nombre Legal" />
 						</b:row>
 						<b:row>
 							<p:inputText value="#{proveedoresMB.itemSelected.nombreLegal}"
-							size="50" id="legal" />
+								size="50" id="legal" />
 						</b:row>
 						<b:row>
 							<h:outputLabel value="Banco y cuenta" />
@@ -57,25 +57,27 @@
 							<b:column col-xs="6">
 								<p:selectOneMenu value="#{proveedoresMB.itemSelected.idBanco}">
 									<f:selectItem itemValue="" itemLabel=""></f:selectItem>
-									<f:selectItems value="#{proveedoresMB.listBanco}" var="b" itemValue="#{b.idBanco}" itemLabel="#{b.nombre}"></f:selectItems>
+									<f:selectItems value="#{proveedoresMB.listBanco}" var="b"
+										itemValue="#{b.idBanco}" itemLabel="#{b.nombre}"></f:selectItems>
 								</p:selectOneMenu>
-								
+
 							</b:column>
 							<b:column col-xs="6">
-								<p:inputText value="#{proveedoresMB.itemSelected.ncuenta}" id="ncuenta"></p:inputText>
+								<p:inputText value="#{proveedoresMB.itemSelected.ncuenta}"
+									id="ncuenta"></p:inputText>
 							</b:column>
-							
+
 						</b:row>
 					</b:column>
-					<b:column col-xs="6">
-					<b:row>
-								<h:outputLabel value="DUI" />
-					</b:row>
-					<b:row>
-						<p:inputText value="#{proveedoresMB.itemSelected.dui}" id="dui"
-							disabled="#{proveedoresMB.itemSelected.tipo eq 'J' }"></p:inputText>
-					</b:row>
-					<b:row>
+					<b:column col-xs="4">
+						<b:row>
+							<h:outputLabel value="DUI" />
+						</b:row>
+						<b:row>
+							<p:inputText value="#{proveedoresMB.itemSelected.dui}" id="dui"
+								disabled="#{proveedoresMB.itemSelected.tipo eq 'J' }"></p:inputText>
+						</b:row>
+						<b:row>
 							<h:outputLabel value="NIT" />
 						</b:row>
 						<b:row>
@@ -84,33 +86,45 @@
 						<b:row>
 							<h:outputLabel value="NCR" />
 						</b:row>
-						
+
 						<b:row>
 							<p:inputText value="#{proveedoresMB.itemSelected.nrc}"></p:inputText>
 						</b:row>
-				</b:column>
+					</b:column>
+					<b:column col-xs="2">
+						<b:row>
+							Retencion
+						</b:row>
+						<b:row>
+							<p:selectOneMenu id="slcRetencion" value="#{proveedoresMB.itemSelected.retencion}" disabled="#{proveedoresMB.itemSelected.tipo eq 'J' }">
+									
+									<f:selectItem itemValue="N" itemLabel="No Retener"></f:selectItem>
+									<f:selectItem itemValue="S" itemLabel="Si Retener"></f:selectItem>
+								</p:selectOneMenu>
+						</b:row>
+					</b:column>
 
 
 				</b:row>
-				
-				<hr/>
-				<hr/>
-					
-					<b:row>
-						<b:column col-xs="2"/>
-						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
-									<ui:param name="mb" 		value="#{proveedoresMB}" />									
-									<ui:param name="cols" value="4"></ui:param>
-						</ui:include>
-						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
-									<ui:param name="mb" 		value="#{proveedoresMB}" />
-									<ui:param name="cols" value="4"></ui:param>
-									<ui:param name="wgt" value="#{proveedoresMB.wtgDialog}"></ui:param>
-						</ui:include>
-						
-					</b:row>	
-				
-				</b:panel>
+
+				<hr />
+				<hr />
+
+				<b:row>
+					<b:column col-xs="2" />
+					<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+						<ui:param name="mb" value="#{proveedoresMB}" />
+						<ui:param name="cols" value="4"></ui:param>
+					</ui:include>
+					<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+						<ui:param name="mb" value="#{proveedoresMB}" />
+						<ui:param name="cols" value="4"></ui:param>
+						<ui:param name="wgt" value="#{proveedoresMB.wtgDialog}"></ui:param>
+					</ui:include>
+
+				</b:row>
+
+			</b:panel>
 		</p:dialog>
 	</h:form>
 </ui:composition>

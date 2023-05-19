@@ -48,6 +48,7 @@ public class Proveedor implements Serializable {
 
     private String act;
     private String codigo;
+    private String retencion;
     
     public Proveedor() {
     }
@@ -190,6 +191,15 @@ public class Proveedor implements Serializable {
 
 	public void setIdEmpresa(int idEmpresa) {
 		this.idEmpresa = idEmpresa;
+	}
+	
+
+	public String getRetencion() {
+		return retencion;
+	}
+
+	public void setRetencion(String retencion) {
+		this.retencion = retencion;
 	}
 
 	@Override

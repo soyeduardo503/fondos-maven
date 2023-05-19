@@ -115,7 +115,7 @@ public class IngresoGastoMB implements Serializable {
 		if(!FacesContext.getCurrentInstance().isPostback()) {
 			this.gasto.setFecha(new Date());
 			gasto.setFechaRegistro(new Date());
-			GastoCtrlr.loadin(this);
+			GastoCtrlr.loadin(this,sesionMB.getPresupuestoSelected());
 			listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
 			presupuestoSelected=sesionMB.getPresupuestoSelected();
 		
@@ -145,10 +145,11 @@ public class IngresoGastoMB implements Serializable {
 	public void copy(Gasto g) {
 		this.gasto=g;
 		
-		this.list= new CategoriaGastoCtrlr().copy(g.getIdGasto(),true);
-		gasto.setIdGasto(null);
-		gasto.setFecha(new Date());
-		gasto.setFechaRegistro(new Date());
+		this.list = new CategoriaGastoCtrlr().copy(g.getIdGasto(),true);
+		this.gasto.setIdGasto(null);
+		this.gasto.setFecha(new Date());
+		this.gasto.setFechaRegistro(new Date());
+		this.gasto.setTotal(g.getTotal());
 		actualizarCheque(gasto.getIdTipoDesembolso());
 		disablePost=true;
 		new MessageGrowlContext().send("Datos cargados ","Datos copiados de gasto: "+g.getIdGasto() );

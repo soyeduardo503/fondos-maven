@@ -47,6 +47,8 @@ public class Financiamiento implements Serializable {
     
     
     private Integer idEmpresa;
+    
+    private Integer idCatingreso;
 
     public Financiamiento() {
     }
@@ -168,6 +170,18 @@ public class Financiamiento implements Serializable {
 
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
+	}
+
+
+
+	public Integer getIdCatingreso() {
+		return idCatingreso;
+	}
+
+
+
+	public void setIdCatingreso(Integer idCatingreso) {
+		this.idCatingreso = idCatingreso;
 	}
 
 

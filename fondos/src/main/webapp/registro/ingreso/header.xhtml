@@ -10,7 +10,13 @@
 					large-screen="full-width" style="font-size:1.2em;" />
 			</b:row>
 	<b:row>
-				<b:inputText value="#{registroEntradaMB.abono.donador}" placeholder="Nombre del donador" large-screen="full-width" small-screen="full-width" />
+		<b:column col-xs="2"></b:column>
+		<b:column col-xs="8">
+			<p:selectOneMenu value="#{registroEntradaMB.abono.idCatingreso}" >
+				<f:selectItems value="#{listaCatingresoMB.list}" var="i" itemValue="#{i.idCatingreso}" itemLabel="#{i.descripcion}"/>
+			</p:selectOneMenu>
+		</b:column>
+				
 	</b:row>
 	<b:row>
 		<b:column col-xs="6">
@@ -63,5 +69,10 @@
 		</b:column>
 
 	</b:row>
+		<b:row>
+			<p:selectOneMenu value="#{registroEntradaMB.abono.idCatingreso}" >
+				<f:selectItems value="#{listaCatingresoMB.list}" var="i" itemValue="#{i.idCatingreso}" itemLabel="#{i.descripcion}"/>
+			</p:selectOneMenu>
+		</b:row>
 
 </ui:composition>

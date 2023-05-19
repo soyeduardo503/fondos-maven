@@ -71,7 +71,7 @@ public class Meses implements Serializable {
 	}
 	
 	public static String obtenerTexto(int dia, int mes) {
-		return dia+" de "+obtenerMesLetra(mes);
+		return (dia+" de "+obtenerMesLetra(mes)).toUpperCase();
 	}
 	
 }

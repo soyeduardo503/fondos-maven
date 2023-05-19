@@ -179,7 +179,7 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	@Override
 	protected void setValueMod() {
 		
-		this.getItemSelected().setIdUSuarioModifico(sesionMB.getIdRol());
+		this.getItemSelected().setIdUSuarioModifico(sesionMB.getIdUser());
 	}
 
 	@Override

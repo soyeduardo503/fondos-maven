@@ -70,9 +70,9 @@ public class ChequeViewMB {
 		
 		cheque.setCantidad(gasto.getTotal());
 
-		cheque.setCantidadLetras(cantidadLetras.toUpperCase());
-		cheque.setConcepto(gasto.getNombre());
-		cheque.setProveedor(gasto.getIdProveedor().getNombreLegal());
+		cheque.setCantidadLetras(cantidadLetras.toUpperCase().replace("CENTAVOS", ""));
+		cheque.setConcepto(gasto.getNombre().toUpperCase());
+		cheque.setProveedor(gasto.getIdProveedor().getNombreLegal().toUpperCase());
 		cheque.setFecha(Meses.obtenerTexto(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.MONTH)).toUpperCase());
 		
 		

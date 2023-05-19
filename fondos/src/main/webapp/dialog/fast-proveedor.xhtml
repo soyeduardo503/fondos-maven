@@ -11,10 +11,10 @@
 
 
 	<p:dialog widgetVar="wgtFastProveedor" header="Crear nuevo proveedor" modal="true"
-		width="600" height="200" closable="true" id="idDlgFastProveedor">
+		width="800" height="300" closable="true" id="idDlgFastProveedor">
 		<b:panel collapsible="false">
 			<b:row>
-				<b:column colSm="4">
+				<b:column colSm="5">
 					<b:row>
 						<h:outputText value="Nombre" />
 					</b:row>
@@ -24,15 +24,16 @@
 
 				</b:column>
 				<b:column col-xs="2"/>
-				<b:column colSm="4">
+				<b:column colSm="5">
 					<b:row>
 						<h:outputText value="Tipo" />
 					</b:row>
 					<b:row>
-						<p:selectOneButton value="#{proveedoresMB.fast.tipo}">
+						<p:selectOneRadio value="#{proveedoresMB.fast.tipo}" unselectable="true">
 							<f:selectItem itemLabel="Juridico" itemValue="J" />
 							<f:selectItem itemLabel="Natural" itemValue="N" />
-						</p:selectOneButton>
+							<p:ajax event="change" 			update="slcRetencion" />
+						</p:selectOneRadio>
 					</b:row>
 
 				</b:column>
@@ -41,7 +42,7 @@
 			</b:row>
 		
 			<b:row>
-				<b:column colSm="4">
+				<b:column colSm="5">
 					<b:row>
 						<h:outputText value="NIT" />
 					</b:row>
@@ -50,8 +51,8 @@
 					</b:row>
 
 				</b:column>
-				<b:column col-xs="2"/>
-				<b:column colSm="4">
+				<b:column col-xs="1"/>
+				<b:column colSm="5">
 					<b:row>
 						<h:outputText value="DUI" />
 					</b:row>
@@ -62,6 +63,17 @@
 
 				
 			</b:row>
+			<b:row>
+				Retencion
+			</b:row>
+			<b:row>
+					<p:selectOneMenu id="slcRetencion" value="#{proveedoresMB.itemSelected.retencion}" disabled="#{proveedoresMB.itemSelected.tipo eq 'J' }">
+									
+									<f:selectItem itemValue="N" itemLabel="No Retener"></f:selectItem>
+									<f:selectItem itemValue="S" itemLabel="Si Retener"></f:selectItem>
+								</p:selectOneMenu>
+			</b:row>
+			<hr/>
 			<b:row>
 				<b:column col-xs="2" />
 					<p:commandLink action="#{proveedoresMB.saveFast()}" update="idProveedorGasto" oncomplete="PF('wgtFastProveedor').hide();">

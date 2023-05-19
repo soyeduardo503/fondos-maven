@@ -294,10 +294,15 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		
 	}
 
-	public List<Categoria> findPrincipalByCodPresupuesto(Integer idPresupuesto) {
+	public List<Categoria> findPrincipalByCodPresupuesto(String  cod) {
 		
-		return getList("/principales/id/"+idPresupuesto);
+		return getList("/list/filter/id/"+cod);
 	}
+	public List<Categoria> findPrincipalByCodPresupuesto(Integer  cod) {
+		
+		return getList("/principales/id/"+cod);
+	}
+
 
 	public void updateReference(String codigo) throws Exception {
 		action("/update/reference/"+codigo,false);

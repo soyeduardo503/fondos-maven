@@ -8,6 +8,7 @@ import java.util.List;
 
 import sv.com.epsilon.ctrlr.wsclient.SearchGastoWSClient;
 import sv.com.epsilon.entities.Gasto;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.ChequeraFacade;
@@ -56,7 +57,7 @@ public class GastoCtrlr {
 	}
 	
 	
-	public static void loadin(IngresoGastoMB gastoMB) {
+	public static void loadin(IngresoGastoMB gastoMB,Presupuesto p) {
 		gastoMB.setListPresupuesto(new PresupuestoFacade().findAllActive());
 		Integer idPresupuesto=1;
 		if(gastoMB.getListPresupuesto().isEmpty())
@@ -66,7 +67,7 @@ public class GastoCtrlr {
 		idPresupuesto=gastoMB.getListPresupuesto().get(0).getIdPresupuesto();
 		
 		gastoMB.getGasto().setFecha(new Date());
-		gastoMB.setListCategoriaPrincipal(new CategoriaFacade().findPrincipalByCodPresupuesto(idPresupuesto));
+		gastoMB.setListCategoriaPrincipal(new CategoriaFacade().findPrincipalByCodPresupuesto(p.getCodigo()));
 		
 		gastoMB.setListBanco(new BancoFacade().findAllActive());
 		if(gastoMB.getListBanco().isEmpty())
