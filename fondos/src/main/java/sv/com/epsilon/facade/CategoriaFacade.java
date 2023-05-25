@@ -6,13 +6,14 @@
 package sv.com.epsilon.facade;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
-import sv.com.epsilon.presupuesto.pojo.MontoUpdateRequest;
+import sv.com.epsilon.response.AccionResponse;
 import sv.com.epsilon.util.Log;
 
 /**
@@ -273,15 +274,17 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		  return (Integer)getNumber("/children/act").getValue();
 		}
 
-	public void updateMontoDisponible(Double monto, String codigoPadre) {
-		
-		try {
-			update(new MontoUpdateRequest(codigoPadre, monto),"/disponible");
-		} catch (Exception e) {
-			Log.error(e, "Error al update ");
-		}
+//	public void updateMontoDisponible(Double monto, String codigoPadre,String type) {
+//		
+//		try {
+//			update(new MontoUpdateRequest(codigoPadre, monto),"/disponible");
+//		} catch (Exception e) {
+//			Log.error(e, "Error al update ");
+//		}
+//	}
+	public void updateDisponiblePresupuesto(String codigo,Double monto,String type) {
+		Optional<AccionResponse> r= process("/movimiento/update/"+codigo+"/"+new BigDecimal(monto).setScale(2, RoundingMode.HALF_UP).doubleValue()+"/"+type);
 	}
-	
 	
 	
 	public Categoria obtenerCategoriasFromCodigo(String cod){

@@ -34,4 +34,6 @@ public class FinanciamientoFacade extends WSClient<Financiamiento> {
 //    	}
     	return new Financiamiento();
     }
+
+	
 }

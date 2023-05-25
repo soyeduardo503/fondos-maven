@@ -73,7 +73,7 @@
 						</b:column>
 					</b:row>
 					<b:row>
-						<b:column col-xs="6">
+						<b:column col-xs="4">
 							<b:row>
 								<h:outputText value="Tipo Persona" />
 							</b:row>
@@ -81,11 +81,26 @@
 								<p:selectOneListbox value="#{proveedoresMB.itemSelected.tipo}" converter="tipoPersonaConverter">
 									<f:selectItem itemLabel="Persona Natural" itemValue="N" selected="selected" />
 									<f:selectItem itemLabel="Persona Juridica" itemValue="J"/>
+										<p:ajax event="change" 
+								update="slcRetencion" />
 								</p:selectOneListbox>
 							</b:row>
 														
 						</b:column>
-						<b:column col-xs="6">
+						<b:column col-xs="4">
+							<b:row>
+								<h:outputText value="Retencion" />
+							</b:row>
+							<b:row>
+								<p:selectOneMenu id="slcRetencion" value="#{proveedoresMB.itemSelected.retencion}" disabled="#{proveedoresMB.itemSelected.tipo eq 'J' }">
+									
+									<f:selectItem itemValue="N" itemLabel="No Retener"></f:selectItem>
+									<f:selectItem itemValue="S" itemLabel="Si Retener"></f:selectItem>
+								</p:selectOneMenu>
+							</b:row>
+														
+						</b:column>
+						<b:column col-xs="3">
 							<b:row>
 								<h:outputText value="Activo" />
 							</b:row>

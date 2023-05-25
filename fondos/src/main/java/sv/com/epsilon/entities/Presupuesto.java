@@ -65,6 +65,8 @@ public class Presupuesto implements Serializable {
         
     private Integer sizesubs;
     
+    private Double abonado;
+    
     public Presupuesto() {
     }
 
@@ -221,6 +223,15 @@ public class Presupuesto implements Serializable {
 		this.codigo = codigo;
 	}
 	
+	
+	public Double getAbonado() {
+		return abonado;
+	}
+
+	public void setAbonado(Double abonado) {
+		this.abonado = abonado;
+	}
+
 	public void defaultValuePrimary(Integer id) {
 		if(id==this.getIdPresupuesto())
 			this.setIsPrimary(1);

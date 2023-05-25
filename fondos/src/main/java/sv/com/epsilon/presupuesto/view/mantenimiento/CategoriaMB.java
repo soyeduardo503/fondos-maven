@@ -147,7 +147,7 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 	@Override
 	public void defineHeaders() {
 		this.setHeaderDialog("Nueva Categoria");
-		this.setHeaderPage("Mantenimiento Categorias (Articulos,Tipo de objeto, Clase )");
+		this.setHeaderPage("Catelogo de Cuentas");
 		this.setHeaderTable("Tipo de Categoria productos");
 		
 	}

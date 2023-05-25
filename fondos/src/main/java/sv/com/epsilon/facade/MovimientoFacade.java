@@ -5,11 +5,8 @@
  */
 package sv.com.epsilon.facade;
 
-import java.util.Optional;
-
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Movimiento;
-import sv.com.epsilon.response.AccionResponse;
 
 /**
  *
@@ -25,10 +22,10 @@ public class MovimientoFacade extends WSClient<Movimiento> {
 
 	public void persist(Movimiento mov) throws Exception{
 		mov=super.save(mov);
-		Optional<AccionResponse> eval = process( "/categoria/update/"+mov.getIdCategoria().getCodigo()+"/"+mov.getMonto());
-		if(!eval.isPresent()) {
-			throw new Exception("Error al guardar datos relacionados al movimiento");
-		}
+//		Optional<AccionResponse> eval = process( "/categoria/update/"+mov.getIdCategoria().getCodigo()+"/"+mov.getMonto());
+//		if(!eval.isPresent()) {
+//			throw new Exception("Error al guardar datos relacionados al movimiento");
+//		}
 	}
     
 }

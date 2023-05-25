@@ -27,6 +27,13 @@
 											<b:iconAwesome value="search" solid="true" size="2x" style="color: white;" />
 										</p:commandLink>
 									</b:column>
+									<ui:include src="/componentes/botones/print.xhtml">
+										<ui:param name="bean" 		value="#{searchGastoMB.list}" />
+										<ui:param name="report" 		value="reportGastos" />
+										<ui:param name="title" 		value="CUENTA PRESUPUESTOS DE OPERACIONES" />
+										<ui:param name="ext" 		value="xls" />
+										
+									</ui:include>
 								</b:row>
 						
 						</b:container>

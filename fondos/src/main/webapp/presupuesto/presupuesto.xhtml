@@ -54,7 +54,11 @@
 										</b:row>
 										<b:row>	
 											<b:column col-sm="4"><h:outputText value="Gastado" /></b:column>
-											<b:column col-sm="2"><b:badge value="#{p.presupuesto.actual}" severity="success"/></b:column>
+											<b:column col-sm="2"><h:outputText value="#{p.presupuesto.actual}" style="color:red;"/></b:column>
+										</b:row>
+										<b:row>	
+											<b:column col-sm="4"><h:outputText value="Disponible" /></b:column>
+											<b:column col-sm="2"><h:outputText value="#{p.presupuesto.total-p.presupuesto.actual}" styleClass="btn btn-info" style="color:green;"/></b:column>
 										</b:row>
 										<b:row>	
 											<b:column col-sm="4"><h:outputText value="Periodo" /></b:column>

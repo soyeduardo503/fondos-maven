@@ -34,14 +34,37 @@
 		<div class="titlePage">
 			<b:container fluid="true">
 				<b:row>
-					<b:column col-xs="10">
+					<b:column col-xs="9">
 						<h2 class="headerPage">
 							<h:outputText value="Consulta de movimientos" />
 						</h2>
 					</b:column>
-					<b:column col-xs="2" styleClass="">
-						<!-- Agregar selector de presupuesto -->
+					
+					<b:column col-xs="1">
+						<b:row>
+							<h2 class="headerPage">
+								<h:outputText value="Orden" />
+							</h2>
+						</b:row>
+						<b:row>
+							<h:form id="formOrder">
+							<p:selectOneMenu value="#{searchMovimientoMB.order}" >
+								<f:selectItem itemLabel="DESC" itemValue="DESC" />
+								<f:selectItem itemLabel="ASC" itemValue="ASC" />
+								<p:ajax  listener="#{searchMovimientoMB.switchOrder()}" process="@this" update=":idGastosTable:idTableGastos,:printForm"/>
+							</p:selectOneMenu>
+							</h:form>
+						</b:row>
 					</b:column>
+					
+							<ui:include src="/componentes/botones/print.xhtml">
+										<ui:param name="bean" 		value="#{searchMovimientoMB}" />
+										<ui:param name="report" 		value="reportGastos.jasper" />
+										<ui:param name="title" 		value="CUENTA PRESUPUESTOS DE OPERACIONES" />
+										<ui:param name="ext" 		value="xls" />
+										<ui:param name="cols" 		value="1" />
+							</ui:include>
+					
 					<b:column col-xs="1" styleClass="">
 						<p:commandLink onclick="PF('findGasto').show();">
 							<b:iconAwesome value="search" solid="true" size="2x"

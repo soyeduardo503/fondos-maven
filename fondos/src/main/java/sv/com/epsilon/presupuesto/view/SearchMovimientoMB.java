@@ -4,6 +4,8 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -46,9 +48,26 @@ public class SearchMovimientoMB implements Serializable{
 	private List<Gasto> list;
 	private Gasto gasto=null;
 	private List<CategoriaGasto> listDetalle =null;
+	private String order;
 	
 	public SearchMovimientoMB() {
 		
+	}
+	
+	public void switchOrder() {
+		if(order==null || order.equalsIgnoreCase("DESC")) {
+			list.sort(new Comparator<Gasto>() {
+				 public int compare(Gasto o1, Gasto o2) {
+			            return o2.getFecha().compareTo(o1.getFecha());
+			        }
+			});
+		}else {
+			list.sort(new Comparator<Gasto>() {
+				 public int compare(Gasto o1, Gasto o2) {
+			            return o1.getFecha().compareTo(o2.getFecha());
+			        }
+			});
+		}
 	}
 	
 	public void load(Gasto g) {
@@ -161,5 +180,14 @@ public class SearchMovimientoMB implements Serializable{
 		this.listDetalle = listDetalle;
 	}
 
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	
 	
 }

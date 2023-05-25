@@ -56,6 +56,7 @@ public class Gasto implements Serializable {
     
     private Integer kpresupuesto;
     private String status;
+    private String numeroComprobante;
 
     public Gasto() {
     }
@@ -298,6 +299,26 @@ public class Gasto implements Serializable {
 	public void setIdTipoDesembolso(Tipodesembolso idTipoDesembolso) {
 		this.idTipoDesembolso = idTipoDesembolso;
 	}
+	
+	
+
+	public String getNumeroComprobante() {
+		return numeroComprobante;
+	}
+
+
+
+
+
+
+	public void setNumeroComprobante(String numeroComprobante) {
+		this.numeroComprobante = numeroComprobante;
+	}
+
+
+
+
+
 
 	@Override
     public int hashCode() {

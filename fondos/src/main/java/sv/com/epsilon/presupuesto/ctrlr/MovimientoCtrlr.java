@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.ctrlr;
 import java.util.List;
 
 import sv.com.epsilon.entities.Movimiento;
+import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.MovimientoFacade;
 
 /**
@@ -18,6 +19,7 @@ public class MovimientoCtrlr {
 	public  void save(Movimiento mov) throws Exception {
 		
 		facade.persist(mov);
+		new CategoriaFacade().updateDisponiblePresupuesto(mov.getIdCategoria().getCodigo(),mov.getMonto(),"D");
 //		new CategoriaFacade().updateMontoDisponible(mov.getMonto(),CodigoCtrlr.getCodigoPadre(
 //				mov.getIdCategoria().getCodigo()));
 	}

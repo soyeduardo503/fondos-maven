@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+
+	<ui:define name="body">
+		<style>
+.paid {
+	background-color: #54a90a !important;
+	background-image: none !important;
+	color: #ffffff !important;
+}
+
+.revert {
+	background-color: #ff5733 !important;
+	background-image: none !important;
+	color: #ffffff !important;
+}
+</style>
+
+		
+		<div class="titlePage">
+			<b:container fluid="true">
+				<b:row>
+					<b:column col-xs="10">
+						<h2 class="headerPage">
+							<h:outputText value="Consulta de ingresos/abonos" />
+						</h2>
+					</b:column>
+					<b:column col-xs="2" styleClass="">
+						<!-- Agregar selector de presupuesto -->
+					</b:column>
+					<b:column col-xs="1" styleClass="">
+						<p:commandLink onclick="PF('findGasto').show();">
+							<b:iconAwesome value="search" solid="true" size="2x"
+								style="color: white;" />
+						</p:commandLink>
+					</b:column>
+				</b:row>
+
+			</b:container>
+
+		</div>
+		<style>
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
+</style>
+		<b:panel look="primary" collapsible="false">
+
+			<h:form id="idIngresosTable">
+
+
+
+				<p:dataTable value="#{searchIngresoMB.list}" id="idTableIngresos"
+					widgetVar="idTableIngresos" var="g" rowIndexVar="indexVar"
+					>
+
+
+					<p:column width="10">
+						<h:outputText value="#{indexVar+1}" />
+					</p:column>
+					<p:column headerText="Donador" filterBy="#{searchIngresoMB.findDonador( g.idCatingreso)}">
+						<h:outputText value="#{searchIngresoMB.findDonador( g.idCatingreso)}" />
+					</p:column>
+					<p:column headerText="Descripcion" filterBy="#{g.nombre}">
+						<h:outputText value="#{g.nombre}" />
+					</p:column>
+
+					<p:column headerText="Fecha">
+						<h:outputText value="#{g.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+					
+
+
+					
+					<p:column headerText="Total ($)">
+						<h:outputText value="#{g.monto}" />
+					</p:column>
+					<p:column headerText="Status">
+						<h:outputText value="#{g.act}" converter="statusConverter" />
+					</p:column>
+
+					<p:column headerText="Opcion">
+						<b:container fluid="true">
+							<b:row>
+								
+							</b:row>
+						</b:container>
+					</p:column>
+
+				</p:dataTable>
+
+
+			</h:form>
+		</b:panel>
+
+		<ui:include src="/componentes/lateralBar/findMovimiento.xhtml" />
+		<ui:include src="/dialog/gasto/detail.xhtml"></ui:include>
+
+	</ui:define>
+
+</ui:composition>
+</html>

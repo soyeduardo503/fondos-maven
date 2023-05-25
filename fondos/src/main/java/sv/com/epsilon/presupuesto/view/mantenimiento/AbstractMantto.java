@@ -243,7 +243,7 @@ public abstract class  AbstractMantto<K,T> implements Serializable {
 //			
 //		}
 //		System.out.println(m);
-		facade.getClass().getMethod(callMethod, new Class[]{Object.class}).invoke(facade, new Object[]{itemSelected});
+		itemSelected=(K)facade.getClass().getMethod(callMethod, new Class[]{Object.class}).invoke(facade, new Object[]{itemSelected});
 		if(list!=null)
 			this.list.add(itemSelected);
 		updateDialogClose();

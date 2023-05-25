@@ -66,6 +66,10 @@
 						<p:inputText value="#{ingresoGastoMB.gasto.cheque}" id="noCheque" />
 					</b:column>
 
+					<b:column col-xs="3" colspan="1">
+						<p:outputLabel value="No.Comprobante" />
+						<p:inputText value="#{ingresoGastoMB.gasto.numeroComprobante}" id="noComprobante" disabled="#{ingresoGastoMB.gasto.idProveedor.retencion eq 'N'}" />
+					</b:column>
 
 				</b:row>
 			

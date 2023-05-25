@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="findIngresos">
+		<p:sidebar position="right" id="findIngresos" widgetVar="findIngresos">
+
+			<b:panel look="primary" title="Busqueda por filtros" collapsible="false">
+				<b:container fluid="true">
+		
+ 
+					<b:row>
+  <hr style="border-top: 1px solid #8c8b8b;"/>
+					</b:row>
+					<b:row>
+
+						<h:outputText value="Donadores" />
+
+					</b:row>
+					<b:row>
+						
+						<p:selectOneMenu value="#{searchIngresoMB.search.idCatingreso}"
+							>
+							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							<f:selectItems value="#{searchIngresoMB.listDonador}" var="pr"
+								itemLabel="#{pr.descripcion}" itemValue="#{pr.idCatingreso}" />
+						</p:selectOneMenu>
+					</b:row>
+
+					
+					
+					<hr />
+
+					<b:row>
+						<h:outputText value="Descripcion" />
+					</b:row>
+					<b:row>
+						<p:inputText value="#{searchIngresoMB.search.description}"  />
+					</b:row>
+
+					<hr />
+
+					<b:row>
+						<h:outputText value="Monto" />
+					</b:row>
+					<b:row>
+						<p:inputText value="#{searchIngresoMB.search.monto}" required="false" />
+					</b:row>
+
+
+					<hr />
+					
+
+					<b:row>
+							<h:outputText value="Fecha" />	
+							<b:label value="Fecha" severity="danger" large-screen="full-width" />
+																							
+					</b:row>
+					<b:row>
+							<b:column col-xs="6">Inicial</b:column>
+							<b:column col-xs="6">Final</b:column>.
+																							
+					</b:row>
+					<b:row>
+							<b:column col-xs="6"><p:calendar value="#{searchIngresoMB.search.fechaInicial}"/> </b:column>
+							<b:column col-xs="6"><p:calendar value="#{searchIngresoMB.search.fechaFinal}"/></b:column>
+							
+					</b:row>					
+					
+					
+					<hr />
+					<b:row>
+					<b:column col-xs="2"/>
+					<p:commandLink  action="#{searchIngresoMB.invocacionBusqueda}"  >
+						<b:column col-xs="4" styleClass="btn btn-info">
+							<b:row>
+								<b:iconAwesome value="search" solid="true"/>
+							</b:row>
+							<b:row>
+								<p:outputLabel value="Buscar"/>
+							</b:row>
+						</b:column>
+					</p:commandLink>
+						
+					<p:commandLink  onclick="PF('findIngresos').hide();" >
+						<b:column col-xs="4" styleClass="btn btn-danger">
+							<b:row>
+								<b:iconAwesome value="window-close" />
+							</b:row>
+							<b:row>
+								<p:outputLabel value="Cancelar"/>
+							</b:row>
+						</b:column>
+					</p:commandLink>
+					
+
+
+				</b:row>
+
+				
+
+				</b:container>
+
+
+			</b:panel>
+
+		</p:sidebar>
+		
+		
+					
+		
+		
+		<p:confirmDialog message="Sin registros encontrados" widgetVar="noFoundG" width="600" height="150">
+			<b:container fluid="true">
+				<b:row>
+					<b:column col-xs="4"/>
+					
+						
+					<p:commandLink  onclick="PF('noFoundG').hide();PF('findIngresos').show();" >
+						<b:column col-xs="4" styleClass="btn btn-danger">
+							<b:row>
+								<b:iconAwesome value="window-close" />
+							</b:row>
+							<b:row>
+								<p:outputLabel value="Cancelar"/>
+							</b:row>
+						</b:column>
+					</p:commandLink>
+					
+
+
+				</b:row>
+			</b:container>
+		</p:confirmDialog>
+		
+	</h:form>
+</ui:composition>

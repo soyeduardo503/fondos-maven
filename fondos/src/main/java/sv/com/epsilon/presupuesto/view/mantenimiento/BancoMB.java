@@ -135,6 +135,7 @@ public class BancoMB extends AbstractMantto<Banco, BancoFacade> implements Seria
 	@Override
 	protected void setDefaultValue() {
 		getItemSelected().setAct("A");
+		getItemSelected().setIdEmpresa(1);
 		//getItemSelected().setIdBanco(-1);
 		
 		

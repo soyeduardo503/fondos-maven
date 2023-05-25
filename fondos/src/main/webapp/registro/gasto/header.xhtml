@@ -62,7 +62,7 @@
 						<f:selectItem itemLabel="" itemValue="" />
 						<f:selectItems value="#{proveedoresMB.list}" var="p"
 							itemValue="#{p}" itemLabel="#{p.nombre}" />
-						<p:ajax process="@this"/>					
+						<p:ajax process="@this" update="noComprobante"/>					
 					</p:selectOneMenu>
 			</b:row>	
 		</b:column>

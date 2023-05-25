@@ -112,7 +112,7 @@ private void mostrar() {
 
 	} catch (Exception e) {
 
-		Log.Error("Error al cargar los documentos ",e);		
+		Log.Error("Error al cargar los documentos: "+e.getMessage(),e);		
 		new MessageGrowlContext().sendError("Error al generar el documento","problemas en el origen de datos del documento",e);
 	}
 }
