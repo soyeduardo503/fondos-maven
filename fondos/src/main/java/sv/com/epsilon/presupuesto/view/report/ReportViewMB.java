@@ -77,6 +77,8 @@ public class ReportViewMB {
 		}
 		//mostrar();
 	}
+	
+	
 	public StreamedContent getReportValue() {
 		return reportValue;
 	}

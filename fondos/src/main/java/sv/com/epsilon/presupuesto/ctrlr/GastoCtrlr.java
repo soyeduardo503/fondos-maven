@@ -15,6 +15,7 @@ import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CuentaFacade;
 import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.view.IngresoGastoMB;
 
@@ -98,7 +99,7 @@ public class GastoCtrlr {
 	}
 
 
-	public List<Gasto> invocarBusqueda(SearchGasto search) throws Exception {
+	public List<GastoExt> invocarBusqueda(SearchGasto search) throws Exception {
 		return new SearchGastoWSClient().searchParam(search);
 		
 	}

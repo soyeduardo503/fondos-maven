@@ -27,6 +27,12 @@
 	background-image: none !important;
 	color: #ffffff !important;
 }
+
+.ingreso {
+	background-color: #a8dadc !important;
+	background-image: none !important;
+	color: #000 !important;
+}
 </style>
 
 		<f:event listener="#{searchMovimientoMB.preRender}"
@@ -34,7 +40,7 @@
 		<div class="titlePage">
 			<b:container fluid="true">
 				<b:row>
-					<b:column col-xs="9">
+					<b:column col-xs="8">
 						<h2 class="headerPage">
 							<h:outputText value="Consulta de movimientos" />
 						</h2>
@@ -51,7 +57,7 @@
 							<p:selectOneMenu value="#{searchMovimientoMB.order}" >
 								<f:selectItem itemLabel="DESC" itemValue="DESC" />
 								<f:selectItem itemLabel="ASC" itemValue="ASC" />
-								<p:ajax  listener="#{searchMovimientoMB.switchOrder()}" process="@this" update=":idGastosTable:idTableGastos,:printForm"/>
+								<p:ajax  listener="#{searchMovimientoMB.switchOrder()}" process="@this" update=":idGastosTable:idTableGastos,:formPrintMov"/>
 							</p:selectOneMenu>
 							</h:form>
 						</b:row>
@@ -63,13 +69,34 @@
 										<ui:param name="title" 		value="CUENTA PRESUPUESTOS DE OPERACIONES" />
 										<ui:param name="ext" 		value="xls" />
 										<ui:param name="cols" 		value="1" />
+										<ui:param name="form" 		value="formPrintMov" />
+										<ui:param name="titleButton" 		value="Gasto" />
+										<ui:param name="btnClass" 		value="btn-info" />
+							</ui:include>
+							
+							<ui:include src="/componentes/botones/print.xhtml">
+										<ui:param name="bean" 		value="#{searchRetencionMB}" />
+										<ui:param name="report" 		value="reportGastosExcluidos.jasper" />
+										<ui:param name="title" 		value="CUENTA PRESUPUESTOS DE OPERACIONES" />
+										<ui:param name="ext" 		value="xls" />
+										<ui:param name="cols" 		value="1" />
+										<ui:param name="form" 		value="formPrintExc" />
+										<ui:param name="titleButton" 		value="Excluidos" />
+										<ui:param name="btnClass" 		value="btn-success" />
 							</ui:include>
 					
 					<b:column col-xs="1" styleClass="">
-						<p:commandLink onclick="PF('findGasto').show();">
+						<b:row>
+							<h2 class="headerPage">
+								<h:outputText value="Busqueda" />
+							</h2>
+						</b:row>
+						<b:row>
+						<p:commandLink onclick="PF('findGasto').show();" styleClass="btn btn-info">
 							<b:iconAwesome value="search" solid="true" size="2x"
 								style="color: white;" />
 						</p:commandLink>
+						</b:row>
 					</b:column>
 				</b:row>
 
@@ -90,7 +117,7 @@
 
 				<p:dataTable value="#{searchMovimientoMB.list}" id="idTableGastos"
 					widgetVar="idTableGastos" var="g" rowIndexVar="indexVar"
-					rowStyleClass="#{g.status eq 'R'?'revert':''}">
+					rowStyleClass="#{  g.status eq 'R'?'revert': (g.status eq 'T'?'ingreso':'') }">
 
 
 					<p:column width="10">
@@ -137,7 +164,9 @@
 					<p:column headerText="Status">
 						<h:outputText value="#{g.status}" converter="statusConverter" />
 					</p:column>
-
+					<p:column headerText="Suj Exc." width="50">
+						<h:outputText value="#{g.idProveedor.retencion}"  />
+					</p:column>
 					<p:column headerText="Opcion">
 						<b:container fluid="true">
 							<b:row>

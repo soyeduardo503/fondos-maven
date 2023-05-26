@@ -3,11 +3,11 @@
  */
 package sv.com.epsilon.presupuesto.pojo;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import sv.com.epsilon.entities.Categoria;
-import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 
@@ -25,11 +25,11 @@ public class SearchGasto {
 	private Proveedor proveedor;
 	private Double monto;
 	private String numeroCheque;
-	private Date fechaInicial;
-	private Date fechaFinal;
+	private Calendar fechaInicial;
+	private Calendar fechaFinal;
 	private String description;
 	private List<Categoria> listCategoria;
-	private List<Gasto> gastos;
+	private List<GastoExt> gastos;
 	private String tipo;
 	private Presupuesto presupuesto;
 	private boolean revertido=false;
@@ -62,16 +62,16 @@ public class SearchGasto {
 	public void setNumeroCheque(String numeroCheque) {
 		this.numeroCheque = numeroCheque;
 	}
-	public Date getFechaInicial() {
+	public Calendar getFechaInicial() {
 		return fechaInicial;
 	}
-	public void setFechaInicial(Date fechaInicial) {
+	public void setFechaInicial(Calendar fechaInicial) {
 		this.fechaInicial = fechaInicial;
 	}
-	public Date getFechaFinal() {
+	public Calendar getFechaFinal() {
 		return fechaFinal;
 	}
-	public void setFechaFinal(Date fechaFinal) {
+	public void setFechaFinal(Calendar fechaFinal) {
 		this.fechaFinal = fechaFinal;
 	}
 	public String getDescription() {
@@ -86,10 +86,10 @@ public class SearchGasto {
 	public void setListCategoria(List<Categoria> listCategoria) {
 		this.listCategoria = listCategoria;
 	}
-	public List<Gasto> getGastos() {
+	public List<GastoExt> getGastos() {
 		return gastos;
 	}
-	public void setGastos(List<Gasto> gastos) {
+	public void setGastos(List<GastoExt> gastos) {
 		this.gastos = gastos;
 	}
 	public String getTipo() {

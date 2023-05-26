@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -20,6 +21,7 @@ import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
+import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
@@ -45,13 +47,21 @@ public class SearchMovimientoMB implements Serializable{
 	private UsuarioSessionMB usuarioSessionMB;
 	private SearchGasto search=new SearchGasto();
 	private List<Proveedor> listProveedor=new ProveedorFacade().findAllActive();
-	private List<Gasto> list;
+	private List<GastoExt> list;
+	private List<GastoExt> listRetencion;
 	private Gasto gasto=null;
 	private List<CategoriaGasto> listDetalle =null;
 	private String order;
 	
 	public SearchMovimientoMB() {
 		
+	}
+	
+	public Double sumaTotal() {
+		return list.stream().mapToDouble(a->a.getTotal()).sum();
+	}
+	public Double sumaTotalRetencion() {
+		return list.stream().filter(v->v.getIdProveedor().getRetencion().equalsIgnoreCase("S")).mapToDouble(a->a.getTotal()).sum();
 	}
 	
 	public void switchOrder() {
@@ -81,7 +91,7 @@ public class SearchMovimientoMB implements Serializable{
 			try {
 				
 				SearchGasto searcher=new SearchGasto();
-				searcher.setPresupuesto(new Presupuesto(usuarioSessionMB.getPresupuestoSelected().getIdPresupuesto()));
+				searcher.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
 				list=new GastoCtrlr().invocarBusqueda(searcher);
 				loadFound();
 			}catch (Exception e) {
@@ -94,6 +104,7 @@ public class SearchMovimientoMB implements Serializable{
 		
 		
 		try {
+			search.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
 			list=new GastoCtrlr().invocarBusqueda(search);
 			loadFound();
 		} catch (Exception e) {
@@ -137,13 +148,13 @@ public class SearchMovimientoMB implements Serializable{
 	
 	
 	
-	public List<Gasto> getList() {
+	public List<GastoExt> getList() {
 		return list;
 	}
 
 
 
-	public void setList(List<Gasto> list) {
+	public void setList(List<GastoExt> list) {
 		this.list = list;
 	}
 

@@ -13,6 +13,7 @@ import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
+import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.util.ExecuteForm;
 
@@ -48,7 +49,7 @@ public class SearchGastoMB implements Serializable{
 		
 		
 		try {
-			list=new GastoCtrlr().invocarBusqueda(search);
+			new GastoCtrlr().invocarBusqueda(search).forEach(v->list.add(v));
 			loadFound();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

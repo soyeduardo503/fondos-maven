@@ -8,8 +8,13 @@
                       xmlns:b="http://bootsfaces.net/ui">
                       
              <b:column col-xs="#{cols}" >
-             	<h:form id="printForm">         
-					<h:commandLink  action="#{reportViewMB.print()}"  styleClass="btn btn-info" target="_blank">
+             <h:form id="#{form}">
+             	<b:row>
+             		<h2	 class="headerPage">#{titleButton}</h2>
+             	</b:row>
+             	<b:row>
+             	         
+					<h:commandLink  action="#{reportViewMB.print()}"  styleClass="btn #{btnClass}" target="_blank">
 						
 						
 				
@@ -21,6 +26,8 @@
 						<f:setPropertyActionListener target="#{reportViewMB.ext}" value= "#{ext}"/>
 						<f:setPropertyActionListener target="#{reportViewMB.report}" value= "#{report}"/>
 					</h:commandLink>
+				
+				</b:row>
 				</h:form>	
 		</b:column>
 </ui:composition>
