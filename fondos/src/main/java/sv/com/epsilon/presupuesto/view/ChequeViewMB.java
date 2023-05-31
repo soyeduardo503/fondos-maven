@@ -53,10 +53,10 @@ public class ChequeViewMB {
 		Documento doc=new Documento();
 		doc.setExt("PDF");
 		doc.setNombre("Cheque FPT");
-		if(new File("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper").exists())
+//		if(new File("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper").exists())
 			doc.setPath("C:\\\\files\\\\fondos\\\\reportes\\\\cheque.jasper");
-		else
-			doc.setPath("/opt/epsilon/reporte/cheque.jasper");
+//		else
+//			doc.setPath("/opt/epsilon/reporte/cheque.jasper");
 		
 		
 		Log.info("The report is made");

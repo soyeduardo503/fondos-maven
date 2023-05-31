@@ -4,27 +4,27 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Gasto;
-import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.pojo.GastoExt;
+import sv.com.epsilon.presupuesto.pojo.Periodo;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
+import sv.com.epsilon.util.PeriodoUtil;
 
 /**
  * @author martinezc
@@ -32,6 +32,7 @@ import sv.com.epsilon.util.ExecuteForm;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class SearchMovimientoMB implements Serializable{
 
 	/**
@@ -52,6 +53,7 @@ public class SearchMovimientoMB implements Serializable{
 	private Gasto gasto=null;
 	private List<CategoriaGasto> listDetalle =null;
 	private String order;
+	private Integer month;
 	
 	public SearchMovimientoMB() {
 		
@@ -105,6 +107,12 @@ public class SearchMovimientoMB implements Serializable{
 		
 		try {
 			search.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
+			
+			if(month!=null && !month.equals("")) {
+				Periodo periodo = PeriodoUtil.make(Integer.valueOf( usuarioSessionMB.getPresupuestoSelected().getYear()), month);
+				search.setFechaInicial(periodo.getInicio());
+				search.setFechaFinal(periodo.getFin());
+			}
 			list=new GastoCtrlr().invocarBusqueda(search);
 			loadFound();
 		} catch (Exception e) {

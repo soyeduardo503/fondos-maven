@@ -39,7 +39,7 @@ public class GastoCtrlr {
 		if(gasto.getIdTipoDesembolso()==null)
 			throw new Exception("Seleccione un tipo de desembolso");
 		if(gasto.getNombre()==null||gasto.getNombre().equals(""))
-			throw new Exception("Ingrese el nombre del gasto");
+			throw new Exception("Ingrese la descripcion del gasto");
 		
 //		if(gasto.getFecha()==null)
 //			throw new Exception("Ingrese la fecha del gasto");

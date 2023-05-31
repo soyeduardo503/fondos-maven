@@ -9,9 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
 import javax.xml.bind.annotation.XmlTransient;
 
+import lombok.Data;
 import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
@@ -19,6 +19,7 @@ import sv.com.epsilon.ctrlr.annotation.Id;
  * @author Zeta
  */
 
+@Data
 public class Presupuesto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +67,8 @@ public class Presupuesto implements Serializable {
     private Integer sizesubs;
     
     private Double abonado;
+    
+    private Integer mesCierre;
     
     public Presupuesto() {
     }

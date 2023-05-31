@@ -31,7 +31,7 @@ public class MessageGrowlContext implements Serializable {
 	/**
 	 * <xml>
 	 */
-
+	private String errorTxt; 
 
 
 	public MessageGrowlContext() {
@@ -44,6 +44,7 @@ public class MessageGrowlContext implements Serializable {
 	 */
 	
 
+	
 
 
 	public  void send(String summary,String detail){
@@ -59,12 +60,21 @@ public class MessageGrowlContext implements Serializable {
 		
 	}
 	
+	public String getErrorTxt() {
+		return errorTxt;
+	}
+
+	public void setErrorTxt(String errorTxt) {
+		this.errorTxt = errorTxt;
+	}
+
 	public  void sendWarning(String summary,String detail){
 		try {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,summary,detail);
 			Log.info(summary+" \n "+detail);
 		
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			new ExecuteForm().Update("status");
 		} catch (Exception e) {
 			Log.error("Error al mandar el mensaje ", e);
 			
@@ -75,11 +85,11 @@ public class MessageGrowlContext implements Serializable {
 	public  void sendError(String summary,String detail, Exception e){
 		try {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,summary,detail);
-
+			this.errorTxt=e.getMessage();
 			Log.error(summary+" \n "+detail, e);
-			
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			
+			//new ExecuteForm().ExecuteUpdate("alertWarning", "PF('dlgWarningDataWgt').show();");
+			FacesContext.getCurrentInstance().addMessage("status", msg);
+			new ExecuteForm().Update("status");
 		} catch (Exception e1) {
 			Log.error("Error al mandar el mensaje ", e1);
 		
@@ -94,6 +104,7 @@ public class MessageGrowlContext implements Serializable {
 			Log.info(summary+" \n "+detail);
 		
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			new ExecuteForm().Update("status");
 		} catch (Exception e) {
 			Log.error("Error al mandar el mensaje ", e);
 			

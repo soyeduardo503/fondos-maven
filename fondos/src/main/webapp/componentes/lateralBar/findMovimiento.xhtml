@@ -78,13 +78,16 @@
 																							
 					</b:row>
 					<b:row>
-							<b:column col-xs="6">Inicial</b:column>
-							<b:column col-xs="6">Final</b:column>.
+							<b:column col-xs="12">Mes</b:column>
+							
 																							
 					</b:row>
 					<b:row>
-							<b:column col-xs="6"><p:calendar value="#{searchMovimientoMB.search.fechaInicial}"/> </b:column>
-							<b:column col-xs="6"><p:calendar value="#{searchMovimientoMB.search.fechaFinal}"/></b:column>
+					
+							<p:selectOneMenu value="#{searchMovimientoMB.month}">
+								<f:selectItem  itemValue="" itemLabel=""></f:selectItem>
+								<f:selectItems value="#{listaMesesMB.all}" var="a" itemValue="#{a.idMes}" itemLabel="#{a.nombre}"/>
+							</p:selectOneMenu>
 							
 					</b:row>					
 					

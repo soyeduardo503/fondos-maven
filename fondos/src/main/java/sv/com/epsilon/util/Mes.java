@@ -4,6 +4,8 @@
 package sv.com.epsilon.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -24,13 +26,27 @@ public class Mes implements Serializable {
 	private int idMes;
 	private String valor;
 	private final static List<String> list=init();
+	private final static List<Mes> all=initAll();
 
-	public Mes() {
-
+	private Mes() {
+		
 	}
+	
+	
+
+	private static List<Mes> initAll() {
+		List<Mes> list=new ArrayList<>();
+		for(int i=1;i<13;i++) {
+			list.add(new Mes(i));
+		}
+		return list;
+	}
+
+
 
 	private static List<String> init() {
 		String[] list=new String[] {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+		
 		return Stream.of(list).toList();
 	}
 
@@ -81,6 +97,15 @@ public class Mes implements Serializable {
 		return "Mes [nombre=" + nombre + ", idMes=" + idMes + ", valor=" + valor + "]";
 	}
 	
+	public static List<Mes> untilCurrentMonth(){
+		
+		return all.stream().filter(m->m.idMes<=Calendar.getInstance().get(Calendar.MONTH)).toList();
+	}
+	
+	
+	public static List<Mes> all(){
+		return all;
+	}
 	
 
 }

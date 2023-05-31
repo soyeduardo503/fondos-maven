@@ -4,17 +4,23 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
+import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
 
 /**
@@ -23,6 +29,7 @@ import sv.com.epsilon.util.ExecuteForm;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class SearchGastoMB implements Serializable{
 
 	/**
@@ -33,10 +40,14 @@ public class SearchGastoMB implements Serializable{
 	 * 
 	 */
 	
-	
+	@ManagedProperty(value = "#{usuarioSessionMB}")
+	private UsuarioSessionMB usuarioSessionMB;
 	private SearchGasto search=new SearchGasto();
 	private List<Proveedor> listProveedor=new ProveedorFacade().findAllActive();
-	private List<Gasto> list;
+	private List<GastoExt> list;
+	private Date inicio;
+	private Date fin;
+	
 	
 	
 	public SearchGastoMB() {
@@ -47,8 +58,19 @@ public class SearchGastoMB implements Serializable{
 	
 	public void invocacionBusqueda() {
 		
-		
+		list=new ArrayList<>();
 		try {
+			if(inicio!=null) {
+				Calendar cal1 = Calendar.getInstance();
+				cal1.setTime(inicio);
+				search.setFechaInicial(cal1);
+			}
+			if(fin!=null) {
+				Calendar cal2 = Calendar.getInstance();
+				cal2.setTime(fin);
+				search.setFechaFinal(cal2);
+			}
+			search.setPresupuesto(this.usuarioSessionMB.getPresupuestoSelected());
 			new GastoCtrlr().invocarBusqueda(search).forEach(v->list.add(v));
 			loadFound();
 		} catch (Exception e) {
@@ -58,40 +80,6 @@ public class SearchGastoMB implements Serializable{
 	}
 
 
-
-	public SearchGasto getSearch() {
-		return search;
-	}
-
-
-
-	public void setSearch(SearchGasto search) {
-		this.search = search;
-	}
-
-
-
-	public List<Proveedor> getListProveedor() {
-		return listProveedor;
-	}
-
-
-
-	public void setListProveedor(List<Proveedor> listProveedor) {
-		this.listProveedor = listProveedor;
-	}
-	
-	
-	
-	public List<Gasto> getList() {
-		return list;
-	}
-
-
-
-	public void setList(List<Gasto> list) {
-		this.list = list;
-	}
 
 
 

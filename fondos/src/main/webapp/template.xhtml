@@ -85,7 +85,7 @@ spans.forEach((span, idx) => {
 			<!-- center -->
 			
 				
-					<p:messages escape="false" globalOnly="true" autoUpdate="true" />
+					<p:messages escape="false" globalOnly="true" autoUpdate="true"  />
 					<b:container fluid="true">
 						<ui:insert name="body" />
 					</b:container>
@@ -113,7 +113,7 @@ spans.forEach((span, idx) => {
 		</b:column>
 	</b:container>
 	<ui:insert name="dialog" />
-	<p:growl autoUpdate="true" globalOnly="false" />
+	<b:growl autoUpdate="true" globalOnly="false" id="status" life="10000" />
 	<p:dialog id="idDlgCambiarPassword" header="Cambio de password" widgetVar="DlgPassword" width="250" modal="true">
 			<h:form id="IDFrmPassword">
 				<p:panelGrid columns="2">
@@ -121,6 +121,12 @@ spans.forEach((span, idx) => {
 			</h:form>
 	</p:dialog>
 	<h:outputText value="#{usuarioSessionMB.user}"/>
+	
+	
+	
+	<script>
+
+</script>
 </h:body>
 
 </html>
