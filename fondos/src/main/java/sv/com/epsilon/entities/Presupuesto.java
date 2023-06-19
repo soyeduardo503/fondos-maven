@@ -28,7 +28,7 @@ public class Presupuesto implements Serializable {
     
     private String nombrePresupuesto;
     
-    private String year;
+    private Integer year;
     
     private double total;
     
@@ -80,7 +80,18 @@ public class Presupuesto implements Serializable {
     public Presupuesto(Integer idPresupuesto, String nombrePresupuesto, String year, double total, Date fechaInicio, Date fechaFin, Date fechaElaboracion, int idUSuario) {
         this.idPresupuesto = idPresupuesto;
         this.nombrePresupuesto = nombrePresupuesto;
-        this.year = year;
+        this.year = Integer.parseInt( year);
+        this.total = total;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.fechaElaboracion = fechaElaboracion;
+        this.idUSuario = idUSuario;
+    }
+    
+    public Presupuesto(Integer idPresupuesto, String nombrePresupuesto, Integer year, double total, Date fechaInicio, Date fechaFin, Date fechaElaboracion, int idUSuario) {
+        this.idPresupuesto = idPresupuesto;
+        this.nombrePresupuesto = nombrePresupuesto;
+        this.year =  year;
         this.total = total;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -127,12 +138,12 @@ public class Presupuesto implements Serializable {
 		this.idEmpresa = idEmpresa;
 	}
 
-	public String getYear() {
+	public Integer getYear() {
     	
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

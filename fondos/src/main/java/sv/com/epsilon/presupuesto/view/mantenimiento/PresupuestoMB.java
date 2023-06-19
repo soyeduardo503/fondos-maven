@@ -70,7 +70,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		if(getItemSelected().getYear()==null)
 			codTemp=new SimpleDateFormat("yy").format(new Date());
 		else {
-			codTemp=getItemSelected().getYear().substring(2,4);
+			codTemp=(""+getItemSelected().getYear()).substring(2,4);
 		}
 		if(getItemSelected().getNombrePresupuesto()!=null&&getItemSelected().getNombrePresupuesto().length()>3)
 			nm=new CodigoCtrlr().createFromName(getItemSelected().getNombrePresupuesto());
@@ -107,9 +107,9 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		if(Calendar.getInstance().get(Calendar.MONTH)>9) {
 			yearSelected++;
 		}
-		this.getItemSelected().setSizesubs(6);
+		this.getItemSelected().setSizesubs(2);
 		
-		this.getItemSelected().setYear(yearSelected+"");
+		this.getItemSelected().setYear(yearSelected);
 		
 	}
 	
@@ -136,7 +136,11 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		getItemSelected().setAct("A");
 		getItemSelected().setFechaElaboracion(new Date());
 		getItemSelected().setValidasub("N");
-		getItemSelected().setSizesubs(6);
+		getItemSelected().setSizesubs(2);
+		Calendar c=Calendar.getInstance();
+		c.setTime(		item.getFechaInicio());
+		item.setMesCierre(c.get(Calendar.MONTH)+1);
+		item.setAbonado(0.0);
 		List<Categoria> categorias=new ArrayList<Categoria>();
 		try {
 			super.saveWithoutclose();
@@ -276,7 +280,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	@Override
 	public Presupuesto getItemSelected(){
 		if(super.getItemSelected()!=null&&super.getItemSelected().getYear()==null||super.getItemSelected().getYear().equals(""))
-			super.getItemSelected().setYear(Calendar.getInstance().get(Calendar.YEAR)+"");
+			super.getItemSelected().setYear(Calendar.getInstance().get(Calendar.YEAR));
 		return super.getItemSelected();
 	}
 

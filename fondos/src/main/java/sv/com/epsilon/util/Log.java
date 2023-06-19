@@ -67,4 +67,10 @@ public class Log {
 		log.warn(st, e);
 		
 	}
+	
+	public static void debug(String st){
+		//Log.info(st+e.getMessage());
+		log.debug(st);
+		
+	}
 }

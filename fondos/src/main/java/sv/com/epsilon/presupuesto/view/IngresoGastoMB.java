@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 
-import sv.com.epsilon.ctrlr.wsclient.WSClient;
+import lombok.Data;
 import sv.com.epsilon.entities.Banco;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Chequera;
@@ -44,11 +44,13 @@ import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.pojo.ImageBucket;
+import sv.com.epsilon.presupuesto.pojo.Periodo;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.presupuesto.view.autocomplete.CategoriaAutocompleteMB;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
 import sv.com.epsilon.util.MessageGrowlContext;
+import sv.com.epsilon.util.PeriodoUtil;
 import sv.com.epsilon.util.Util;
 
 /**
@@ -57,6 +59,7 @@ import sv.com.epsilon.util.Util;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class IngresoGastoMB implements Serializable {
 
 	/**
@@ -102,6 +105,7 @@ public class IngresoGastoMB implements Serializable {
 	
 	private Integer idGastoSelected;
 	private List<ImageBucket> listImages;
+	private Periodo periodo;
 	
 	
 	BigDecimal monto=new BigDecimal(0);
@@ -113,12 +117,18 @@ public class IngresoGastoMB implements Serializable {
 	
 	public void preRender() {
 		if(!FacesContext.getCurrentInstance().isPostback()) {
-			this.gasto.setFecha(new Date());
-			gasto.setFechaRegistro(new Date());
+			
+			
 			GastoCtrlr.loadin(this,sesionMB.getPresupuestoSelected());
 			listTipoDesembolso= new TipodesembolsoFacade().findAllActive();
 			presupuestoSelected=sesionMB.getPresupuestoSelected();
-		
+			periodo=	PeriodoUtil.make(presupuestoSelected.getYear(), presupuestoSelected.getMesCierre());
+			Calendar c=Calendar.getInstance();
+			c.set(Calendar.MONTH, periodo.getFin().get(Calendar.MONTH));
+			gasto.setFechaRegistro(new Date());
+			this.gasto.setFecha(c.getTime());
+			
+			
 			
 		}
 		

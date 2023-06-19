@@ -60,7 +60,7 @@ public class NodeModel {
 		
 		TreeNode root =new DefaultTreeNode(nodoRoot,null);
 		for(Categoria c:presupuesto.getCategoriaList())
-		 crearNodosRecursivos(c,root,filtro,presupuesto.getYear(),presupuesto.getTotal());
+		 crearNodosRecursivos(c,root,filtro,""+presupuesto.getYear(),presupuesto.getTotal());
 			
 		
 		return root;

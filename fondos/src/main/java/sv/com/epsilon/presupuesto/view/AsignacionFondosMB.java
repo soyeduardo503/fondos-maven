@@ -46,6 +46,7 @@ public class AsignacionFondosMB {
 	private boolean showAllCat=false;
 	
 	private Categoria catModSelected;
+	private Double total=0.0;
 	
 	/**
 	 * 
@@ -82,7 +83,7 @@ public class AsignacionFondosMB {
 				CategoriaFacade facade=new CategoriaFacade();
 				//presupuesto= sesionMB.getPresupuestoSelected();
 				allCategoria = facade.findByCodPresupuesto7(presupuesto);
-				
+				this.total=presupuesto.getTotal();
 				
 				//crearEstructuraCompleta();
 				//facade.close();
@@ -248,13 +249,14 @@ public class AsignacionFondosMB {
 	
 	public void refactorAmount(Categoria catModSelected) {
 	  AsignacionMontosCtrlr.calcularMontos(allCategoria, catModSelected, presupuesto);
-	  
+	  total=presupuesto.getTotal();
 	  new ExecuteForm().update(":IDFrmTableDetail:detalleAsignacionFondo");
 	  new MessageGrowlContext().send("Presupuesto modificado ", "total $ "+presupuesto.getTotal());
 	}
 	
 	public void save() {
 		try {
+			this.presupuesto.setTotal(total);
 			new AsignacionMontosCtrlr().save(presupuesto, allCategoria);
 		} catch (Exception e) {
 			new MessageGrowlContext().sendError("Error en guardar asignacion", e.getMessage(), e);

@@ -4,10 +4,12 @@
 package sv.com.epsilon.presupuesto.session;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,6 +19,7 @@ import javax.servlet.http.Cookie;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.ctrlr.wsclient.AppCtrlr;
 import sv.com.epsilon.entities.Categoria;
@@ -54,6 +57,7 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 	private Presupuesto presupuestoSelectedDlg;
 	private Integer idPresupuestoSelected;
 	private List<Presupuesto> listPresupuesto;
+	private List<String> formAfect;
 	private WgtDialog<Presupuesto> dialog=new WgtDialog<Presupuesto>() {
 		
 		@Override
@@ -102,8 +106,25 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		}
 	}
 	
+	public void addFormAfect(String forms) {
+		if(!FacesContext.getCurrentInstance().isPostback()) {
+			this.formAfect=new ArrayList<>();
+			if(forms!=null) {
+				Stream.of(forms.split(":")).forEach(n->formAfect.add(n));
+			}
+		}
+	}
 	
-	
+	public List<String> getFormAfect() {
+		return formAfect;
+	}
+
+
+	public void setFormAfect(List<String> formAfect) {
+		this.formAfect = formAfect;
+	}
+
+
 	public WgtDialog<Presupuesto> getDialog() {
 		return dialog;
 	}

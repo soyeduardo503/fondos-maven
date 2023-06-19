@@ -21,12 +21,11 @@ public class PeriodoUtil {
 		Calendar inicio = Calendar.getInstance();
 		Calendar fin=Calendar.getInstance();
 		inicio.set(Calendar.YEAR, year);
-		inicio.set(Calendar.MONTH, month);
+		inicio.set(Calendar.MONTH, month-1);
 		inicio.set(Calendar.DAY_OF_MONTH, 1);
-		fin.set(Calendar.MONTH, month);	
-		fin.set(Calendar.DAY_OF_MONTH, 1);
-		fin.add(Calendar.MONTH, 1);
-		fin.add(Calendar.DAY_OF_MONTH, -1);
+		fin.set(Calendar.MONTH, month-1);	
+		fin.set(Calendar.DAY_OF_MONTH, fin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
 		return new  Periodo(inicio, fin);
 	}
 

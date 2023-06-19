@@ -58,7 +58,12 @@ public class Proveedor implements Serializable {
     }
     
     
-    
+    public Proveedor(String nombre, String nombreLegal) {
+  		super();
+  		this.nombre = nombre;
+  		this.nombreLegal = nombreLegal;
+  	}
+
     
     
     

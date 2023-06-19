@@ -70,7 +70,7 @@ public class RegistroEntradaMB implements Serializable {
 		abono=new Financiamiento();
 		abono.setAct("A");
 		abono.setIdEmpresa(1);
-		abono.setIdPresupuesto(new Presupuesto(1));
+		abono.setIdPresupuesto(new Presupuesto(sesionMB.getIdPresupuestoSelected()));
 		abono.setFecha(new Date());
 		abono.setFechaRegistro(new Date());
 	}
@@ -78,7 +78,9 @@ public class RegistroEntradaMB implements Serializable {
 	
 	public void save() {
 		try {
+			this.abono.setDonador(abono.getIdCatingreso()+"");
 			new FinanciamientoFacade().save(this.abono);
+			
 			this.reset();
 			new MessageGrowlContext().send("Movimiento guardado!!!","Accion completada");
 			new ExecuteForm().update("IDFormGasto");

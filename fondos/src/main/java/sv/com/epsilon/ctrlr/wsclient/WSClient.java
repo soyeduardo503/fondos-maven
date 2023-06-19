@@ -92,14 +92,17 @@ public class WSClient<T> {
 			object=(T) resp.get();
 		return object;
 	}
-	
 	public boolean action(String endpoint,boolean post) throws Exception {
+		return action(endpoint, post,null);
+	}
+	
+	public boolean action(String endpoint,boolean post,Object request) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		//request.getHeaders().add(, CONTEXT);
 		Optional<AccionResponse> resp=null;
 		if(post)
-			 resp= Optional.ofNullable( restTemplate.postForObject(url(endpoint),null,AccionResponse.class));
+			 resp= Optional.ofNullable( restTemplate.postForObject(url(endpoint),request,AccionResponse.class));
 		else
 			resp=process(endpoint);
 		if(!resp.isPresent())

@@ -29,7 +29,7 @@ public class GastoCtrlr {
 	
 	public static  Integer save(Gasto gasto) throws  Exception{
 		
-		gasto.setIdEmpresa("1");
+		gasto.setIdEmpresa(1);
 		if(gasto.getCheque()==null)
 			throw new Exception("Requiere numero cheque/transferencia/recibo");
 //		if(gasto.getMovimientoList()==null||gasto.getMovimientoList().size()==0)

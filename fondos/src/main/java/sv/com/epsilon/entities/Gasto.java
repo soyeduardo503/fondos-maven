@@ -6,6 +6,7 @@
 package sv.com.epsilon.entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Gasto implements Serializable {
     
     private Double total;
         
-    private String idEmpresa;
+    private Integer idEmpresa;
     
     private Date fecha;
     private Date fechaRegistro;
@@ -61,15 +62,75 @@ public class Gasto implements Serializable {
     public Gasto() {
     }
 
+
+
+    public Gasto(Integer idGasto, String nombre, String descripcion, String nombrePantalla, String act, String codigo,
+			Integer cheque, Double total, String idEmpresa, Date fecha, Date fechaRegistro, List<Recibo> reciboList,
+			List<Imagen> imagenList, List<Movimiento> movimientoList, Tipodesembolso idTipoDesembolso,
+			Proveedor idProveedor, Integer kpresupuesto, String status, String numeroComprobante) {
+		super();
+		this.idGasto = idGasto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.nombrePantalla = nombrePantalla;
+		this.act = act;
+		this.codigo = codigo;
+		this.cheque = cheque;
+		this.total = total;
+		this.idEmpresa = Integer.parseInt( idEmpresa);
+		Calendar c=Calendar.getInstance();
+		c.setTime(fecha);
+		Calendar cr=Calendar.getInstance();
+		cr.setTime(fechaRegistro);
+		this.fecha = fecha;
+		this.fechaRegistro =fechaRegistro;
+		this.reciboList = reciboList;
+		this.imagenList = imagenList;
+		this.movimientoList = movimientoList;
+		this.idTipoDesembolso = idTipoDesembolso;
+		this.idProveedor = idProveedor;
+		this.kpresupuesto = kpresupuesto;
+		this.status = status;
+		this.numeroComprobante = numeroComprobante;
+	}
     
-    
-    
+    public Gasto(Integer idGasto, String nombre, String descripcion, String nombrePantalla, String act, String codigo,
+			Integer cheque, Double total, Integer idEmpresa, Date fecha, Date fechaRegistro, List<Recibo> reciboList,
+			List<Imagen> imagenList, List<Movimiento> movimientoList, Tipodesembolso idTipoDesembolso,
+			Proveedor idProveedor, Integer kpresupuesto, String status, String numeroComprobante) {
+		super();
+		this.idGasto = idGasto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.nombrePantalla = nombrePantalla;
+		this.act = act;
+		this.codigo = codigo;
+		this.cheque = cheque;
+		this.total = total;
+		this.idEmpresa = idEmpresa;
+		Calendar c=Calendar.getInstance();
+		c.setTime(fecha);
+		Calendar cr=Calendar.getInstance();
+		cr.setTime(fechaRegistro);
+		this.fecha = fecha;
+		this.fechaRegistro =fechaRegistro;
+		this.reciboList = reciboList;
+		this.imagenList = imagenList;
+		this.movimientoList = movimientoList;
+		this.idTipoDesembolso = idTipoDesembolso;
+		this.idProveedor = idProveedor;
+		this.kpresupuesto = kpresupuesto;
+		this.status = status;
+		this.numeroComprobante = numeroComprobante;
+	}
    
 
     public Gasto(Integer idGasto) {
 		super();
 		this.idGasto = idGasto;
 	}
+
+
 
 
 
@@ -108,7 +169,7 @@ public class Gasto implements Serializable {
 
 
 
-	public String getIdEmpresa() {
+	public Integer getIdEmpresa() {
 		return idEmpresa;
 	}
 
@@ -116,7 +177,7 @@ public class Gasto implements Serializable {
 
 
 
-	public void setIdEmpresa(String idEmpresa) {
+	public void setIdEmpresa(Integer idEmpresa) {
 		this.idEmpresa = idEmpresa;
 	}
 

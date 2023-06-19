@@ -5,6 +5,8 @@
  */
 package sv.com.epsilon.facade;
 
+import java.util.Optional;
+
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Financiamiento;
 
@@ -34,6 +36,11 @@ public class FinanciamientoFacade extends WSClient<Financiamiento> {
 //    	}
     	return new Financiamiento();
     }
+
+	public Optional<Financiamiento> findFirst(Integer idPresupuestoSelected, Integer mesCierre) {
+		
+		return get("/searchFirst/"+idPresupuestoSelected+"/"+mesCierre);
+	}
 
 	
 }

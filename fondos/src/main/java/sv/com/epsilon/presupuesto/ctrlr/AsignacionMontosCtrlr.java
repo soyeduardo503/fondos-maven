@@ -1,5 +1,7 @@
 package sv.com.epsilon.presupuesto.ctrlr;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
@@ -22,7 +24,7 @@ public class AsignacionMontosCtrlr {
 		Stream<Categoria> l = list.stream().filter(s->s.getCodigo().length()==7);
 		
 		DoubleStream montoTotal = l.mapToDouble(s->s.getMonto());
-		p.setTotal(montoTotal.sum());
+		p.setTotal(new BigDecimal(  montoTotal.sum()).setScale(2, RoundingMode.HALF_UP).doubleValue());
 		
 		
 		

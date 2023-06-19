@@ -4,8 +4,10 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -13,11 +15,15 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import lombok.Data;
+import sv.com.epsilon.entities.Catingreso;
+import sv.com.epsilon.entities.Cierre;
+import sv.com.epsilon.entities.Financiamiento;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Proveedor;
-import sv.com.epsilon.facade.GastoFacade;
+import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
+import sv.com.epsilon.presupuesto.ctrlr.CierreMensualCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.pojo.GastoExt;
@@ -25,6 +31,7 @@ import sv.com.epsilon.presupuesto.pojo.Periodo;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
+import sv.com.epsilon.util.Mes;
 import sv.com.epsilon.util.PeriodoUtil;
 
 /**
@@ -34,7 +41,7 @@ import sv.com.epsilon.util.PeriodoUtil;
 @ManagedBean
 @ViewScoped
 @Data
-public class SearchMovimientoMB implements Serializable{
+public class CierreMensualMB implements Serializable{
 
 	/**
 	 * 
@@ -55,8 +62,13 @@ public class SearchMovimientoMB implements Serializable{
 	private List<CategoriaGasto> listDetalle =null;
 	private String order;
 	private Integer month;
+	private Mes mes;
+	private Cierre current;
+	private Periodo periodo;
+	private Double montoInicial;
+	private Double montoFinal;
 	
-	public SearchMovimientoMB() {
+	public CierreMensualMB() {
 		
 	}
 	
@@ -89,37 +101,51 @@ public class SearchMovimientoMB implements Serializable{
 		new ExecuteForm().ExecuteUpdate("idDetailGasto","PF('wgtDetail').show();");
 	}
 	
-	public void reload(Integer idGasto) {
-		
-		  
-		Gasto gasto= new GastoFacade().findById(idGasto);
-		list.stream().filter(g->g.getIdGasto()==idGasto).findFirst().ifPresent(g->{g.setStatus(gasto.getStatus());});
-	
-		new ExecuteForm().update(":idGastosTable:idTableGastos");
-	}
-	
 	public void preRender() {
 		if(!FacesContext.getCurrentInstance().isPostback()) {
 			try {
 				
 				SearchGasto searcher=new SearchGasto();
-				searcher.setAll(true);
 				searcher.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
-				list=new GastoCtrlr().invocarBusqueda(searcher);
+				this.month=usuarioSessionMB.getPresupuestoSelected().getMesCierre();
+				if(month!=null ) {
+					periodo = PeriodoUtil.make(Integer.valueOf( usuarioSessionMB.getPresupuestoSelected().getYear()), month);
+					searcher.setFechaInicial(periodo.getInicio());
+					searcher.setFechaFinal(periodo.getFin());
+					if(month==1) {
+						
+					}
+				}
+				list=new ArrayList<>();
+				//list.add(incomeFirst());
+				list=	new GastoCtrlr().invocarBusqueda(searcher);
+				this.month=searcher.getPresupuesto().getMesCierre();
+				this.setMes(new Mes(month));
+				CierreMensualCtrlr.appliedIncomesExpencies(list);
 				loadFound();
+				
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
+	private GastoExt incomeFirst() {
+		Optional<Financiamiento> income=new FinanciamientoFacade().findFirst(usuarioSessionMB.getIdPresupuestoSelected(),usuarioSessionMB.getPresupuestoSelected().getMesCierre());
+		Optional<Catingreso> tx=Optional.of(new Catingreso(0, "SALDO INICIAL "));
+		if(income.isPresent())
+			return new GastoExt(income.get(),tx);
+		else
+			return new  GastoExt();
+	}
+
 	public void invocacionBusqueda() {
 		
 		
 		try {
 			search.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
 			
-			if(month!=null ) {
+			if(month!=null && !month.equals("")) {
 				Periodo periodo = PeriodoUtil.make(Integer.valueOf( usuarioSessionMB.getPresupuestoSelected().getYear()), month);
 				search.setFechaInicial(periodo.getInicio());
 				search.setFechaFinal(periodo.getFin());
@@ -134,48 +160,6 @@ public class SearchMovimientoMB implements Serializable{
 
 
 	
-
-	public UsuarioSessionMB getUsuarioSessionMB() {
-		return usuarioSessionMB;
-	}
-
-	public void setUsuarioSessionMB(UsuarioSessionMB usuarioSessionMB) {
-		this.usuarioSessionMB = usuarioSessionMB;
-	}
-
-	public SearchGasto getSearch() {
-		return search;
-	}
-
-
-
-	public void setSearch(SearchGasto search) {
-		this.search = search;
-	}
-
-
-
-	public List<Proveedor> getListProveedor() {
-		return listProveedor;
-	}
-
-
-
-	public void setListProveedor(List<Proveedor> listProveedor) {
-		this.listProveedor = listProveedor;
-	}
-	
-	
-	
-	public List<GastoExt> getList() {
-		return list;
-	}
-
-
-
-	public void setList(List<GastoExt> list) {
-		this.list = list;
-	}
 
 
 
@@ -194,29 +178,7 @@ public class SearchMovimientoMB implements Serializable{
 		
 	}
 
-	public Gasto getGasto() {
-		return gasto;
-	}
-
-	public void setGasto(Gasto gasto) {
-		this.gasto = gasto;
-	}
-
-	public List<CategoriaGasto> getListDetalle() {
-		return listDetalle;
-	}
-
-	public void setListDetalle(List<CategoriaGasto> listDetalle) {
-		this.listDetalle = listDetalle;
-	}
-
-	public String getOrder() {
-		return order;
-	}
-
-	public void setOrder(String order) {
-		this.order = order;
-	}
+	
 
 	
 	

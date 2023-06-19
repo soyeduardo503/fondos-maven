@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="idFormReversa">
+		<p:confirmDialog message="Desea anular el pago de #{rollbackMB.gasto.total}?"
+			width="700" height="50" widgetVar="reversaWgt" id="idReversa">
+			<b:container fluid="true">
+				<b:row>
+					<b:column colXs="4" />
+					<b:column colXs="4">
+						<h2> Motivo</h2>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column colXs="2" />
+					<b:column colXs="4">
+						<p:inputText value="#{rollbackMB.rollback.reason}" size="60" maxlength="50"
+							inputmode="text" required="true" />
+					</b:column>
+				</b:row>
+	<hr/>
+				<b:row>
+					<b:column colXs="2" />
+					<p:commandLink actionListener="#{rollbackMB.callRollback()}" action="#{searchMovimientoMB.reload(rollbackMB.gasto.idGasto)}" oncomplete="PF('reversaWgt').hide();" >
+						<b:column colXs="4" styleClass="btn btn-info">
+
+							<b:iconAwesome value="check-square" solid="true" style="font-size:1.2em;"/>
+
+						</b:column>
+					</p:commandLink>
+					<p:commandLink onclick="PF('reversaWgt').hide();">
+						<b:column colXs="4" styleClass="btn btn-danger">
+
+							<b:iconAwesome value="window-close" style="font-size:1.2em;" />
+
+						</b:column>
+					</p:commandLink>
+				</b:row>
+			</b:container>
+		</p:confirmDialog>
+	</h:form>
+
+</ui:composition>

@@ -23,9 +23,9 @@
 }
 
 .revert {
-	background-color: #ff5733 !important;
+	background-color: #FDCEDF !important;
 	background-image: none !important;
-	color: #ffffff !important;
+	color: #000 !important;
 }
 
 .ingreso {
@@ -158,8 +158,10 @@
 					<p:column headerText="No. cheque/recibo/transferencia">
 						<h:outputText value="#{g.cheque}" />
 					</p:column>
-					<p:column headerText="Total ($)">
-						<h:outputText value="#{g.total}" />
+					<p:column headerText="Total ($)" >
+						<h:outputText value="#{g.total}"  >
+							<f:convertNumber maxFractionDigits="2" minFractionDigits="2"  />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Status">
 						<h:outputText value="#{g.status}" converter="statusConverter" />
@@ -170,17 +172,18 @@
 					<p:column headerText="Opcion">
 						<b:container fluid="true">
 							<b:row>
-								<b:column col-xs="2">
-									<p:commandLink styleClass="btn btn-danger"
-										style="font-size:0.9em;" action="#{revertMB.action()}">
-										<f:setPropertyActionListener value="#{g}" target=""></f:setPropertyActionListener>
+								<b:column col-xs="4">
+									<p:commandLink styleClass="btn btn-danger" oncomplete="PF('reversaWgt').show();" update=":idFormReversa:idReversa"
+										style="font-size:0.9em;" >
+										<f:setPropertyActionListener value="#{g}" target="#{rollbackMB.gasto}"/>
+										
 										<b:iconAwesome value="undo" />
-										<h:outputText value="Revertir" style="font-size:0.7em;" />
+										<h:outputText value="Anular" style="font-size:0.7em;" />
 
 									</p:commandLink>
 								</b:column>
 								<b:column col-xs="2" />
-								<b:column col-xs="2">
+								<b:column col-xs="4">
 									<p:commandLink styleClass="btn btn-primary"
 										actionListener="#{searchMovimientoMB.load(g)}"
 										oncomplete="PF('wgtDetail').show();">
@@ -200,6 +203,7 @@
 
 		<ui:include src="/componentes/lateralBar/findMovimiento.xhtml" />
 		<ui:include src="/dialog/gasto/detail.xhtml"></ui:include>
+		<ui:include src="/dialog/gasto/reversar.xhtml"></ui:include>
 
 	</ui:define>
 
