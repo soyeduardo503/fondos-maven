@@ -34,7 +34,7 @@ public class SearchGasto {
 	private String tipo;
 	private Presupuesto presupuesto;
 	private boolean revertido=false;
-	private boolean all=false;
+	private boolean all=true;
 	
 	public SearchGasto() {
 		

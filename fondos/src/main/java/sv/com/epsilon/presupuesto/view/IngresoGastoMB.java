@@ -126,7 +126,7 @@ public class IngresoGastoMB implements Serializable {
 			Calendar c=Calendar.getInstance();
 			c.set(Calendar.MONTH, periodo.getFin().get(Calendar.MONTH));
 			gasto.setFechaRegistro(new Date());
-			this.gasto.setFecha(c.getTime());
+			this.gasto.setFecha(new Date());
 			
 			
 			
@@ -573,6 +573,7 @@ public class IngresoGastoMB implements Serializable {
 				gasto.setNombre(gasto.getDescripcion());
 				gasto.setKpresupuesto(getPresupuestoSelected().getIdPresupuesto());
 				gasto.setStatus("A");
+				gasto.setAct("A");
 				Integer id=GastoCtrlr.save(gasto);
 				this.gasto.setIdGasto(id);
 				List<Movimiento> listMovToSave = createMovimientos();

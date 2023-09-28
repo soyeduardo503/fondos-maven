@@ -16,10 +16,10 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.file.UploadedFile;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.presupuesto.ctrlr.CargaGastoCtrlr;
-import sv.com.epsilon.presupuesto.ctrlr.CargaValidacionCtrlr;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Log;
 
@@ -29,6 +29,7 @@ import sv.com.epsilon.util.Log;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class CargaGastosMB {
 
 	/**
@@ -116,6 +117,7 @@ public class CargaGastosMB {
 		new ExecuteForm().update("loadCategoriasFromFile:panelResumen");
 	}
 
+	
 	
 	
 }

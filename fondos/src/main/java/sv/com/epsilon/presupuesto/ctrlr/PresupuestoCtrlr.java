@@ -25,4 +25,9 @@ public class PresupuestoCtrlr {
 		else
 			return new Presupuesto();
 	}
+
+	public Presupuesto findById(Integer idPresupuesto) {
+		PresupuestoFacade facade=new PresupuestoFacade();
+		return facade.findById(idPresupuesto);
+	}
 }

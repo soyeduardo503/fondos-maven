@@ -15,28 +15,15 @@
 
 	<ui:define name="body">
 
-		<f:event listener="#{categoriaMB.preRender()}" type="preRenderView"></f:event>
+		<f:event listener="#{donantesMB.preRender()}" type="preRenderView"></f:event>
 		<ui:include src="/componentes/headers/headerMantto.xhtml">
-			<ui:param name="bean" value="#{categoriaMB}" />
+			<ui:param name="bean" value="#{donantesMB}" />
 		</ui:include>
 
 		<b:panel look="primary" collapsible="false">
 			<h:form id="formSelect">
 				<b:container fluid="true">
-					<b:row>
-						<b:column col-xs="5">
-											Presupuesto
-									</b:column>
-						<b:column col-xs="3">
-											Total de categorias
-									</b:column>
-						<b:column col-xs="3">
-											Opciones
-									</b:column>
-						<b:column col-xs="1">
-											Rubro
-						</b:column>
-					</b:row>
+				
 					<b:row>
 						<b:column col-xs="5">
 							<p:selectOneMenu value="#{categoriaMB.presupuestoSelected}"
@@ -94,8 +81,8 @@
 					<f:facet name="header">
 
 					</f:facet>
-					<p:column width="110" filterBy="#{i.codigo}"  filterMatchMode="contains">
-						<f:facet name="header" >#</f:facet>
+					<p:column width="110">
+						<f:facet name="header">#</f:facet>
 
 						<h:outputText value="#{i.codigo}" />
 					</p:column>

@@ -21,11 +21,11 @@ import sv.com.epsilon.presupuesto.pojo.GastoExt;
 @Data
 public class SearchRetencionMB {
 
-	@ManagedProperty(value = "#{searchMovimientoMB}")
-	private SearchMovimientoMB seachMovs;
+	@ManagedProperty(value = "#{cierreMensualMB}")
+	private CierreMensualMB seachMovs;
 	
 	public List<GastoExt> getList(){
-		return seachMovs.getList().stream().filter(g->g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).toList();
+		return seachMovs.getList().stream().filter(g->g.getIdProveedor().getRetencion()!=null&& g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).toList();
 	}
 	 
 }

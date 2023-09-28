@@ -271,9 +271,9 @@ background: linear-gradient(90deg, rgba(51,187,194,1) 0%, rgba(193,40,93,1) 0%, 
     padding-bottom: 5px;
     background: #435d7d;
     color: #fff;
-    padding: 16px 30px;
+    padding: 1px 3px;/*padding: 10px 30px;*/
     min-width: 100%;
-    margin: -5px -5px 10px;
+    margin: -5px -5px 1px;
     border-radius: 3px 3px 0 0;
 }
 
@@ -1467,4 +1467,40 @@ font-style: normal;
 font-variant: small-caps;
 text-transform: none;
 }
+
+.message {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  display: block !important;
+  color: #fff !important;
+}
+.undermessage {
+  font-size: 17px !important;
+  color: #fff !important;
+}
+
+.paid {
+	background-color: #fff !important;
+	background-image: none !important;
+	color: #000 !important;
+}
+
+.revert {
+	background-color: #ff5733 !important;
+	background-image: none !important;
+	color: #ffffff !important;
+}
+
+.ingreso {
+	background-color: #afeeee !important;
+	background-image: none !important;
+	color: #000 !important;
+}
+
+.cerrado{	
+	background-color: #afeeee !important;
+	background-image: none !important;
+	color: #000 !important;
+}
+
 	

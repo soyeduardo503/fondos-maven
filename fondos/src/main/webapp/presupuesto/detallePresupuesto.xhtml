@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:b="http://bootsfaces.net/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:composition template="../template.xhtml">
 	<ui:define name="title">
@@ -14,69 +11,95 @@
 	</ui:define>
 
 	<ui:define name="body">
-		
-					<f:event listener="#{presupuestoViewMB.preRenderView()}" type="preRenderView"></f:event>
-					
-					<h:form id="IDFrmPresupuestos">
-					<b:panel look="info" collapsible="false" >
-					<f:facet name="heading"><h2 class="iconWhite">Datos del presupuesto <b:iconAwesome value="chart-bar" size="4X"/></h2> </f:facet>
-						<b:container fluid="true">
+
+		<f:event listener="#{usuarioSessionMB.reloadPresupuesto()}" type="preRenderView"></f:event>
+		<f:event listener="#{presupuestoViewMB.preRenderView()}" type="preRenderView"></f:event>
+
+		<h:form id="IDFrmPresupuestos">
+			<b:panel look="info" collapsible="false">
+				<f:facet name="heading">
+					<h2 class="iconWhite">
+						Datos del presupuesto
+						<b:iconAwesome value="chart-bar" size="4X" />
+					</h2>
+				</f:facet>
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="4">
 							<b:row>
-								<b:column col-xs="4">
+								<b:panel collapsible="false"
+									title="#{presupuestoViewMB.presupuesto.nombrePresupuesto} - #{presupuestoViewMB.presupuesto.year}">
 									<b:row>
-										<p:panelGrid id="IDPnlgPresupuestoSelected" columns="2" style="width:100px;" >
-											<f:facet name="header">
-												
-												<p:outputLabel value="#{presupuestoViewMB.presupuesto.nombrePresupuesto}"/>
-												<p:outputLabel value="#{presupuestoViewMB.presupuesto.year}"/>
-											</f:facet>
-											<p:outputLabel value="Monto Asignable"  /> <p:outputLabel value="#{ingresoMontoMB.obtenerDisponibleAsignado(usuarioSessionMB.presupuestoSelected)}"  />
-											<h:outputText value="Monto Total" /> <h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}" />
-									</p:panelGrid>
-										
-									
+										<b:column colXs="6">Monto Gastado</b:column>
+										<b:column colXs="6">
+											<p:outputLabel value="#{usuarioSessionMB.presupuestoSelected.actual}">
+												<f:convertNumber maxFractionDigits="2" />
+											</p:outputLabel>
+										</b:column>
 									</b:row>
+
 									<b:row>
-										<div class="knob-container ui-corner-all">
-										            <p:knob  foregroundColor="#2196F3" backgroundColor="#495057" disabled="true" value="#{presupuestoViewMB.percentExecution}"/>
-										</div>
+										<b:column colXs="6">Monto Total</b:column>
+										<b:column colXs="6">
+											<h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}">
+												<f:convertNumber maxFractionDigits="2" />
+											</h:outputText>
+										</b:column>
 									</b:row>
-									<b:row>
-									
-										    <b:column col-xs="10" styleClass="btn btn-info" >         
-														<p:commandLink  actionListener="#{organigramViewMB.createModelFromPresupuesto(presupuestoViewMB.presupuesto)}"
-										 						>			
-															<b:iconAwesome value="sitemap" solid="true" styleClass="iconWhite" size="2x"/>
-									
-											
-														</p:commandLink>
-											</b:column>
-												
-											
-										
-									</b:row>
-									<b:row>
-										<div class="card">
-            									<p:donutChart model="#{presupuestoViewMB.distModel}" style="width: 100%; height: 500px;"/>
-        								</div>
-									</b:row>
-								</b:column>
-								<b:column col-xs="8">
-										<div class="card">
-    													<p:lineChart model="#{presupuestoViewMB.lineModel}" style="width: 100%; height: 500px;"/>
-										</div>		
-									
-								</b:column>
+								</b:panel>
+
+
+
 							</b:row>
-						
-					</b:container>	
-					</b:panel>
-					</h:form>
-					<ui:include src="/componentes/tabladetalle.xhtml"/>
-					<ui:include src="/componentes/dialogs/estructura.xhtml"/>
-							
-					<f:event listener="#{presupuestoViewMB.close()}" type="preRenderView"></f:event>
-		
+							<b:row>
+								<b:panel collapsible="false" look="danger"
+									title="Porcentaje disponible">
+								<div class="knob-container ui-corner-all">
+									<p:knob foregroundColor="#2196F3" backgroundColor="#495057" disabled="true"
+										value="#{presupuestoViewMB.percentExecution}" />
+								</div>
+								</b:panel>
+							</b:row>
+							<b:row>
+
+								<b:column col-xs="10" styleClass="btn btn-info">
+									<p:commandLink
+										actionListener="#{organigramViewMB.createModelFromPresupuesto(presupuestoViewMB.presupuesto)}">
+										<b:iconAwesome value="sitemap" solid="true" styleClass="iconWhite" size="2x" />
+
+
+									</p:commandLink>
+								</b:column>
+
+
+
+							</b:row>
+							<b:row>
+								<div class="card">
+									<p:donutChart model="#{presupuestoViewMB.distModel}"
+										style="width: 100%; height: 500px;" />
+								</div>
+							</b:row>
+						</b:column>
+						<b:column col-xs="8">
+							<div class="card">
+								<p:lineChart model="#{presupuestoViewMB.lineModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+
+						</b:column>
+					</b:row>
+
+				</b:container>
+			</b:panel>
+		</h:form>
+		<ui:include src="/componentes/tabladetalle.xhtml" />
+		<ui:include src="/componentes/dialogs/estructura.xhtml" />
+		<ui:include src="/componentes/dashboard/detalleGastos.xhtml" />
+		<ui:include src="/componentes/dashboard/detalleGastosMensual.xhtml" />
+
+		<f:event listener="#{presupuestoViewMB.close()}" type="preRenderView"></f:event>
+
 	</ui:define>
 
 </ui:composition>

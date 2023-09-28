@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:b="http://bootsfaces.net/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:composition template="../template.xhtml">
 	<ui:define name="title">
@@ -14,88 +11,136 @@
 	</ui:define>
 
 	<ui:define name="body">
-		
-				<b:panel >
-				
-				<f:event listener="#{dashboardPrincipalMB.preRender()}" type="preRenderView"></f:event>
-				<h:form>
-				
-				<b:panel  title="Fondos vs Gastos" collapsible="false" icon-awesome="sitemap" icon-solid="true">
-					<ui:repeat  var="p" value="#{dashboardPrincipalMB.list}" >
-						<p:commandLink  action="#{menuUsuarioMB.goTo('detallepresupuesto')}" >
-						<f:setPropertyActionListener target="#{usuarioSessionMB.presupuestoSelected}" value="#{p.presupuesto}" />
-						
-						
-						<b:panel col-xs="3" look="warning" collapsible="false" title="#{p.presupuesto.nombrePresupuesto}">
-							
-								
+
+		<b:panel>
+
+			<f:event listener="#{dashboardPrincipalMB.preRender()}" type="preRenderView"></f:event>
+			<h:form>
+
+				<b:panel title="Fondos vs Gastos" collapsible="false" icon-awesome="sitemap"
+					icon-solid="true">
+					<ui:repeat var="p" value="#{dashboardPrincipalMB.list}">
+						<p:commandLink action="#{menuUsuarioMB.goTo('detallepresupuesto')}">
+							<f:setPropertyActionListener target="#{usuarioSessionMB.presupuestoSelected}"
+								value="#{p.presupuesto}" />
+
+
+							<b:panel col-xs="3" look="warning" collapsible="false"
+								title="#{p.presupuesto.nombrePresupuesto}">
+
+
 								<b:container fluid="true">
-										<b:row>
-											<b:column>
-												<b:row>
-													
-													<div class="p-field p-col-12 p-md-4">
-											                <h5>#{p.presupuesto.nombrePresupuesto}</h5>
-											                <div class="knob-container ui-corner-all">
-											                    <p:knob  foregroundColor="#2196F3" backgroundColor="#495057" disabled="true" value="#{p.percent}"/>
-											                </div>
-									            	</div>
-												</b:row>
-													
-											</b:column>
-										</b:row>
-										<b:row>
-											<b:column col-sm="4"><h:outputText value="Año" /></b:column>
-											<b:column col-sm="4"><b:badge value="#{p.presupuesto.year}" severity="success"/></b:column>
-										</b:row>
-										<b:row>	
-											<b:column col-sm="4"><h:outputText value="Prepuesto" /></b:column>
-											<b:column col-sm="4"><b:badge value="#{p.presupuesto.total}" severity="success" /></b:column>
-										</b:row>
-										<b:row>	
-											<b:column col-sm="4"><h:outputText value="Gastado" /></b:column>
-											<b:column col-sm="2"><h:outputText value="#{p.presupuesto.actual}" style="color:red;"/></b:column>
-										</b:row>
-										<b:row>	
-											<b:column col-sm="4"><h:outputText value="Disponible" /></b:column>
-											<b:column col-sm="2"><h:outputText value="#{p.presupuesto.total-p.presupuesto.actual}" styleClass="btn btn-info" style="color:green;"/></b:column>
-										</b:row>
-										<b:row>	
-											<b:column col-sm="4"><h:outputText value="Periodo" /></b:column>
-											<b:column col-sm="4"><b:badge value="#{p.presupuesto.fechaInicio}" severity="success"><f:convertDateTime pattern="dd/MM/yyyy"/></b:badge>
-											-<b:badge value="#{p.presupuesto.fechaFin}" severity="success"><f:convertDateTime pattern="dd/MM/yyyy"/></b:badge>
-											 </b:column>
-										</b:row>
-										<b:row>
-											<b:column styleClass="btn btn-info">
-												<ui:include src="/componentes/botones/organigrama/verPresupuesto.xhtml">
-													<ui:param name="p" value="#{p}"></ui:param>
-													<ui:param name="cols" value="10"></ui:param>
-												</ui:include>
-											</b:column>
-										</b:row>
-										
-										
+									<b:row>
+										<b:column>
+											<b:row>
+
+												<div class="p-field p-col-12 p-md-4">
+													<h5>#{p.presupuesto.nombrePresupuesto}</h5>
+													<div class="knob-container ui-corner-all">
+														<p:knob foregroundColor="#2196F3" backgroundColor="#495057" disabled="true"
+															value="#{p.percent}" />
+													</div>
+												</div>
+											</b:row>
+
+										</b:column>
+									</b:row>
+									<b:row>
+										<b:column col-sm="4">
+											<h:outputText value="Año" />
+										</b:column>
+										<b:column col-sm="4">
+											<b:badge value="#{p.presupuesto.year}" severity="success" />
+										</b:column>
+									</b:row>
+									<b:row>
+										<b:column col-sm="4">
+											<h:outputText value="Prepuesto" />
+										</b:column>
+										<b:column col-sm="4">
+											<b:badge value="#{p.presupuesto.total}" severity="success">
+												<f:convertNumber maxFractionDigits="2" />
+											</b:badge>
+										</b:column>
+									</b:row>
+									<b:row>
+										<b:column col-sm="4">
+											<h:outputText value="Gastado" />
+										</b:column>
+										<b:column col-sm="2">
+											<h:outputText value="#{p.presupuesto.actual}" style="color:red;">
+												<f:convertNumber maxFractionDigits="2" />
+											</h:outputText>
+										</b:column>
+									</b:row>
+									<b:row>
+										<b:column col-sm="4">
+											<h:outputText value="Disponible" />
+										</b:column>
+										<b:column col-sm="2">
+											<h:outputText value="#{p.presupuesto.total-p.presupuesto.actual}"
+												styleClass="btn btn-info" style="color:green;">
+												<f:convertNumber maxFractionDigits="2" />
+											</h:outputText>
+										</b:column>
+									</b:row>
+									<b:row>
+										<b:column col-sm="4">
+											<h:outputText value="Periodo" />
+										</b:column>
+										<b:column col-sm="4">
+											<b:badge value="#{p.presupuesto.fechaInicio}" severity="success">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</b:badge>
+											-<b:badge value="#{p.presupuesto.fechaFin}" severity="success">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</b:badge>
+										</b:column>
+									</b:row>
+									<b:row>
+										<b:column styleClass="btn btn-info">
+											<ui:include src="/componentes/botones/organigrama/verPresupuesto.xhtml">
+												<ui:param name="p" value="#{p}"></ui:param>
+												<ui:param name="cols" value="10"></ui:param>
+											</ui:include>
+										</b:column>
+									</b:row>
+
+
 								</b:container>
-								
-							
-							
-						</b:panel>
+
+
+
+							</b:panel>
 						</p:commandLink>
 					</ui:repeat>
 				</b:panel>
-				
-				</h:form>
-				<b:panel look="success" title="Top Gastos">
-					<p:dataTable value="#{dashboardPrincipalMB.listTop5Gasto}" var="l" >
-						<p:column headerText="Gasto">#{l.description}</p:column>
-						<p:column headerText="Monto">$ #{l.value}</p:column>
-					</p:dataTable>
-				</b:panel>
-				</b:panel>
-				
-		<ui:include src="/componentes/dialogs/estructura.xhtml"/>
-		
+
+			</h:form>
+			<b:panel look="success" title="Top Gastos">
+			<b:row>
+			<b:column col-xs="6">General</b:column>
+			<b:column col-xs="6" styleClass="panel panel-danger">Ultimo mes</b:column>
+			</b:row>
+				<b:row>
+					<b:column col-xs="6">
+						<p:dataTable value="#{dashboardPrincipalMB.listTop5Gasto}" var="l">
+							<p:column headerText="Gasto">#{l.description}</p:column>
+							<p:column headerText="Monto">$ #{l.value}</p:column>
+						</p:dataTable>
+					</b:column>
+					<b:column col-xs="6">
+						<p:dataTable value="#{dashboardPrincipalMB.listTop5GastoMes}" var="l">
+							<p:column headerText="Gasto">#{l.description}</p:column>
+							<p:column headerText="Monto">$ #{l.value}</p:column>
+						</p:dataTable>
+					</b:column>
+				</b:row>
+			</b:panel>
+		</b:panel>
+
+		<ui:include src="/componentes/dialogs/estructura.xhtml" />
+
 	</ui:define>
 
 </ui:composition>

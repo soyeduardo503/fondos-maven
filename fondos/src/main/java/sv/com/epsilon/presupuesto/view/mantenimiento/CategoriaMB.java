@@ -23,6 +23,7 @@ import sv.com.epsilon.presupuesto.ctrlr.CategoriaCtrlr;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.GeneradorCodigo;
+import sv.com.epsilon.util.Log;
 
 /**
  * @author usuario07
@@ -139,6 +140,8 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 		
 	}
 	
+	
+	
 	public void openDiagram(Categoria cat) {
 		getFacade().findListSubCategoriaByCod(cat);
 		diagram=new CategoriaCtrlr().createDiagram(cat);
@@ -179,6 +182,17 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 	
 	public void cargarPresupuesto() {
 		
+	}
+	
+	public void save() {
+		getItemSelected().setIdPresupuesto( getItemSelected().getCodigo().length()==7?presupuestoSelected:null);
+		try {
+			Log.info(getItemSelected().getIdPresupuesto());
+			super.save();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void loadCategories() {

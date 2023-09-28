@@ -9,16 +9,14 @@
                       
              <b:column col-xs="#{cols}" >
              <h:form id="#{form}">
-             	<b:row>
-             		<h2	 class="headerPage">#{titleButton}</h2>
-             	</b:row>
+             	
              	<b:row>
              	         
 					<h:commandLink  action="#{reportViewMB.print()}"  styleClass="btn #{btnClass}" target="_blank">
 						
 						
 				
-						<b:iconAwesome value="print" solid="true" />
+						<b:iconAwesome value="print" solid="true" size="2x" />
 				
 						<f:setPropertyActionListener target="#{reportViewMB.object}" value= "#{bean}"/>
 						
@@ -28,6 +26,9 @@
 					</h:commandLink>
 				
 				</b:row>
+				<b:row class="undermessage">
+             		#{titleButton}
+             	</b:row>
 				</h:form>	
 		</b:column>
 </ui:composition>

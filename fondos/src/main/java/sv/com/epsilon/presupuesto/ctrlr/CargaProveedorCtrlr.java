@@ -13,6 +13,7 @@ import java.util.List;
 
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.BancoFacade;
+import sv.com.epsilon.util.Log;
 
 /**
  * @author 50364
@@ -23,50 +24,62 @@ public class CargaProveedorCtrlr {
 	/**
 	 * 
 	 */
-	private final static Integer CODIGO=0;
-	private final static Integer NOMBRE=1;
-	
-	private final static Integer NOMBRE_LEGAL=2;
-	private final static Integer TIPO=3;
-	private final static Integer NIT=4;
-	private final static Integer DUI=5;
-	private final static Integer NCR=6;
-	private final static Integer BANCO=7;
-	private final static Integer CUENTA=8;
-	private final static String JURIDICO="J";
-	private final static String NATURAL="N";
-	
-	public CargaProveedorCtrlr() {
-		
-	}
-	private HashMap<String,Integer> bancos=new BancoFacade().buscarHashBancosActivos();
+	private final static Integer CODIGO = 0;
+	private final static Integer NOMBRE = 1;
 
-	public List<Proveedor> processFile(InputStream is,Integer idEmpresa) throws IOException{
+	private final static Integer NOMBRE_LEGAL = 2;
+	private final static Integer TIPO = 3;
+	private final static Integer NIT = 4;
+	private final static Integer DUI = 5;
+	private final static Integer NCR = 6;
+	private final static Integer BANCO = 7;
+	private final static Integer CUENTA = 8;
+	private final static String JURIDICO = "J";
+	private final static String NATURAL = "N";
+	private final static Integer RETENCION = 9;
+	
+
+	public CargaProveedorCtrlr() {
+
+	}
+
+	private HashMap<String, Integer> bancos = new BancoFacade().buscarHashBancosActivos();
+
+	public List<Proveedor> processFile(InputStream is, Integer idEmpresa) throws IOException {
+
 		BufferedReader csvReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 		String line;
-		boolean first=true;
-		 List<Proveedor>  list=new  ArrayList<Proveedor>();
+		boolean first = true;
+		List<Proveedor> list = new ArrayList<Proveedor>();
 		while ((line = csvReader.readLine()) != null) {
-				if(!first)
-				{
-					
-					String[] values =line.split(";");
-					
+			try {
+				if (!first) {
+
+					String[] values = line.split(";");
+
 					/**
-					 * String nombre, String nombreLegal, String tipo, String dui, String nrc, String nit, String ncuenta,
-			int idEmpresa
-					 * */
-					Integer idBanco=bancos.get(values[BANCO].toString())!=null?bancos.get(values[BANCO].toString()):0;
-					String dui=values[TIPO].equals(JURIDICO)?"": values[DUI];
-					Proveedor proveedor=new Proveedor(values[NOMBRE],values[NOMBRE_LEGAL],values[TIPO],dui,values[NCR],
-							values[NIT],idBanco,values[CUENTA],idEmpresa);
+					 * String nombre, String nombreLegal, String tipo, String dui, String nrc,
+					 * String nit, String ncuenta, int idEmpresa
+					 */
+					Integer idBanco = 0;
+					String dui = values[TIPO].equals(JURIDICO) ? "" : values[DUI];
+					Proveedor proveedor = new Proveedor(values[NOMBRE], values[NOMBRE_LEGAL], values[TIPO], dui,
+							values[NCR], values[NIT], idBanco, "00000", 1);
+					if (!values[TIPO].equals(JURIDICO)) {
+						proveedor.setRetencion("S");
+					}
+					proveedor.setCodigo(values[CODIGO]);
+					proveedor.setRetencion(values[RETENCION]);
 					list.add(proveedor);
 				}
-				first=false;
-                System.out.println("->"+line);
-            }
+				first = false;
+				System.out.println("->" + line);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.error(e,"Error al procesar un proveedor");
+			}
+		}
 		return list;
 	}
-	
-	
+
 }

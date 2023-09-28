@@ -73,7 +73,7 @@ public class ChequeViewMB {
 		cheque.setCantidadLetras(cantidadLetras.toUpperCase().replace("CENTAVOS", ""));
 		cheque.setConcepto(gasto.getNombre().toUpperCase());
 		cheque.setProveedor(gasto.getIdProveedor().getNombreLegal().toUpperCase());
-		cheque.setFecha(Meses.obtenerTexto(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.MONTH)).toUpperCase());
+		cheque.setFecha(Meses.obtenerTexto(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.MONTH)+1).toUpperCase());
 		
 		
 		try {

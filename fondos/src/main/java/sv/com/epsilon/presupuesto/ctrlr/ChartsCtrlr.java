@@ -16,6 +16,7 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.GastoFacade;
+import sv.com.epsilon.presupuesto.pojo.DetalleGastoMes;
 import sv.com.epsilon.presupuesto.pojo.Distribution;
 import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.Colors;
@@ -83,6 +84,58 @@ public class ChartsCtrlr {
 	        List<String> bgColors = new ArrayList<>();
 	        data.addChartDataSet(dataSet);
 	        list.stream().forEach(dist->{values.add(dist.getValue()); labels.add(dist.getDescription()); });
+	        
+	        dataSet.setData(values);
+	        Colors.getByCount(labels.size()).forEach(cl->bgColors.add(cl.toString()));;
+
+	        dataSet.setBackgroundColor(bgColors);
+
+	        
+	        
+	        
+	        data.setLabels(labels);
+
+	        donutModel.setData(data);
+	        return donutModel;
+	    }
+	 
+	 public DonutChartModel createDonutModelGastos(List<DetalleGastoMes> list) {
+		 	DonutChartModel donutModel = new DonutChartModel();
+	        ChartData data = new ChartData();
+
+	        DonutChartDataSet dataSet = new DonutChartDataSet();
+	        List<Number> values = new ArrayList<>();
+	        
+	        List<String> labels = new ArrayList<>();
+	        List<String> bgColors = new ArrayList<>();
+	        data.addChartDataSet(dataSet);
+	        list.stream().forEach(dist->{values.add(dist.acumulado()); labels.add(dist.getCategoria().getNombre()); });
+	        
+	        dataSet.setData(values);
+	        Colors.getByCount(labels.size()).forEach(cl->bgColors.add(cl.toString()));;
+
+	        dataSet.setBackgroundColor(bgColors);
+
+	        
+	        
+	        
+	        data.setLabels(labels);
+
+	        donutModel.setData(data);
+	        return donutModel;
+	    }
+	 public DonutChartModel createDonutModelGastosDummy() {
+		 List<DetalleGastoMes> list=new ArrayList<>();
+		 	DonutChartModel donutModel = new DonutChartModel();
+	        ChartData data = new ChartData();
+
+	        DonutChartDataSet dataSet = new DonutChartDataSet();
+	        List<Number> values = new ArrayList<>();
+	        
+	        List<String> labels = new ArrayList<>();
+	        List<String> bgColors = new ArrayList<>();
+	        data.addChartDataSet(dataSet);
+	        list.stream().forEach(dist->{values.add(dist.acumulado()); labels.add(dist.getCategoria().getNombre()); });
 	        
 	        dataSet.setData(values);
 	        Colors.getByCount(labels.size()).forEach(cl->bgColors.add(cl.toString()));;

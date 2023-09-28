@@ -5,11 +5,9 @@
  */
 package sv.com.epsilon.facade;
 
-import java.util.HashMap;
 import java.util.List;
 
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
-import sv.com.epsilon.entities.Banco;
 import sv.com.epsilon.presupuesto.pojo.Top5Gasto;
 
 /**
@@ -41,6 +39,13 @@ public class Top5Facade extends WSClient<Top5Gasto> {
 //		}finally {
 //			close();
 //		}
+	}
+
+
+
+	public List<Top5Gasto> findByPresupuestoMensual(Integer idPresupuestoSelected) {
+		// TODO Auto-generated method stub
+		return getList("/kpi/top5GastoMes/"+idPresupuestoSelected);
 	}
     
 }

@@ -318,7 +318,11 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		this.presupuestoSelected = presupuestoSelected;
 	}
 
-
+	public void reloadPresupuesto() {
+		if(!FacesContext.getCurrentInstance().isPostback() && presupuestoSelected!=null) {
+			presupuestoSelected=new PresupuestoCtrlr().findById(presupuestoSelected.getIdPresupuesto());
+		}
+	}
 	
 
 	
@@ -341,6 +345,12 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 
 	public void setPresupuestoSelectedDlg(Presupuesto presupuestoSelectedDlg) {
 		this.presupuestoSelectedDlg = presupuestoSelectedDlg;
+	}
+
+
+	public void updatePresupuesto() {
+		this.presupuestoSelected=new PresupuestoFacade().findById(idPresupuestoSelected);
+		this.presupuestoSelectedDlg=presupuestoSelected;
 	}
 	
 	

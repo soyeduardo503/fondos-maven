@@ -61,7 +61,9 @@ public class PresupuestoViewMB implements Serializable{
 			facade.close();
 			lineModel=new ChartsCtrlr().createLineYear(presupuesto);
 			makeModel(presupuesto.getCodigo());
-			percentExecution=(int) ((presupuesto.getTotal()-presupuesto.getActual())/presupuesto.getTotal());
+			//facade.foundExecution(presupuesto.getIdPresupuesto()); 
+			percentExecution=  (int) (((presupuesto.getTotal()-presupuesto.getActual())/presupuesto.getTotal())*100);
+			log.info("Porcentaje ->"+percentExecution);
 		}
 	}
 	private void makeModel(String codigo) {

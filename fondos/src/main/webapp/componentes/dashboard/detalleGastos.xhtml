@@ -1,0 +1,52 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+
+	
+
+<h:form id="IDDetalleGastos">
+			 
+				
+				
+				<p:commandButton value="PDF" styleClass="mr-2 mb-2">
+                        <p:printer target="pnelData"/>
+                </p:commandButton>
+                <p:panel id="pnelData">
+					<b:panel look="info" collapsible="false" title="Detalle de gastos #{presupuestoViewMB.presupuesto.nombrePresupuesto} - #{searchListGastosMB.categoria.nombre} " id="dltData">
+					
+						<b:row>
+							<b:column col-xs="6" styleClass="btn-primary">Gastos</b:column>
+							
+							<b:column col-xs="6" styleClass="btn-warning"></b:column>
+						</b:row>
+						<b:row>
+							<b:column col-xs="6" styleClass="btn-primary">
+							
+								<p:dataTable value="#{searchListGastosMB.listDetalle}" var="dg" id="lstGastos">
+									<p:column headerText="Cuenta">#{dg.categoria} </p:column>
+									<p:column headerText="Monto"><p:outputLabel value=" #{ dg.acumulado()}"><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+								</p:dataTable>
+								
+							</b:column>
+							
+							<b:column col-xs="6" styleClass="btn">Distribucion
+								<div class="card">
+									<p:donutChart model="#{searchListGastosMB.distModel}" id="donutGasto"
+										style="width: 100%; height: 500px;" />
+								</div>
+							</b:column>
+							
+						</b:row>
+						
+						
+					</b:panel>
+				</p:panel>
+				
+</h:form>	       
+
+</ui:composition>

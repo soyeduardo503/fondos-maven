@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="idFormDeleteMov">
+		<p:confirmDialog message="Desea eliminar el pago de #{deleteMovMB.gasto.total}?"
+			width="700" height="50" widgetVar="deleteMovWgt" id="idDeleteMov">
+			<b:container fluid="true">
+				
+	<hr/>
+				<b:row>
+					<b:column colXs="2" />
+					<p:commandLink actionListener="#{deleteMovMB.action()}" action="#{searchMovimientoMB.invocacionBusqueda()}" oncomplete="PF('deleteMovWgt').hide();" >
+						<b:column colXs="4" styleClass="btn btn-info">
+
+							<b:iconAwesome value="check-square" solid="true" style="font-size:1.2em;"/>
+
+						</b:column>
+					</p:commandLink>
+					<p:commandLink onclick="PF('deleteMovWgt').hide();">
+						<b:column colXs="4" styleClass="btn btn-danger">
+
+							<b:iconAwesome value="window-close" style="font-size:1.2em;" />
+
+						</b:column>
+					</p:commandLink>
+				</b:row>
+			</b:container>
+		</p:confirmDialog>
+	</h:form>
+
+</ui:composition>

@@ -311,6 +311,11 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		action("/update/reference/"+codigo,false);
 		
 	}
+
+	public Integer foundExecution(Integer idPresupuesto) {
+		// TODO Auto-generated method stub
+		return getMontoDisponible("/amountSpent/"+idPresupuesto).intValue();
+	}
 	
 	
 }

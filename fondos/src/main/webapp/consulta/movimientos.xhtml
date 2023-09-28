@@ -55,6 +55,7 @@
 						<b:row>
 							<h:form id="formOrder">
 							<p:selectOneMenu value="#{searchMovimientoMB.order}" >
+								<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
 								<f:selectItem itemLabel="DESC" itemValue="DESC" />
 								<f:selectItem itemLabel="ASC" itemValue="ASC" />
 								<p:ajax  listener="#{searchMovimientoMB.switchOrder()}" process="@this" update=":idGastosTable:idTableGastos,:formPrintMov"/>
@@ -182,13 +183,24 @@
 
 									</p:commandLink>
 								</b:column>
-								<b:column col-xs="2" />
+								
+								
 								<b:column col-xs="4">
 									<p:commandLink styleClass="btn btn-primary"
 										actionListener="#{searchMovimientoMB.load(g)}"
 										oncomplete="PF('wgtDetail').show();">
 										<b:iconAwesome value="window-restore" />
 										<h:outputText value="Ver" style="font-size:0.7em;" />
+									</p:commandLink>
+								</b:column>
+								<b:column col-xs="4">
+									<p:commandLink styleClass="btn btn-warning" rendered="#{g.status.equals('R')}" oncomplete="PF('deleteMovWgt').show();" update=":idFormDeleteMov:idDeleteMov"
+										style="font-size:0.9em;" >
+										<f:setPropertyActionListener value="#{g}" target="#{deleteMovMB.gasto}"/>
+										
+										<b:iconAwesome value="undo" />
+										<h:outputText value="Eliminar" style="font-size:0.7em;" />
+
 									</p:commandLink>
 								</b:column>
 							</b:row>
@@ -204,6 +216,7 @@
 		<ui:include src="/componentes/lateralBar/findMovimiento.xhtml" />
 		<ui:include src="/dialog/gasto/detail.xhtml"></ui:include>
 		<ui:include src="/dialog/gasto/reversar.xhtml"></ui:include>
+		<ui:include src="/dialog/gasto/delete.xhtml"></ui:include>
 
 	</ui:define>
 

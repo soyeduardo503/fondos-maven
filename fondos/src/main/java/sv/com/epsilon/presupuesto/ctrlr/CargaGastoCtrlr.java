@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
+import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.util.Log;
 
@@ -38,14 +40,14 @@ public class CargaGastoCtrlr {
 
 	private final static Integer CHEQUE = 0;
 	private final static Integer FECHA = 1;
-	private final static Integer CODIGO_CAT = 4;
-	private final static Integer PROVEEDOR = 9;
-	private final static Integer NSUJETO = 6;
+	private final static Integer CODIGO_CAT = 2;
+	private final static Integer PROVEEDOR = 7;
+	private final static Integer NSUJETO = 4;
 
-	private final static Integer DESCRIPCION = 10;
-	private final static Integer MONTO = 8;
+	private final static Integer DESCRIPCION = 8;
+	private final static Integer MONTO = 6;
 	private final static Integer MONTO_INGRESO = 7;
-	private final static Integer TIPO = 1;
+	private final static Integer TIPO = 0;
 
 	private final static String REMESA = "REMESA";
 	private final static String TRANSF = "TRANSF";
@@ -53,9 +55,26 @@ public class CargaGastoCtrlr {
 
 	private Integer idEmpresa = 1;
 	private List<Proveedor> proveedores = new ProveedorFacade().findAll();
-
+	private HashMap<String, String> uniq=new HashMap<>(); 
+	
 	public CargaGastoCtrlr() {
 
+	}
+	public List<Gasto> processFileProveedor(InputStream is) throws Exception {
+		BufferedReader csvReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		String line;
+		while ((line = csvReader.readLine()) != null) {
+			String[] values = line.split(",");
+			Optional<Proveedor> proveedor = proveedores.stream()
+					.filter(n -> n.getNombre().equalsIgnoreCase(values[PROVEEDOR].trim()) || n.getNombreLegal().equalsIgnoreCase(values[PROVEEDOR].trim())).findFirst();
+			if (!proveedor.isPresent()) {
+				log.info("->"+values[PROVEEDOR].trim());
+				uniq.put(values[PROVEEDOR].trim(), values[PROVEEDOR].trim());
+			}
+		}
+		log.info("List:");
+		log.info(uniq.keySet()+"");
+		return new ArrayList<>();
 	}
 
 	public List<Gasto> processFile(InputStream is) throws Exception {
@@ -66,7 +85,7 @@ public class CargaGastoCtrlr {
 		while ((line = csvReader.readLine()) != null) {
 			Gasto g = new Gasto();
 			try {
-				String[] values = line.split(";");
+				String[] values = line.split(",");
 
 				g.setAct("A");
 				if (!values[CHEQUE].equals(TRANSF)) {
@@ -86,7 +105,8 @@ public class CargaGastoCtrlr {
 					monto = 0.0;
 				}
 				g.setTotal(monto);
-				g.setDescripcion(values[DESCRIPCION]);
+				g.setDescripcion(values[DESCRIPCION].replace("*",","));
+				g.setNombre(values[DESCRIPCION].replace("*",","));
 				g.setFechaRegistro(new Date());
 				g.setFecha(parseDate(values[FECHA]));
 				g.setIdEmpresa(1);
@@ -108,10 +128,12 @@ public class CargaGastoCtrlr {
 					throw new Exception("No fue posible encontrar proveedor \n"+values[PROVEEDOR].trim());
 				}
 
-				Categoria categoria = new CategoriaFacade().obtenerCategoriasFromCodigo(values[CODIGO_CAT]);
+				Categoria categoria = new CategoriaFacade().obtenerCategoriasFromCodigo( values[CODIGO_CAT].startsWith("23FPT")? values[CODIGO_CAT]:"23FPT"+values[CODIGO_CAT]);
 				if(categoria==null) {
 					throw new Exception("No fue posible encontrar categoria: "+values[CODIGO_CAT]);
 				}
+				g=new GastoFacade().save(g);
+				
 				Movimiento mov = new Movimiento();
 				mov.setFecha(g.getFecha());
 				mov.setIdCategoria(categoria);
@@ -122,10 +144,10 @@ public class CargaGastoCtrlr {
 				mov.setMonto(g.getTotal());
 				mov.setTipo("D");
 
-				
-				System.out.println("->" + line);
+				new MovimientoCtrlr().save(mov);
+//				System.out.println("->" + line);
 			} catch (Exception e) {
-				
+				log.info("line->"+line);
 				Log.error(e, "Error al procesar linea");
 				list.add(g);
 			}
@@ -136,7 +158,7 @@ public class CargaGastoCtrlr {
 	}
 
 	private Date parseDate(String date) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.parse(date);
 	}
 

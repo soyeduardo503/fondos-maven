@@ -123,6 +123,9 @@ public class SearchMovimientoMB implements Serializable{
 				Periodo periodo = PeriodoUtil.make(Integer.valueOf( usuarioSessionMB.getPresupuestoSelected().getYear()), month);
 				search.setFechaInicial(periodo.getInicio());
 				search.setFechaFinal(periodo.getFin());
+				search.setAll(false);
+			}else {
+				search.setAll(true);
 			}
 			list=new GastoCtrlr().invocarBusqueda(search);
 			loadFound();

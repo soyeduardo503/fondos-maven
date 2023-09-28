@@ -115,13 +115,7 @@ public class CargaProveedoresMB implements Serializable{
 					InputStream is = file.getInputStream();
 					
 		        	list=new CargaProveedorCtrlr().processFile(is,(Integer)(session.getValues().get("idEmpresa")));
-		        	CargaValidacionCtrlr ctlr = new CargaValidacionCtrlr();
-		        	//ctlr.validarCargaCategorias(list);
-		        	//this.montoTotal=ctlr.getMontoAcumuladoPrincipal();
-		        	
-//		        	if(montoTotal>presupuesto.getTotal()) {
-//		        		throw new Exception("Monto asignado a categorias principales es mayor al del presupuesto");
-//		        	}
+		        
 		            this.fileCSV = file;
 		            FacesMessage msg = new FacesMessage("Completado", this.fileCSV.getFileName() + " fue cargado.");
 		            FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -140,7 +134,7 @@ public class CargaProveedoresMB implements Serializable{
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 				ok=false;
 			}
-	        new ExecuteForm().update("loadCategoriasFromFile:panelResumen");
+	        new ExecuteForm().update("loadProveedoresFromFile:detailUploadFile");
 	    }
 	public boolean isOk() {
 		return ok;
@@ -150,13 +144,14 @@ public class CargaProveedoresMB implements Serializable{
 	}
 	
 	public void save() {
-		principales.forEach(cat->cat.setIdEmpresa(session.getIdEmpresa()));
-		try {
-			new ProveedorFacade().save(this.principales);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		list.stream().forEach(v->{
+			try {
+				new ProveedorFacade().save(v);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 	
 	

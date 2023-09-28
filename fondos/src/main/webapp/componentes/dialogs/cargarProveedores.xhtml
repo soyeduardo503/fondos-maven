@@ -32,7 +32,7 @@
 								                      sizeLimit="202400000" allowTypes="/(\.|\/)(csv)$/"
 								                      invalidSizeMessage="Maximo archivo permitido 2MB"
 								                      invalidFileMessage="only csv | CSV  is allowed"
-								                      update="detailUploadFile,totalItem,saveBtnProv"  
+								                      update="detailUploadFile"  
 								                      listener="#{cargaProveedoresMB.handleFileUpload}"/>
 										</b:column>						
 									</b:row>
@@ -63,44 +63,22 @@
 					
 								<b:panel title="" collapsible="false" look="#{varMB.DANGER}" id="panelResumen">
 								<b:row>
-									<b:column col-xs="2">
-										Resumen
-									</b:column>
+									
 									<b:column col-xs="6">
 										<b:container>
-											<b:row>
-												<b:column col-xs="2">
-													Total :
-												</b:column>
-												<b:column col-xs="6">
-													<h:outputText value="#{cargaProveedoreMB.list.size()}" id="totalItem"/>
-												</b:column>
+											<p:commandLink actionListener="#{cargaProveedoresMB.save()}">
+											<b:row styleClass="btn btn-info">
+												
+												Guardar
 											</b:row>
-											<br/>
-											<b:row>
-												<b:column col-xs="2">
-													Monto total:
-												</b:column>
-												<b:column col-xs="6">
-													<h:outputText value="#{cargaProveedoreMB.montoTotal}" id="montoTotal" styleClass="resume"/>
-												</b:column>
-											</b:row>
+											</p:commandLink>
 											  <p:growl id="messages" showDetail="true"/>	
 											 <p:messages escape="false"  autoUpdate="true"  for="cats"/>
 											<br/>
 											<br/>
 										</b:container>
 									</b:column>
-									<b:column col-xs="2">
-										<b:row>
-											Opciones
-										</b:row>
-										<b:row>
-											<p:commandLink id="saveBtnProv" action="#{cargaProveedoreMB.save}" disabled="#{!cargaProveedoresMB.ok}">
-												<b:iconAwesome value="save" solid="true" size="2x"/>
-											</p:commandLink>
-										</b:row>
-									</b:column>
+									
 								</b:row>
 								<b:row>	
 									

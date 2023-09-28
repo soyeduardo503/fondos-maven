@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.facade.Top5Facade;
@@ -25,6 +26,7 @@ import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class DashboardPrincipalMB {
 
 	/**
@@ -34,7 +36,9 @@ public class DashboardPrincipalMB {
 	private List<PresupuestoDashboard> list;
 	private List<Top5Gasto> listTop5Gasto;
 	
-	@ManagedProperty(value = "#{sesionMB}")
+	private List<Top5Gasto> listTop5GastoMes;
+	
+	@ManagedProperty(value = "#{usuarioSessionMB}")
 	private UsuarioSessionMB sessionMb; 
 	
 	
@@ -64,7 +68,8 @@ public class DashboardPrincipalMB {
 	}
 	
 	public void callTop5() {
-		listTop5Gasto=new Top5Facade().findByPresupuesto(1);
+		listTop5Gasto=new Top5Facade().findByPresupuesto(sessionMb.getIdPresupuestoSelected());
+		listTop5GastoMes=new Top5Facade().findByPresupuestoMensual(sessionMb.getIdPresupuestoSelected());
 	}
 	
 	
@@ -75,30 +80,7 @@ public class DashboardPrincipalMB {
 	}
 	
 	
-
-	public List<Top5Gasto> getListTop5Gasto() {
-		return listTop5Gasto;
-	}
-
-	public void setListTop5Gasto(List<Top5Gasto> listTop5Gasto) {
-		this.listTop5Gasto = listTop5Gasto;
-	}
-
-	public List<PresupuestoDashboard> getList() {
-		return list;
-	}
-
-	public void setList(List<PresupuestoDashboard> list) {
-		this.list = list;
-	}
-
-	public UsuarioSessionMB getSessionMb() {
-		return sessionMb;
-	}
-
-	public void setSessionMb(UsuarioSessionMB sessionMb) {
-		this.sessionMb = sessionMb;
-	}
+	
 
 	
 }

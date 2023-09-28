@@ -1,14 +1,12 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
 	<h:form id="IDFrmTableDetail">
 		<b:panel look="info" collapsible="false"
-			title="#{presupuestoViewMB.presupuesto.nombrePresupuesto}"
-			icon-awesome="traffic-light" icon-solid="true" icon-size="3x">
-			<p:dataTable value="#{presupuestoViewMB.listCatDist}" var="cat"
-				lazy="true">
+			title="#{presupuestoViewMB.presupuesto.nombrePresupuesto}" icon-awesome="traffic-light"
+			icon-solid="true" icon-size="3x">
+			<p:dataTable value="#{presupuestoViewMB.listCatDist}" var="cat" lazy="true">
 				<p:column headerText="Codigo" width="60">#{cat.codigo}</p:column>
 				<p:column headerText="Nombre" width="400">#{cat.nombre}</p:column>
 				<p:column headerText="Monto" width="80">
@@ -36,6 +34,13 @@
 						<b:iconAwesome value="#{presupuestoViewMB.icon(cat)}"
 							style="color:white; font-size:1.6em;" solid="true"></b:iconAwesome>
 					</div>
+					<p:commandLink action="#{searchListGastosMB.invocacionBusqueda(cat)}"
+					 update=":IDDetalleGastos,:IDDetalleGastosMes">
+						
+						<div class="btn btn-info">
+							<b:iconAwesome value="search" style="color:white; font-size:1.6em;" solid="true"></b:iconAwesome>
+						</div>
+					</p:commandLink>
 				</p:column>
 
 			</p:dataTable>

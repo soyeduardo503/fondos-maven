@@ -49,6 +49,8 @@ public class Financiamiento implements Serializable {
     private Integer idEmpresa;
     
     private Integer idCatingreso;
+    
+    private String status;
 
     public Financiamiento() {
     }
@@ -182,6 +184,19 @@ public class Financiamiento implements Serializable {
 
 	public void setIdCatingreso(Integer idCatingreso) {
 		this.idCatingreso = idCatingreso;
+	}
+
+
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 

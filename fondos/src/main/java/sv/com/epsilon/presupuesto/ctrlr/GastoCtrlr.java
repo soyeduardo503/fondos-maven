@@ -3,9 +3,11 @@
  */
 package sv.com.epsilon.presupuesto.ctrlr;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import sv.com.epsilon.ctrlr.wsclient.SearchGastoDetalleMesWSClient;
 import sv.com.epsilon.ctrlr.wsclient.SearchGastoWSClient;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Presupuesto;
@@ -15,8 +17,10 @@ import sv.com.epsilon.facade.ChequeraFacade;
 import sv.com.epsilon.facade.CuentaFacade;
 import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
+import sv.com.epsilon.presupuesto.pojo.DetalleGastoMes;
 import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
+import sv.com.epsilon.presupuesto.pojo.SearchParameterGastoMensual;
 import sv.com.epsilon.presupuesto.view.IngresoGastoMB;
 
 /**
@@ -106,6 +110,18 @@ public class GastoCtrlr {
 	
 	public List<Gasto> find(Integer idStarted,Integer idFinished,Integer type){
 		return facade.findByRange(idStarted, idFinished, type);
+	}
+
+
+	public List<DetalleGastoMes> invocarBusqueda(SearchParameterGastoMensual search) {
+	
+		try {
+			return  new SearchGastoDetalleMesWSClient().searchParam(search);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
 	}
 	
 }
