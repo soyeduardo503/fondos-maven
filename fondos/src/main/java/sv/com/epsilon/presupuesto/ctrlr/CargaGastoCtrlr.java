@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.entities.Categoria;
@@ -25,7 +28,9 @@ import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
+import sv.com.epsilon.presupuesto.pojo.GastoLoad;
 import sv.com.epsilon.util.Log;
+import sv.com.epsilon.util.helper.LoadGastoHelper;
 
 /**
  * @author 50364
@@ -52,6 +57,8 @@ public class CargaGastoCtrlr {
 	private final static String REMESA = "REMESA";
 	private final static String TRANSF = "TRANSF";
 	private final static String DB = "D/B";
+	private final static String separatorField=";";
+	
 
 	private Integer idEmpresa = 1;
 	private List<Proveedor> proveedores = new ProveedorFacade().findAll();
@@ -60,11 +67,13 @@ public class CargaGastoCtrlr {
 	public CargaGastoCtrlr() {
 
 	}
+	/*
 	public List<Gasto> processFileProveedor(InputStream is) throws Exception {
+		
 		BufferedReader csvReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 		String line;
 		while ((line = csvReader.readLine()) != null) {
-			String[] values = line.split(",");
+			String[] values = line.split(separatorField);
 			Optional<Proveedor> proveedor = proveedores.stream()
 					.filter(n -> n.getNombre().equalsIgnoreCase(values[PROVEEDOR].trim()) || n.getNombreLegal().equalsIgnoreCase(values[PROVEEDOR].trim())).findFirst();
 			if (!proveedor.isPresent()) {
@@ -76,7 +85,35 @@ public class CargaGastoCtrlr {
 		log.info(uniq.keySet()+"");
 		return new ArrayList<>();
 	}
+	*/
+	StringBuilder errors=new StringBuilder();
+	public List<Gasto> processFile(InputStream is,boolean readJson)throws Exception {
+		BufferedReader jsonReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		StringBuilder sb=new StringBuilder();
+		String line;
+		
+		List<Gasto> list=new ArrayList<>();
+		while((line=jsonReader.readLine())!=null) {
+			sb.append(line);
+		}
+		
+		 Stream<GastoLoad> loadObjects = Stream.of( new ObjectMapper().readValue(sb.toString(), GastoLoad[].class));
+		 loadObjects.filter(load->load.getMontoAbono().isEmpty()).forEach(v-> {
+			try {
+				list.add(LoadGastoHelper.assigData(v,proveedores,uniq));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		log.info("Errors->");
+		errors=new StringBuilder();
+		uniq.forEach((k,v)->errors.append("\"proveedor\":"+"\""+v+"\","));
+		log.info(errors.toString());
+		return list;
+	}
 
+	@Deprecated/*
 	public List<Gasto> processFile(InputStream is) throws Exception {
 		BufferedReader csvReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 		String line;
@@ -156,7 +193,7 @@ public class CargaGastoCtrlr {
 		Log.info(listNoFound);
 		return list;
 	}
-
+*/
 	private Date parseDate(String date) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.parse(date);

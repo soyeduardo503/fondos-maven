@@ -10,9 +10,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.BancoFacade;
+import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.util.Log;
 
 /**
@@ -37,7 +39,7 @@ public class CargaProveedorCtrlr {
 	private final static String JURIDICO = "J";
 	private final static String NATURAL = "N";
 	private final static Integer RETENCION = 9;
-	
+	private Integer codCorrelative=110;
 
 	public CargaProveedorCtrlr() {
 
@@ -64,13 +66,17 @@ public class CargaProveedorCtrlr {
 					Integer idBanco = 0;
 					String dui = values[TIPO].equals(JURIDICO) ? "" : values[DUI];
 					Proveedor proveedor = new Proveedor(values[NOMBRE], values[NOMBRE_LEGAL], values[TIPO], dui,
-							values[NCR], values[NIT], idBanco, "00000", 1);
+							 values[NIT],values[NCR], idBanco, "00000", 1);
 					if (!values[TIPO].equals(JURIDICO)) {
 						proveedor.setRetencion("S");
 					}
-					proveedor.setCodigo(values[CODIGO]);
+					
 					proveedor.setRetencion(values[RETENCION]);
-					list.add(proveedor);
+					if(!exist(proveedor)) {
+						proveedor.setCodigo("FTP"+(++codCorrelative));
+						list.add(proveedor);
+						
+					}
 				}
 				first = false;
 				System.out.println("->" + line);
@@ -80,6 +86,18 @@ public class CargaProveedorCtrlr {
 			}
 		}
 		return list;
+	}
+
+	private boolean exist(Proveedor proveedor) {
+		  try {
+			  Optional<Proveedor> res=Optional.of(	new ProveedorFacade().search(proveedor));
+		   return res.isPresent();//if exist shoult return true
+		  
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

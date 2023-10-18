@@ -16,7 +16,7 @@ public class CategoriaAsignacion {
 	 */
 	private Categoria categoria;
 	public CategoriaAsignacion() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

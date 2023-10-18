@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.view;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ import sv.com.epsilon.util.PeriodoUtil;
 @ManagedBean
 @ViewScoped
 @Data
-public class CierreMensualMB implements Serializable {
+public class ListaCierreMensualMB implements Serializable {
 
 	/**
 	 * 
@@ -71,9 +72,8 @@ public class CierreMensualMB implements Serializable {
 	private Double montoFinal;
 	private Boolean reload=false;
 	private boolean vdefault=true;
-	private List<Mes> mesesCerrados;
 
-	public CierreMensualMB() {
+	public ListaCierreMensualMB() {
 
 	}
 

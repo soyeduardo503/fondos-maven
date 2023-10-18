@@ -12,6 +12,7 @@ import sv.com.epsilon.entities.Cierre;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.facade.CierreFacade;
 import sv.com.epsilon.presupuesto.pojo.GastoExt;
+import sv.com.epsilon.util.Mes;
 
 /**
  * @author martinezc
@@ -24,6 +25,11 @@ public class CierreCtrlr {
 	 */
 	public CierreCtrlr() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public List<Mes> findMesesCerrados(Integer idPresupuesto){
+	
+		return new CierreFacade().findMesesCerrados(idPresupuesto);
 	}
 
 	public void findFirstIncome(Integer idPresupuesto, Integer month, Integer year,List<GastoExt> list) {

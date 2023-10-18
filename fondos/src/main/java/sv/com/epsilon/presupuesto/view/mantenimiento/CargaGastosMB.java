@@ -95,7 +95,7 @@ public class CargaGastosMB {
 
 				InputStream is = file.getInputStream();
 
-				list = new CargaGastoCtrlr().processFile(is);
+				list = new CargaGastoCtrlr().processFile(is,true);
 				
 				FacesMessage msg = new FacesMessage("Completado", this.fileCSV.getFileName() + " fue cargado.");
 				FacesContext.getCurrentInstance().addMessage(null, msg);

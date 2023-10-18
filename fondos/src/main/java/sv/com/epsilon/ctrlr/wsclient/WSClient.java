@@ -237,6 +237,33 @@ public class WSClient<T> {
 		}
 	}
 	
+	public List<?> getList(String endpoint,Class typeClass)  {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = 
+				  restTemplate.exchange(
+				    url(endpoint),
+				    HttpMethod.GET,
+				    null,
+				    new ParameterizedTypeReference<String>() {}
+				  );//new TypeReference<
+		if(200!=responseEntity.getStatusCodeValue())
+			return new ArrayList<T>();
+		try {
+			return  deserialize(responseEntity.getBody(),typeClass);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<T>();
+		}
+	}
+	
+	public List<?>  deserialize(String json,Class typeClass ) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+	    CollectionType listType = mapper.getTypeFactory().constructCollectionType(ArrayList.class, typeClass);
+	    List<?> ts = mapper.readValue(json, listType);
+	    return ts;   
+	}
+	
 	public List<T>  deserialize(String json ) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 	    CollectionType listType = mapper.getTypeFactory().constructCollectionType(ArrayList.class, typeClass);
@@ -283,6 +310,10 @@ public class WSClient<T> {
 	
 	public List<T> list(String endpoint){
 		return getList(endpoint);
+	}
+	
+	public List<?> list(String endpoint,Class<?> typeClass1){
+		return getList(endpoint,typeClass1);
 	}
 	public T getById(int id) throws Exception{
 		RestTemplate restTemplate = new RestTemplate();

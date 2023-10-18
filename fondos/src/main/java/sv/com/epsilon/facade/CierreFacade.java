@@ -5,10 +5,13 @@
  */
 package sv.com.epsilon.facade;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Cierre;
+import sv.com.epsilon.util.Mes;
 
 /**
  *
@@ -26,6 +29,13 @@ public class CierreFacade extends WSClient<Cierre> {
     public Optional<Cierre> find(Integer idPresupuesto,Integer month) {
     	return this.find("/byMonth/"+idPresupuesto+"/"+month);
     }
+
+	public List<Mes> findMesesCerrados(Integer idPresupuesto) {
+		 List<Integer> list=(List<Integer>)this.list("/mesesCerrados/"+idPresupuesto+"/",Integer.class);
+		 List<Mes> listMes=new ArrayList<>();
+		 list.forEach(m->listMes.add(new Mes(m)));
+		return listMes;
+	}
     
 
 	

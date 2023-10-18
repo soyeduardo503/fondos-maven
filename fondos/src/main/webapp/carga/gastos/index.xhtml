@@ -14,13 +14,13 @@
 		<h:form>
 			<p:fileUpload mode="advanced" multiple="false" auto="true" sizeLimit="202400000"
 				invalidSizeMessage="Maximo archivo permitido 2MB"
-				invalidFileMessage="only csv | CSV  is allowed"
+				invalidFileMessage="only json | JSON  is allowed"
 				listener="#{cargaGastosMB.handleFileUpload}"  update="listTable">
 				
 				</p:fileUpload>
 				
 			<p:dataTable value="#{cargaGastosMB.list}" var="g" id="listTable">
-				<p:column><h:outputText value="#{g.idProveedor}"/> </p:column>
+				<p:column><h:outputText value="#{g.idProveedor.nombre}"/> </p:column>
 				<p:column><h:outputText value="#{g.total}"/> </p:column>
 				<p:column><h:outputText value="#{g.nombre}"/> </p:column>
 				<p:column><h:outputText value="#{g.fecha}"/> </p:column>
