@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
+import sv.com.epsilon.ctrlr.wsclient.WSClient;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Movimiento;
@@ -18,9 +19,12 @@ import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.GastoFacade;
+import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.GastoLoad;
+import sv.com.epsilon.presupuesto.pojo.Rollback;
 import sv.com.epsilon.util.Log;
+import sv.com.epsilon.util.MessageGrowlContext;
 
 /**
  * @author martinezc
@@ -94,11 +98,32 @@ public class LoadGastoHelper {
 			mov.setTipo("D");
 
 			new MovimientoCtrlr().save(mov);
+			if(g.getDescripcion().equals("ANULADO")) {
+				 Rollback rollback=new Rollback();
+				WSClient<Rollback>	client=getClient();
+				rollback.setIdGasto(g.getIdGasto());
+				try {
+					client.action("/call", true,rollback);
+					rollback=new Rollback();
+					new MessageGrowlContext().send("Gasto ha sido anulado", "Total del gasto a cero");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					new MessageGrowlContext().sendError("Error al anular pago", "no se logro anular el gasto",e);
+				}
+			}
 //			System.out.println("->" + line);
 		
 	
 		return g;
 }
+	
+	private static WSClient<Rollback> getClient() {
+		// TODO Auto-generated method stub
+		WSClient cl = new WSClient<>(Rollback.class);
+	
+		return cl;
+	}
 
 	private static void assigProveedor(Gasto g, GastoLoad v, List<Proveedor> proveedores) throws Exception {
 		v.setProveedor(v.getProveedor().replace(",", ""));
