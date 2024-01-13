@@ -58,7 +58,7 @@
 						<h:outputText value="#{g.cheque}" />
 					</p:column>
 					<p:column headerText="Fecha">
-						<h:outputText value="#{g.fecha}">
+						<h:outputText value="#{g.fecha.getTime()}">
 							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</h:outputText>
 					</p:column>

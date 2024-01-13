@@ -1503,4 +1503,19 @@ text-transform: none;
 	color: #000 !important;
 }
 
-	
+.text-center{
+	  padding: 0 24px;
+  color: white; /* Change my color to yellow */
+  margin: 0;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}	
+.mesLabel {
+border-radius: 5%;
+  border: 2px solid #0000ff75;
+  background-color: #FFFFFF;
+  text-align: center;
+  color: #0000ff75;
+}

@@ -20,8 +20,8 @@
 		<h:form id="IDFrmTableDetail">
 			<b:panel look="primary" title="Presupuestos" icon="wallet"
 				collapsible="false">
-				<p:selectOneRadio value="#{asignacionFondosMB.presupuesto}"
-					converter="presupuestoConverter" layout="grid" columns="3">
+				<p:selectOneMenu value="#{asignacionFondosMB.presupuesto}"
+					converter="presupuestoConverter" >
 					<p:ajax event="change"
 						listener="#{asignacionFondosMB.reloadView()}"
 						update="panelPresupuesto,detailPr" />
@@ -29,7 +29,7 @@
 						itemLabel="#{p.nombrePresupuesto}" itemValue="#{p}" />
 
 
-				</p:selectOneRadio>
+				</p:selectOneMenu>
 			</b:panel>
 
 						<b:panel look="primary" id="detailPr" title=" #{asignacionFondosMB.presupuesto.nombrePresupuesto}" collapsible="false">

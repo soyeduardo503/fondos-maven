@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+	<h:form id="calendarEnabled">
+		<b:container fluid="true">
+			<b:row>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(1)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(2)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(3)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(4)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(5)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(6)}" />
+				</ui:include>
+			</b:row>
+			<b:row>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(7)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(8)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(9)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(10)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(11)}" />
+				</ui:include>
+				<ui:include src="/componentes/botones/Mes.xhtml">
+					<ui:param name="month" value="#{listaCierresMB.findMes(12)}" />
+				</ui:include>
+			</b:row>
+		</b:container>
+	</h:form>
+</ui:composition>

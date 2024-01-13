@@ -19,161 +19,15 @@
 
 
 		<div class="titlePage">
-			<b:container fluid="true">
-				<h:form id="idDetailPresupuesto">
-					<b:row>
-						<b:column col-xs="12">
-							<h2 class="headerPage"
-								style="margin: auto; width: 50%; padding: 10px; font-size: 2.1em;">
-
-								#{usuarioSessionMB.presupuestoSelected.nombrePresupuesto}</h2>
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column col-xs="3">
-							<h2 class="headerPage">
-								<h:outputText value="Cierre mensual" />
-							</h2>
-						</b:column>
-
-						<b:column col-xs="4">
-
-						</b:column>
-
-						<b:column col-xs="2">
-							<h2 class="headerPage">cierre:</h2>
-							<h:outputText styleClass="message" value="#{cierreMensualMB.mes.nombre}" />
-						</b:column>
-						<b:column col-xs="2">
-							<h2 class="headerPage">Año:</h2>
-							<h:outputText styleClass="message"
-								value="#{usuarioSessionMB.presupuestoSelected.year}" />
-						</b:column>
-					</b:row>
-				</h:form>
-				<b:row>
-					<hr />
-				</b:row>
-				<b:row>
-					<b:column col-xs="4">
-						<b:row>
-
-							<b:column col-xs="12">
-								<h1
-									style="color: #999999; font-family: arial, sans-serif; font-size: 26px; font-weight: bold; margin-top: 0px; margin-bottom: 1px;">
-									Periodo:</h1>
-							</b:column>
-						</b:row>
-
-						<b:row>
-							<b:column col-xs="6" styleClass="message">
-								<h:outputText value="#{cierreMensualMB.periodo.inicio.time}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</b:column>
-							<b:column col-xs="6" styleClass="message">
-								<h:outputText value="#{cierreMensualMB.periodo.fin.time}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</b:column>
-						</b:row>
-						<b:row>
-							<b:column col-xs="6" styleClass="undermessage">Inicio</b:column>
-							<b:column col-xs="6" styleClass="undermessage">Fin</b:column>
-						</b:row>
-					</b:column>
-					<b:column col-xs="4" />
-					<b:column col-xs="4">
-						<b:row>
-
-							<b:column col-xs="12">
-								<h1
-									style="color: #999999; font-family: arial, sans-serif; font-size: 26px; font-weight: bold; margin-top: 0px; margin-bottom: 1px;">
-									Saldo</h1>
-							</b:column>
-						</b:row>
-
-						<b:row>
-							<b:column col-xs="6" styleClass="message">$<h:outputText
-									value="#{cierreMensualMB.montoInicial}">
-									<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol="$"
-										currencyCode="USD" />
-								</h:outputText>
-							</b:column>
-							<b:column col-xs="6" styleClass="message">$<h:outputText
-									value="#{cierreMensualMB.montoFinal}">
-									<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol="$" />
-								</h:outputText>
-							</b:column>
-						</b:row>
-						<b:row>
-							<b:column col-xs="6" styleClass="undermessage">Inicial</b:column>
-							<b:column col-xs="6" styleClass="undermessage">Final</b:column>
-						</b:row>
-					</b:column>
-				</b:row>
-				<b:row>
-					<hr />
-				</b:row>
-				<b:row>
-					<b:column col-xs="2">
-						<b:row>
-							<h2 class="headerPage">
-								<h:outputText value="Cierres" />
-							</h2>
-						</b:row>
-						<b:row>
-							<h:form id="formOrder">
-								<p:selectOneMenu value="#{cierreMensualMB.month}">
-									<f:selectItem itemLabel="Mes en proceso"
-										itemValue="#{usuarioSessionMB.presupuestoSelected.mesCierre}"></f:selectItem>
-									<f:selectItems value="#{cierreMensualMB.listCierres}" var="c"
-										itemLabel="#{c.mes}" itemValue="#{c.mes}" />
-
-									<p:ajax listener="#{cierreMensualMB.loadInfo()}" process="@this"
-										update=":idGastosTable:idTableGastos,:formPrintMov" />
-								</p:selectOneMenu>
-							</h:form>
-						</b:row>
-					</b:column>
-
-					<ui:include src="/componentes/botones/print.xhtml">
-						<ui:param name="bean" value="#{cierreMensualMB}" />
-						<ui:param name="report" value="reportGastos.jasper" />
-						<ui:param name="title" value="CUENTA PRESUPUESTOS DE OPERACIONES" />
-						<ui:param name="ext" value="xls" />
-						<ui:param name="cols" value="1" />
-						<ui:param name="form" value="formPrintMov" />
-						<ui:param name="titleButton" value="Gasto" />
-						<ui:param name="btnClass" value="btn-info" />
-					</ui:include>
-
-					<ui:include src="/componentes/botones/print.xhtml">
-						<ui:param name="bean" value="#{searchRetencionMB}" />
-						<ui:param name="report" value="reportGastosExcluidos.jasper" />
-						<ui:param name="title" value="CUENTA PRESUPUESTOS DE OPERACIONES" />
-						<ui:param name="ext" value="xls" />
-						<ui:param name="cols" value="1" />
-						<ui:param name="form" value="formPrintExc" />
-						<ui:param name="titleButton" value="Excluidos" />
-						<ui:param name="btnClass" value="btn-warning" />
-					</ui:include>
-					<b:column col-xs="5" styleClass="" />
-					<p:commandLink action="#{cierreMensualMB.create()}" oncomplete="PF('wgtCnfCierre').show();">
-					<b:column col-xs="1" styleClass="">
-						
-						<b:row>
-							<b:iconAwesome value="lock-open" solid="true" styleClass="btn btn-warning"
-								size="2x" />
-						</b:row>
-						
-						<b:row styleClass="undermessage"> Cerrar</b:row>
-					</b:column>
-					</p:commandLink>
-				</b:row>
-
-			</b:container>
-
+			<ui:include src="/componentes/headers/headerCierre.xhtml" >
+				<ui:param name="ci" value="#{cierreMensualMB.current}" />
+				<ui:param name="pr" value="#{cierreMensualMB.presupuestoSelected}" />
+				<ui:param name="mes" value="#{cierreMensualMB.mes}" />
+				<ui:param name="periodo" value="#{cierreMensualMB.periodo}" />
+				<ui:param name="montoInicial" value="#{cierreMensualMB.montoInicial}" />
+				<ui:param name="montoFinal" value="#{cierreMensualMB.montoFinal}" />
+				<ui:param name="disabledOption" value="false" />
+			</ui:include>
 		</div>
 		<style>
 .ui-filter-column .ui-column-customfilter .custom-filter {
@@ -198,12 +52,12 @@
 					<p:column headerText="Proveedor" filterBy="#{g.idProveedor.nombre}">
 						<h:outputText value="#{g.idProveedor.nombre}" />
 					</p:column>
-					<p:column headerText="Descripcion" filterBy="#{g.descripcion}">
+					<p:column headerText="Descripcion" filterBy="#{g.descripcion}" filterMatchMode="contains">
 						<h:outputText value="#{g.descripcion}" />
 					</p:column>
 
-					<p:column headerText="Fecha" width="80">
-						<h:outputText value="#{g.fecha}">
+					<p:column headerText="Fecha" width="80" filterBy="#{searchMovimientoMB.convertDate( g.fecha.time)}">
+						<h:outputText value="#{g.fecha.time}">
 							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</h:outputText>
 					</p:column>

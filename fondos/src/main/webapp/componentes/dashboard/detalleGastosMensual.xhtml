@@ -36,6 +36,13 @@
 									<p:column headerText="OCT"><p:outputLabel value=" #{ dg.byMes(10)}"><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
 									<p:column headerText="NOV"><p:outputLabel value=" #{ dg.byMes(11)}"><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
 									<p:column headerText="DIC"><p:outputLabel value=" #{ dg.byMes(12)}"><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="" >
+										<div class="btn btn-info"> 
+										<p:commandLink action="#{consultaDetalleGastoEspecificoMB.load(dg)}" update=":IDDetalleGastosEspecificosMes">
+											<b:iconAwesome value="search" style="color:white; font-size:1.6em;" solid="true"/>
+										</p:commandLink>
+										</div>
+									</p:column>
 								</p:dataTable>
 								
 						

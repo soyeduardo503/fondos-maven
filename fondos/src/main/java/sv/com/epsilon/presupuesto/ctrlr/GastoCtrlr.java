@@ -4,6 +4,7 @@
 package sv.com.epsilon.presupuesto.ctrlr;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class GastoCtrlr {
 		gastoMB.setPresupuestoSelected(gastoMB.getListPresupuesto().get(0));
 		idPresupuesto=gastoMB.getListPresupuesto().get(0).getIdPresupuesto();
 		
-		gastoMB.getGasto().setFecha(new Date());
+		gastoMB.getGasto().setFecha(Calendar.getInstance());
 		gastoMB.setListCategoriaPrincipal(new CategoriaFacade().findPrincipalByCodPresupuesto(p.getCodigo()));
 		
 		gastoMB.setListBanco(new BancoFacade().findAllActive());

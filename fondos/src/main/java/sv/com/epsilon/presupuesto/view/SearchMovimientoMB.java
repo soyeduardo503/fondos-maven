@@ -4,7 +4,9 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -83,6 +85,10 @@ public class SearchMovimientoMB implements Serializable{
 		}
 	}
 	
+	
+	public String convertDate(Date d) {
+		return new SimpleDateFormat("dd/MM/yyyy").format(d);
+	}
 	public void load(Gasto g) {
 		this.gasto=g;
 		 listDetalle = new CategoriaGastoCtrlr().convert(g.getIdGasto());

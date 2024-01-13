@@ -4,7 +4,9 @@
 package sv.com.epsilon.presupuesto.ctrlr;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.donut.DonutChartDataSet;
@@ -18,6 +20,7 @@ import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.presupuesto.pojo.DetalleGastoMes;
 import sv.com.epsilon.presupuesto.pojo.Distribution;
+import sv.com.epsilon.presupuesto.pojo.GastoReal;
 import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.Colors;
 import sv.com.epsilon.util.Mes;
@@ -32,6 +35,7 @@ public class ChartsCtrlr {
 	/**
 	 * 
 	 */
+	
 	public ChartsCtrlr() {
 		
 	}
@@ -48,10 +52,15 @@ public class ChartsCtrlr {
 	       
 	        List<Mes> listMeses = new Meses().getList();
 	        GastoFacade gastoFacade=new GastoFacade();
+	        if(p.getYear()==Calendar.getInstance().get(Calendar.YEAR)) {
+	        	listMeses=listMeses.stream().filter(m->m.getIdMes()<Calendar.getInstance().get(Calendar.MONTH)+2).toList();
+	        }
 	        for(Mes m:listMeses) {
 	        	NumberResponse resp = gastoFacade.getNumber("/amount/month/"+p.getYear()+"/"+m.getIdMes()+"/"+p.getIdPresupuesto());
-	        	labels.add(m.getNombre());
-	        	values.add( resp.getDoubleValue());
+	        	if(resp.getCod()!=9999) {
+	        		labels.add(m.getNombre());
+	        		values.add( resp.getDoubleValue());
+	        	}
 	        }
 	        dataSet.setData(values);
 	        dataSet.setFill(false);
@@ -73,7 +82,71 @@ public class ChartsCtrlr {
 	        return lineModel;
 	    }
 	 
-	 public DonutChartModel createDonutModel(List<Distribution> list) {
+	 
+	 
+	 public LineChartModel createLineYear(List<GastoReal> list,Presupuesto p) {
+	        LineChartModel lineModel = new LineChartModel();
+	        ChartData data = new ChartData();
+
+	        LineChartDataSet dataSet = new LineChartDataSet();
+	        LineChartDataSet dataSetR = new LineChartDataSet();
+	        
+	        List<Object> values = new ArrayList<>();
+	        List<Object> valuesP = new ArrayList<>();
+	        
+	        List<String> labels = new ArrayList<>();
+	       
+	        List<Mes> listMeses = new Meses().getList().stream().filter(m->exist(list,m)).toList();
+	        GastoFacade gastoFacade=new GastoFacade();
+	        list.stream().forEach(gr-> {
+	        	labels.add(gr.getMes().getNombre());
+	        	values.add(gr.getGastoReal());
+	        	valuesP.add(gr.getGastoPrevisto());
+	        });
+//	        for(Mes m:listMeses) {
+//	        		
+//	        		Optional<GastoReal> gr=list.stream().filter(gr->gr.getMes().equals(m)).findFirst();
+//	        		if(gr.)
+//	        		labels.add(m.getNombre());
+//	        		values.add( );
+//	        		}
+//	        
+//	        }
+	        
+	        /*Data set valores reales*/
+	        dataSet.setData(values);
+	        dataSet.setFill(false);
+	        dataSet.setLabel("Gastos por Mes");
+	        dataSet.setBorderColor("rgb(75, 192, 192)");
+	        /*Data set valores previstos*/
+	        dataSetR.setData(valuesP);
+	        dataSetR.setFill(false);
+	        dataSetR.setLabel("Gastos previstos");
+	        dataSetR.setBorderColor("rgb(60, 193, 45)");
+	        
+	        
+	        data.addChartDataSet(dataSet);
+	        data.addChartDataSet(dataSetR);
+	        data.setLabels(labels);
+
+	        //Options
+	        LineChartOptions options = new LineChartOptions();
+	        Title title = new Title();
+	        title.setDisplay(true);
+	        title.setText(p.getNombrePresupuesto());
+	        options.setTitle(title);
+
+	        lineModel.setOptions(options);
+	        lineModel.setData(data);
+	        return lineModel;
+	    }
+	 private boolean exist(List<GastoReal> list, Mes m) {
+		// TODO Auto-generated method stub
+		return list.stream().filter(gs->gs.getMes().equals(m)).findFirst().isPresent();
+	}
+
+
+	public DonutChartModel createDonutModel(List<Distribution> list) {
 		 	DonutChartModel donutModel = new DonutChartModel();
 	        ChartData data = new ChartData();
 

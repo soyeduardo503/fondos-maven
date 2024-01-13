@@ -3,6 +3,7 @@
  */
 package sv.com.epsilon.presupuesto.pojo;
 
+import java.util.Calendar;
 import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,7 +41,9 @@ public class GastoExt extends Gasto {
 			this.setDescripcion(f.getNombre());
 			this.setTotal(f.getMonto());
 			this.setAbono(f.getMonto());
-			this.setFecha( f.getFecha());
+			Calendar c=Calendar.getInstance();
+			c.setTime(f.getFecha());
+			this.setFecha( c);
 			this.setStatus("T");
 		}
 }

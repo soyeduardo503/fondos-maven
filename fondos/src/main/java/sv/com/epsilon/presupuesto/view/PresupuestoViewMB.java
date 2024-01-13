@@ -14,13 +14,17 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.charts.donut.DonutChartModel;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.Distribution5Facade;
 import sv.com.epsilon.presupuesto.ctrlr.ChartsCtrlr;
+import sv.com.epsilon.presupuesto.ctrlr.DataGastoPeriodCtrlr;
+import sv.com.epsilon.presupuesto.pojo.DataGastoPeriod;
 import sv.com.epsilon.presupuesto.pojo.Distribution;
+import sv.com.epsilon.presupuesto.pojo.GastoReal;
 import sv.com.epsilon.presupuesto.pojo.NodeModel;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 
@@ -31,6 +35,7 @@ import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 @ManagedBean
 @ViewScoped
 @Slf4j
+@Data
 public class PresupuestoViewMB implements Serializable{
 
 	/**
@@ -47,6 +52,7 @@ public class PresupuestoViewMB implements Serializable{
 	private DonutChartModel distModel;
 	private Integer percentExecution;
 	private List<Categoria> listCatDist;
+	private DataGastoPeriod dataGasto ;
 	
 	
 	public PresupuestoViewMB() {
@@ -59,7 +65,8 @@ public class PresupuestoViewMB implements Serializable{
 			presupuesto.setCategoriaList(facade.findByPresupuestoWithoutClose(presupuesto));
 			crearNodo();
 			facade.close();
-			lineModel=new ChartsCtrlr().createLineYear(presupuesto);
+			dataGasto= new DataGastoPeriodCtrlr().presupuesto(presupuesto).build();
+			lineModel=dataGasto.getChart();
 			makeModel(presupuesto.getCodigo());
 			//facade.foundExecution(presupuesto.getIdPresupuesto()); 
 			percentExecution=  (int) (((presupuesto.getTotal()-presupuesto.getActual())/presupuesto.getTotal())*100);
@@ -73,6 +80,7 @@ public class PresupuestoViewMB implements Serializable{
 	}
 	public void crearNodo() {
 		listCatDist=presupuesto.getCategoriaList().stream().filter(cat->cat.getCodigo().length()==7).toList();
+		
 		log.info(""+listCatDist.size());
 	}
 	
@@ -201,6 +209,15 @@ public class PresupuestoViewMB implements Serializable{
 		
 		return "frown-o";
 	}
+	public String styleDiff(GastoReal gr) {
+		Double value=gr.getGastoPrevisto()-gr.getGastoReal();
+		return value>0.0?
+			 "primary": "danger";
+	}
 	
-	
+	public String iconDiff(GastoReal gr) {
+		Double value=gr.getGastoPrevisto()-gr.getGastoReal();
+		return value>0.0?
+			 "smile-o": "frown-o";
+	}
 }

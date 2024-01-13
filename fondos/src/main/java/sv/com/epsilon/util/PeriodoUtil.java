@@ -20,12 +20,17 @@ public class PeriodoUtil {
 	public static Periodo make(Integer year, Integer month) {
 		Calendar inicio = Calendar.getInstance();
 		Calendar fin=Calendar.getInstance();
+		if(month==0)
+			month=1;
 		inicio.set(Calendar.YEAR, year);
 		inicio.set(Calendar.MONTH, month-1);
 		inicio.set(Calendar.DAY_OF_MONTH, 1);
-		fin.set(Calendar.MONTH, month-1);	
-		fin.set(Calendar.DAY_OF_MONTH, fin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		fin.set(Calendar.MONTH, month);
+	
+		fin.set(Calendar.DAY_OF_MONTH,1);
 		
+		fin.add(Calendar.DAY_OF_MONTH, -1);
+		System.out.println(fin.getTime());
 		return new  Periodo(inicio, fin);
 	}
 

@@ -5,13 +5,18 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 <h:form id="frmConfirmCierreCreated">
-	<p:dialog id="idCnfCierre" widgetVar="wgtCnfCierre" width="700" height="500" header="confirmacion">
+	<p:dialog id="idCnfCierre" widgetVar="wgtCnfCierre" width="700" height="200" header="confirmacion">
 		<b:container fluid="true">
-			
-			<p:commandLink onclick="location.reload();">
-				<b:column colSm="12">Ok </b:column>
+			<b:row>
+				Se ha creado el cierre 
+			</b:row>
+			<hr/>
+			<hr/>
+			<b:row>
+			<p:commandLink onclick="location.reload();" >
+				<b:column colSm="12" styleClass="btn btn-info">Ok </b:column>
 			</p:commandLink>
-			
+			</b:row>
 		</b:container>
 
 	</p:dialog>

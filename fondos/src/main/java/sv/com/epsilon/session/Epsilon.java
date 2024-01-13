@@ -120,7 +120,7 @@ public class Epsilon implements Serializable {
 	}
 	
 	public Integer getIdUser() {
-		return  Integer.parseInt(getValues().get("idRol")==null?"0":  getValues().get("idUser").toString());
+		return  Integer.parseInt(getValues().get("idUser")==null?"0":  getValues().get("idUser").toString());
 	}
 
 	

@@ -8,9 +8,9 @@ package sv.com.epsilon.entities;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sv.com.epsilon.util.Util;
 
 /**
  *
@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Cierre implements Serializable {
 
@@ -46,7 +45,9 @@ public class Cierre implements Serializable {
     private Integer idPresupuesto;
 
     private Integer year;
+    private Double gasto;
 
+    
     
     
 	@Override
@@ -73,5 +74,20 @@ public class Cierre implements Serializable {
     public String toString() {
         return "sv.com.epsilon.Cierre[ idCierre=" + idCierre + " ]";
     }
+
+	public Cierre(Integer idCierre, Calendar fecha, Integer mes, Double montoInicial, Double montoFinal, String act,
+			Integer idUser, Integer idPresupuesto, Integer year, Double gasto) {
+		super();
+		this.idCierre = idCierre;
+		this.fecha = fecha;
+		this.mes = mes;
+		this.montoInicial = Util.round2( montoInicial).doubleValue();
+		this.montoFinal = Util.round2( montoFinal).doubleValue();
+		this.act = act;
+		this.idUser = idUser;
+		this.idPresupuesto = idPresupuesto;
+		this.year = year;
+		this.gasto = Util.round2(gasto).doubleValue();
+	}
     
 }

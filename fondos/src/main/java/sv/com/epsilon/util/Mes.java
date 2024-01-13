@@ -28,7 +28,7 @@ public class Mes implements Serializable {
 	private final static List<String> list=init();
 	private final static List<Mes> all=initAll();
 
-	private Mes() {
+	public Mes() {
 		
 	}
 	
@@ -105,6 +105,13 @@ public class Mes implements Serializable {
 	
 	public static List<Mes> all(){
 		return all;
+	}
+
+
+
+	public static Mes defaultMes() {
+		// TODO Auto-generated method stub
+		return all.get(0);
 	}
 	
 

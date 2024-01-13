@@ -1,0 +1,20 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+             <b:column col-xs="2" styleClass="mesLabel">         
+					<p:commandLink  action="#{listaCierresMB.CallMonth(month)}" disabled="#{!month.icon.equals('eye')}" update=":idGastosTable" >
+						
+						
+						<h3 >#{month.nombre}</h3>
+						
+				
+						<f:setPropertyActionListener target="#{listaCierresMB.mesSelected}" value= "#{month.cast()}"/>
+						<h3 class="headerPage"><b:iconAwesome style="color:#{month.icon.equals('eye')?'green':'red'};"  value="#{month.icon}" solid="true"/> </h3>
+					</p:commandLink>
+		</b:column>
+</ui:composition>

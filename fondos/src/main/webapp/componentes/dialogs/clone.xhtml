@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+
+
+
+
+
+	<h:form id="budgetClone">
+		<p:dialog widgetVar="budgetCloneWgt" width="1100" height="300"
+			header="#{presupuestoMB.headerDialog}" id="budgetCloneId" modal="true">
+			<b:panel>
+				<f:facet name="header">
+					<h:outputText value="#{presupuestoMB.headerDialog}" />
+				</f:facet>
+
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="4">
+							<h:outputText value="Cuentas a clonar" />
+						</b:column>
+						<b:column col-xs="8">
+							<h:outputText value="#{presupuestoMB.clone.nombrePresupuesto}"
+								styleClass="codigo" />
+						</b:column>
+					</b:row>
+					<hr />
+					<b:row>
+						<b:column col-xs="4">
+							<h:outputText value="Año" />
+						</b:column>
+						<b:column col-xs="8">
+							<p:inputNumber decimalPlaces="0" thousandSeparator="" value="#{presupuestoMB.clone.year}"
+								styleClass="codigo" />
+						</b:column>
+					</b:row>
+					<hr />
+
+					<b:row>
+						<b:column col-xs="4">
+							<h:outputText value="Principal" />
+						</b:column>
+						<b:column col-xs="2">
+							<p:selectOneMenu  value="#{presupuestoMB.clone.isPrimary}" styleClass="codigo">
+								<f:selectItem itemValue="1" itemLabel="Si"></f:selectItem>
+								<f:selectItem itemValue="0" itemLabel="No"></f:selectItem>
+							</p:selectOneMenu>
+							
+						</b:column>
+					</b:row>
+
+
+				<b:row>
+						<b:column col-xs="2">
+							
+						</b:column>
+						<p:commandLink action="#{presupuestoMB.clonePresupuesto()}" >
+						<b:column col-xs="4" styleClass="btn btn-info">
+							
+								<b:iconAwesome value="save" solid="true" styleClass="iconWhite" size="2x"/>
+							
+						</b:column>
+						</p:commandLink>
+						<p:commandLink onclick="PF('budgetCloneWgt').hide();" >
+						<b:column col-xs="4" styleClass="btn btn-danger">
+							
+								<b:iconAwesome value="close" solid="true" styleClass="iconWhite" size="2x"/>
+							
+						</b:column>
+						</p:commandLink>
+				</b:row>
+
+				</b:container>
+			</b:panel>
+		</p:dialog>
+	</h:form>
+
+
+</ui:composition>

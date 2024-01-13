@@ -41,7 +41,7 @@ public class Gasto implements Serializable {
         
     private Integer idEmpresa;
     
-    private Date fecha;
+    private Calendar fecha;
     private Date fechaRegistro;
     
     
@@ -65,7 +65,7 @@ public class Gasto implements Serializable {
 
 
     public Gasto(Integer idGasto, String nombre, String descripcion, String nombrePantalla, String act, String codigo,
-			Integer cheque, Double total, String idEmpresa, Date fecha, Date fechaRegistro, List<Recibo> reciboList,
+			Integer cheque, Double total, String idEmpresa, Calendar fecha, Date fechaRegistro, List<Recibo> reciboList,
 			List<Imagen> imagenList, List<Movimiento> movimientoList, Tipodesembolso idTipoDesembolso,
 			Proveedor idProveedor, Integer kpresupuesto, String status, String numeroComprobante) {
 		super();
@@ -78,8 +78,8 @@ public class Gasto implements Serializable {
 		this.cheque = cheque;
 		this.total = total;
 		this.idEmpresa = Integer.parseInt( idEmpresa);
-		Calendar c=Calendar.getInstance();
-		c.setTime(fecha);
+//		Calendar c=Calendar.getInstance();
+//		c.setTime(fecha);
 		Calendar cr=Calendar.getInstance();
 		cr.setTime(fechaRegistro);
 		this.fecha = fecha;
@@ -95,7 +95,7 @@ public class Gasto implements Serializable {
 	}
     
     public Gasto(Integer idGasto, String nombre, String descripcion, String nombrePantalla, String act, String codigo,
-			Integer cheque, Double total, Integer idEmpresa, Date fecha, Date fechaRegistro, List<Recibo> reciboList,
+			Integer cheque, Double total, Integer idEmpresa, Calendar fecha, Date fechaRegistro, List<Recibo> reciboList,
 			List<Imagen> imagenList, List<Movimiento> movimientoList, Tipodesembolso idTipoDesembolso,
 			Proveedor idProveedor, Integer kpresupuesto, String status, String numeroComprobante) {
 		super();
@@ -108,8 +108,8 @@ public class Gasto implements Serializable {
 		this.cheque = cheque;
 		this.total = total;
 		this.idEmpresa = idEmpresa;
-		Calendar c=Calendar.getInstance();
-		c.setTime(fecha);
+//		Calendar c=Calendar.getInstance();
+//		c.setTime(fecha);
 		Calendar cr=Calendar.getInstance();
 		cr.setTime(fechaRegistro);
 		this.fecha = fecha;
@@ -242,11 +242,11 @@ public class Gasto implements Serializable {
     }
 
     
-    public Date getFecha() {
+    public Calendar getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Calendar fecha) {
         this.fecha = fecha;
     }
 

@@ -1,0 +1,56 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+
+	
+
+<h:form id="IDDetalleGastosEspecificosMes">
+			 
+				
+				
+			
+					<b:panel look="info" collapsible="false" id="dltDataTitle">
+					
+						<b:row>
+							Mostrar todo
+						</b:row>
+						<b:row>
+							<p:selectBooleanButton value="#{consultaDetalleGastoEspecificoMB.showAll}"  >
+								<p:ajax event="change" listener="#{consultaDetalleGastoEspecificoMB.updateShow()}" update=":IDDetalleGastosEspecificosMes:pnelDataGastoMes2" /> 
+							</p:selectBooleanButton>
+						</b:row>
+						<hr/>
+							
+								<p:dataTable value="#{consultaDetalleGastoEspecificoMB.list}" var="dg" id="pnelDataGastoMes2">
+									<p:column headerText="Cuenta">#{dg.categoria.nombre} </p:column>
+									<p:column headerText="ENE"><p:outputLabel value=" #{ dg.byMes(1)}" styleClass="#{ dg.byMes(1)>0?'btn ':''} " ><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="FEB"><p:outputLabel value=" #{ dg.byMes(2)}" styleClass="#{ dg.byMes(2)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="MAR"><p:outputLabel value=" #{ dg.byMes(3)}" styleClass="#{ dg.byMes(3)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="ABR"><p:outputLabel value=" #{ dg.byMes(4)}" styleClass="#{ dg.byMes(4)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="MAY"><p:outputLabel value=" #{ dg.byMes(5)}" styleClass="#{ dg.byMes(5)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="JUN"><p:outputLabel value=" #{ dg.byMes(6)}" styleClass="#{ dg.byMes(6)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="JUL"><p:outputLabel value=" #{ dg.byMes(7)}" styleClass="#{ dg.byMes(7)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="AGO"><p:outputLabel value=" #{ dg.byMes(8)}" styleClass="#{ dg.byMes(8)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="SEP"><p:outputLabel value=" #{ dg.byMes(9)}" styleClass="#{ dg.byMes(9)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="OCT"><p:outputLabel value=" #{ dg.byMes(10)}" styleClass="#{ dg.byMes(10)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="NOV"><p:outputLabel value=" #{ dg.byMes(11)}" styleClass="#{ dg.byMes(11)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									<p:column headerText="DIC"><p:outputLabel value=" #{ dg.byMes(12)}" styleClass="#{ dg.byMes(12)>0?'btn ':''} "><f:convertNumber maxFractionDigits="2" />  </p:outputLabel></p:column>
+									
+								</p:dataTable>
+								
+						
+							
+						
+						
+						
+					</b:panel>
+				
+				
+</h:form>	       
+
+</ui:composition>

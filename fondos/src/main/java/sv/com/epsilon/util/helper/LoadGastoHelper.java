@@ -4,6 +4,7 @@
 package sv.com.epsilon.util.helper;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.entities.Tipodesembolso;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.GastoFacade;
+import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.MovimientoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.GastoLoad;
@@ -66,13 +68,15 @@ public class LoadGastoHelper {
 				e.printStackTrace();
 				monto = 0.0;
 			}
+		
 			g.setTotal(monto);
 			g.setDescripcion(v.getConcepto().replace("*",","));
 			g.setNombre(v.getDescripcionCodigo().replace("*",","));
 			g.setFechaRegistro(new Date());
-			g.setFecha(v.getFecha());
+			g.setFecha(v.date());
 			g.setIdEmpresa(1);
 			g.setKpresupuesto(1);
+			
 			g.setStatus("A");
 			try {
 			assigProveedor(g,v,proveedores);
@@ -80,15 +84,20 @@ public class LoadGastoHelper {
 			
 				uniq.put(v.getProveedor(), v.getProveedor());
 			}
-
-			Categoria categoria = new CategoriaFacade().obtenerCategoriasFromCodigo( v.getCodigo().startsWith("23FPT")? v.getCodigo():"23FPT"+v.getCodigo());
+			Categoria categoria=null;
+		try {
+			categoria = new CategoriaFacade().obtenerCategoriasFromCodigo( v.getCodigo());
 			if(categoria==null) {
 				throw new Exception("No fue posible encontrar categoria: "+v.getCodigo());
 			}
+		}catch (Exception e) {
+			log.error("No Code Found:"+v.getCodigo());
+			e.printStackTrace();
+		}
 			g=new GastoFacade().save(g);
 			
 			Movimiento mov = new Movimiento();
-			mov.setFecha(g.getFecha());
+			mov.setFecha(g.getFecha().getTime());
 			mov.setIdCategoria(categoria);
 			mov.setFechaRegistro(new Date());
 			mov.setIdGasto(g);
@@ -96,8 +105,11 @@ public class LoadGastoHelper {
 			mov.setIdUsuario(3);
 			mov.setMonto(g.getTotal());
 			mov.setTipo("D");
-
-			new MovimientoCtrlr().save(mov);
+			try {
+				new MovimientoCtrlr().save(mov);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 			if(g.getDescripcion().equals("ANULADO")) {
 				 Rollback rollback=new Rollback();
 				WSClient<Rollback>	client=getClient();
@@ -127,12 +139,20 @@ public class LoadGastoHelper {
 
 	private static void assigProveedor(Gasto g, GastoLoad v, List<Proveedor> proveedores) throws Exception {
 		v.setProveedor(v.getProveedor().replace(",", ""));
+		
+		if(v.getIdProveedor()!=null) {
+			Optional<Proveedor> prov = new ProveedorFacade().find("/id/"+v.getIdProveedor());
+			if(prov.isPresent()) {
+				g.setIdProveedor(prov.get());
+				return ;
+			}
+		}
 		if(v.getProveedor().startsWith("PLANILLA SUELDO")) {
 			v.setProveedor("FUNDACION PABLO TESAK");
 		}
 		Optional<Proveedor> proveedor = proveedores.stream()
-				.filter(n -> n.getNombre().equalsIgnoreCase(v.getProveedor().trim())
-						|| n.getNombreLegal().equalsIgnoreCase(v.getProveedor().trim()))
+				.filter(n -> n.getNombre().replace(",","").equalsIgnoreCase(v.getProveedor().replace(",","").trim())
+						|| n.getNombreLegal().replace(",","").equalsIgnoreCase(v.getProveedor().replace(",","").trim()))
 				.findFirst();
 		if (proveedor.isPresent()) {
 			g.setIdProveedor(proveedor.get());

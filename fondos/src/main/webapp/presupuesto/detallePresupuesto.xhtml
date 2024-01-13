@@ -25,67 +25,38 @@
 				</f:facet>
 				<b:container fluid="true">
 					<b:row>
+						<b:column colXs="4"><ui:include src="/componentes/dashboard/items/general.xhtml" /> </b:column>
+						<b:column colXs="6"><ui:include src="/componentes/dashboard/items/line.xhtml" /> </b:column>
+					</b:row>
+					<b:row>
+						<b:column colXs="4"><ui:include src="/componentes/dashboard/items/distribucionDonut.xhtml" /> </b:column>
+						<b:column colXs="6"><ui:include src="/componentes/dashboard/items/tablaGastoReal.xhtml"/> </b:column>
+					</b:row>
+					<b:row>
 						<b:column col-xs="4">
-							<b:row>
-								<b:panel collapsible="false"
-									title="#{presupuestoViewMB.presupuesto.nombrePresupuesto} - #{presupuestoViewMB.presupuesto.year}">
-									<b:row>
-										<b:column colXs="6">Monto Gastado</b:column>
-										<b:column colXs="6">
-											<p:outputLabel value="#{usuarioSessionMB.presupuestoSelected.actual}">
-												<f:convertNumber maxFractionDigits="2" />
-											</p:outputLabel>
-										</b:column>
-									</b:row>
-
-									<b:row>
-										<b:column colXs="6">Monto Total</b:column>
-										<b:column colXs="6">
-											<h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}">
-												<f:convertNumber maxFractionDigits="2" />
-											</h:outputText>
-										</b:column>
-									</b:row>
-								</b:panel>
-
-
-
-							</b:row>
-							<b:row>
-								<b:panel collapsible="false" look="danger"
-									title="Porcentaje disponible">
-								<div class="knob-container ui-corner-all">
-									<p:knob foregroundColor="#2196F3" backgroundColor="#495057" disabled="true"
-										value="#{presupuestoViewMB.percentExecution}" />
-								</div>
-								</b:panel>
-							</b:row>
+							
+							
 							<b:row>
 
 								<b:column col-xs="10" styleClass="btn btn-info">
-									<p:commandLink
+									 <p:commandLink
 										actionListener="#{organigramViewMB.createModelFromPresupuesto(presupuestoViewMB.presupuesto)}">
 										<b:iconAwesome value="sitemap" solid="true" styleClass="iconWhite" size="2x" />
 
 
 									</p:commandLink>
+									 
 								</b:column>
 
 
 
 							</b:row>
 							<b:row>
-								<div class="card">
-									<p:donutChart model="#{presupuestoViewMB.distModel}"
-										style="width: 100%; height: 500px;" />
-								</div>
+								
 							</b:row>
 						</b:column>
 						<b:column col-xs="8">
-							<div class="card">
-								<p:lineChart model="#{presupuestoViewMB.lineModel}"
-									style="width: 100%; height: 500px;" />
-							</div>
+							
 
 						</b:column>
 					</b:row>
@@ -95,10 +66,11 @@
 		</h:form>
 		<ui:include src="/componentes/tabladetalle.xhtml" />
 		<ui:include src="/componentes/dialogs/estructura.xhtml" />
-		<ui:include src="/componentes/dashboard/detalleGastos.xhtml" />
+		
 		<ui:include src="/componentes/dashboard/detalleGastosMensual.xhtml" />
-
+		<ui:include src="/componentes/dashboard/detalleGastos.xhtml" />
 		<f:event listener="#{presupuestoViewMB.close()}" type="preRenderView"></f:event>
+		<ui:include src="/componentes/dashboard/detalleGastosEspecificoMensual.xhtml" />
 
 	</ui:define>
 

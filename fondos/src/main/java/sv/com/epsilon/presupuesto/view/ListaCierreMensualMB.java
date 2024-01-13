@@ -23,6 +23,7 @@ import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.CierreFacade;
 import sv.com.epsilon.facade.FinanciamientoFacade;
+import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CierreCtrlr;
@@ -33,6 +34,7 @@ import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.Periodo;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
+import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Mes;
 import sv.com.epsilon.util.PeriodoUtil;
@@ -191,7 +193,8 @@ public class ListaCierreMensualMB implements Serializable {
 	}
 	
 	public void create() {
-		Cierre c=new Cierre(null, Calendar.getInstance(), usuarioSessionMB.getPresupuestoSelected().getMesCierre(), montoInicial, montoFinal, "A", usuarioSessionMB.getIdUser(), usuarioSessionMB.getIdPresupuestoSelected(), usuarioSessionMB.getPresupuestoSelectedDlg().getYear());
+		NumberResponse resp = new GastoFacade().getNumber("/amount/month/"+usuarioSessionMB.getPresupuestoSelected().getYear()+"/"+usuarioSessionMB.getPresupuestoSelected().getMesCierre()+"/"+usuarioSessionMB.getPresupuestoSelected().getIdPresupuesto());
+		Cierre c=new Cierre(null, Calendar.getInstance(), usuarioSessionMB.getPresupuestoSelected().getMesCierre(), montoInicial, montoFinal, "A", usuarioSessionMB.getIdUser(), usuarioSessionMB.getIdPresupuestoSelected(), usuarioSessionMB.getPresupuestoSelectedDlg().getYear(),resp.getDoubleValue());
 		try {
 			if(new CierreFacade().action("/do", true, c)) {
 				usuarioSessionMB.updatePresupuesto();

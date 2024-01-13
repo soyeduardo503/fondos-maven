@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.BancoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
+import sv.com.epsilon.staticvalues.Customers;
 import sv.com.epsilon.util.Log;
 
 /**
@@ -55,7 +56,7 @@ public class CargaProveedorCtrlr {
 		String line;
 		boolean first = true;
 		List<Proveedor> list = new ArrayList<Proveedor>();
-		List<String> nameNoExist = Stream.of(notExist.split(",")).toList();
+		List<String> nameNoExist = Stream.of(Customers.VALUES.split(",")).toList();
 		while ((line = csvReader.readLine()) != null) {
 			try {
 				if (!first) {

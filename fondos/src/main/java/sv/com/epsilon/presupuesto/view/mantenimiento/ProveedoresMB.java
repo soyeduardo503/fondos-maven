@@ -36,6 +36,7 @@ public class ProveedoresMB extends AbstractMantto<Proveedor, ProveedorFacade> im
 	@ManagedProperty(value = "#{usuarioSessionMB}")	
 	private UsuarioSessionMB sesionMB;
 	private List<Banco> listBanco=new BancoFacade().findAllActive();
+	
 
 	private Proveedor fast=new Proveedor();
 	

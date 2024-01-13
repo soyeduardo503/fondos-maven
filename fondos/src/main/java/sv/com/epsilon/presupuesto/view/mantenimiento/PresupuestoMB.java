@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FlowEvent;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
@@ -28,6 +29,8 @@ import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.GeneradorCodigo;
 import sv.com.epsilon.util.MessageGrowlContext;
+import sv.com.epsilon.util.ReadProperty;
+import sv.com.epsilon.util.RedirectNv;
 
 /**
  * @author usuario07
@@ -35,6 +38,7 @@ import sv.com.epsilon.util.MessageGrowlContext;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade> implements Serializable{
 
 	/**
@@ -52,6 +56,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	private boolean crearCategoriasBasicas;
 	private List<Integer> years;
 	private String codTemp;
+	private Presupuesto clone;
 	
 	public PresupuestoMB() {
 		super(Presupuesto.class,PresupuestoFacade.class);
@@ -61,8 +66,30 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	}
 	
 	
+	public List<Presupuesto> presupuestoActive(){
+		return getList().stream().filter(p->p.getAct().equalsIgnoreCase("A")).toList();
+	}
 	
+	public void showClone(Presupuesto cl) {
+		this.clone=new Presupuesto();
+		clone.setNombrePresupuesto(cl.getNombrePresupuesto());
+		clone.setIdPresupuesto(cl.getIdPresupuesto());
+		clone.setYear( cl.getYear() +1);
+		//clone.setIsPrimary(cl);
+	}
 
+	public void clonePresupuesto() {
+		try {
+			boolean resp = new PresupuestoFacade().action("/duplicate", true,clone);
+			if(resp) {
+				ReadProperty reader=new ReadProperty();
+				new RedirectNv(reader.read(	"url.properties","mantenimientopresupuesto"));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void asignarCodigo(){
 		codTemp="";
@@ -267,6 +294,19 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void remove(Presupuesto p){
+		
+			try {
+				new PresupuestoFacade().action("/deleteByPresupuesto", true, p);
+				this.setList(getFacade().findAllActive());
+				new ExecuteForm().Update(this.getIdFormList());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 	}
 
 	public boolean isCrearCategoriasBasicas() {

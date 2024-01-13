@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="#{projectionsMB.idFormEdit}">
+		<p:sidebar position="right" id="editObjectDialog"
+			widgetVar="#{projectionsMB.dialogEdit}">
+
+			<b:panel look="primary" title="#{projectionsMB.headerDialog}" collapsible="false">
+				<b:container fluid="true">
+					<b:row>
+
+
+						<h:outputText value="Mes" />
+					</b:row>
+					<b:row>
+						
+						<b:label value="#{meses.obtenerMesLetra(projectionsMB.itemSelected.month)}" severity="info" style="font-size:1.2em;"/>
+						
+
+					</b:row>
+
+
+
+					<b:row>
+
+						<h:outputText value="Monto" />
+
+					</b:row>
+					<b:row>
+						<p:inputNumber value="#{projectionsMB.itemSelected.amount}"></p:inputNumber>
+
+
+					</b:row>
+
+					
+
+
+
+					
+
+					<b:row>
+						<h:outputText value="Activo" />
+					</b:row>
+					<b:row>
+						<p:selectOneMenu value="#{projectionsMB.itemSelected.act}">
+							<f:selectItem itemLabel="Si" itemValue="A" />
+							<f:selectItem itemLabel="No" itemValue="I" />
+						</p:selectOneMenu>
+					</b:row>
+
+
+
+					<hr />
+					<b:row>
+						<b:column col-xs="2" />
+						<ui:include src="/componentes/botones/guardarEdit.xhtml">
+							<ui:param name="mb" value="#{projectionsMB}" />
+							<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+							<ui:param name="mb" value="#{projectionsMB}" />
+							<ui:param name="cols" value="4"></ui:param>
+							<ui:param name="wgt" value="#{projectionsMB.dialogEdit}"></ui:param>
+						</ui:include>
+					</b:row>
+				</b:container>
+
+
+			</b:panel>
+
+		</p:sidebar>
+	</h:form>
+</ui:composition>

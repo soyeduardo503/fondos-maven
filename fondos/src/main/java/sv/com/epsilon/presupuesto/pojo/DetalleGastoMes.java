@@ -37,7 +37,7 @@ public class DetalleGastoMes {
 	
 	public Double byMes(Integer i) {
 		Optional<MontoMes> mm= montos==null?Optional.empty(): montos.stream().filter(l->l.getMonth()==i).findFirst();
-		return mm.isPresent()? new BigDecimal(mm.get().getAmount()).setScale(2, RoundingMode.HALF_UP).doubleValue():0.0;
+		return mm.isPresent()? new BigDecimal(mm.get().getAmount()).setScale(2, RoundingMode.HALF_UP).doubleValue():null;
 	}
 	
 	

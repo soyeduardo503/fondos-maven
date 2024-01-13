@@ -126,7 +126,7 @@ public class IngresoGastoMB implements Serializable {
 			Calendar c=Calendar.getInstance();
 			c.set(Calendar.MONTH, periodo.getFin().get(Calendar.MONTH));
 			gasto.setFechaRegistro(new Date());
-			this.gasto.setFecha(new Date());
+			this.gasto.setFecha(Calendar.getInstance());
 			
 			
 			
@@ -157,7 +157,7 @@ public class IngresoGastoMB implements Serializable {
 		
 		this.list = new CategoriaGastoCtrlr().copy(g.getIdGasto(),true);
 		this.gasto.setIdGasto(null);
-		this.gasto.setFecha(new Date());
+		this.gasto.setFecha(Calendar.getInstance());
 		this.gasto.setFechaRegistro(new Date());
 		this.gasto.setTotal(g.getTotal());
 		actualizarCheque(gasto.getIdTipoDesembolso());
@@ -396,7 +396,7 @@ public class IngresoGastoMB implements Serializable {
 			return ;
 		default:
 			this.setIdChequeraSelected(0);
-			this.gasto.setCheque(null);
+			this.gasto.setCheque(0);
 			chequeraBloq=true;
 			break;
 		}
@@ -627,7 +627,7 @@ public class IngresoGastoMB implements Serializable {
 			this.list.forEach(temp->{
 				Movimiento mov=new Movimiento();
 				mov.setIdCategoria(		temp.getCategoria());
-				mov.setFecha(gasto.getFecha());
+				mov.setFecha(gasto.getFecha().getTime());
 				mov.setTipo("D");//debito
 				mov.setMonto(temp.getMonto());
 				mov.setFechaRegistro(new Date());

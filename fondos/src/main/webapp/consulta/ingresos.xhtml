@@ -29,20 +29,32 @@
 }
 </style>
 
-		
+		<f:event listener="#{presupuestoMB.preRender()}" type="preRenderView"></f:event>
 		<div class="titlePage">
 			<b:container fluid="true">
 				<b:row>
-					<b:column col-xs="10">
+					<b:column col-xs="6">
 						<h2 class="headerPage">
 							<h:outputText value="Consulta de ingresos/abonos" />
 						</h2>
 					</b:column>
-					<b:column col-xs="2" styleClass="">
+					<b:column col-xs="6">
+						presupuestos:
+					</b:column>
+				</b:row>
+				<b:row>	
+					<b:column col-xs="6">
+						
+					</b:column>
+					<b:column col-xs="6" styleClass="">
 						<!-- Agregar selector de presupuesto -->
+						<ui:include src="/componentes/filtros/filtroPresupuestoList.xhtml" >
+							<ui:param name="mb" value="#{searchIngresoMB}" />
+							<ui:param name="list" value="#{presupuestoMB.presupuestoActive()}" />
+						</ui:include>
 					</b:column>
 					<b:column col-xs="1" styleClass="">
-						<p:commandLink onclick="PF('findGasto').show();">
+						<p:commandLink action="#{searchIngresoMB.invocacionBusqueda()}" update="idIngresosTable">
 							<b:iconAwesome value="search" solid="true" size="2x"
 								style="color: white;" />
 						</p:commandLink>
@@ -109,8 +121,8 @@
 			</h:form>
 		</b:panel>
 
-		<ui:include src="/componentes/lateralBar/findMovimiento.xhtml" />
-		<ui:include src="/dialog/gasto/detail.xhtml"></ui:include>
+		
+		
 
 	</ui:define>
 

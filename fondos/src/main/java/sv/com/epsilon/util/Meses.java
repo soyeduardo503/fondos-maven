@@ -67,6 +67,8 @@ public class Meses implements Serializable {
 	}
 	
 	public static String obtenerMesLetra(int i) {
+		if(i==-1||i==0)
+			i=1;
 		return new Mes(i).getNombre();
 	}
 	

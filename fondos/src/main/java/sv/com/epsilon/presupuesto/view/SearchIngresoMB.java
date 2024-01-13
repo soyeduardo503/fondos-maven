@@ -9,12 +9,17 @@ import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Catingreso;
 import sv.com.epsilon.entities.Financiamiento;
 import sv.com.epsilon.entities.Gasto;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CatingresoFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.facade.SearchIngresosFacade;
+import sv.com.epsilon.presupuesto.pojo.PresupuestoDashboard;
 import sv.com.epsilon.presupuesto.pojo.SearchIngreso;
 import sv.com.epsilon.util.ExecuteForm;
 /**
@@ -23,6 +28,7 @@ import sv.com.epsilon.util.ExecuteForm;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class SearchIngresoMB implements Serializable{
 
 	/**
@@ -33,14 +39,21 @@ public class SearchIngresoMB implements Serializable{
 	 * 
 	 */
 	
-	
+	private Presupuesto presupuestoSelected;
 	private SearchIngreso search=new SearchIngreso();
 	private List<Catingreso> listDonador=new CatingresoFacade().findAllActive();
 	private List<Financiamiento> list;
+	private List<Presupuesto> presupuestoActive=new PresupuestoFacade().findAllActive();
 	
 	
 	public SearchIngresoMB() {
 		
+	}
+	
+	public void preRender() {
+		if(!FacesContext.getCurrentInstance().isPostback()){
+			
+		}
 	}
 	
 	public String findDonador(Integer idCatingreso) {
@@ -55,6 +68,7 @@ public class SearchIngresoMB implements Serializable{
 		
 		
 		try {
+			search.setPresupuesto(presupuestoSelected);
 			list=new SearchIngresosFacade().invocarBusqueda(search);
 			new ExecuteForm().update("idIngresosTable");
 //			loadFound();

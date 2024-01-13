@@ -1,0 +1,148 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    xmlns:b="http://bootsfaces.net/ui"
+    >
+
+	<b:container fluid="true">
+				<h:form id="idDetailPresupuesto">
+					<b:row>
+						<b:column col-xs="12">
+							<h2 class="headerPage"
+								style="margin: auto; width: 50%; padding: 10px; font-size: 2.1em;">
+
+								#{pr.nombrePresupuesto}</h2>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-xs="3">
+							<h2 class="headerPage">
+								<h:outputText value="Cierre mensual" />
+							</h2>
+						</b:column>
+
+						<b:column col-xs="4">
+
+						</b:column>
+
+						<b:column col-xs="2">
+							<h2 class="headerPage">cierre:</h2>
+							<h:outputText styleClass="message" value="#{mes.nombre}" />
+						</b:column>
+						<b:column col-xs="2">
+							<h2 class="headerPage">Año:</h2>
+							<h:outputText styleClass="message"
+								value="#{pr.year}" />
+						</b:column>
+					</b:row>
+				</h:form>
+				<b:row>
+					<hr />
+				</b:row>
+				<b:row>
+					<b:column col-xs="4">
+						<b:row>
+
+							<b:column col-xs="12">
+								<h1
+									style="color: #999999; font-family: arial, sans-serif; font-size: 26px; font-weight: bold; margin-top: 0px; margin-bottom: 1px;">
+									Periodo:</h1>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<b:column col-xs="6" styleClass="message">
+								<h:outputText value="#{periodo.inicio.time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</b:column>
+							<b:column col-xs="6" styleClass="message">
+								<h:outputText value="#{periodo.fin.time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-xs="6" styleClass="undermessage">Inicio</b:column>
+							<b:column col-xs="6" styleClass="undermessage">Fin</b:column>
+						</b:row>
+					</b:column>
+					<b:column col-xs="4" />
+					<b:column col-xs="4">
+						<b:row>
+
+							<b:column col-xs="12">
+								<h1
+									style="color: #999999; font-family: arial, sans-serif; font-size: 26px; font-weight: bold; margin-top: 0px; margin-bottom: 1px;">
+									Saldo</h1>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<b:column col-xs="6" styleClass="message">$<h:outputText
+									value="#{montoInicial}">
+									<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol="$"
+										currencyCode="USD" />
+								</h:outputText>
+							</b:column>
+							<b:column col-xs="6" styleClass="message">$<h:outputText
+									value="#{montoFinal}">
+									<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol="$" />
+								</h:outputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-xs="6" styleClass="undermessage">Inicial</b:column>
+							<b:column col-xs="6" styleClass="undermessage">Final</b:column>
+						</b:row>
+					</b:column>
+				</b:row>
+				<b:row>
+					<hr />
+				</b:row>
+				<b:row>
+					<b:column col-xs="2">
+						Opciones:
+					</b:column>
+
+					<ui:include src="/componentes/botones/print.xhtml">
+						<ui:param name="bean" value="#{bean}" />
+						<ui:param name="report" value="reportGastos.jasper" />
+						<ui:param name="title" value="CUENTA PRESUPUESTOS DE OPERACIONES" />
+						<ui:param name="ext" value="xls" />
+						<ui:param name="cols" value="1" />
+						<ui:param name="form" value="formPrintMov" />
+						<ui:param name="titleButton" value="Gasto" />
+						<ui:param name="btnClass" value="btn-info" />
+					</ui:include>
+
+					<ui:include src="/componentes/botones/print.xhtml">
+						<ui:param name="bean" value="#{searchRetencionMB}" />
+						<ui:param name="report" value="reportGastosExcluidos.jasper" />
+						<ui:param name="title" value="CUENTA PRESUPUESTOS DE OPERACIONES" />
+						<ui:param name="ext" value="xls" />
+						<ui:param name="cols" value="1" />
+						<ui:param name="form" value="formPrintExc" />
+						<ui:param name="titleButton" value="Excluidos" />
+						<ui:param name="btnClass" value="btn-warning" />
+					</ui:include>
+					<b:column col-xs="5" styleClass="" />
+					<p:commandLink action="#{cierreMensualMB.create()}" oncomplete="PF('wgtCnfCierre').show();"  disabled="#{disabledOption}">
+					<b:column col-xs="1" styleClass="">
+						
+						<b:row>
+							<b:iconAwesome value="lock-open" solid="true" styleClass="btn btn-warning"
+								size="2x" />
+						</b:row>
+						
+						<b:row styleClass="undermessage"> Cerrar</b:row>
+					</b:column>
+					</p:commandLink>
+				</b:row>
+
+			</b:container>
+	
+</ui:composition>

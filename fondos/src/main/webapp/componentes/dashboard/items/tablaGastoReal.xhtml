@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+	<p:dataTable value="#{presupuestoViewMB.dataGasto.list}" var="gr">
+		<f:facet name="header">
+			<h3 class="panel-heading panel-title">Previsto vs Ejecutado</h3>
+		</f:facet>
+		<p:column headerText="Mes">
+			<b:label value="#{gr.mes.nombre}" severity="warning" style="font-size:1.3em;" />
+		</p:column>
+		<p:column headerText="Previsto">
+			<h:outputText value="#{gr.gastoPrevisto}" style="font-size:1.3em;">
+				<f:convertNumber currencyCode="USD" currencySymbol="$" maxFractionDigits="2" minFractionDigits="2"></f:convertNumber>
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Ejecutado">
+			<h:outputText value="#{gr.gastoReal}" style="font-size:1.3em;">
+				<f:convertNumber currencyCode="USD" currencySymbol="$" maxFractionDigits="2" minFractionDigits="2"></f:convertNumber>
+			</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Diferencia" styleClass="btn btn-#{(gr.gastoPrevisto- gr.gastoReal)>0?'primary':'danger'}" >
+			<h:outputText value="#{gr.gastoPrevisto- gr.gastoReal}" style="font-size:1.3em;" >
+				<f:convertNumber currencyCode="USD" currencySymbol="$" maxFractionDigits="2" minFractionDigits="2"></f:convertNumber>
+			</h:outputText>
+			<b:iconAwesome value="#{(gr.gastoPrevisto- gr.gastoReal)>0?'smile-o':'frown-o'}"
+							style="color:white; font-size:1.6em;" solid="true"></b:iconAwesome>
+		</p:column>
+	</p:dataTable>
+
+</ui:composition>

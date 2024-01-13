@@ -131,9 +131,10 @@
 						<h:outputText value="#{g.descripcion}" />
 					</p:column>
 
-					<p:column headerText="Fecha">
-						<h:outputText value="#{g.fecha}">
-							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					<p:column headerText="Fecha" filterBy="#{searchMovimientoMB.convertDate( g.fecha.time)}"  >
+						
+						<h:outputText value="#{searchMovimientoMB.convertDate( g.fecha.time)}">
+							
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Tipo desembolso" field="tipoDesembolso"

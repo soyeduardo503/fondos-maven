@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="../template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{myBundle.AppName}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="body">
+
+		<f:event listener="#{projectionsMB.preRender()}" type="preRenderView"></f:event>
+		<f:event listener="#{presupuestoMB.preRender()}" type="preRenderView"></f:event>
+		<ui:include src="/componentes/headers/headerMantto.xhtml">
+			<ui:param name="bean" value="#{projectionsMB}" />
+		</ui:include>
+		<ui:include src="/componentes/filtros/filtroPresupuestoList.xhtml" >
+			<ui:param name="mb" value="#{projectionsMB}" />
+			<ui:param name="list" value="#{presupuestoMB.presupuestoActive()}" />
+		</ui:include>
+		
+
+		<b:panel collapsible="false">
+			<h:form id="#{projectionsMB.idFormList}">
+
+				<p:dataTable value="#{projectionsMB.list}" var="i"
+					rowIndexVar="rowIndex" scrollHeight="250"
+					id="#{projectionsMB.idTable}">
+					<f:facet name="header">
+
+					</f:facet>
+					<p:column   >
+						<f:facet name="header" >#</f:facet>
+
+						<h:outputText value="#{meses.obtenerNameMes(i.month)}" />
+					</p:column>
+					<p:column headerText="Monto" >
+
+						<h:outputText value="#{i.amount}" />
+
+					</p:column>
+
+					<p:column headerText="Porcentaje" >
+
+						<h:outputText value="#{i.percent}" />
+
+					</p:column>
+
+
+					<p:column headerText="Activo">
+
+						<h:outputText value="#{i.act}" />
+
+
+					</p:column>
+					<p:column>
+						<p:commandLink actionListener="#{projectionsMB.openEdit(i)}" update=":#{projectionsMB.idFormEdit}"
+							styleClass="btn btn-info">
+							<b:iconAwesome value="edit" solid="true" />
+							<f:setPropertyActionListener value="#{i}"
+								target="#{projectionsMB.itemSelected}" />
+						</p:commandLink>
+					
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+		</b:panel>
+
+		
+		<ui:include src="/componentes/lateralBar/editProjection.xhtml" />
+		
+		<h:form id="#{projectionsMB.idFormNew}">
+			<ui:include src="/componentes/dialogs/nuevoProjection.xhtml" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

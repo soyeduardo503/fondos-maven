@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<p:dialog widgetVar="#{projectionsMB.wtgDialog}" width="900" height="750"
+		header="#{projectionsMB.headerDialog}" id="#{projectionsMB.idWtgNew}">
+		<b:panel>
+			<f:facet name="header">
+				<h:outputText value="#{projectionsMB.headerDialog}" />
+			</f:facet>
+			<b:container fluid="true">
+				<p:dataTable value="#{projectionsMB.list}" var="p">
+					<p:column headerText="Mes">
+						<h:outputText value="#{meses.obtenerNameMes(p.month).toUpperCase()}" />
+					</p:column>
+					<p:column headerText="Monto">
+						<p:inputNumber value="#{p.amount}" decimalSeparator="."  placeholder="0.00"></p:inputNumber>
+						
+					</p:column>
+
+				</p:dataTable>
+
+
+
+				<hr />
+
+				<b:row>
+					<b:column col-xs="2" />
+					<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+						<ui:param name="mb" value="#{projectionsMB}" />
+						<ui:param name="cols" value="4"></ui:param>
+					</ui:include>
+					<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+						<ui:param name="mb" value="#{projectionsMB}" />
+						<ui:param name="cols" value="4"></ui:param>
+						<ui:param name="wgt" value="#{projectionsMB.wtgDialog}"></ui:param>
+					</ui:include>
+
+				</b:row>
+			</b:container>
+		</b:panel>
+	</p:dialog>
+</ui:composition>

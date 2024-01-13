@@ -19,9 +19,11 @@ import sv.com.epsilon.entities.Catingreso;
 import sv.com.epsilon.entities.Cierre;
 import sv.com.epsilon.entities.Financiamiento;
 import sv.com.epsilon.entities.Gasto;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.CierreFacade;
 import sv.com.epsilon.facade.FinanciamientoFacade;
+import sv.com.epsilon.facade.GastoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CierreCtrlr;
@@ -32,6 +34,7 @@ import sv.com.epsilon.presupuesto.pojo.GastoExt;
 import sv.com.epsilon.presupuesto.pojo.Periodo;
 import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
+import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.Mes;
 import sv.com.epsilon.util.PeriodoUtil;
@@ -72,6 +75,8 @@ public class CierreMensualMB implements Serializable {
 	private Boolean reload=false;
 	private boolean vdefault=true;
 	private List<Mes> mesesCerrados;
+	private Double totalGasto;
+	private Presupuesto presupuestoSelected;
 
 	public CierreMensualMB() {
 
@@ -99,13 +104,18 @@ public class CierreMensualMB implements Serializable {
 	public void preRender() {
 		if (!FacesContext.getCurrentInstance().isPostback()||reload) {
 			vdefault=true;
-			loadInfo();
+			if(usuarioSessionMB.getPresupuestoSelected()!=null) {
+				this.presupuestoSelected=usuarioSessionMB.getPresupuestoSelected();
+				loadInfo();
+			}
+			
 		}
 	}
 	public void loadInfo() {
 			int idPre=usuarioSessionMB.getIdPresupuestoSelected();
 			listCierres=new CierreFacade().list("/all/byPresupuesto/"+idPre);
 			try {
+				Presupuesto pre = usuarioSessionMB.getPresupuestoSelected();
 
 				SearchGasto searcher = new SearchGasto();
 				searcher.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
@@ -118,10 +128,15 @@ public class CierreMensualMB implements Serializable {
 					searcher.setFechaFinal(periodo.getFin());
 
 				}
+				
 				list = new ArrayList<>();
 				if (month != 1) {						
-						new CierreCtrlr().findFirstIncome(idPre,usuarioSessionMB.getPresupuestoSelected().getMesCierre(),usuarioSessionMB.getPresupuestoSelected().getYear(),list);
+						new CierreCtrlr().findFirstIncome(idPre,pre.getMesCierre(),pre.getYear(),list);
 					
+				}
+				NumberResponse resp = new GastoFacade().getNumber("/amount/month/"+pre.getYear()+"/"+month+"/"+usuarioSessionMB.getPresupuestoSelected().getIdPresupuesto());
+				if(resp.getCod()==0) {
+					this.totalGasto=resp.getDoubleValue();
 				}
 				// list.add(incomeFirst());
 				list.addAll(new GastoCtrlr().invocarBusqueda(searcher));
@@ -136,6 +151,7 @@ public class CierreMensualMB implements Serializable {
 					montoFinal = finalv.get().getSaldo();
 				}
 				loadFound();
+				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -191,7 +207,7 @@ public class CierreMensualMB implements Serializable {
 	}
 	
 	public void create() {
-		Cierre c=new Cierre(null, Calendar.getInstance(), usuarioSessionMB.getPresupuestoSelected().getMesCierre(), montoInicial, montoFinal, "A", usuarioSessionMB.getIdUser(), usuarioSessionMB.getIdPresupuestoSelected(), usuarioSessionMB.getPresupuestoSelectedDlg().getYear());
+		Cierre c=new Cierre(null, Calendar.getInstance(), usuarioSessionMB.getPresupuestoSelected().getMesCierre(), montoInicial, montoFinal, "A", usuarioSessionMB.getIdUser(), usuarioSessionMB.getIdPresupuestoSelected(), usuarioSessionMB.getPresupuestoSelected().getYear(),totalGasto);
 		try {
 			if(new CierreFacade().action("/do", true, c)) {
 				usuarioSessionMB.updatePresupuesto();

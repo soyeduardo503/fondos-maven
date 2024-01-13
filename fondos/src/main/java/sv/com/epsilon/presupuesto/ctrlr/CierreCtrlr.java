@@ -46,7 +46,7 @@ public class CierreCtrlr {
 			d.set(Calendar.DAY_OF_MONTH, 1);
 			d.set(Calendar.MONTH, month - 1);
 			d.set(Calendar.YEAR, year);
-			fIncomes.setFecha(d.getTime());
+			fIncomes.setFecha(d);
 			list.add(fIncomes);
 		}
 	}

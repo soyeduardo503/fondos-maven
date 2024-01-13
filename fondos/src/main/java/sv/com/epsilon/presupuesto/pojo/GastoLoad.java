@@ -3,6 +3,9 @@
  */
 package sv.com.epsilon.presupuesto.pojo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +34,7 @@ public class GastoLoad {
 	
     private String mes;
     @Position(methodTarget = "setFecha",classTarget = Gasto.class,type = Date.class)
-    private Date fecha;    
+    private String fecha;    
     private String categoria;
     
     private String codigo;
@@ -48,8 +51,15 @@ public class GastoLoad {
     private String proveedor;
     @Position(methodTarget = "setDescripcion",classTarget = Gasto.class,type = String.class)
     private String concepto;
+    private Integer idProveedor;
     
     private double saldo;
 	
 
+    public Calendar date() throws ParseException {
+    	Calendar c=Calendar.getInstance();
+    	Date d=new SimpleDateFormat("dd/MM/yyyy").parse(getFecha());
+    	c.setTime(d);
+    	return c;
+    }
 }

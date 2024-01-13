@@ -7,6 +7,8 @@ package sv.com.epsilon.entities;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,8 +45,15 @@ public class Projection implements Serializable {
    
     private Integer idEmpresa;
 
-   
-   
+    
+
+    
+
+    private Integer percent;
+    
+
+
+   @JsonIgnore
     public Mes getMesLetter() {
     	return new Mes(month);
 
