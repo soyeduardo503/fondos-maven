@@ -19,43 +19,54 @@
 
 		
 		<div class="titlePage">
+			<ui:include src="/componentes/headers/headerCierre.xhtml" >
+				<ui:param name="ci" value="#{listaCierresMB.cierre}" />
+				<ui:param name="pr" value="#{listaCierresMB.presupuestoSelected}" />
+				<ui:param name="mes" value="#{listaCierresMB.mes}" />
+				<ui:param name="periodo" value="#{listaCierresMB.periodo}" />
+				<ui:param name="montoInicial" value="#{listaCierresMB.montoInicial}" />
+				<ui:param name="montoFinal" value="#{listaCierresMB.montoFinal}" />
+				<ui:param name="disabledOption" value="true" />
+			</ui:include>
 			<b:container fluid="true">
-				<h:form id="idDetailPresupuesto">
-					<b:row>
-						<b:column col-xs="12">
-							<h2 class="headerPage"
-								style="margin: auto; width: 50%; padding: 10px; font-size: 2.1em;">
-
-								Cierres</h2>
-						</b:column>
-					</b:row>
-					
-				</h:form>
-				<b:row>
-					<hr />
-				</b:row>
-				<b:row>
-					
+						
 				
-				</b:row>
 				<b:row>
 					<hr />
 					
 
 				<ui:include src="/componentes/filtros/filtroPresupuestoCarrousel.xhtml" >
-					<ui:param name="" value="" />
+					<ui:param name="mb" value="#{listaCierresMB}" />
+					
+					<ui:param name="listValues" value="#{listaCierresMB.listPre}"></ui:param>
 				</ui:include>
    
 					
 					
 				</b:row>
+				<b:row>
+					<ui:include src="/componentes/tabla/tablaMeses.xhtml" />
+				</b:row>
+							<b:row>
 				
+				<ui:include src="/componentes/botones/load.xhtml" >
+					<ui:param name="cols" value="1" />
+					<ui:param name="mb" value="#{cierreMB}" />
+					<ui:param name="action" value="#{cierreMB.load()}" />
+					<ui:param name="form" value="btnOpenCierres" />
+					<ui:param name="btnClass" value="btn-primary" />
+					<ui:param name="updateId" value="IDDlgCierres" />
+					<ui:param name="open" value="PF('DlgCierres').show();" />
+					<ui:param name="titleButton" value="Ver Cierres" />
+				</ui:include>
+				
+			</b:row>
 
 	
 			</b:container>
 
 		</div>
-		<ui:include src="/componentes/tabla/tablaMeses.xhtml" />
+		
 		<style>
 .ui-filter-column .ui-column-customfilter .custom-filter {
 	width: 100%;
@@ -63,6 +74,8 @@
 }
 </style>
 		<b:panel look="primary" collapsible="false">
+
+			<hr></hr>
 
 			<h:form id="idGastosTable">
 
@@ -143,7 +156,7 @@
 
 
 		<ui:include src="/dialog/confirmCierreCreated.xhtml"></ui:include>
-
+		<ui:include src="/dialog/cierre/dialogCierres.xhtml"></ui:include>
 	</ui:define>
 
 </ui:composition>

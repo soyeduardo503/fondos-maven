@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+
+
+	<p:dialog widgetVar="DlgCierres" header="Cierres del presupuesto" width="900"
+		height="350" closable="true" closeOnEscape="true" id="IDDlgCierres">
+		<p:dataTable value="#{cierreMB.list}" var="c"  rowIndexVar="indexVar" rowStyleClass="showInformation">
+			<p:column width="10">
+				<h:outputText value="#{indexVar+1}" />
+			</p:column>
+			<p:column headerText="Mes" >
+				<h:outputText value="#{meses.obtenerMesLetra( c.mes)}" />
+			</p:column>
+			<p:column headerText="Saldo Inicial" >
+				
+				<h:outputText value="#{c.montoInicial}" >
+					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Gasto del Mes" >
+				<h:outputText value="#{c.gasto}" styleClass="gasto" >
+					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Saldo Final" >
+				<h:outputText value="#{c.montoFinal}" >
+					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</p:dialog>
+
+
+</ui:composition>

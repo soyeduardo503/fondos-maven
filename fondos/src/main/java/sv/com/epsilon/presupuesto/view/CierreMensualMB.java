@@ -24,6 +24,7 @@ import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.CierreFacade;
 import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.facade.GastoFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.CierreCtrlr;
@@ -36,6 +37,7 @@ import sv.com.epsilon.presupuesto.pojo.SearchGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.ExecuteForm;
+import sv.com.epsilon.util.Log;
 import sv.com.epsilon.util.Mes;
 import sv.com.epsilon.util.PeriodoUtil;
 
@@ -77,6 +79,7 @@ public class CierreMensualMB implements Serializable {
 	private List<Mes> mesesCerrados;
 	private Double totalGasto;
 	private Presupuesto presupuestoSelected;
+	private List<Presupuesto> listPre=new PresupuestoFacade().findAllActive();
 
 	public CierreMensualMB() {
 
@@ -111,30 +114,37 @@ public class CierreMensualMB implements Serializable {
 			
 		}
 	}
+	
+	public void loadPresupuesto() {
+		this.usuarioSessionMB.setPresupuestoSelected(presupuestoSelected);
+		this.usuarioSessionMB.setIdPresupuestoSelected(presupuestoSelected.getIdPresupuesto());
+		this.usuarioSessionMB.setPresupuestoSelectedDlg(presupuestoSelected);
+		loadInfo();
+	}
+	
 	public void loadInfo() {
-			int idPre=usuarioSessionMB.getIdPresupuestoSelected();
+			int idPre=presupuestoSelected.getIdPresupuesto();
 			listCierres=new CierreFacade().list("/all/byPresupuesto/"+idPre);
 			try {
-				Presupuesto pre = usuarioSessionMB.getPresupuestoSelected();
-
 				SearchGasto searcher = new SearchGasto();
-				searcher.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
+				searcher.setPresupuesto(presupuestoSelected);
 				if(month==null||vdefault)
-					this.month = usuarioSessionMB.getPresupuestoSelected().getMesCierre();
+					this.month = presupuestoSelected.getMesCierre();
 				if (month != null) {
-					periodo = PeriodoUtil.make(Integer.valueOf(usuarioSessionMB.getPresupuestoSelected().getYear()),
+					periodo = PeriodoUtil.make(Integer.valueOf(presupuestoSelected.getYear()),
 							month);
 					searcher.setFechaInicial(periodo.getInicio());
+					Log.info("periodo ["+periodo.getInicio().getTime()+"-"+ periodo.getFin().getTime());
 					searcher.setFechaFinal(periodo.getFin());
 
 				}
 				
 				list = new ArrayList<>();
 				if (month != 1) {						
-						new CierreCtrlr().findFirstIncome(idPre,pre.getMesCierre(),pre.getYear(),list);
+						new CierreCtrlr().findFirstIncome(idPre,presupuestoSelected.getMesCierre(),presupuestoSelected.getYear(),list);
 					
 				}
-				NumberResponse resp = new GastoFacade().getNumber("/amount/month/"+pre.getYear()+"/"+month+"/"+usuarioSessionMB.getPresupuestoSelected().getIdPresupuesto());
+				NumberResponse resp = new GastoFacade().getNumber("/amount/month/"+presupuestoSelected.getYear()+"/"+month+"/"+presupuestoSelected.getIdPresupuesto());
 				if(resp.getCod()==0) {
 					this.totalGasto=resp.getDoubleValue();
 				}
@@ -162,7 +172,7 @@ public class CierreMensualMB implements Serializable {
 
 	private GastoExt incomeFirst() {
 		Optional<Financiamiento> income = new FinanciamientoFacade().findFirst(
-				usuarioSessionMB.getIdPresupuestoSelected(), usuarioSessionMB.getPresupuestoSelected().getMesCierre());
+				presupuestoSelected.getIdPresupuesto(), presupuestoSelected.getMesCierre());
 		Optional<Catingreso> tx = Optional.of(new Catingreso(0, "SALDO INICIAL "));
 		if (income.isPresent())
 			return new GastoExt(income.get(), tx);
@@ -173,10 +183,10 @@ public class CierreMensualMB implements Serializable {
 	public void invocacionBusqueda() {
 
 		try {
-			search.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
+			search.setPresupuesto(presupuestoSelected);
 
 			if (month != null && !month.equals("")) {
-				Periodo periodo = PeriodoUtil.make(Integer.valueOf(usuarioSessionMB.getPresupuestoSelected().getYear()),
+				Periodo periodo = PeriodoUtil.make(Integer.valueOf(presupuestoSelected.getYear()),
 						month);
 				search.setFechaInicial(periodo.getInicio());
 				search.setFechaFinal(periodo.getFin());
@@ -207,7 +217,7 @@ public class CierreMensualMB implements Serializable {
 	}
 	
 	public void create() {
-		Cierre c=new Cierre(null, Calendar.getInstance(), usuarioSessionMB.getPresupuestoSelected().getMesCierre(), montoInicial, montoFinal, "A", usuarioSessionMB.getIdUser(), usuarioSessionMB.getIdPresupuestoSelected(), usuarioSessionMB.getPresupuestoSelected().getYear(),totalGasto);
+		Cierre c=new Cierre(null, Calendar.getInstance(), presupuestoSelected.getMesCierre(), montoInicial, montoFinal, "A", usuarioSessionMB.getIdUser(),presupuestoSelected.getIdPresupuesto(), presupuestoSelected.getYear(),totalGasto);
 		try {
 			if(new CierreFacade().action("/do", true, c)) {
 				usuarioSessionMB.updatePresupuesto();

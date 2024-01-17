@@ -13,26 +13,26 @@
 			<b:panel look="primary" title="#{proveedoresMB.headerDialog}" collapsible="false"> 
 				<b:container fluid="true">
 					<b:row>
-						<b:column col-xs="5">
-							<b:row>
-							
-									<h:outputText value="Nombre" />
-							
-							</b:row>
-							<b:row>
-									<p:inputText value="#{proveedoresMB.itemSelected.nombre}" size="20" maxlength="50"></p:inputText>
-							</b:row>
-						</b:column>
-						<b:column col-xs="5">
-							<b:row>
-								<h:outputText value="Cuenta" />
-							</b:row>
-							<b:row><p:inputText  value="#{proveedoresMB.itemSelected.ncuenta}" id="codigo" />
-							
-							</b:row>
-							
-						</b:column>
+						<b:badge value="#{proveedoresMB.itemSelected.idProveedor}"></b:badge>
 					</b:row>
+					
+							
+					<b:row>
+									<p:inputText value="#{proveedoresMB.itemSelected.nombre}" size="50" maxlength="50"></p:inputText>
+					</b:row>			
+					<b:row>		
+								<h:outputText value="Nombre" />	
+							
+					</b:row>
+					<b:row>
+								<h:outputText value="Cuenta" />
+					</b:row>
+					<b:row>
+					<p:inputText  value="#{proveedoresMB.itemSelected.ncuenta}" id="codigo" />
+							
+					</b:row>
+							
+						
 				
 					<b:row>
 						<b:column>

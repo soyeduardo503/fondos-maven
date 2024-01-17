@@ -28,8 +28,9 @@ public class PeriodoUtil {
 		fin.set(Calendar.MONTH, month);
 	
 		fin.set(Calendar.DAY_OF_MONTH,1);
-		
+		fin.set(Calendar.YEAR, year);
 		fin.add(Calendar.DAY_OF_MONTH, -1);
+		
 		System.out.println(fin.getTime());
 		return new  Periodo(inicio, fin);
 	}

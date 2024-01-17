@@ -1426,7 +1426,8 @@ font-family: Tahoma, Geneva, sans-serif;
 font-size: 25px;
 letter-spacing: 2px;
 word-spacing: 2px;
-color: #000000;
+color: #ffffff !important;
+font-stretch: wider;
 font-weight: 700;
 text-decoration: none;
 font-style: normal;
@@ -1514,8 +1515,20 @@ text-transform: none;
 }	
 .mesLabel {
 border-radius: 5%;
-  border: 2px solid #0000ff75;
-  background-color: #FFFFFF;
+  border: 2px solid #435d7d;
+  background-color: #e9ecef;
   text-align: center;
   color: #0000ff75;
+}
+
+.showInformation {
+	background-color: #fff !important;
+	background-image: none !important;
+	color: #000 !important;
+	font-size: 1.4em;
+	font-family: inherit;
+	font-style: normal;
+	font-weight: lighter;
+	border-bottom: 0;
+	border-bottom-left-radius: 0.6em;
 }

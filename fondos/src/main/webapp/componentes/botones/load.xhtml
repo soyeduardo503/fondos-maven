@@ -1,0 +1,30 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+                      
+             <b:column col-xs="#{cols}"  style="display:  block !important;">
+             <h:form id="#{form}">
+             	
+             	<b:row styleClass="btn #{btnClass}" style="display:  block !important;">
+             	         
+					<p:commandLink  action="#{mb.load()}"   update="#{updateId}"  oncomplete="#{open}" >
+						
+						
+				
+						<b:iconAwesome value="external-link-alt" solid="true" size="2x" style="color:white;" />
+				
+						
+					</p:commandLink>
+				
+				</b:row>
+				<b:row   style="display:  block !important;">
+             		#{titleButton}
+             	</b:row>
+				</h:form>	
+		</b:column>
+</ui:composition>

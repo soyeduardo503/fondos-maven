@@ -4,15 +4,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 
-	<f:event listener="#{listaCierresMB.preRender}" type="preRenderView"></f:event>
+	<f:event listener="#{mb.preRender}" type="preRenderView"></f:event>
 	<h:form id="IDfiltrosPresupuestoCarousel">
 		<div class="card">
-			 <p:selectOneMenu id="slctPresu"  value="#{listaCierresMB.presupuestoSelected}" converter="presupuestoConverter" valueChangeListener="#{listaCierresMB.loadPresupuesto()}" >
-			 		  <f:selectItems value="#{listaCierresMB.listPre}" var="item" itemLabel="#{item.nombrePresupuesto} - #{item.year}"
+		<span class="demoFont" style="font-size:1.5em;"> Presupuestos :</span>
+			 <p:selectOneMenu id="slctPresu"  value="#{mb.presupuestoSelected}" converter="presupuestoConverter" valueChangeListener="#{mb.loadPresupuesto()}" >
+			 		  <f:selectItems value="#{listValues}" var="item" itemLabel="#{item.nombrePresupuesto} - #{item.year}"
                             itemValue="#{item}" />
                         <p:column><b:iconAwesome value="calendar" solid="true"></b:iconAwesome> #{item.nombrePresupuesto}  </p:column>
 			 </p:selectOneMenu>
-		
+			
 		</div>
 	</h:form>
 

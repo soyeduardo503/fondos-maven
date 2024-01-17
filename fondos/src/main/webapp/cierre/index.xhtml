@@ -19,7 +19,7 @@
 
 
 		<div class="titlePage">
-			<ui:include src="/componentes/headers/headerCierre.xhtml" >
+			<ui:include src="/componentes/headers/headerCierre.xhtml">
 				<ui:param name="ci" value="#{cierreMensualMB.current}" />
 				<ui:param name="pr" value="#{cierreMensualMB.presupuestoSelected}" />
 				<ui:param name="mes" value="#{cierreMensualMB.mes}" />
@@ -28,6 +28,41 @@
 				<ui:param name="montoFinal" value="#{cierreMensualMB.montoFinal}" />
 				<ui:param name="disabledOption" value="false" />
 			</ui:include>
+			<b:container fluid="true">
+
+
+				<b:row>
+					<hr />
+
+
+					<ui:include src="/componentes/filtros/filtroPresupuestoCarrousel.xhtml">
+						<ui:param name="mb" value="#{cierreMensualMB}" />
+
+						<ui:param name="listValues" value="#{cierreMensualMB.listPre}"></ui:param>
+					</ui:include>
+
+
+
+				</b:row>
+
+				<b:row>
+
+					<ui:include src="/componentes/botones/load.xhtml">
+						<ui:param name="cols" value="1" />
+						<ui:param name="mb" value="#{cierreMB}" />
+						<ui:param name="action" value="#{cierreMB.load()}" />
+						<ui:param name="form" value="btnOpenCierres" />
+						<ui:param name="btnClass" value="btn-primary" />
+						<ui:param name="updateId" value="IDDlgCierres" />
+						<ui:param name="open" value="PF('DlgCierres').show();" />
+						<ui:param name="titleButton" value="Ver Cierres" />
+					</ui:include>
+
+				</b:row>
+
+
+			</b:container>
+
 		</div>
 		<style>
 .ui-filter-column .ui-column-customfilter .custom-filter {
@@ -52,11 +87,13 @@
 					<p:column headerText="Proveedor" filterBy="#{g.idProveedor.nombre}">
 						<h:outputText value="#{g.idProveedor.nombre}" />
 					</p:column>
-					<p:column headerText="Descripcion" filterBy="#{g.descripcion}" filterMatchMode="contains">
+					<p:column headerText="Descripcion" filterBy="#{g.descripcion}"
+						filterMatchMode="contains">
 						<h:outputText value="#{g.descripcion}" />
 					</p:column>
 
-					<p:column headerText="Fecha" width="80" filterBy="#{searchMovimientoMB.convertDate( g.fecha.time)}">
+					<p:column headerText="Fecha" width="80"
+						filterBy="#{searchMovimientoMB.convertDate( g.fecha.time)}">
 						<h:outputText value="#{g.fecha.time}">
 							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</h:outputText>
@@ -83,7 +120,7 @@
 						<h:outputText value="#{g.cheque}" />
 					</p:column>
 					<p:column headerText="Total ($)" width="80">
-						<h:outputText value="#{g.total}" >
+						<h:outputText value="#{g.total}">
 							<f:convertNumber maxFractionDigits="2" minFractionDigits="2" currencySymbol="$" />
 						</h:outputText>
 					</p:column>
@@ -115,7 +152,7 @@
 
 
 		<ui:include src="/dialog/confirmCierreCreated.xhtml"></ui:include>
-
+		<ui:include src="/dialog/cierre/dialogCierres.xhtml"></ui:include>
 	</ui:define>
 
 </ui:composition>

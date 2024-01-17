@@ -7,7 +7,7 @@
     
                       xmlns:b="http://bootsfaces.net/ui">
              <b:column col-xs="2" styleClass="mesLabel">         
-					<p:commandLink  action="#{listaCierresMB.CallMonth(month)}" disabled="#{!month.icon.equals('eye')}" update=":idGastosTable" >
+					<p:commandLink  action="#{listaCierresMB.CallMonth(month)}" disabled="#{!month.icon.equals('eye')}" update=":idGastosTable,:idDetailPresupuesto,detailCierre" >
 						
 						
 						<h3 >#{month.nombre}</h3>

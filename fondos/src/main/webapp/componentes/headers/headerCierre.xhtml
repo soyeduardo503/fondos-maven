@@ -42,6 +42,7 @@
 				<b:row>
 					<hr />
 				</b:row>
+				<h:form id="detailCierre">
 				<b:row>
 					<b:column col-xs="4">
 						<b:row>
@@ -130,7 +131,7 @@
 						<ui:param name="btnClass" value="btn-warning" />
 					</ui:include>
 					<b:column col-xs="5" styleClass="" />
-					<p:commandLink action="#{cierreMensualMB.create()}" oncomplete="PF('wgtCnfCierre').show();"  disabled="#{disabledOption}">
+					<p:commandLink action="#{cierreMensualMB.create()}" oncomplete="PF('wgtCnfCierre').show();"  disabled="#{disabledOption}"   >
 					<b:column col-xs="1" styleClass="">
 						
 						<b:row>
@@ -142,7 +143,7 @@
 					</b:column>
 					</p:commandLink>
 				</b:row>
-
+				</h:form>
 			</b:container>
 	
 </ui:composition>
