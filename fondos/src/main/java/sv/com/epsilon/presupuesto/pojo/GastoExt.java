@@ -27,12 +27,14 @@ public class GastoExt extends Gasto {
 	
 	private Double Abono;
 	@JsonIgnore
-	private Double saldo; 
+	private Double saldo;
+	private String typeTransaccion="S";
 	public GastoExt(Gasto g) {
 			
 			super(g.getIdGasto(), g.getNombre(), g.getDescripcion(), g.getNombrePantalla(), g.getAct(), g.getCodigo(), g.getCheque(),
 					g.getTotal(),g.getIdEmpresa(),  g.getFecha(), g.getFechaRegistro(), g.getReciboList(),g.getImagenList(), g.getMovimientoList(), 
 					g.getIdTipoDesembolso(), g.getIdProveedor(), g.getKpresupuesto(), g.getStatus(), g.getNumeroComprobante());
+			typeTransaccion="S";
 	}
 		
 		public GastoExt(Financiamiento f,Optional<Catingreso> nombre) {
@@ -45,5 +47,6 @@ public class GastoExt extends Gasto {
 			c.setTime(f.getFecha());
 			this.setFecha( c);
 			this.setStatus("T");
+			typeTransaccion="E";
 		}
 }

@@ -1420,6 +1420,11 @@ padding: 0.4em !important ;
         color: #ffffff !important;
 }
 
+.spreadsheet {
+        background-color: #f1faee !important;
+        background-image: none !important;
+        color: #000 !important;
+}
 
 .demoFont {
 font-family: Tahoma, Geneva, sans-serif;

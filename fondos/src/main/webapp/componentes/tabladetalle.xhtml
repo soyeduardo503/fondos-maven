@@ -25,7 +25,7 @@
 					</h:outputText>
 				</p:column>
 				<p:column headerText="%" width="60">
-					<h:outputText value="#{((cat.monto-cat.actual)/cat.monto)}">
+					<h:outputText value="#{ cat.monto eq 0.0?0.0: ((cat.monto-cat.actual)/cat.monto)}">
 						<f:convertNumber type="percent" />
 					</h:outputText>
 				</p:column>
@@ -39,6 +39,14 @@
 						
 						<div class="btn btn-info">
 							<b:iconAwesome value="search" style="color:white; font-size:1.6em;" solid="true"></b:iconAwesome>
+						</div>
+					</p:commandLink>
+					
+					<p:commandLink action="#{listaCategoriaMB.load(cat.codigo)}"
+					 update=":IDDlgCuentas" oncomplete="PF('DlgListaCuentas').show();">
+						
+						<div class="btn btn-success">
+							<b:iconAwesome value="info" style="color:white; font-size:1.6em;" solid="true"></b:iconAwesome>
 						</div>
 					</p:commandLink>
 				</p:column>

@@ -8,28 +8,31 @@
 
 
 
-	<p:dialog widgetVar="DlgCierres" header="Cierres del presupuesto" width="900"
-		height="750" closable="true" closeOnEscape="true" id="IDDlgCierres">
-		<p:dataTable value="#{cierreMB.list}" var="c"  rowIndexVar="indexVar" rowStyleClass="showInformation">
+	<p:dialog widgetVar="DlgListaCuentas" header="Detalle cuentas" width="1200"
+		height="750" closable="true" closeOnEscape="true" id="IDDlgCuentas">
+		<p:dataTable value="#{listaCategoriaMB.list}" var="c"  rowIndexVar="indexVar" rowStyleClass="showInformation">
 			<p:column width="10">
 				<h:outputText value="#{indexVar+1}" />
 			</p:column>
-			<p:column headerText="Mes" >
-				<h:outputText value="#{meses.obtenerMesLetra( c.mes)}" />
+			<p:column headerText="Codigo" >
+				<h:outputText value="#{c.codigo}" />
 			</p:column>
-			<p:column headerText="Saldo Inicial" >
+			<p:column headerText="Nombre" >
+				<h:outputText value="#{c.nombre}" />
+			</p:column>
+			<p:column headerText="Monto Asignado" >
 				
-				<h:outputText value="#{c.montoInicial}" >
+				<h:outputText value="#{c.monto}" >
 					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
 				</h:outputText>
 			</p:column>
-			<p:column headerText="Gasto del Mes" >
-				<h:outputText value="#{c.gasto}" styleClass="gasto" >
+			<p:column headerText="Gastado" >
+				<h:outputText value="#{c.actual}" styleClass="gasto" >
 					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
 				</h:outputText>
 			</p:column>
-			<p:column headerText="Saldo Final" >
-				<h:outputText value="#{c.montoFinal}" >
+			<p:column headerText="Saldo" >
+				<h:outputText value="#{c.monto-c.actual}" >
 					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
 				</h:outputText>
 			</p:column>

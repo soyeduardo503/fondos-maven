@@ -316,6 +316,11 @@ public class CategoriaFacade extends WSClient<Categoria> {
 		// TODO Auto-generated method stub
 		return getMontoDisponible("/amountSpent/"+idPresupuesto).intValue();
 	}
+
+	public List<Categoria> children(String cod) {
+		// TODO Auto-generated method stub
+		return getList("/list/code/"+cod);
+	}
 	
 	
 }

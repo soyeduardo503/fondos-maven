@@ -78,7 +78,7 @@
 
 				<p:dataTable value="#{cierreMensualMB.list}" id="idTableGastos"
 					widgetVar="idTableGastos" var="g" rowIndexVar="indexVar"
-					rowStyleClass="#{  g.status eq 'R'?'revert': (g.status eq 'T'?'ingreso':'paid') }">
+					rowStyleClass="#{ g.descripcion.contains('PLANILLA')?'spreadsheet' : ( g.status eq 'R'?'revert': (g.status eq 'T'?'ingreso':'paid') )}">
 
 
 					<p:column width="10">
@@ -138,8 +138,8 @@
 
 					<p:column headerText="" width="80">
 
-						<b:iconAwesome styleClass="btn #{g.status.equals('A')? 'btn-danger':'btn-success'}"
-							value="#{g.status.equals('A')? 'arrow-up':'arrow-down'}" solid="true"></b:iconAwesome>
+						<b:iconAwesome styleClass="btn #{g.typeTransaccion.equals('S')? 'btn-danger':'btn-success'}"
+							value="#{g.typeTransaccion.equals('S')? 'arrow-up':'arrow-down'}" solid="true"></b:iconAwesome>
 
 					</p:column>
 

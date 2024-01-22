@@ -12,6 +12,7 @@
 				<p:outputLabel value="#{usuarioSessionMB.presupuestoSelected.actual}">
 					<f:convertNumber maxFractionDigits="2" />
 				</p:outputLabel>
+				<b:iconAwesome solid="true"  value="arrow-up"/>
 			</b:column>
 		</b:row>
 
@@ -21,6 +22,15 @@
 				<h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}">
 					<f:convertNumber maxFractionDigits="2" />
 				</h:outputText>
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column colXs="6">Ingresos</b:column>
+			<b:column colXs="6" styleClass="paid">
+				<h:outputText value="#{presupuestoViewMB.montoIngreso}" >
+					<f:convertNumber maxFractionDigits="2" />
+				</h:outputText>
+				<b:iconAwesome solid="true"  value="arrow-down"/>
 			</b:column>
 		</b:row>
 		<b:row>

@@ -47,6 +47,7 @@ public class CierreCtrlr {
 			d.set(Calendar.MONTH, month - 1);
 			d.set(Calendar.YEAR, year);
 			fIncomes.setFecha(d);
+			fIncomes.setTypeTransaccion("E");
 			list.add(fIncomes);
 		}
 	}

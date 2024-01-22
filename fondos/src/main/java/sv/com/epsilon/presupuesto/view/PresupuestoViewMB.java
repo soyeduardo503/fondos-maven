@@ -20,6 +20,7 @@ import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
 import sv.com.epsilon.facade.Distribution5Facade;
+import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.ChartsCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.DataGastoPeriodCtrlr;
 import sv.com.epsilon.presupuesto.pojo.DataGastoPeriod;
@@ -27,6 +28,7 @@ import sv.com.epsilon.presupuesto.pojo.Distribution;
 import sv.com.epsilon.presupuesto.pojo.GastoReal;
 import sv.com.epsilon.presupuesto.pojo.NodeModel;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
+import sv.com.epsilon.response.NumberResponse;
 
 /**
  * @author usuario07
@@ -53,6 +55,7 @@ public class PresupuestoViewMB implements Serializable{
 	private Integer percentExecution;
 	private List<Categoria> listCatDist;
 	private DataGastoPeriod dataGasto ;
+	private Double montoIngreso;
 	
 	
 	public PresupuestoViewMB() {
@@ -71,6 +74,10 @@ public class PresupuestoViewMB implements Serializable{
 			//facade.foundExecution(presupuesto.getIdPresupuesto()); 
 			percentExecution=  (int) (((presupuesto.getTotal()-presupuesto.getActual())/presupuesto.getTotal())*100);
 			log.info("Porcentaje ->"+percentExecution);
+			NumberResponse resp = new FinanciamientoFacade().getNumber("/totalByCodPresupuesto/"+presupuesto.getCodigo());
+			if(resp.getCod()==0) {
+				montoIngreso=resp.getDoubleValue();
+			}
 		}
 	}
 	private void makeModel(String codigo) {
@@ -192,6 +199,9 @@ public class PresupuestoViewMB implements Serializable{
 	}
 
 	public String style(Categoria cat) {
+		if((cat.getMonto()-cat.getActual())<0) {
+			return "danger";
+		}
 		int value=(int)(((cat.getMonto()-cat.getActual())/cat.getMonto())*100);
 		if(value>=70)
 			return "primary";
@@ -201,6 +211,10 @@ public class PresupuestoViewMB implements Serializable{
 		return "danger";
 	}
 	public String icon(Categoria cat) {
+		
+		if((cat.getMonto()-cat.getActual())<0) {
+			return "skull";
+		}
 		int value=(int)(((cat.getMonto()-cat.getActual())/cat.getMonto())*100);
 		if(value>=70)
 			return "smile-o";
