@@ -6,9 +6,9 @@
 		title="#{presupuestoViewMB.presupuesto.nombrePresupuesto} - #{presupuestoViewMB.presupuesto.year}">
 
 
-		<b:row>
+		<b:row >
 			<b:column colXs="6">Monto Gastado</b:column>
-			<b:column colXs="6">
+			<b:column colXs="6" styleClass="btn btn-danger">
 				<p:outputLabel value="#{usuarioSessionMB.presupuestoSelected.actual}">
 					<f:convertNumber maxFractionDigits="2" />
 				</p:outputLabel>
@@ -16,24 +16,24 @@
 			</b:column>
 		</b:row>
 
-		<b:row>
+		<b:row >
 			<b:column colXs="6">Monto presupuestado</b:column>
-			<b:column colXs="6">
+			<b:column colXs="6"  styleClass="btn btn-info">
 				<h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}">
 					<f:convertNumber maxFractionDigits="2" />
 				</h:outputText>
 			</b:column>
 		</b:row>
-		<b:row>
+		<b:row >
 			<b:column colXs="6">Ingresos</b:column>
-			<b:column colXs="6" styleClass="paid">
+			<b:column colXs="6" styleClass="btn btn-success">
 				<h:outputText value="#{presupuestoViewMB.montoIngreso}" >
 					<f:convertNumber maxFractionDigits="2" />
 				</h:outputText>
 				<b:iconAwesome solid="true"  value="arrow-down"/>
 			</b:column>
 		</b:row>
-		<b:row>
+		<b:row >
 			<b:panel collapsible="false" look="danger" title="Porcentaje disponible">
 				<div class="knob-container ui-corner-all">
 					<p:knob foregroundColor="#2196F3" backgroundColor="#495057" disabled="true"
