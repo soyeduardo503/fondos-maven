@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:composition template="../template.xhtml">
@@ -31,38 +28,46 @@
 
 		<f:event listener="#{presupuestoMB.preRender()}" type="preRenderView"></f:event>
 		<div class="titlePage">
+			<h:form>
 			<b:container fluid="true">
 				<b:row>
-					<b:column col-xs="6">
+					<b:column col-xs="3">
 						<h2 class="headerPage">
 							<h:outputText value="Consulta de ingresos/abonos" />
 						</h2>
 					</b:column>
 					<b:column col-xs="6">
-						presupuestos:
+						<h:outputText value="presupuestos:" styleClass="headerPage"/>
 					</b:column>
 				</b:row>
-				<b:row>	
-					<b:column col-xs="6">
-						
+				<b:row>
+					<b:column col-xs="3">
+
 					</b:column>
 					<b:column col-xs="6" styleClass="">
 						<!-- Agregar selector de presupuesto -->
-						<ui:include src="/componentes/filtros/filtroPresupuestoList.xhtml" >
-							<ui:param name="mb" value="#{searchIngresoMB}" />
-							<ui:param name="list" value="#{presupuestoMB.presupuestoActive()}" />
-						</ui:include>
+						<p:selectOneMenu id="idSelectPre" value="#{searchIngresoMB.presupuestoSelected}" converter="presupuestoConverter" valueChangeListener="#{searchIngresoMB.loadData()}">
+							
+			 		  			<f:selectItems value="#{searchIngresoMB.presupuestoActive}" var="item" itemLabel="#{item.nombrePresupuesto} - #{item.year}"                itemValue="#{item}" />
+						</p:selectOneMenu>
+						
+
+						
 					</b:column>
-					<b:column col-xs="1" styleClass="">
-						<p:commandLink action="#{searchIngresoMB.invocacionBusqueda()}" update="idIngresosTable">
-							<b:iconAwesome value="search" solid="true" size="2x"
-								style="color: white;" />
+					
+						
+						<p:commandLink action="#{searchIngresoMB.invocacionBusqueda()}"
+							update="idIngresosTable">
+							<b:column col-xs="1" styleClass="btn btn-info">
+								<b:iconAwesome value="search" solid="true" size="2x" style="color: white;" />
+							</b:column>
 						</p:commandLink>
-					</b:column>
+						
+					
 				</b:row>
 
 			</b:container>
-
+</h:form>
 		</div>
 		<style>
 .ui-filter-column .ui-column-customfilter .custom-filter {
@@ -76,15 +81,15 @@
 
 
 
-				<p:dataTable value="#{searchIngresoMB.list}" id="idTableIngresos"
-					widgetVar="idTableIngresos" var="g" rowIndexVar="indexVar"
-					>
+				<p:dataTable value="#{searchIngresoMB.list}" id="idIngresosTable"
+					widgetVar="idTableIngresos" var="g" rowIndexVar="indexVar">
 
 
 					<p:column width="10">
 						<h:outputText value="#{indexVar+1}" />
 					</p:column>
-					<p:column headerText="Donador" filterBy="#{searchIngresoMB.findDonador( g.idCatingreso)}">
+					<p:column headerText="Donador"
+						filterBy="#{searchIngresoMB.findDonador( g.idCatingreso)}">
 						<h:outputText value="#{searchIngresoMB.findDonador( g.idCatingreso)}" />
 					</p:column>
 					<p:column headerText="Descripcion" filterBy="#{g.nombre}">
@@ -96,10 +101,10 @@
 							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</h:outputText>
 					</p:column>
-					
 
 
-					
+
+
 					<p:column headerText="Total ($)">
 						<h:outputText value="#{g.monto}" />
 					</p:column>
@@ -110,7 +115,7 @@
 					<p:column headerText="Opcion">
 						<b:container fluid="true">
 							<b:row>
-								
+
 							</b:row>
 						</b:container>
 					</p:column>
@@ -121,8 +126,8 @@
 			</h:form>
 		</b:panel>
 
-		
-		
+
+
 
 	</ui:define>
 

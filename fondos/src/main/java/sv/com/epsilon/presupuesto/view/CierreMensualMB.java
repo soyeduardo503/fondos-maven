@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.entities.Catingreso;
 import sv.com.epsilon.entities.Cierre;
 import sv.com.epsilon.entities.Financiamiento;
@@ -48,6 +49,7 @@ import sv.com.epsilon.util.PeriodoUtil;
 @ManagedBean
 @ViewScoped
 @Data
+@Slf4j
 public class CierreMensualMB implements Serializable {
 
 	/**

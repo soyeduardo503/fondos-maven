@@ -5,15 +5,18 @@ package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Financiamiento;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.FinanciamientoFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.MessageGrowlContext;
@@ -24,6 +27,7 @@ import sv.com.epsilon.util.MessageGrowlContext;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class RegistroEntradaMB implements Serializable {
 
 	/**
@@ -36,12 +40,14 @@ public class RegistroEntradaMB implements Serializable {
 	
 	
 	private Financiamiento abono=new Financiamiento();
+	private Presupuesto presupuestoSelected;
 
 	
 	
 	public void preRender() {
 		if(!FacesContext.getCurrentInstance().isPostback()) {
 			reset();
+			
 		}
 	}
 	
@@ -67,6 +73,8 @@ public class RegistroEntradaMB implements Serializable {
 		this.abono = abono;
 	}
 	public void reset() {//TODO delete presupuesto 1
+		Optional<Presupuesto> pre = new PresupuestoFacade().defaultValue();
+		presupuestoSelected=pre.orElse(new Presupuesto(1) );
 		abono=new Financiamiento();
 		abono.setAct("A");
 		abono.setIdEmpresa(1);

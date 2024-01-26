@@ -8,7 +8,7 @@
 
 		<b:row >
 			<b:column colXs="6">Monto Gastado</b:column>
-			<b:column colXs="6" styleClass="btn btn-danger">
+			<b:column colXs="6" styleClass="label-danger">
 				<p:outputLabel value="#{usuarioSessionMB.presupuestoSelected.actual}">
 					<f:convertNumber maxFractionDigits="2" />
 				</p:outputLabel>
@@ -18,7 +18,7 @@
 
 		<b:row >
 			<b:column colXs="6">Monto presupuestado</b:column>
-			<b:column colXs="6"  styleClass="btn btn-info">
+			<b:column colXs="6"  styleClass="label-info" style="font-size:1.2em;">
 				<h:outputText value="#{usuarioSessionMB.presupuestoSelected.total}">
 					<f:convertNumber maxFractionDigits="2" />
 				</h:outputText>
@@ -26,12 +26,14 @@
 		</b:row>
 		<b:row >
 			<b:column colXs="6">Ingresos</b:column>
-			<b:column colXs="6" styleClass="btn btn-success">
+			<p:commandLink action="#{listaIngresoAcumuladoMB.load(usuarioSessionMB.presupuestoSelected.idPresupuesto)}" oncomplete="PF('DlgListaIngresos').show();" update=":IDDlgIngresos">
+			<b:column colXs="6" styleClass="btn label-success">
 				<h:outputText value="#{presupuestoViewMB.montoIngreso}" >
 					<f:convertNumber maxFractionDigits="2" />
 				</h:outputText>
-				<b:iconAwesome solid="true"  value="arrow-down"/>
+				<b:iconAwesome solid="true"  value="search"/>
 			</b:column>
+			</p:commandLink>
 		</b:row>
 		<b:row >
 			<b:panel collapsible="false" look="danger" title="Porcentaje disponible">

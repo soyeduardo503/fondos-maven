@@ -10,8 +10,14 @@
 					large-screen="full-width" style="font-size:1.2em;" />
 			</b:row>
 	<b:row>
-		<b:column col-xs="2"></b:column>
-		<b:column col-xs="8">
+		<b:column col-xs="2">
+				<ui:include src="/componentes/filtros/filtroPresupuestoList.xhtml" >
+						<ui:param name="mb" value="#{registroEntradaMB}" />
+
+						<ui:param name="listValues" value="#{ListaCatingresoMB.listPresupuestos}"></ui:param>
+				</ui:include>
+		</b:column>
+		<b:column col-xs="4">
 			<p:selectOneMenu value="#{registroEntradaMB.abono.idCatingreso}" >
 				<f:selectItems value="#{listaCatingresoMB.list}" var="i" itemValue="#{i.idCatingreso}" itemLabel="#{i.descripcion}"/>
 				<p:ajax process="@this"></p:ajax>

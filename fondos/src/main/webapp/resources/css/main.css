@@ -1537,3 +1537,26 @@ border-radius: 5%;
 	border-bottom: 0;
 	border-bottom-left-radius: 0.6em;
 }
+
+.label-primary{
+  color: #fff;
+  background-color: #2d48c1;
+  border-color: #46b8da;
+}
+.label-success {
+  color: #fff;
+  background-color: #94c12d;
+  border-color: #46b8da;
+}
+.label-info {
+  color: #fff;
+  background-color: #009dbd;
+  border-color: #46b8da;
+  
+}
+
+.label-danger {
+  color: #fff;
+  background-color: #ff0000;
+  border-color: #46b8da;
+}

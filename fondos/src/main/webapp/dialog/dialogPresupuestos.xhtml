@@ -19,8 +19,8 @@
 					<p:dataTable value="#{usuarioSessionMB.listPresupuesto}" var="p" id="idSeleccionador">
 					  
 						<p:column><f:facet name="header"></f:facet> #{p.nombrePresupuesto} </p:column>
-						<p:column> <f:facet name="header"></f:facet>
-							<p:commandLink oncomplete="PF('#{usuarioSessionMB.dialog.wgt}').hide();" action="#{usuarioSessionMB.seleccionar(p)}">					
+						<p:column > <f:facet name="header"></f:facet>
+							<p:commandLink oncomplete="PF('#{usuarioSessionMB.dialog.wgt}').hide();" action="#{usuarioSessionMB.seleccionar(p)}" styleClass="btn btn-warning">					
 								<b:iconAwesome value="heart" solid="true" style="color:#{usuarioSessionMB.color(p)}" />
 							</p:commandLink> 
 						</p:column>

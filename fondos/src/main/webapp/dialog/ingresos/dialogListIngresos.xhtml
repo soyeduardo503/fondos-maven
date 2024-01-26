@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+
+
+	<p:dialog widgetVar="DlgListaIngresos" header="Ingresos del presupuesto" width="900" modal="true" 
+		height="750" closable="true" closeOnEscape="true" id="IDDlgIngresos">
+		<p:dataTable value="#{listaIngresoAcumuladoMB.list}" var="c"  rowIndexVar="indexVar" lazy="false">
+			<p:column width="10">
+				<h:outputText value="#{indexVar+1}" />
+			</p:column>
+			<p:column headerText="Nombre" >
+				<h:outputText value="#{c.nombreDonador}" />
+			</p:column>
+			<p:column headerText="Total" >
+				<h:outputText value="#{c.total}" >
+					<f:convertNumber currencySymbol="$" maxFractionDigits="2" type = "currency" />
+				</h:outputText>
+			</p:column>
+
+			
+		</p:dataTable>
+	</p:dialog>
+
+
+</ui:composition>

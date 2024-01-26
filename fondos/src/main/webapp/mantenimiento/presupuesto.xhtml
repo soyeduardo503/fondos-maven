@@ -14,6 +14,7 @@
 
 		<f:event listener="#{presupuestoMB.preRender()}" type="preRenderView"></f:event>
 		<f:event listener="#{listaCuentasMB.preRender()}" type="preRenderView"></f:event>
+		<f:event listener="#{listaCodigoCuentasMB.preRender()}" type="preRenderView"></f:event>
 		<h:form>
 			<ui:include src="/componentes/headers/headerMantto.xhtml">
 				<ui:param name="bean" value="#{presupuestoMB}" />
@@ -48,17 +49,17 @@
 						<h:outputText value="#{i.year}" />
 
 					</p:column>
-					<p:column headerText="Total ($)" sortBy="#{i.total}">
+					<p:column headerText="Total ($)" sortBy="#{i.total}" width="150">
 						<p:outputLabel value="#{i.total}">
 							<f:convertNumber minFractionDigits="2" />
 						</p:outputLabel>
 					</p:column>
-					<p:column headerText="Disponible">
+					<p:column headerText="Gastado"  width="150">
 						<p:outputLabel value="#{i.actual}">
 							<f:convertNumber minFractionDigits="2" />
 						</p:outputLabel>
 					</p:column>
-					<p:column headerText="Fecha inicio" width="70">
+					<p:column headerText="Fecha inicio"  width="100">
 
 						<h:outputText value="#{i.fechaInicio}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -66,7 +67,7 @@
 
 
 					</p:column>
-					<p:column headerText="Fecha fin" width="70">
+					<p:column headerText="Fecha fin" width="100">
 
 						<h:outputText value="#{i.fechaFin}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -83,6 +84,10 @@
 
 
 					</p:column>
+					<p:column headerText="# cuentas" width="80">
+						<h:outputLabel value="#{listaCodigoCuentasMB.get(i.codigo).count}"/>
+					</p:column>
+					
 					<p:column headerText="Default" width="50">
 						<p:commandLink actionListener="#{presupuestoMB.makeDefault(i)}">
 							<b:iconAwesome value="star" solid="true" style="color:#{presupuestoMB.color(i)}" />

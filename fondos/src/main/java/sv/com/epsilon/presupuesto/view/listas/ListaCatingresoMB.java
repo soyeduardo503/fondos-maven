@@ -7,15 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.FacesComponent;
 import javax.faces.context.FacesContext;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Catingreso;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CatingresoFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 
 /**
@@ -24,6 +25,7 @@ import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class ListaCatingresoMB implements Serializable {
 
 	/**
@@ -37,7 +39,7 @@ public class ListaCatingresoMB implements Serializable {
 	 */
 	@ManagedProperty(value = "#{usuarioSessionMB}")
 	private UsuarioSessionMB usuarioSessionMB;
-	
+	private List<Presupuesto> listPresupuestos=new PresupuestoFacade().findAllActive();
 	
 	
 	
@@ -56,7 +58,7 @@ public class ListaCatingresoMB implements Serializable {
 	}
 	
 	public void load() {
-		list=facade.getList("/idPresupuesto/"+usuarioSessionMB.getIdPresupuestoSelected());
+		list=facade.getList("/idPresupuesto/"+1);
 	}
 
 	public List<Catingreso> getList() {

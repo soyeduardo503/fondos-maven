@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.entities.Catingreso;
 import sv.com.epsilon.entities.Financiamiento;
 import sv.com.epsilon.entities.Gasto;
@@ -29,6 +30,7 @@ import sv.com.epsilon.util.ExecuteForm;
 @ManagedBean
 @ViewScoped
 @Data
+@Slf4j
 public class SearchIngresoMB implements Serializable{
 
 	/**
@@ -39,7 +41,7 @@ public class SearchIngresoMB implements Serializable{
 	 * 
 	 */
 	
-	private Presupuesto presupuestoSelected;
+	private Presupuesto presupuestoSelected=new PresupuestoFacade().defaultValue().orElse(new Presupuesto(1));
 	private SearchIngreso search=new SearchIngreso();
 	private List<Catingreso> listDonador=new CatingresoFacade().findAllActive();
 	private List<Financiamiento> list;
@@ -48,6 +50,9 @@ public class SearchIngresoMB implements Serializable{
 	
 	public SearchIngresoMB() {
 		
+	}
+	public void loadData() {
+		log.info("No load data");
 	}
 	
 	public void preRender() {
