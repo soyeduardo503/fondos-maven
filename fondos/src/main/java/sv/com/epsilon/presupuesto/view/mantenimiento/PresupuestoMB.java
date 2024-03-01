@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
@@ -67,7 +68,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	
 	
 	public List<Presupuesto> presupuestoActive(){
-		return getList().stream().filter(p->p.getAct().equalsIgnoreCase("A")).toList();
+		return getList().stream().filter(p->p.getAct().equalsIgnoreCase("A")).collect(Collectors.toList());
 	}
 	
 	public void showClone(Presupuesto cl) {
@@ -83,6 +84,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 			boolean resp = new PresupuestoFacade().action("/duplicate", true,clone);
 			if(resp) {
 				ReadProperty reader=new ReadProperty();
+				usuarioSessionMB.asignarSelected();
 				new RedirectNv(reader.read(	"url.properties","mantenimientopresupuesto"));
 			}
 		} catch (Exception e) {

@@ -18,7 +18,7 @@ public class AsignacionMontosCtrlr {
 	
 	public static void calcularMontos(List<Categoria> list,Categoria catMod,Presupuesto p) {
 		Categoria padre= list.stream().filter(c->c.getCodigo().equalsIgnoreCase(catMod.getCodigo().substring(0, 7))).findFirst().get();
-//		List<Categoria> catHijos =list.stream().filter(c->c.getCodigo().length()==9&& c.getCodigo().startsWith(padre.getCodigo())).toList();
+//		List<Categoria> catHijos =list.stream().filter(c->c.getCodigo().length()==9&& c.getCodigo().startsWith(padre.getCodigo())).collect(Collectors.toList());;
 		DoubleStream totalHijos = list.stream().filter(c->c.getCodigo().length()==9&& c.getCodigo().startsWith(padre.getCodigo())).mapToDouble(s->s.getMonto());
 		padre.setMonto(totalHijos.sum());
 		Stream<Categoria> l = list.stream().filter(s->s.getCodigo().length()==7);

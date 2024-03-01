@@ -5,7 +5,6 @@ package sv.com.epsilon.report.documentos;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -13,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -38,7 +38,7 @@ public class RptShow extends ReportFactory  implements Serializable{
 	public RptShow() {
 		// TODO Auto-generated constructor stub
 	}
-	public void callReport(Documento documento,Object bean) throws Exception {
+	public void callReport(Documento documento,Object data) throws Exception {
 		
 		 
 		Log.info(cheque);
@@ -53,7 +53,7 @@ public class RptShow extends ReportFactory  implements Serializable{
 		setFormato(documento.getExt());
 		
 		
-		this.setCollecion			(new ArrayList<Object>(Arrays.asList(bean)));
+		this.setCollecion			(new ArrayList<Object>(Arrays.asList(data)));
 		this.addReport();
 		//setUrl										(documento2.getUrl());	
 		

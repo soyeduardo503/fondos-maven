@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="frmConfirmAnularIngreso">
+		<p:dialog id="idConfirmAnularIngreso" widgetVar="wgtConfirmAnularIngreso" width="700"
+			height="200" header="Confirmacion">
+			<b:container fluid="true">
+				<b:row>
+				Desea anular el ingreso por <h:outputText value="#{searchIngresoMB.ingreso.monto}"/> ?
+			</b:row>
+
+				<hr />
+				<hr />
+				<b:row>
+					<b:column col-xs="2" />
+
+					<p:commandLink action="#{searhIngresoMB.anular()}"			>
+						<b:column col-xs="4" styleClass="btn btn-info">
+
+							<b:iconAwesome value="save" solid="true" styleClass="iconWhite" size="2x" />
+
+						</b:column>
+					</p:commandLink>
+
+
+
+					<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+						<ui:param name="mb" value="#{searhIngresoMB}" />
+						<ui:param name="cols" value="4"></ui:param>
+						<ui:param name="wgt" value="wgtConfirmAnularIngreso"></ui:param>
+					</ui:include>
+
+				</b:row>
+			</b:container>
+
+		</p:dialog>
+
+
+	</h:form>
+
+
+
+
+</ui:composition>

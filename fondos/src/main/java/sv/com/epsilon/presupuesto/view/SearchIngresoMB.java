@@ -18,11 +18,13 @@ import sv.com.epsilon.entities.Financiamiento;
 import sv.com.epsilon.entities.Gasto;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CatingresoFacade;
+import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.facade.SearchIngresosFacade;
 import sv.com.epsilon.presupuesto.pojo.PresupuestoDashboard;
 import sv.com.epsilon.presupuesto.pojo.SearchIngreso;
 import sv.com.epsilon.util.ExecuteForm;
+import sv.com.epsilon.util.MessageGrowlContext;
 /**
  * @author martinezc
  *
@@ -46,6 +48,7 @@ public class SearchIngresoMB implements Serializable{
 	private List<Catingreso> listDonador=new CatingresoFacade().findAllActive();
 	private List<Financiamiento> list;
 	private List<Presupuesto> presupuestoActive=new PresupuestoFacade().findAllActive();
+	private Financiamiento ingreso=new Financiamiento();
 	
 	
 	public SearchIngresoMB() {
@@ -64,7 +67,7 @@ public class SearchIngresoMB implements Serializable{
 	public String findDonador(Integer idCatingreso) {
 		Optional<Catingreso> donador = listDonador.stream().filter(d->d.getIdCatingreso()==idCatingreso).findFirst();
 		if(donador.isPresent()) {
-			return donador.get().getNombre();
+			return donador.get().getDescripcion();
 		}
 		return "N/E";
 	}
@@ -134,5 +137,32 @@ public class SearchIngresoMB implements Serializable{
 	public void loadGasto(Gasto g) {
 		
 	}
-
+	
+	public void showConfirmAnular(Financiamiento i) {
+		ingreso=i;
+		new ExecuteForm().ExecuteUpdate(new String[]{"frmConfirmAnularIngreso"}, new String[]{"PF('wgtConfirmAnularIngreso').show();"});
+	}
+	
+	public void anular() {
+		
+		
+		try {
+			if(validation(ingreso))
+				throw new Exception("La anulacion no fue posible!!!");
+			ingreso.setNombre("ANULADO - "+ingreso.getNombre());
+			ingreso.setMonto(0.0);
+			ingreso.setAct("I");
+			ingreso.setStatus("R");
+			new FinanciamientoFacade().save(ingreso);
+			new MessageGrowlContext().send("Anulado", "Ingreso anulado!!!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			new MessageGrowlContext().sendError("Error al anular", e.getMessage(), e);
+		}
+	}
+	private boolean validation(Financiamiento f) {
+		return !(presupuestoSelected.getMesCierre()!=0&& presupuestoSelected.getMesCierre()>f.getFecha().getMonth());
+		
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
@@ -15,7 +16,9 @@ import javax.websocket.Session;
 
 import net.sf.jasperreports.charts.util.CategoryChartHyperlinkProvider;
 import sv.com.epsilon.entities.Categoria;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.pojo.CategoriaGasto;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
 
@@ -38,8 +41,14 @@ public class CategoriaAutocompleteMB {
 	
 	public void preRender(){
 		if(!FacesContext.getCurrentInstance().isPostback()){
-			List<Categoria> categorias=new CategoriaFacade().findAllChildrenSelectableActive(sesionMB.getPresupuestoSelected().getCodigo());
-			principales=new CategoriaFacade().findPrincipalByCodPresupuesto(sesionMB.getIdPresupuestoSelected());
+			Optional<Presupuesto> preDeault = new PresupuestoFacade().defaultValue();
+			Presupuesto p=new Presupuesto(1);
+			p.setCodigo("23FPT");
+			if(preDeault.isPresent()) {
+				p=preDeault.get();
+			}
+			List<Categoria> categorias=new CategoriaFacade().findAllChildrenSelectableActive(p.getCodigo());
+			principales=new CategoriaFacade().findPrincipalByCodPresupuesto(p.getIdPresupuesto());
 			
 			//for(Presupuesto presupuesto: presupuestos){
 //				String cod=new StringBuilder(presupuesto.getNombrePresupuesto()).toString();

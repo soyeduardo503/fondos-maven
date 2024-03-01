@@ -29,45 +29,48 @@
 		<f:event listener="#{presupuestoMB.preRender()}" type="preRenderView"></f:event>
 		<div class="titlePage">
 			<h:form>
-			<b:container fluid="true">
-				<b:row>
-					<b:column col-xs="3">
-						<h2 class="headerPage">
-							<h:outputText value="Consulta de ingresos/abonos" />
-						</h2>
-					</b:column>
-					<b:column col-xs="6">
-						<h:outputText value="presupuestos:" styleClass="headerPage"/>
-					</b:column>
-				</b:row>
-				<b:row>
-					<b:column col-xs="3">
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="3">
+							<h2 class="headerPage">
+								<h:outputText value="Consulta de ingresos/abonos" />
+							</h2>
+						</b:column>
+						<b:column col-xs="6">
+							<h:outputText value="presupuestos:" styleClass="headerPage" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column col-xs="3">
 
-					</b:column>
-					<b:column col-xs="6" styleClass="">
-						<!-- Agregar selector de presupuesto -->
-						<p:selectOneMenu id="idSelectPre" value="#{searchIngresoMB.presupuestoSelected}" converter="presupuestoConverter" valueChangeListener="#{searchIngresoMB.loadData()}">
-							
-			 		  			<f:selectItems value="#{searchIngresoMB.presupuestoActive}" var="item" itemLabel="#{item.nombrePresupuesto} - #{item.year}"                itemValue="#{item}" />
-						</p:selectOneMenu>
-						
+						</b:column>
+						<b:column col-xs="6" styleClass="">
+							<!-- Agregar selector de presupuesto -->
+							<p:selectOneMenu id="idSelectPre" value="#{searchIngresoMB.presupuestoSelected}"
+								converter="presupuestoConverter"
+								valueChangeListener="#{searchIngresoMB.loadData()}">
 
-						
-					</b:column>
-					
-						
+								<f:selectItems value="#{searchIngresoMB.presupuestoActive}" var="item"
+									itemLabel="#{item.nombrePresupuesto} - #{item.year}" itemValue="#{item}" />
+							</p:selectOneMenu>
+
+
+
+						</b:column>
+
+l
 						<p:commandLink action="#{searchIngresoMB.invocacionBusqueda()}"
 							update="idIngresosTable">
 							<b:column col-xs="1" styleClass="btn btn-info">
 								<b:iconAwesome value="search" solid="true" size="2x" style="color: white;" />
 							</b:column>
 						</p:commandLink>
-						
-					
-				</b:row>
 
-			</b:container>
-</h:form>
+
+					</b:row>
+
+				</b:container>
+			</h:form>
 		</div>
 		<style>
 .ui-filter-column .ui-column-customfilter .custom-filter {
@@ -89,10 +92,10 @@
 						<h:outputText value="#{indexVar+1}" />
 					</p:column>
 					<p:column headerText="Donador"
-						filterBy="#{searchIngresoMB.findDonador( g.idCatingreso)}">
+						filterBy="#{searchIngresoMB.findDonador( g.idCatingreso)}" width="400">
 						<h:outputText value="#{searchIngresoMB.findDonador( g.idCatingreso)}" />
 					</p:column>
-					<p:column headerText="Descripcion" filterBy="#{g.nombre}">
+					<p:column headerText="Descripcion" filterBy="#{g.nombre}" width="450">
 						<h:outputText value="#{g.nombre}" />
 					</p:column>
 
@@ -106,7 +109,10 @@
 
 
 					<p:column headerText="Total ($)">
-						<h:outputText value="#{g.monto}" />
+						<h:outputText value="#{g.monto}"
+							style="float:right;font-weight:bold; 	font-size:1.4em;">
+							<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Status">
 						<h:outputText value="#{g.act}" converter="statusConverter" />
@@ -115,7 +121,12 @@
 					<p:column headerText="Opcion">
 						<b:container fluid="true">
 							<b:row>
-
+								<p:commandLink  action="#{searchIngresoMB.showConfirmAnular(g)}" >
+									<b:column colSm="4" styleClass="btn btn-danger">
+										
+										<b:iconAwesome value="undo" solid="true" styleClass="iconWhite" size="2x" />
+									</b:column>
+								</p:commandLink>
 							</b:row>
 						</b:container>
 					</p:column>
@@ -126,7 +137,7 @@
 			</h:form>
 		</b:panel>
 
-
+		<ui:include src="/dialog/ingresos/confirmAnular.xhtml" />
 
 
 	</ui:define>

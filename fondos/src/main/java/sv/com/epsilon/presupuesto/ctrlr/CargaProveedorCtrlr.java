@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import sv.com.epsilon.entities.Proveedor;
@@ -56,7 +57,7 @@ public class CargaProveedorCtrlr {
 		String line;
 		boolean first = true;
 		List<Proveedor> list = new ArrayList<Proveedor>();
-		List<String> nameNoExist = Stream.of(Customers.VALUES.split(",")).toList();
+		List<String> nameNoExist = Stream.of(Customers.VALUES.split(",")).collect(Collectors.toList());
 		while ((line = csvReader.readLine()) != null) {
 			try {
 				if (!first) {

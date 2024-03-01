@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.view.consulta;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -64,7 +65,7 @@ public class ConsultaDetalleGastoEspecificoMB implements Serializable {
 	public void updateShow() {
 		if(listComplete!=null) {
 			if(!showAll) {
-				list=listComplete.stream().filter(v->v.getMontos()!=null).toList();
+				list=listComplete.stream().filter(v->v.getMontos()!=null).collect(Collectors.toList());;
 			}else {
 				list=listComplete;
 			}

@@ -1,0 +1,47 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+		<p:dialog widgetVar="#{donantesMB.wtgDialog}" width="700" height="250" header="#{donantesMB.headerDialog}" id="#{donantesMB.idWtgNew}">
+				<b:panel >
+					<f:facet name="header"><h:outputText value="#{donantesMB.headerDialog}" /> </f:facet>
+					<b:container fluid="true">
+					<b:row>
+						
+						<b:column col-xs="8">Nombre </b:column>
+					</b:row>
+					<b:row>
+						<b:column col-xs="8">
+							<p:inputText value="#{donantesMB.itemSelected.descripcion}" size="50" maxlength="50"></p:inputText>							
+							
+						</b:column>
+						
+					</b:row>	
+					
+					
+					
+					
+					<hr/>
+					
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarNuevo.xhtml">
+									<ui:param name="mb" 		value="#{donantesMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{donantesMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{donantesMB.wtgDialog}"></ui:param>
+						</ui:include>
+						
+					</b:row>	
+					</b:container>
+				</b:panel>
+			</p:dialog>
+</ui:composition>

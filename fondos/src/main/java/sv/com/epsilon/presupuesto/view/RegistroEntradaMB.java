@@ -87,6 +87,7 @@ public class RegistroEntradaMB implements Serializable {
 	public void save() {
 		try {
 			this.abono.setDonador(abono.getIdCatingreso()+"");
+			this.abono.setIdPresupuesto(presupuestoSelected);
 			new FinanciamientoFacade().save(this.abono);
 			
 			this.reset();

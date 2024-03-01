@@ -1,0 +1,76 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"  
+    
+                      xmlns:b="http://bootsfaces.net/ui">
+	
+	<h:form id="#{donantesMB.idFormEdit}" >
+		<p:sidebar position="right" id="editObject" widgetVar="#{donantesMB.dialogEdit}">
+			
+			<b:panel look="primary" title="#{donantesMB.headerDialog}" collapsible="false"> 
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="6">
+							<b:row>
+							
+									<h:outputText value="Codigo" />
+							
+							</b:row>
+							<b:row>
+									<p:outputLabel value="#{donantesMB.itemSelected.codigo}" />
+							</b:row>
+						</b:column>
+						
+						<b:column col-xs="6">
+							<b:row>
+							
+									<h:outputText value="Descripcion" />
+							
+							</b:row>
+							<b:row>
+									<p:inputText value="#{donantesMB.itemSelected.descripcion}" size="20" maxlength="50"></p:inputText>
+							</b:row>
+						</b:column>
+						
+					</b:row>
+				
+				
+					<b:row>
+						<b:column col-xs="12">
+							<b:row>
+								<h:outputText value="Activo" />
+							</b:row>
+							<b:row>
+								<p:selectOneMenu value="#{donantesMB.itemSelected.act}">
+															<f:selectItem itemLabel="Si" itemValue="A"/>
+															<f:selectItem itemLabel="No" itemValue="I"/>
+								</p:selectOneMenu>
+							</b:row>
+														
+						</b:column>
+					</b:row>
+					<hr />
+					<b:row>
+						<b:column col-xs="2"/>
+						<ui:include src="/componentes/botones/guardarEdit.xhtml">
+									<ui:param name="mb" 		value="#{donantesMB}" />									
+									<ui:param name="cols" value="4"></ui:param>
+						</ui:include>
+						<ui:include src="/componentes/botones/cancelNuevo.xhtml">
+									<ui:param name="mb" 		value="#{donantesMB}" />
+									<ui:param name="cols" value="4"></ui:param>
+									<ui:param name="wgt" value="#{donantesMB.dialogEdit}"></ui:param>
+						</ui:include>
+					</b:row>
+					
+				</b:container>
+				
+			
+			</b:panel>
+			
+		</p:sidebar>
+	</h:form>
+</ui:composition>

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.facade.ParametroFacade;
@@ -47,7 +48,7 @@ public class CargaValidacionCtrlr {
 	}
 
 	public void validarCargaCategorias(List<Categoria> list) throws Exception {
-		List<Categoria> principalesList=list.stream().filter(pl->pl.getCodigo().length()==LENGHT_PRINCIPAL).toList();
+		List<Categoria> principalesList=list.stream().filter(pl->pl.getCodigo().length()==LENGHT_PRINCIPAL).collect(Collectors.toList());;
 		principalesList.forEach(v->principal.put(v.getCodigo(), v));
 		Collections.sort(list);
 		

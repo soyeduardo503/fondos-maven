@@ -6,18 +6,19 @@
 
 
 	<b:row>
-				<b:label value="Donador" severity="info"
+				<b:label value="Datos" severity="info"
 					large-screen="full-width" style="font-size:1.2em;" />
 			</b:row>
 	<b:row>
-		<b:column col-xs="2">
+		<b:column col-xs="6"><span class="text-primary-color" >Presupuesto:</span>
 				<ui:include src="/componentes/filtros/filtroPresupuestoList.xhtml" >
 						<ui:param name="mb" value="#{registroEntradaMB}" />
 
-						<ui:param name="listValues" value="#{ListaCatingresoMB.listPresupuestos}"></ui:param>
+						<ui:param name="list" value="#{presupuestoMB.presupuestoActive()}"></ui:param>
 				</ui:include>
 		</b:column>
 		<b:column col-xs="4">
+			<span class="text-primary-color" >Donador:</span>
 			<p:selectOneMenu value="#{registroEntradaMB.abono.idCatingreso}" >
 				<f:selectItems value="#{listaCatingresoMB.list}" var="i" itemValue="#{i.idCatingreso}" itemLabel="#{i.descripcion}"/>
 				<p:ajax process="@this"></p:ajax>
@@ -25,6 +26,7 @@
 		</b:column>
 				
 	</b:row>
+	<hr/>
 	<b:row>
 		<b:column col-xs="6">
 			<b:row>

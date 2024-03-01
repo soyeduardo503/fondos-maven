@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -47,7 +48,7 @@ public class Mes implements Serializable {
 	private static List<String> init() {
 		String[] list=new String[] {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
 		
-		return Stream.of(list).toList();
+		return Stream.of(list).collect(Collectors.toList());
 	}
 
 	public Mes(int idmes) {
@@ -99,7 +100,7 @@ public class Mes implements Serializable {
 	
 	public static List<Mes> untilCurrentMonth(){
 		
-		return all.stream().filter(m->m.idMes<=Calendar.getInstance().get(Calendar.MONTH)).toList();
+		return all.stream().filter(m->m.idMes<=Calendar.getInstance().get(Calendar.MONTH)).collect(Collectors.toList());
 	}
 	
 	

@@ -6,7 +6,7 @@ package sv.com.epsilon.presupuesto.ctrlr;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.donut.DonutChartDataSet;
@@ -53,7 +53,7 @@ public class ChartsCtrlr {
 	        List<Mes> listMeses = new Meses().getList();
 	        GastoFacade gastoFacade=new GastoFacade();
 	        if(p.getYear()==Calendar.getInstance().get(Calendar.YEAR)) {
-	        	listMeses=listMeses.stream().filter(m->m.getIdMes()<Calendar.getInstance().get(Calendar.MONTH)+2).toList();
+	        	listMeses=listMeses.stream().filter(m->m.getIdMes()<Calendar.getInstance().get(Calendar.MONTH)+2).collect(Collectors.toList());;
 	        }
 	        for(Mes m:listMeses) {
 	        	NumberResponse resp = gastoFacade.getNumber("/amount/month/"+p.getYear()+"/"+m.getIdMes()+"/"+p.getIdPresupuesto());
@@ -96,7 +96,7 @@ public class ChartsCtrlr {
 	        
 	        List<String> labels = new ArrayList<>();
 	       
-	        List<Mes> listMeses = new Meses().getList().stream().filter(m->exist(list,m)).toList();
+	        List<Mes> listMeses = new Meses().getList().stream().filter(m->exist(list,m)).collect(Collectors.toList());;
 	        GastoFacade gastoFacade=new GastoFacade();
 	        list.stream().forEach(gr-> {
 	        	labels.add(gr.getMes().getNombre());

@@ -14,7 +14,21 @@
 
 		<f:event listener="#{usuarioSessionMB.reloadPresupuesto()}" type="preRenderView"></f:event>
 		<f:event listener="#{presupuestoViewMB.preRenderView()}" type="preRenderView"></f:event>
-
+	<b:container fluid="true">
+		<b:row>
+			<ui:include src="/componentes/botones/print.xhtml">
+						<ui:param name="bean" value="#{presupuestoViewMB}" />
+						<ui:param name="report" value="DistribucionGastos.jasper" />
+						<ui:param name="title" value="Resumen de presupuesto" />
+						<ui:param name="ext" value="pdf" />
+						<ui:param name="cols" value="4" />
+						<ui:param name="form" value="formPrintResumen" />
+						<ui:param name="titleButton" value="Impresion resumen" />
+						<ui:param name="btnClass" value="btn-info" />
+			</ui:include>
+		</b:row>
+	 </b:container>
+		
 		<h:form id="IDFrmPresupuestos">
 			<b:panel look="info" collapsible="false">
 				<f:facet name="heading">

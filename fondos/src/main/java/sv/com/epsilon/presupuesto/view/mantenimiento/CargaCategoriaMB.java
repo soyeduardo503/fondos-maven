@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.view.mantenimiento;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -180,8 +181,8 @@ public class CargaCategoriaMB {
 	public void save() {
 		principales.forEach(cat -> cat.setIdPresupuesto(presupuesto));
 		new CategoriaFacade().saveList(this.principales, null);
-		List<Categoria> listSec = list.stream().filter(v -> v.getCodigo().length() == 9).toList();
-		List<Categoria> listLast = list.stream().filter(v -> v.getCodigo().length() == 11).toList();
+		List<Categoria> listSec = list.stream().filter(v -> v.getCodigo().length() == 9).collect(Collectors.toList());;
+		List<Categoria> listLast = list.stream().filter(v -> v.getCodigo().length() == 11).collect(Collectors.toList());;
 		try {
 			listSec.forEach(cat->{
 				try {

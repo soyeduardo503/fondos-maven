@@ -13,15 +13,20 @@
            				<h:outputText value="#{usuarioSessionMB.user}"/>
            			</b:row>
 	           		<b:listLinks  style="widht:100%;">
+	           				
 	           			   <b:navCommandLink value="Principal" actionListener="#{menuUsuarioMB.goTo('presupuesto')}"          icon-awesome="home" />
 	           			   <hr style="border-top: 1px solid #8c8b8b;"/>
+	           			   <h:outputText value="Cierre" styleClass="text-info-color"/>
 	           			   <b:navCommandLink value="Cierre mensual" actionListener="#{menuUsuarioMB.goTo('cierre')}"          icon-awesome="calendar" />
 	           			   <b:navCommandLink value="Ver Cierres" actionListener="#{menuUsuarioMB.goTo('vercierre')}"          icon-awesome="eye" />
 	           			   <hr style="border-top: 1px solid #8c8b8b;"/>
-	           			   <b:navCommandLink value="Movimientos" actionListener="#{menuUsuarioMB.goTo('movimientos')}"          icon-awesome="arrows-alt" />
-	           			   
+	           			   <h:outputText value="Consultar" styleClass="text-info-color"/>
+	           			   <b:navCommandLink value="Gasto" actionListener="#{menuUsuarioMB.goTo('movimientos')}"          icon-awesome="arrows-alt" />
+	           			   <b:navCommandLink value="Ingresos" actionListener="#{menuUsuarioMB.goTo('ingresos')}"          icon-awesome="dollar-sign" />
 	           			   <hr style="border-top: 1px solid #8c8b8b;"/>
+	           			   
 	           			   <p:submenu label="Registrar">
+	           			   		<h:outputText value="Registro" styleClass="text-info-color"/>
 	                       		<b:navCommandLink value="Gasto" actionListener="#{menuUsuarioMB.goTo('gasto')}"		icon-solid="true"			 icon-awesome="file-invoice-dollar" />
 	                       		<b:navCommandLink value="Ingreso" actionListener="#{menuUsuarioMB.goTo('ingreso')}"					 icon-awesome="money-bill" />
 	                       		<b:navCommandLink value="Asignar fondos" actionListener="#{menuUsuarioMB.goTo('asignarfondo')}"
@@ -29,6 +34,7 @@
 								<b:navCommandLink value="Caja chica" actionListener="#{menuUsuarioMB.goTo('cajachica')}"					 icon-awesome="usd" />	 
 	                       </p:submenu>
 	                       <hr style="border-top: 1px solid #8c8b8b;"/>
+	                       <h:outputText value="Mantenimiento" styleClass="text-info-color"/>
 	                     	  <b:navCommandLink value="Presupuesto" actionListener="#{menuUsuarioMB.goTo('mantenimientopresupuesto')}"
 									 icon-awesome="sitemap" />
 								<b:navCommandLink value="Cuentas" actionListener="#{menuUsuarioMB.goTo('mantenimientocategoria')}"
@@ -39,7 +45,11 @@
 								<b:navCommandLink value="Proveedores" actionListener="#{menuUsuarioMB.goTo('mantenimientoproveedores')}"
 									 icon-awesome="truck"  icon-solid="true"/>
 								<b:navCommandLink value="Cuentas y Bancos" actionListener="#{menuUsuarioMB.goTo('cuentaybancos')}"
-									 icon-awesome="piggy-bank"  icon-solid="true"/>		 	 	 
+									 icon-awesome="piggy-bank"  icon-solid="true"/>
+								<b:navCommandLink value="Proyecciones" actionListener="#{menuUsuarioMB.goTo('proyecciones')}"
+									 icon-awesome="dice"  icon-solid="true"/>		 	 	 
+								<b:navCommandLink value="Donadores" actionListener="#{menuUsuarioMB.goTo('donadores')}"
+									 icon-awesome="walking"  icon-solid="true" icon-size="2x" />	 
 	                       
 	           		<hr style="border-top: 1px solid #8c8b8b;"/>
 	           		<b:navLink href="http://localhost:8080/login" value="Salir" icon="power-off" icon-awesome="power-off"></b:navLink>

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.primefaces.model.charts.line.LineChartModel;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Cierre;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Projection;
@@ -21,6 +22,7 @@ import sv.com.epsilon.util.Mes;
  * @author martinezc
  *
  */
+@Data
 public class DataGastoPeriodCtrlr {
 
 	/**
@@ -72,6 +74,7 @@ public class DataGastoPeriodCtrlr {
 		data.setChart( createChart());
 		data.setListCierre(listCierres);
 		data.setList(list);
+		
 		return data;
 		
 	}

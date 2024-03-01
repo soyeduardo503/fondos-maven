@@ -6,14 +6,14 @@
 
 	<f:event listener="#{mb.preRender}" type="preRenderView"></f:event>
 	<h:form id="IDfiltrosPresupuestoList">
-		<div class="card">
+		
 			 <p:selectOneMenu id="slctPresu"  value="#{mb.presupuestoSelected}" converter="presupuestoConverter" valueChangeListener="#{mb.loadData()}" >
 			 		  <f:selectItems value="#{list}" var="item" itemLabel="#{item.nombrePresupuesto} - #{item.year}"
                             itemValue="#{item}" />
                         <p:column><b:iconAwesome value="calendar" solid="true"></b:iconAwesome> #{item.nombrePresupuesto}  </p:column>
 			 </p:selectOneMenu>
 		
-		</div>
+		
 	</h:form>
 
 </ui:composition>

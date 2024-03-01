@@ -3,8 +3,10 @@
  */
 package sv.com.epsilon.presupuesto.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -23,11 +25,13 @@ import sv.com.epsilon.facade.Distribution5Facade;
 import sv.com.epsilon.facade.FinanciamientoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.ChartsCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.DataGastoPeriodCtrlr;
+import sv.com.epsilon.presupuesto.ctrlr.DrawChartCtrlr;
 import sv.com.epsilon.presupuesto.pojo.DataGastoPeriod;
 import sv.com.epsilon.presupuesto.pojo.Distribution;
 import sv.com.epsilon.presupuesto.pojo.GastoReal;
 import sv.com.epsilon.presupuesto.pojo.NodeModel;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
+import sv.com.epsilon.presupuesto.view.dashboard.ChartSaved;
 import sv.com.epsilon.response.NumberResponse;
 
 /**
@@ -46,7 +50,7 @@ public class PresupuestoViewMB implements Serializable{
 	@ManagedProperty(value="#{usuarioSessionMB}")
 	private UsuarioSessionMB session;
 	private Presupuesto presupuesto;
-	private TreeNode nodo;
+	
 	private String filtro="";
 	private org.primefaces.model.charts.line.LineChartModel lineModel;
 	private CategoriaFacade facade= new CategoriaFacade();
@@ -68,8 +72,14 @@ public class PresupuestoViewMB implements Serializable{
 			presupuesto.setCategoriaList(facade.findByPresupuestoWithoutClose(presupuesto));
 			crearNodo();
 			facade.close();
-			dataGasto= new DataGastoPeriodCtrlr().presupuesto(presupuesto).build();
-			lineModel=dataGasto.getChart();
+			
+			try {
+				buildCharts(presupuesto);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log.error("Error en creacion de graficos");
+			}
 			makeModel(presupuesto.getCodigo());
 			//facade.foundExecution(presupuesto.getIdPresupuesto()); 
 			percentExecution=  (int) (((presupuesto.getTotal()-presupuesto.getActual())/presupuesto.getTotal())*100);
@@ -80,13 +90,20 @@ public class PresupuestoViewMB implements Serializable{
 			}
 		}
 	}
+	
+	public void buildCharts(Presupuesto presupuesto) throws IOException {
+		DataGastoPeriodCtrlr dataGastoCrlr=new DataGastoPeriodCtrlr();
+		dataGasto= dataGastoCrlr.presupuesto(presupuesto).build();
+		lineModel=dataGasto.getChart();
+		new ChartSaved().buildLineChart(new DrawChartCtrlr().setPresupuesto(presupuesto, dataGastoCrlr));
+	}
 	private void makeModel(String codigo) {
 		distModel= new ChartsCtrlr().createDonutModel( new Distribution5Facade().findByPresupuesto(codigo));
 		
 		
 	}
 	public void crearNodo() {
-		listCatDist=presupuesto.getCategoriaList().stream().filter(cat->cat.getCodigo().length()==7).toList();
+		listCatDist=presupuesto.getCategoriaList().stream().filter(cat->cat.getCodigo().length()==7).collect(Collectors.toList());;
 		
 		log.info(""+listCatDist.size());
 	}
@@ -117,62 +134,24 @@ public class PresupuestoViewMB implements Serializable{
 //	}
 	
 
-	private void crearEstructuraFiltro(String filtro) {
-		nodo=new NodeModel().crearEstructura(presupuesto,filtro);
-		System.out.println(nodo.getChildCount());
-	}
-
-	public Presupuesto getPresupuesto() {
-		return presupuesto;
-	}
-
-	public void setPresupuesto(Presupuesto presupuesto) {
-		this.presupuesto = presupuesto;
-	}
+//	private void crearEstructuraFiltro(String filtro) {
+//		nodo=new NodeModel().crearEstructura(presupuesto,filtro);
+//		System.out.println(nodo.getChildCount());
+//	}
 
 	
 	
 	
+	
 
-	public List<Categoria> getListCatDist() {
-		return listCatDist;
-	}
 
-	public void setListCatDist(List<Categoria> listCatDist) {
-		this.listCatDist = listCatDist;
-	}
-
-	public Integer getPercentExecution() {
-		return percentExecution;
-	}
-
-	public void setPercentExecution(Integer percentExecution) {
-		this.percentExecution = percentExecution;
-	}
-
-	public DonutChartModel getDistModel() {
-		return distModel;
-	}
-
-	public void setDistModel(DonutChartModel distModel) {
-		this.distModel = distModel;
-	}
-
-	public List<Distribution> getListDist() {
-		return listDist;
-	}
-
-	public void setListDist(List<Distribution> listDist) {
-		this.listDist = listDist;
-	}
-
-	public TreeNode getNodo() {
-		return nodo;
-	}
-
-	public void setNodo(TreeNode nodo) {
-		this.nodo = nodo;
-	}
+//	public TreeNode getNodo() {
+//		return nodo;
+//	}
+//
+//	public void setNodo(TreeNode nodo) {
+//		this.nodo = nodo;
+//	}
 
 	public UsuarioSessionMB getSession() {
 		return session;
@@ -180,14 +159,6 @@ public class PresupuestoViewMB implements Serializable{
 
 	public void setSession(UsuarioSessionMB session) {
 		this.session = session;
-	}
-
-	public String getFiltro() {
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
 	}
 
 	public org.primefaces.model.charts.line.LineChartModel getLineModel() {

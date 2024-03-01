@@ -41,6 +41,7 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 	private   String              contentType;
 	private   Class<?>            xClass;
 	public final static  String pathPDF=init(); 
+	public List<?> items;
 	
 	
 	public AbstractReport(){
@@ -72,8 +73,11 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 				
 	
 			int c=0;JasperPrint jasperPrint=null;
+		
 			for(ReportFactory rf:reportes){
-				jasperPrint = JasperFillManager.fillReport(rf.getUrl(), rf.getParametros(), new JREmptyDataSource());
+				if(items!=null)
+					
+				jasperPrint = JasperFillManager.fillReport(rf.getUrl(), rf.getParametros(), items!=null?new JRBeanCollectionDataSource(items): new JREmptyDataSource());
 				Log.info("1-Reporte url:"+rf.getUrl()+" Nombre:"+this.nombreReporte);
 				in = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(rf.getUrl());
 				if(in==null)

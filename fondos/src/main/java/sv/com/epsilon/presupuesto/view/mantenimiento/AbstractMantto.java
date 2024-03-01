@@ -149,6 +149,7 @@ public abstract class  AbstractMantto<K,T> implements Serializable {
 		}
 		
 		 setDialogActive(dialogEdit);
+		 new ExecuteForm().update(idFormEdit);
 		new ExecuteForm().ExecuteUpdate(idFormNew, "PF('"+dialogEdit+"').show();");
 	}
 	

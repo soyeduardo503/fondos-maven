@@ -183,7 +183,24 @@ public class UsuarioSessionMB extends Epsilon implements Serializable {
 		}
 	}
 	
-	
+	public void reloadPresupuestoSelected()
+	{
+		//TODO eliminar presupuesto quemado
+		Optional<Presupuesto> defaultPresupuesto = new  PresupuestoFacade().defaultValue();
+		if(defaultPresupuesto.isPresent()) {
+			presupuestoSelected=defaultPresupuesto.get();
+			idPresupuestoSelected=presupuestoSelected.getIdPresupuesto();
+			this.presupuestoSelectedDlg=presupuestoSelected;
+		
+			
+		}else {
+			if(idPresupuestoSelected==null||idPresupuestoSelected==0) {
+				idPresupuestoSelected=1;
+			}
+			presupuestoSelected=new PresupuestoFacade().findById(idPresupuestoSelected);
+		}
+		this.addValue("context","fondos");
+	}
 	public void eventSelectBudget() {
 		log.info("the budget selected is "+this.idPresupuestoSelected);
 		Presupuesto pr = new PresupuestoFacade().findById(idPresupuestoSelected);

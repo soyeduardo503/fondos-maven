@@ -1542,21 +1542,49 @@ border-radius: 5%;
   color: #fff;
   background-color: #2d48c1;
   border-color: #46b8da;
+  font-size: 1.2em;
 }
 .label-success {
   color: #fff;
   background-color: #94c12d;
   border-color: #46b8da;
+  font-size: 1.2em;
 }
 .label-info {
   color: #fff;
   background-color: #009dbd;
   border-color: #46b8da;
-  
+  font-size: 1.6em;
 }
 
 .label-danger {
   color: #fff;
   background-color: #ff0000;
   border-color: #46b8da;
+  font-size: 1.2em;
+}
+
+.text-info-color{
+	color: #009dbd;
+  background-color: #fff;
+  font-size: 1.6em;
+}
+.text-primary-color{
+	color: #2d48c1;
+  background-color: #fff;
+  font-size: 1.6em;
+}
+.text-right-bold{
+	float:right;font-weight:bold; 	
+}
+.text-small-size{
+	font-family: Verdana;
+	 font-size:1.2em;
+}
+.text-medium-size{
+	font-size:1.6em;
+}
+
+.text-large-size{
+	font-weight:bold; font-size:2.0em;
 }

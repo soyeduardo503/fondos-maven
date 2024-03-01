@@ -4,6 +4,7 @@
 package sv.com.epsilon.presupuesto.view;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -25,7 +26,7 @@ public class SearchRetencionMB {
 	private CierreMensualMB seachMovs;
 	
 	public List<GastoExt> getList(){
-		return seachMovs.getList().stream().filter(g->g.getIdProveedor().getRetencion()!=null&& g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).toList();
+		return seachMovs.getList().stream().filter(g->g.getIdProveedor().getRetencion()!=null&& g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).collect(Collectors.toList());
 	}
 	 
 }
