@@ -15,7 +15,12 @@
 		<relativePath/>
 		<!-- lookup parent from repository -->
 	</parent>
-	
+	<repositories>
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<url>http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+		</repository>
+	</repositories>	
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
