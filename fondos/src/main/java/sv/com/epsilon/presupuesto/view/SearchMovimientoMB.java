@@ -5,6 +5,7 @@ package sv.com.epsilon.presupuesto.view;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +17,10 @@ import javax.faces.context.FacesContext;
 
 import lombok.Data;
 import sv.com.epsilon.entities.Gasto;
+import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.entities.Proveedor;
 import sv.com.epsilon.facade.GastoFacade;
+import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.facade.ProveedorFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CategoriaGastoCtrlr;
 import sv.com.epsilon.presupuesto.ctrlr.GastoCtrlr;
@@ -50,18 +53,36 @@ public class SearchMovimientoMB implements Serializable{
 	@ManagedProperty(value = "#{usuarioSessionMB}")
 	private UsuarioSessionMB usuarioSessionMB;
 	private SearchGasto search=new SearchGasto();
-	private List<Proveedor> listProveedor=new ProveedorFacade().findAllActive();
+	private List<Proveedor> listProveedor=loadProveedores();
 	private List<GastoExt> list;
 	private List<GastoExt> listRetencion;
 	private Gasto gasto=null;
 	private List<CategoriaGasto> listDetalle =null;
 	private String order;
-	private Integer month;
+	private Integer month=Calendar.getInstance().get(Calendar.MONTH);
+	private Integer monthCreate;
+	private Presupuesto presupuestoSelected;
+	private Gasto gastoSelected;
+	
 	
 	public SearchMovimientoMB() {
 		
 	}
 	
+	private List<Proveedor> loadProveedores() {
+		// TODO Auto-generated method stub
+		List<Proveedor> list=new ProveedorFacade().findAllActive();
+		list.sort(new Comparator<Proveedor>() {
+
+			@Override
+			public int compare(Proveedor o1, Proveedor o2) {
+				// TODO Auto-generated method stub
+				return o1.getNombre().compareTo(o2.getNombre());
+			}
+		});
+		return list;
+	}
+
 	public Double sumaTotal() {
 		return list.stream().mapToDouble(a->a.getTotal()).sum();
 	}
@@ -70,20 +91,9 @@ public class SearchMovimientoMB implements Serializable{
 	}
 	
 	public void switchOrder() {
-		if(order==null || order.equalsIgnoreCase("DESC")) {
-			list.sort(new Comparator<Gasto>() {
-				 public int compare(Gasto o1, Gasto o2) {
-			            return o2.getFecha().compareTo(o1.getFecha());
-			        }
-			});
-		}else {
-			list.sort(new Comparator<Gasto>() {
-				 public int compare(Gasto o1, Gasto o2) {
-			            return o1.getFecha().compareTo(o2.getFecha());
-			        }
-			});
-		}
+		GastoCtrlr.order(list, order);
 	}
+	
 	
 	
 	public String convertDate(Date d) {
@@ -92,7 +102,7 @@ public class SearchMovimientoMB implements Serializable{
 	public void load(Gasto g) {
 		this.gasto=g;
 		 listDetalle = new CategoriaGastoCtrlr().convert(g.getIdGasto());
-		new ExecuteForm().ExecuteUpdate("idDetailGasto","PF('wgtDetail').show();");
+		//new ExecuteForm().ExecuteUpdate("idDetailGasto","PF('wgtDetail').show();");
 	}
 	
 	public void reload(Integer idGasto) {
@@ -110,8 +120,12 @@ public class SearchMovimientoMB implements Serializable{
 				
 				SearchGasto searcher=new SearchGasto();
 				searcher.setAll(true);
+				Periodo periodo = PeriodoUtil.make(Integer.valueOf( presupuestoSelected.getYear()), month);
+				search.setFechaInicial(periodo.getInicio());
+				search.setFechaFinal(periodo.getFin());
 				searcher.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
 				list=new GastoCtrlr().invocarBusqueda(searcher);
+				presupuestoSelected=new PresupuestoFacade().defaultValue().get();
 				loadFound();
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -123,16 +137,17 @@ public class SearchMovimientoMB implements Serializable{
 		
 		
 		try {
-			search.setPresupuesto(usuarioSessionMB.getPresupuestoSelected());
+			search.setPresupuesto(presupuestoSelected);
 			
 			if(month!=null ) {
-				Periodo periodo = PeriodoUtil.make(Integer.valueOf( usuarioSessionMB.getPresupuestoSelected().getYear()), month);
+				Periodo periodo = PeriodoUtil.make(Integer.valueOf( presupuestoSelected.getYear()), month);
 				search.setFechaInicial(periodo.getInicio());
 				search.setFechaFinal(periodo.getFin());
 				search.setAll(false);
 			}else {
 				search.setAll(true);
 			}
+			search.setMesRegistrado(monthCreate);
 			list=new GastoCtrlr().invocarBusqueda(search);
 			loadFound();
 		} catch (Exception e) {

@@ -1,142 +1,179 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
 
 
 
 
-	
-<h:form id="#{presupuestoMB.idFormNew}">
-			<p:dialog widgetVar="#{presupuestoMB.wtgDialog}" width="1100" height="400" header="#{presupuestoMB.headerDialog}" id="#{presupuestoMB.idWtgNew}" modal="true">
-				<b:panel>
-					<f:facet name="header"><h:outputText value="#{presupuestoMB.headerDialog}" /> </f:facet>
-					
-					<b:container fluid="true">
-						<b:row>
-									<b:column col-xs="6"/><b:column col-xs="2"><h:outputText value="Codigo : " /></b:column>
-									<b:column col-xs="2"><h:outputText value="#{presupuestoMB.codTemp}" id="codigo"  styleClass="codigo" /></b:column>
-						</b:row>
-						<br/>
+
+	<h:form id="#{presupuestoMB.idFormNew}">
+		<p:dialog widgetVar="#{presupuestoMB.wtgDialog}" width="1100" height="400"
+			header="#{presupuestoMB.headerDialog}" id="#{presupuestoMB.idWtgNew}" modal="true">
+			<b:panel>
+				<f:facet name="header">
+					<h:outputText value="#{presupuestoMB.headerDialog}" />
+				</f:facet>
+
+				<b:container fluid="true">
+					<b:row>
+						<b:column col-xs="6" />
+						<b:column col-xs="2">
+							<h:outputText value="Codigo : " />
+						</b:column>
+						<b:column col-xs="2">
+							<h:outputText value="#{presupuestoMB.codTemp}" id="codigo" styleClass="codigo" />
+						</b:column>
+					</b:row>
+					<br />
 					<p:wizard flowListener="#{presupuestoMB.flow}">
-							
-						 	<p:tab id="nombrePresupuestoCrear" title="Nombre">
-						 	<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
-						 	 
+
+						<p:tab id="nombrePresupuestoCrear" title="Nombre">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
 								<b:row>
-								 		
-										<b:column col-xs="2"><h:outputText value="Nombre"  /></b:column>
-															
-									
-								
-								
-										<b:column col-xs="6">
-											<p:inputText value="#{presupuestoMB.itemSelected.nombrePresupuesto}" label="Nombre de  Presupuesto"  size="50" maxlength="50" required="true">
-															<p:ajax event="change" listener="#{presupuestoMB.asignarCodigo()}"/>
-											</p:inputText>
-											
-											
-										</b:column>
-								</b:row>
-								<b:row>		
-										<b:column col-xs="12">
-											<p:messages  />
-										</b:column>
-								</b:row>
-								
-								
-								
-							</b:panel>
-							</p:tab>
-							<p:tab id="year" title="Año">
-								<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
-									<b:row>
-										<b:column col-xs="2">
-											<h:outputText value="Año" />
-										</b:column>			
-									
-										<b:column col-xs="6">
-											<p:spinner value="#{presupuestoMB.itemSelected.year}"  required="true" min="2022" max="2040">
-												<p:ajax event="change" process="@this" listener="#{presupuestoMB.asignarCodigo()}" />
-											</p:spinner>
-										</b:column>						
-									</b:row>
-									
-								</b:panel>	
-							</p:tab>
-							<p:tab id="monto" title="Monto">
-								<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+									<b:column colXs="6">
 										<b:row>
-											<b:column col-xs="2">
-												<h:outputText value="Monto" />
-											</b:column>
-																	
-										
-											<b:column col-xs="6">
-												<p:inputText value="#{presupuestoMB.itemSelected.total}" size="30" maxlength="9" required="true" label="Monto del presupuesto"/>
-											</b:column>
-													
+
+											
+												<h:outputText value="Nombre" />
+											
+
+
 										</b:row>
-										<b:row>		
+										<b:row>
+
+											
+												<p:inputText value="#{presupuestoMB.itemSelected.nombrePresupuesto}"
+													label="Nombre de  Presupuesto" size="50" maxlength="50" required="true">
+													<p:ajax event="change" listener="#{presupuestoMB.asignarCodigo()}" />
+												</p:inputText>
+
+
+											
+										</b:row>
+
+									</b:column>
+									<b:column colXs="6">
+										<b:row>
+
+											
+												<h:outputText value="Presupuesto principal" />
+											
+
+										</b:row>
+
+										<b:row>
+
+											<p:selectOneButton value="#{presupuestoMB.itemSelected.isPrimary}">
+												<f:selectItem itemLabel="Si" itemValue="1" />
+												<f:selectItem itemLabel="No" itemValue="0" />
+
+											</p:selectOneButton>
+
+										</b:row>
+										
+
+									</b:column>
+								</b:row>
+								<b:row>
 											<b:column col-xs="12">
-												<p:messages  />
+												<p:messages />
 											</b:column>
-										</b:row>
-									
-								
-								</b:panel>
-							</p:tab>
-								
-							<p:tab id="periodo" title="Periodo">
-								<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
-										<b:row>
-											<b:column col-xs="3"/>
-											<b:column col-xs="4">
-												<h:outputText value="Fecha inicio" />
-											</b:column>
-											<b:column col-xs="4">
-												<h:outputText value="Fecha fin" />
-											</b:column>
-										</b:row>
-										<b:row>
-											<b:column col-xs="3"/>
-											<b:column col-xs="4">
-												<p:calendar value="#{presupuestoMB.itemSelected.fechaInicio}"
-													pattern="dd/MM/yyyy" />
-											</b:column>
-											<b:column col-xs="4">
-												<p:calendar value="#{presupuestoMB.itemSelected.fechaFin}"
-													pattern="dd/MM/yyyy" />
-											</b:column>
-										</b:row>
-								</b:panel>	
-							</p:tab>
-							<p:tab id="Cuentas" title="Cuentas">
-								<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
-									<b:row>
-										<b:column col-xs="2"><h:outputText value="Cuentas" /></b:column>
-										
-										<b:column col-xs="8">
-											<p:selectOneMenu value="#{presupuestoMB.itemSelected.idCuenta}">
-												<f:selectItems value="#{listaCuentasMB.list}" var="c" itemLabel="#{listaBancoMB.find(c.idBanco).nombre}- #{c.numero}" itemValue="#{c.idCuenta}"/>
-											</p:selectOneMenu>
-										</b:column>						
-									</b:row>
-								</b:panel>
-							</p:tab>
-							<p:tab id="basicoCreacioon" title="Categorias basicas">
-								<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
-									<b:row>
-										<b:column col-xs="3"><h:outputText value="Crear categorias basicas" /></b:column>
-									
-										<b:column col-xs="8"><p:selectBooleanButton onLabel="Si" offLabel="No" value="#{presupuestoMB.crearCategoriasBasicas}"/></b:column>						
-									</b:row>
-								</b:panel>			
-							</p:tab>					
-							<p:tab id="basico" title="Finalizar">
-								<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+								</b:row>
+							</b:panel>
+
+						</p:tab>
+						<p:tab id="year" title="Año">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+								<b:row>
+									<b:column col-xs="2">
+										<h:outputText value="Año" />
+									</b:column>
+
+									<b:column col-xs="6">
+										<p:spinner value="#{presupuestoMB.itemSelected.year}" required="true" min="2022"
+											max="2040">
+											<p:ajax event="change" process="@this"
+												listener="#{presupuestoMB.asignarCodigo()}" />
+										</p:spinner>
+									</b:column>
+								</b:row>
+
+							</b:panel>
+						</p:tab>
+						<p:tab id="monto" title="Monto">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+								<b:row>
+									<b:column col-xs="2">
+										<h:outputText value="Monto" />
+									</b:column>
+
+
+									<b:column col-xs="6">
+										<p:inputText value="#{presupuestoMB.itemSelected.total}" size="30" maxlength="9"
+											required="true" label="Monto del presupuesto" />
+									</b:column>
+
+								</b:row>
+								<b:row>
+									<b:column col-xs="12">
+										<p:messages />
+									</b:column>
+								</b:row>
+
+
+							</b:panel>
+						</p:tab>
+
+						<p:tab id="periodo" title="Periodo">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+								<b:row>
+									<b:column col-xs="3" />
+									<b:column col-xs="4">
+										<h:outputText value="Fecha inicio" />
+									</b:column>
+									<b:column col-xs="4">
+										<h:outputText value="Fecha fin" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column col-xs="3" />
+									<b:column col-xs="4">
+										<p:calendar value="#{presupuestoMB.itemSelected.fechaInicio}"
+											pattern="dd/MM/yyyy" />
+									</b:column>
+									<b:column col-xs="4">
+										<p:calendar value="#{presupuestoMB.itemSelected.fechaFin}" pattern="dd/MM/yyyy" />
+									</b:column>
+								</b:row>
+							</b:panel>
+						</p:tab>
+						<p:tab id="Cuentas" title="Cuentas">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+								<b:row>
+									<b:column col-xs="2">
+										<h:outputText value="Cuentas" />
+									</b:column>
+
+									<b:column col-xs="8">
+										<p:selectOneMenu value="#{presupuestoMB.itemSelected.idCuenta}">
+											<f:selectItems value="#{listaCuentasMB.list}" var="c"
+												itemLabel="#{listaBancoMB.find(c.idBanco).nombre}- #{c.numero}"
+												itemValue="#{c.idCuenta}" />
+										</p:selectOneMenu>
+									</b:column>
+								</b:row>
+							</b:panel>
+						</p:tab>
+						<p:tab id="projections" title="Proyecciones">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
+								<b:row>
+
+								</b:row>
+							</b:panel>
+						</p:tab>
+						<p:tab id="basico" title="Finalizar">
+							<b:panel title="" collapsible="false" look="#{varMB.DANGER}">
 								<b:row>
 									<b:column col-xs="2">
 										Resumen
@@ -148,74 +185,82 @@
 													Nombre
 												</b:column>
 												<b:column col-xs="6">
-													<h:outputText value="#{presupuestoMB.itemSelected.nombrePresupuesto}" styleClass="resume" />
+													<h:outputText value="#{presupuestoMB.itemSelected.nombrePresupuesto}"
+														styleClass="resume" />
 												</b:column>
 											</b:row>
-											<br/>
+											<br />
 											<b:row>
 												<b:column col-xs="2">
 													Año
 												</b:column>
 												<b:column col-xs="6">
-													<h:outputText value="#{presupuestoMB.itemSelected.year}" styleClass="resume"/>
+													<h:outputText value="#{presupuestoMB.itemSelected.year}" styleClass="resume" />
 												</b:column>
 											</b:row>
-											
-											<br/>
+
+											<br />
 											<b:row>
 												<b:column col-xs="2">
 													Periodo
 												</b:column>
 												<b:column col-xs="6">
-													<h:outputText value="#{presupuestoMB.itemSelected.fechaInicio}" styleClass="resume" ><f:convertDateTime pattern="dd/MM/YYYY"/> </h:outputText>-
-													<h:outputText value="#{presupuestoMB.itemSelected.fechaFin}" styleClass="resume"><f:convertDateTime pattern="dd/MM/YYYY"/></h:outputText>
+													<h:outputText value="#{presupuestoMB.itemSelected.fechaInicio}"
+														styleClass="resume">
+														<f:convertDateTime pattern="dd/MM/YYYY" />
+													</h:outputText>-
+													<h:outputText value="#{presupuestoMB.itemSelected.fechaFin}"
+														styleClass="resume">
+														<f:convertDateTime pattern="dd/MM/YYYY" />
+													</h:outputText>
 												</b:column>
 											</b:row>
-											<br/>
+											<br />
 											<b:row>
 												<b:column col-xs="2">
 													Monto
 												</b:column>
-												<b:column col-xs="6" >
-													<h:outputText value="$ #{presupuestoMB.itemSelected.total}" styleClass="resume" />
+												<b:column col-xs="6">
+													<h:outputText value="$ #{presupuestoMB.itemSelected.total}"
+														styleClass="resume" />
 												</b:column>
 											</b:row>
-											<br/>
-											<br/>
+											<br />
+											<br />
 										</b:container>
 									</b:column>
 								</b:row>
-								<b:row>	
-									<b:column col-xs="2"/>
+								<b:row>
+									<b:column col-xs="2" />
 									<ui:include src="/componentes/botones/guardarNuevo.xhtml">
-												<ui:param name="mb" 		value="#{presupuestoMB}" />									
-												<ui:param name="cols" value="4"></ui:param>
+										<ui:param name="mb" value="#{presupuestoMB}" />
+										<ui:param name="cols" value="4"></ui:param>
 									</ui:include>
 									<ui:include src="/componentes/botones/cancelNuevo.xhtml">
-												<ui:param name="mb" 		value="#{presupuestoMB}" />
-												<ui:param name="cols" value="4"></ui:param>
-												<ui:param name="wgt" value="#{presupuestoMB.wtgDialog}"></ui:param>
+										<ui:param name="mb" value="#{presupuestoMB}" />
+										<ui:param name="cols" value="4"></ui:param>
+										<ui:param name="wgt" value="#{presupuestoMB.wtgDialog}"></ui:param>
 									</ui:include>
-									
+
 								</b:row>
-								</b:panel>	
-							</p:tab>
-						
-						
-						
-						
-						
-						
-					</p:wizard>	
-							
-						
-									
-						
-					
-					</b:container>
-				</b:panel>
-			</p:dialog>
-		</h:form>
-		
-		
+							</b:panel>
+						</p:tab>
+
+
+
+
+
+
+					</p:wizard>
+
+
+
+
+
+				</b:container>
+			</b:panel>
+		</p:dialog>
+	</h:form>
+
+
 </ui:composition>

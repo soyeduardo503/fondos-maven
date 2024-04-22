@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import lombok.Data;
 import sv.com.epsilon.ctrlr.annotation.Id;
 
 /**
@@ -19,6 +20,7 @@ import sv.com.epsilon.ctrlr.annotation.Id;
  * @author Zeta
  */
 
+@Data
 public class Gasto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -137,150 +139,6 @@ public class Gasto implements Serializable {
 
 
 
-	public Date getFechaRegistro() {
-		return fechaRegistro;
-	}
-
-
-
-
-
-	public void setFechaRegistro(Date fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
-	}
-
-
-
-
-
-	public Double getTotal() {
-		return total;
-	}
-
-
-
-
-
-	public void setTotal(Double total) {
-		this.total = total;
-	}
-
-
-
-
-
-	public Integer getIdEmpresa() {
-		return idEmpresa;
-	}
-
-
-
-
-
-	public void setIdEmpresa(Integer idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-
-
-
-
-	public Integer getIdGasto() {
-		return idGasto;
-	}
-
-
-
-
-
-	public void setIdGasto(Integer idGasto) {
-		this.idGasto = idGasto;
-	}
-
-
-
-
-
-	public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getNombrePantalla() {
-        return nombrePantalla;
-    }
-
-    public void setNombrePantalla(String nombrePantalla) {
-        this.nombrePantalla = nombrePantalla;
-    }
-
-    public String getAct() {
-        return act;
-    }
-
-    public void setAct(String act) {
-        this.act = act;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    
-    public Calendar getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Calendar fecha) {
-        this.fecha = fecha;
-    }
-
-  
-
-    public Integer getCheque() {
-		return cheque;
-	}
-
-
-
-
-
-	public void setCheque(Integer cheque) {
-		this.cheque = cheque;
-	}
-
-
-
-
-
-	public String getStatus() {
-		return status;
-	}
-
-
-
-
-
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 
 
 
@@ -334,51 +192,7 @@ public class Gasto implements Serializable {
 
 	
 
-
-	public Integer getKpresupuesto() {
-		return kpresupuesto;
-	}
-
-
-
-
-
-
-	public void setKpresupuesto(Integer kpresupuesto) {
-		this.kpresupuesto = kpresupuesto;
-	}
-
-
-
-
-
-
-	public Tipodesembolso getIdTipoDesembolso() {
-		return idTipoDesembolso;
-	}
-
-	public void setIdTipoDesembolso(Tipodesembolso idTipoDesembolso) {
-		this.idTipoDesembolso = idTipoDesembolso;
-	}
 	
-	
-
-	public String getNumeroComprobante() {
-		return numeroComprobante;
-	}
-
-
-
-
-
-
-	public void setNumeroComprobante(String numeroComprobante) {
-		this.numeroComprobante = numeroComprobante;
-	}
-
-
-
-
 
 
 	@Override
@@ -403,7 +217,7 @@ public class Gasto implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.com.epsilon.Gasto[ idItem=" + idGasto + " ]";
+        return "sv.com.epsilon.GastoExt[ idItem=" + idGasto + " ]";
     }
     
 }

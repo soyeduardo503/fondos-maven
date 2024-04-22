@@ -1,20 +1,31 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 
 	<f:event listener="#{mb.preRender}" type="preRenderView"></f:event>
 	<h:form id="IDfiltrosPresupuestoCarousel">
-		<div class="card">
-		<span class="demoFont" style="font-size:1.5em;"> Presupuestos :</span>
-			 <p:selectOneMenu id="slctPresu"  value="#{mb.presupuestoSelected}" converter="presupuestoConverter" valueChangeListener="#{mb.loadPresupuesto()}" >
-			 		  <f:selectItems value="#{listValues}" var="item" itemLabel="#{item.nombrePresupuesto} - #{item.year}"
-                            itemValue="#{item}" />
-                        <p:column><b:iconAwesome value="calendar" solid="true"></b:iconAwesome> #{item.nombrePresupuesto}  </p:column>
-			 </p:selectOneMenu>
-			
-		</div>
+		<b:container fluid="true">
+			<b:row>
+				
+					<b:selectOneMenu id="slctPresu" value="#{mb.presupuestoSelected}"
+						converter="presupuestoConverter" colXs="4" label="Presupuestos">
+						<f:selectItems value="#{listValues}" var="item"
+							itemLabel="#{item.nombrePresupuesto} - #{item.year}" itemValue="#{item}" />
+
+					</b:selectOneMenu>
+				
+				<b:column colXs="2">
+					<p:commandLink action="#{mb.loadPresupuesto()}" update="#{updateView}">
+						<b:iconAwesome value="search" solid="true" styleClass="btn btn-info" style="font-size:3.0em;" />
+						
+					</p:commandLink>
+				</b:column>
+			</b:row>
+
+
+		</b:container>
 	</h:form>
 
 </ui:composition>

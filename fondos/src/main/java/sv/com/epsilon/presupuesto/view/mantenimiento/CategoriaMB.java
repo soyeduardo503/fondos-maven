@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.diagram.DefaultDiagramModel;
 
+import lombok.Data;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
@@ -31,6 +32,7 @@ import sv.com.epsilon.util.Log;
  */
 @ManagedBean
 @ViewScoped
+@Data
 public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> implements Serializable {
 
 	/**
@@ -240,22 +242,9 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 		
 	}
 
-	public List<Presupuesto> getListPresupuesto() {
-		return listPresupuesto;
-	}
+	
 
-	public void setListPresupuesto(List<Presupuesto> listPresupuesto) {
-		this.listPresupuesto = listPresupuesto;
-	}
-
-	public Presupuesto getPresupuestoSelected() {
-		return presupuestoSelected;
-	}
-
-	public void setPresupuestoSelected(Presupuesto presupuestoSelected) {
-		this.presupuestoSelected = presupuestoSelected;
-	}
-
+	
 	public void cargarArchivo() {
 		
 	}
@@ -268,15 +257,11 @@ public class CategoriaMB extends AbstractMantto<Categoria, CategoriaFacade> impl
 		this.formCarga = formCarga;
 	}
 
-	public UsuarioSessionMB getUsuarioSessionMB() {
-		return usuarioSessionMB;
-	}
-
-	public void setUsuarioSessionMB(UsuarioSessionMB usuarioSessionMB) {
-		this.usuarioSessionMB = usuarioSessionMB;
-	}
 	
 	
+	public void deleteByCode(Categoria cat) {
+		setList( new CategoriaCtrlr().deleteByCod(cat,this.getList()));
+	}
 	
 
 }

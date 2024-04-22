@@ -21,6 +21,9 @@
 		<div class="titlePage">
 			<ui:include src="/componentes/headers/headerCierre.xhtml">
 				<ui:param name="ci" value="#{cierreMensualMB.current}" />
+				<ui:param name="dataMB" value="#{cierreMensualMB}" />
+				<ui:param name="data2MB" value="#{searchRetencionMB}" />
+				
 				<ui:param name="pr" value="#{cierreMensualMB.presupuestoSelected}" />
 				<ui:param name="mes" value="#{cierreMensualMB.mes}" />
 				<ui:param name="periodo" value="#{cierreMensualMB.periodo}" />
@@ -30,6 +33,11 @@
 			</ui:include>
 			<b:container fluid="true">
 
+				<b:row>
+
+					
+
+				</b:row>
 
 				<b:row>
 					<hr />
@@ -37,7 +45,7 @@
 
 					<ui:include src="/componentes/filtros/filtroPresupuestoCarrousel.xhtml">
 						<ui:param name="mb" value="#{cierreMensualMB}" />
-
+						<ui:param name="updateView" value=":idDetailPresupuesto,:idGastosTable"/>								
 						<ui:param name="listValues" value="#{cierreMensualMB.listPre}"></ui:param>
 					</ui:include>
 
@@ -45,20 +53,6 @@
 
 				</b:row>
 
-				<b:row>
-
-					<ui:include src="/componentes/botones/load.xhtml">
-						<ui:param name="cols" value="1" />
-						<ui:param name="mb" value="#{cierreMB}" />
-						<ui:param name="action" value="#{cierreMB.load()}" />
-						<ui:param name="form" value="btnOpenCierres" />
-						<ui:param name="btnClass" value="btn-primary" />
-						<ui:param name="updateId" value="IDDlgCierres" />
-						<ui:param name="open" value="PF('DlgCierres').show();" />
-						<ui:param name="titleButton" value="Ver Cierres" />
-					</ui:include>
-
-				</b:row>
 
 
 			</b:container>

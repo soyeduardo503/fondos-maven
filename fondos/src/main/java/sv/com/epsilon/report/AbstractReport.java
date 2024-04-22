@@ -19,7 +19,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRHtmlExporterParameter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
@@ -98,8 +97,7 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 						
 			parametros=new ArrayList<Object[]>();
 			parametros.add(new Object[]{JRExporterParameter.JASPER_PRINT_LIST,jasperPrintList});			
-			if(nombreReporte.endsWith(".html"))
-				parametros.add(new Object[]{JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE});
+			
 						
 			if(nombreReporte.endsWith(".xls")) {
 				parametros.add(new Object[]{JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE});
@@ -172,8 +170,7 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 			parametros=new ArrayList<Object[]>();
 			parametros.add(new Object[]{JRExporterParameter.JASPER_PRINT_LIST,jasperPrintList});			
 			servletOutputStream = obtenerServletOutputStream("Content-disposition", this.nombreReporte);
-			if(nombreReporte.endsWith(".html"))
-				parametros.add(new Object[]{JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE});
+			
 			parametros.add(new Object[]{JRExporterParameter.OUTPUT_STREAM,servletOutputStream});							
 						
 			if(nombreReporte.endsWith(".xls")) {
@@ -263,10 +260,7 @@ public abstract class AbstractReport implements Serializable, Cloneable{
 				this.xClass=JRPdfExporter.class;				
 				contentType="application/pdf";
 			}
-			if(formato.equalsIgnoreCase("html")){
-				this.xClass=JRHtmlExporter.class;				
-				contentType="text/html";
-			}
+			
 			if(formato.equalsIgnoreCase("xls")){
 				this.xClass=JRXlsExporter.class;	
 				

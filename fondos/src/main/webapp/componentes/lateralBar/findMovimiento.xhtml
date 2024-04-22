@@ -1,15 +1,26 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<h:form id="findGasto">
 		<p:sidebar position="right" id="findGasto" widgetVar="findGasto">
 
 			<b:panel look="primary" title="Busqueda por filtros" collapsible="false">
 				<b:container fluid="true">
-		
+					<b:row>
+
+						<h:outputText value="Presupuesto" />
+
+					</b:row>
+
+					<b:row>
+
+						<ui:include src="/componentes/filtros/listPresupuestos.xhtml">						
+							<ui:param name="mb" value="#{searchMovimientoMB}" />							
+						</ui:include>
+
+					</b:row>
 					<b:row>
 
 						<h:outputText value="Revertidos" />
@@ -17,13 +28,14 @@
 					</b:row>
 
 					<b:row>
-	 
-						 <p:selectBooleanButton onLabel="Si" offLabel="No" value="#{searchMovimientoMB.search.revertido}" />
+
+						<p:selectBooleanButton onLabel="Si" offLabel="No"
+							value="#{searchMovimientoMB.search.revertido}" />
 
 					</b:row>
- 
+
 					<b:row>
-  <hr style="border-top: 1px solid #8c8b8b;"/>
+						<hr style="border-top: 1px solid #8c8b8b;" />
 					</b:row>
 					<b:row>
 
@@ -31,24 +43,24 @@
 
 					</b:row>
 					<b:row>
-						
-						<p:selectOneMenu value="#{searchMovimientoMB.search.proveedor}"
+
+						<b:selectOneMenu value="#{searchMovimientoMB.search.proveedor}" select2="true" 
 							converter="proveedorConverter">
 							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
 							<f:selectItems value="#{searchMovimientoMB.listProveedor}" var="pr"
 								itemLabel="#{pr.nombre}" itemValue="#{pr}" />
-						</p:selectOneMenu>
+						</b:selectOneMenu>
 					</b:row>
 
-					
-					
+
+
 					<hr />
 
 					<b:row>
 						<h:outputText value="Descripcion" />
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchMovimientoMB.search.description}"  />
+						<p:inputText value="#{searchMovimientoMB.search.description}" />
 					</b:row>
 
 					<hr />
@@ -57,7 +69,7 @@
 						<h:outputText value="Monto" />
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchMovimientoMB.search.monto}"  />
+						<p:inputText value="#{searchMovimientoMB.search.monto}" />
 					</b:row>
 
 
@@ -66,62 +78,84 @@
 						<h:outputText value="Cheque" />
 					</b:row>
 					<b:row>
-						<p:inputText value="#{searchMovimientoMB.search.numeroCheque}" placeholder="ej. 25 o 1-10" />
+						<p:inputText value="#{searchMovimientoMB.search.numeroCheque}"
+							placeholder="ej. 25 o 1-10" />
 					</b:row>
 
 
 					<hr />
 
 					<b:row>
-							<h:outputText value="Fecha" />	
-							<b:label value="Fecha" severity="danger" large-screen="full-width" />
-																							
-					</b:row>
-					<b:row>
-							<b:column col-xs="12">Mes</b:column>
-							
-																							
-					</b:row>
-					<b:row>
-					
-							<p:selectOneMenu value="#{searchMovimientoMB.month}">
-								<f:selectItem  itemValue="" itemLabel=""></f:selectItem>
-								<f:selectItems value="#{listaMesesMB.all}" var="a" itemValue="#{a.idMes}" itemLabel="#{a.nombre}"/>
-							</p:selectOneMenu>
-							
-					</b:row>					
-					
-					
-					<hr />
-					<b:row>
-					<b:column col-xs="2"/>
-					<p:commandLink  action="#{searchMovimientoMB.invocacionBusqueda}"  >
-						<b:column col-xs="4" styleClass="btn btn-info">
-							<b:row>
-								<b:iconAwesome value="search" solid="true"/>
-							</b:row>
-							<b:row>
-								<p:outputLabel value="Buscar"/>
-							</b:row>
-						</b:column>
-					</p:commandLink>
 						
-					<p:commandLink  onclick="PF('findGasto').hide();" >
-						<b:column col-xs="4" styleClass="btn btn-danger">
-							<b:row>
-								<b:iconAwesome value="window-close" />
-							</b:row>
-							<b:row>
-								<p:outputLabel value="Cancelar"/>
-							</b:row>
-						</b:column>
-					</p:commandLink>
-					
+						<b:label value="Fecha movimiento" severity="danger" large-screen="full-width" />
+
+					</b:row>
+					<b:row>
+						<b:column col-xs="12">Mes</b:column>
 
 
-				</b:row>
+					</b:row>
+					<b:row>
 
-				
+						<b:selectOneMenu value="#{searchMovimientoMB.month}" autoWidth="true" >
+							<f:selectItem itemValue="" itemLabel=""></f:selectItem>
+							<f:selectItems value="#{listaMesesMB.all}" var="a" itemValue="#{a.idMes}"
+								itemLabel="#{a.nombre.toUpperCase()}" />
+						</b:selectOneMenu>
+
+					</b:row>
+
+					<b:row>
+						
+						<b:label value="Fecha Creado" severity="danger" large-screen="full-width" />
+
+					</b:row>
+					<b:row>
+						<b:column col-xs="12">Mes</b:column>
+
+
+					</b:row>
+					<b:row>
+
+						<b:selectOneMenu value="#{searchMovimientoMB.monthCreate}" autoWidth="true">
+							<f:selectItem itemValue="" itemLabel=""></f:selectItem>
+							<f:selectItems value="#{listaMesesMB.all}" var="a" itemValue="#{a.idMes}"
+								itemLabel="#{a.nombre.toUpperCase()}" />
+						</b:selectOneMenu>
+
+					</b:row>
+
+
+					<hr />
+					<b:row>
+						<b:column col-xs="2" />
+						<p:commandLink action="#{searchMovimientoMB.invocacionBusqueda}">
+							<b:column col-xs="4" styleClass="btn btn-info">
+								<b:row>
+									<b:iconAwesome value="search" solid="true" />
+								</b:row>
+								<b:row>
+									<p:outputLabel value="Buscar" />
+								</b:row>
+							</b:column>
+						</p:commandLink>
+
+						<p:commandLink onclick="PF('findGasto').hide();">
+							<b:column col-xs="4" styleClass="btn btn-danger">
+								<b:row>
+									<b:iconAwesome value="window-close" />
+								</b:row>
+								<b:row>
+									<p:outputLabel value="Cancelar" />
+								</b:row>
+							</b:column>
+						</p:commandLink>
+
+
+
+					</b:row>
+
+
 
 				</b:container>
 
@@ -129,33 +163,34 @@
 			</b:panel>
 
 		</p:sidebar>
-		
-		
-					
-		
-		
-		<p:confirmDialog message="Sin registros encontrados" widgetVar="noFoundG" width="600" height="150">
+
+
+
+
+
+		<p:confirmDialog message="Sin registros encontrados" widgetVar="noFoundG" width="600"
+			height="150">
 			<b:container fluid="true">
 				<b:row>
-					<b:column col-xs="4"/>
-					
-						
-					<p:commandLink  onclick="PF('noFoundG').hide();PF('findGasto').show();" >
+					<b:column col-xs="4" />
+
+
+					<p:commandLink onclick="PF('noFoundG').hide();PF('findGasto').show();">
 						<b:column col-xs="4" styleClass="btn btn-danger">
 							<b:row>
 								<b:iconAwesome value="window-close" />
 							</b:row>
 							<b:row>
-								<p:outputLabel value="Cancelar"/>
+								<p:outputLabel value="Cancelar" />
 							</b:row>
 						</b:column>
 					</p:commandLink>
-					
+
 
 
 				</b:row>
 			</b:container>
 		</p:confirmDialog>
-		
+
 	</h:form>
 </ui:composition>

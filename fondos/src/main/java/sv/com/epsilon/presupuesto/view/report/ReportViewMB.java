@@ -30,6 +30,7 @@ public class ReportViewMB {
 	private String path="C:\\files\\fondos\\reportes\\";
 	private String titlePdf;
 	private String report;
+	private String headerDocument;
 	private String ext;
 	
 	
@@ -73,6 +74,7 @@ public class ReportViewMB {
 			new RptShow().callReport(doc, doc.getObject());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Log.error(e, "Error al crear el objeto");
 			e.printStackTrace();
 		}
 		//mostrar();

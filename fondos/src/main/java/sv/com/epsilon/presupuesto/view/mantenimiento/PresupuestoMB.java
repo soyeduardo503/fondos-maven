@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.FlowEvent;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.entities.Presupuesto;
 import sv.com.epsilon.facade.CategoriaFacade;
@@ -27,6 +28,7 @@ import sv.com.epsilon.facade.PresupuestoFacade;
 import sv.com.epsilon.presupuesto.ctrlr.CodigoCtrlr;
 import sv.com.epsilon.presupuesto.pojo.CategoriasBasicas;
 import sv.com.epsilon.presupuesto.session.UsuarioSessionMB;
+import sv.com.epsilon.presupuesto.view.dashboard.ProyeccionesMB;
 import sv.com.epsilon.util.ExecuteForm;
 import sv.com.epsilon.util.GeneradorCodigo;
 import sv.com.epsilon.util.MessageGrowlContext;
@@ -40,6 +42,7 @@ import sv.com.epsilon.util.RedirectNv;
 @ManagedBean
 @ViewScoped
 @Data
+@Slf4j
 public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade> implements Serializable{
 
 	/**
@@ -54,7 +57,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 	
 	@ManagedProperty(value = "#{usuarioSessionMB}")
 	private UsuarioSessionMB usuarioSessionMB;
-	private boolean crearCategoriasBasicas;
+	private boolean crearCategoriasBasicas=false;
 	private List<Integer> years;
 	private String codTemp;
 	private Presupuesto clone;
@@ -119,12 +122,10 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 			this.setItemSelected(this.oneNewObject());
 			setYearDefault();
 			
-		} catch (InstantiationException e) {
+		} catch (InstantiationException  |  IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Error en crear un default", e);
 		}
 		
 	}
@@ -155,10 +156,12 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				log.error("Error en crear un default", e);
 			}
 			return;
 		}
 		Presupuesto item = getItemSelected();
+		
 		item.setIdEmpresa(1);//TODO update when is ready
 		getItemSelected().setCodigo(codTemp);
 		getItemSelected().setActual(item.getTotal());
@@ -172,35 +175,13 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		item.setAbonado(0.0);
 		List<Categoria> categorias=new ArrayList<Categoria>();
 		try {
-			super.saveWithoutclose();
-			if(this.crearCategoriasBasicas){
-				List<Categoria> list= CategoriasBasicas.crearLista();
-				
-				
-				for(Categoria categoria:list){
-					Categoria cat=new Categoria();
-					cat.setNombre(categoria.getNombre());
-					gc.code(cat);
-					cat.setIdPresupuesto(item);
-					cat.setMonto(0.0);
-					cat.setActual(0.0);
-					cat.setAct("A");
-					cat.setDescripcion(cat.getNombre());
-					List<Categoria> temp=categoria.getCategoriaList();
-					cat.setCategoriaList(null);
-					cat.setIdCategoriaPadre(null);
-					categoriaFacade.save(cat);
-					categorias.add(cat);
-					if(temp!=null&&!temp.isEmpty()){
-						crearSubCategoria(cat,temp);
-					}
-				}
-			}	
-			item.setCategoriaList(categorias);
+			super.save();
+			
+			
 			//categoriaFacade.close();
 			updateDialogClose();
 		} catch (Exception e) {
-
+			log.error("Error en crear un default", e);
 			e.printStackTrace();
 			new MessageGrowlContext().send("No se puedo crear", "Presupuesto no creado");
 		}
@@ -268,6 +249,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error("Error en crear un preRender", e);
 		}
 		
 	}
@@ -294,6 +276,7 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				log.error("Error en Remove", e);
 			}
 		}
 	}
@@ -307,6 +290,8 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				
+				log.error("Error en remover item", e);
 			}
 		
 	}
@@ -381,19 +366,11 @@ public class PresupuestoMB extends AbstractMantto<Presupuesto, PresupuestoFacade
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error("Error en setiar  un default", e);
 		}
 	}
 	
 
-		public UsuarioSessionMB getUsuarioSessionMB() {
-			return usuarioSessionMB;
-		}
-
-
-
-		public void setUsuarioSessionMB(UsuarioSessionMB usuarioSessionMB) {
-			this.usuarioSessionMB = usuarioSessionMB;
-		}
 
 
 }

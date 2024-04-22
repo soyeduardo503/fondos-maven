@@ -21,7 +21,7 @@ import sv.com.epsilon.presupuesto.view.PresupuestoViewMB;
 @ManagedBean
 @RequestScoped
 @Data
-public class GastosReportMB {
+public class GastosReportMB extends ReportViewMB{
 
 	/**
 	 * 
@@ -30,7 +30,12 @@ public class GastosReportMB {
 	private PresupuestoViewMB presupuestoViewMB;
 	@ManagedProperty(value="#{usuarioSessionMB}")
 	private UsuarioSessionMB session;
-	private List<Categoria> items=presupuestoViewMB.getListCatDist();
+	private List<Categoria> items;
+	public void callReport() {
+		items=presupuestoViewMB.getListCatDist();
+	}
+	
+	
 	
 	
 

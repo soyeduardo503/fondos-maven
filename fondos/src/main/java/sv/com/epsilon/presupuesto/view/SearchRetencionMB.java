@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 
 import lombok.Data;
 import sv.com.epsilon.presupuesto.pojo.GastoExt;
+import sv.com.epsilon.presupuesto.view.listas.ListaCierresMB;
 
 /**
  * @author martinezc
@@ -21,12 +22,15 @@ import sv.com.epsilon.presupuesto.pojo.GastoExt;
 @ViewScoped
 @Data
 public class SearchRetencionMB {
-
-	@ManagedProperty(value = "#{cierreMensualMB}")
-	private CierreMensualMB seachMovs;
-	
+	@ManagedProperty(value = "#{cierreMensualMB}")	
+	private CierreMensualMB cierres;
+	@ManagedProperty(value = "#{listaCierresMB}")
+	private ListaCierresMB listaCierresMB;
 	public List<GastoExt> getList(){
-		return seachMovs.getList().stream().filter(g->g.getIdProveedor().getRetencion()!=null&& g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).collect(Collectors.toList());
+		if(cierres!=null&& cierres.getList()!=null)
+			return cierres.getList().stream().filter(g->g.getIdProveedor().getRetencion()!=null&& g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).collect(Collectors.toList());
+		else
+			return listaCierresMB.getList().stream().filter(g->g.getIdProveedor().getRetencion()!=null&& g.getIdProveedor().getRetencion().equalsIgnoreCase("S")).collect(Collectors.toList());
 	}
 	 
 }

@@ -35,6 +35,7 @@ public class SearchGasto {
 	private Presupuesto presupuesto;
 	private boolean revertido=false;
 	private boolean all=true;
+	private Integer mesRegistrado;
 	
 	public SearchGasto() {
 		

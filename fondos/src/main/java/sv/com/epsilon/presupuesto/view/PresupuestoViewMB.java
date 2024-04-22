@@ -95,7 +95,12 @@ public class PresupuestoViewMB implements Serializable{
 		DataGastoPeriodCtrlr dataGastoCrlr=new DataGastoPeriodCtrlr();
 		dataGasto= dataGastoCrlr.presupuesto(presupuesto).build();
 		lineModel=dataGasto.getChart();
-		new ChartSaved().buildLineChart(new DrawChartCtrlr().setPresupuesto(presupuesto, dataGastoCrlr));
+		try {
+			new ChartSaved().buildLineChart(new DrawChartCtrlr().setPresupuesto(presupuesto, dataGastoCrlr));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	
 	}
 	private void makeModel(String codigo) {
 		distModel= new ChartsCtrlr().createDonutModel( new Distribution5Facade().findByPresupuesto(codigo));

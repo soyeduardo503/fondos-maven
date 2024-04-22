@@ -27,6 +27,8 @@
 				<ui:param name="montoInicial" value="#{listaCierresMB.montoInicial}" />
 				<ui:param name="montoFinal" value="#{listaCierresMB.montoFinal}" />
 				<ui:param name="disabledOption" value="true" />
+				<ui:param name="dataMB" value="#{listaCierresMB}"/>
+				<ui:param name="data2MB" value="#{searchRetencionMB}" />
 			</ui:include>
 			<b:container fluid="true">
 						
@@ -37,7 +39,7 @@
 
 				<ui:include src="/componentes/filtros/filtroPresupuestoCarrousel.xhtml" >
 					<ui:param name="mb" value="#{listaCierresMB}" />
-					
+					<ui:param name="updateView" value=":idDetailPresupuesto,:idGastosTable,:calendarEnabled"/>
 					<ui:param name="listValues" value="#{listaCierresMB.listPre}"></ui:param>
 				</ui:include>
    
@@ -48,7 +50,7 @@
 					<ui:include src="/componentes/tabla/tablaMeses.xhtml" />
 				</b:row>
 							<b:row>
-				
+				<!-- 
 				<ui:include src="/componentes/botones/load.xhtml" >
 					<ui:param name="cols" value="1" />
 					<ui:param name="mb" value="#{cierreMB}" />
@@ -59,7 +61,7 @@
 					<ui:param name="open" value="PF('DlgCierres').show();" />
 					<ui:param name="titleButton" value="Ver Cierres" />
 				</ui:include>
-				
+				 -->
 			</b:row>
 
 	

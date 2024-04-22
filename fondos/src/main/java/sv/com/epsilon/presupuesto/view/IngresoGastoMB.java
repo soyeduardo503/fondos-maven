@@ -326,15 +326,15 @@ public class IngresoGastoMB implements Serializable {
 			BigDecimal disponible=new CategoriaFacade().getMontoDisponible(CodigoCtrlr.getCodigoPadre( cg.getCategoria().getCodigo()));
 		//CategoriaGasto cg=new CategoriaGasto(c, new Double(this.movimiento.getMonto()));
 		try {
-			if(disponible.doubleValue()<=0) {
-				new ExecuteForm().execute("PF('DlgGasto').show();");
-				return ;
-			}
-			if(disponible.doubleValue()<=0) {
-				this.mensaje="Se requiere el monto del gasto!!!";
-				new ExecuteForm().execute("PF('DlgRequired').show();");
-				return ;
-			}
+//			if(disponible.doubleValue()<=0) {
+//				new ExecuteForm().execute("PF('DlgGasto').show();");
+//				return ;
+//			}
+//			if(disponible.doubleValue()<=0) {
+//				this.mensaje="Se requiere el monto del gasto!!!";
+//				new ExecuteForm().execute("PF('DlgRequired').show();");
+//				return ;
+//			}
 			if(foundCategoria(cg)) {
 				this.mensaje="Esta Caetgoria ya fue agregada!!!";
 				new ExecuteForm().execute("PF('DlgRequired').show();");
@@ -482,7 +482,7 @@ public class IngresoGastoMB implements Serializable {
 			
 			
 			
-			
+			//TODO implement
 			imgBase64.add(Base64.getEncoder().encodeToString(in.readAllBytes()));
 			
 			in.close();

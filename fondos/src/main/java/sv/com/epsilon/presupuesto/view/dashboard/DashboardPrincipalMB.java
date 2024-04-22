@@ -6,6 +6,7 @@ package sv.com.epsilon.presupuesto.view.dashboard;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -68,8 +69,13 @@ public class DashboardPrincipalMB {
 	}
 	
 	public void callTop5() {
-		listTop5Gasto=new Top5Facade().findByPresupuesto(sessionMb.getIdPresupuestoSelected());
-		listTop5GastoMes=new Top5Facade().findByPresupuestoMensual(sessionMb.getIdPresupuestoSelected());
+		Optional<Presupuesto> presupuesto = new PresupuestoFacade().defaultValue();
+		int idSelected=1;
+		if(presupuesto.isPresent()) {
+			idSelected=presupuesto.get().getIdPresupuesto();
+		}
+		listTop5Gasto=new Top5Facade().findByPresupuesto(idSelected);
+		listTop5GastoMes=new Top5Facade().findByPresupuestoMensual(idSelected);
 	}
 	
 	

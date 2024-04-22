@@ -1,85 +1,83 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<h:form id="idDetailGasto">
-		<p:dialog widgetVar="wgtDetail" id="detail" width="900"  header="Gasto No. #{searchMovimientoMB.gasto.idGasto}">
+		<p:dialog widgetVar="wgtDetail" id="detail" width="900"
+			header="Gasto No. #{searchMovimientoMB.gasto.idGasto}">
 			<b:panel look="#{varMB.PRIMARY}" collapsible="false">
 				<b:container fluid="true">
 
 					<b:row>
-						<b:column col-sm="3" styleClass="btn btn-info">
+						<b:column col-sm="3" styleClass="text-info-color ">
 						Fecha Ingreso
 					</b:column>
-						<b:column col-sm="3" styleClass="btn btn-info">
+						<b:column col-sm="3" styleClass="text-info-color">
 						Fecha Transaccion
 					</b:column>
 
-					<b:column col-sm="3" styleClass="btn btn-info">
+						<b:column col-sm="3" styleClass="text-info-color">
 						Tipo desembolso
 					</b:column>
-					<b:column col-sm="3" styleClass="btn btn-info">
+						<b:column col-sm="3" styleClass="text-info-color">
 						Cheque/transf/recibo
 					</b:column>
 					</b:row>
 					<b:row>
 						<b:column col-sm="3">
-							<h:outputText value="#{searchMovimientoMB.gasto.fechaRegistro}">
+							<h:outputText value="#{searchMovimientoMB.gasto.fechaRegistro}" styleClass="text-medium-size">
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</b:column>
 						<b:column col-sm="3">
-							<h:outputText value="#{searchMovimientoMB.gasto.fecha}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+							<h:outputText value="#{searchMovimientoMB.gasto.fecha}" styleClass="text-medium-size"
+								converter="dateShortConverter">
+
 							</h:outputText>
 						</b:column>
 
 						<b:column col-sm="3">
-							<h:outputText
-								value="#{searchMovimientoMB.gasto.idTipoDesembolso}"
+							<h:outputText value="#{searchMovimientoMB.gasto.idTipoDesembolso}" styleClass="text-medium-size"
 								converter="tipoDesembolsoConverter" />
 						</b:column>
 						<b:column col-sm="3">
-							<h:outputText value="#{searchMovimientoMB.gasto.cheque}" />
+							<h:outputText value="#{searchMovimientoMB.gasto.cheque}" styleClass="text-medium-size" />
 						</b:column>
 					</b:row>
 					<b:row>
-						<b:column col-sm="8" styleClass="btn btn-info">
+						<b:column col-sm="8" styleClass="text-info-color">
 						Proveedor
 					</b:column>
-					<b:column col-sm="1">
+						<b:column col-sm="1">
 						</b:column>
-						<b:column col-sm="3" styleClass="btn btn-info">
+						<b:column col-sm="3" styleClass="text-info-color">
 						Monto total $
 					</b:column>
-						
+
 					</b:row>
 					<b:row>
-						<b:column col-sm="8" styleClass="demoFont">
-							<h:outputText
-								value="#{searchMovimientoMB.gasto.idProveedor.nombre}"
-								style="font-size:1.4em;" />
+						<b:column col-sm="8" styleClass="text-medium-size">
+							<h:outputText value="#{searchMovimientoMB.gasto.idProveedor.nombre}"
+								 />
 						</b:column>
 						<b:column col-sm="1">
 						</b:column>
 						<b:column col-sm="3">
-							<h:outputText style="font-size:1.6em;"
-								value="#{searchMovimientoMB.gasto.total}"></h:outputText>
+							<h:outputText style="font-size:1.6em;" value="#{searchMovimientoMB.gasto.total}" styleClass="text-medium-size"/>
 						</b:column>
 
-						
+
 					</b:row>
 					<b:row>
-						<b:column col-sm="12" styleClass="btn btn-info">
+						<b:column col-sm="12" styleClass="text-info-color">
 							Descripcion
 						</b:column>
 					</b:row>
 					<b:row>
 						<b:column col-sm="12">
 
-							<h:outputText value="#{searchMovimientoMB.gasto.descripcion}"></h:outputText>
+							<h:outputText value="#{searchMovimientoMB.gasto.descripcion}" styleClass="text-medium-size"/>
 
 						</b:column>
 					</b:row>
@@ -90,7 +88,7 @@
 					</b:row>
 					<b:row>
 
-						
+
 						<p:dataTable value="#{searchMovimientoMB.listDetalle}" var="det"
 							rowIndexVar="rowIndex">
 							<p:column headerText="#">

@@ -3,7 +3,9 @@
  */
 package sv.com.epsilon.presupuesto.pojo;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,6 +37,7 @@ public class GastoExt extends Gasto {
 					g.getTotal(),g.getIdEmpresa(),  g.getFecha(), g.getFechaRegistro(), g.getReciboList(),g.getImagenList(), g.getMovimientoList(), 
 					g.getIdTipoDesembolso(), g.getIdProveedor(), g.getKpresupuesto(), g.getStatus(), g.getNumeroComprobante());
 			typeTransaccion="S";
+			this.setMovimientoList(g.getMovimientoList());
 	}
 		
 		public GastoExt(Financiamiento f,Optional<Catingreso> nombre) {
@@ -48,5 +51,10 @@ public class GastoExt extends Gasto {
 			this.setFecha( c);
 			this.setStatus("T");
 			typeTransaccion="E";
+			setMovimientoList(new ArrayList<>());
+		}
+		
+		public Date dateFromFecha() {
+			return this.getFecha().getTime();
 		}
 }

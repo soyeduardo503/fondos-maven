@@ -162,7 +162,7 @@ public class CierreMensualMB implements Serializable {
 					montoInicial = initialv.get().getSaldo();
 					montoFinal = finalv.get().getSaldo();
 				}
-				loadFound();
+				//loadFound();
 				
 
 			} catch (Exception e) {
@@ -194,7 +194,7 @@ public class CierreMensualMB implements Serializable {
 				search.setFechaFinal(periodo.getFin());
 			}
 			list = new GastoCtrlr().invocarBusqueda(search);
-			loadFound();
+			//loadFound();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

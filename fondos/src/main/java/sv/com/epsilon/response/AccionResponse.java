@@ -55,6 +55,8 @@ public class AccionResponse implements Response{
 	}
 	
 	
-	
+	public boolean isOk() {
+		return status==0;
+	}
 	
 }

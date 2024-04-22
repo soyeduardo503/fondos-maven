@@ -5,6 +5,7 @@ package sv.com.epsilon.presupuesto.ctrlr;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -123,6 +124,22 @@ public class GastoCtrlr {
 			e.printStackTrace();
 		}
 		return new ArrayList<>();
+	}
+	
+	public static void order(List<GastoExt> list ,String order) {
+		if(order==null || order.equalsIgnoreCase("DESC")) {
+			list.sort(new Comparator<Gasto>() {
+				 public int compare(Gasto o1, Gasto o2) {
+			            return o2.getFecha().compareTo(o1.getFecha());
+			        }
+			});
+		}else {
+			list.sort(new Comparator<Gasto>() {
+				 public int compare(Gasto o1, Gasto o2) {
+			            return o1.getFecha().compareTo(o2.getFecha());
+			        }
+			});
+		}
 	}
 	
 }

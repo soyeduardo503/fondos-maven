@@ -3,7 +3,6 @@ package sv.com.epsilon.ctrlr.wsclient;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,18 +11,21 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import sv.com.epsilon.entities.Categoria;
 import sv.com.epsilon.response.AccionResponse;
 import sv.com.epsilon.response.NumberResponse;
 import sv.com.epsilon.util.Log;
 
 @Data
+@Slf4j
 public class WSClient<T> {
 
 	private Class<T>  typeClass;
@@ -81,9 +83,19 @@ public class WSClient<T> {
 	public T save(T object) throws Exception {
 		
 		RestTemplate restTemplate = new RestTemplate();
-		HttpEntity<?> request = new HttpEntity<>(object);
-		if(token!=null&&!token.equals(""))
-			request.getHeaders().add("Authorization",token);
+		HttpHeaders headers=new  HttpHeaders();  
+		try {
+			if(token!=null&&!token.equals("")) {
+				
+				headers.setBearerAuth(token);
+			}
+		}catch (Exception e) {
+			log.error("error in RestClient", e);
+			e.printStackTrace();
+			
+		}
+		HttpEntity<?> request = new HttpEntity<>(object,headers);
+		
 		
 		Optional<?> resp = Optional.ofNullable( restTemplate.postForObject(url("/"),request,typeClass));
 		if(!resp.isPresent())
